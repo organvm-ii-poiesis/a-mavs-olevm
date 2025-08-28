@@ -1,6 +1,14 @@
 # ETCETER4
 This is the build for etceter4.com. Contact us if you see any strange things happening on the site!
 
+## For Beginners
+
+**New to web development?** We've got you covered with comprehensive learning materials:
+- ✅ [Setup Checklist](SETUP_CHECKLIST.md) - Make sure everything is installed correctly
+- 📚 [Complete Beginner's Tutorial](BEGINNER_TUTORIAL.md) - Learn Terminal, Git, GitHub, VS Code, and more
+- 🚀 [Quick Start Guide](QUICK_START.md) - Get running in 5 minutes
+- 📊 [Visual Guides](docs/VISUAL_GUIDES.md) - Diagrams and visual references
+
 ## Getting Started
 
 1. Download and install the [Node Version Manager (NVM)](https://github.com/creationix/nvm)  (you will need XCode for this if on Mac), and [git](https://www.atlassian.com/git/tutorials/install-git/mac-os-x)
