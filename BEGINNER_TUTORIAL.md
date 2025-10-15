@@ -150,15 +150,24 @@ nvm alias default node
 
 **On Windows:**
 
-1. Download nvm-windows from: https://github.com/coreybutler/nvm-windows/releases
-2. Download the `nvm-setup.exe` file
-3. Run the installer
-4. Open a new Command Prompt or PowerShell as Administrator
-5. Install Node.js:
-```bash
-nvm install lts
-nvm use lts
-```
+1. **Option A: Using nvm-windows (Recommended)**
+   - Download nvm-windows from: https://github.com/coreybutler/nvm-windows/releases
+   - Download the `nvm-setup.exe` file
+   - Run the installer (may need admin privileges)
+   - Open a new Command Prompt or PowerShell **as Administrator**
+   - Install Node.js:
+   ```powershell
+   nvm install lts
+   nvm use lts
+   ```
+
+2. **Option B: Direct Installation (Simpler for beginners)**
+   - Go to https://nodejs.org/
+   - Download the LTS version installer for Windows
+   - Run the installer and follow prompts (accept default settings)
+   - Restart your terminal/PowerShell
+
+**Tip for Windows users**: PowerShell is recommended over Command Prompt for better compatibility with modern development tools.
 
 #### Method 2: Direct Installation
 
@@ -214,6 +223,67 @@ git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 ```
 
+### Setting Up GitHub Authentication
+
+**Important**: As of August 2021, GitHub requires a Personal Access Token (PAT) or SSH key for authentication - passwords no longer work for command-line operations.
+
+#### Option 1: Personal Access Token (Easier for Beginners)
+
+1. **Create a Personal Access Token:**
+   - Log in to GitHub
+   - Click your profile picture (top right) → Settings
+   - Scroll down and click "Developer settings" (left sidebar)
+   - Click "Personal access tokens" → "Tokens (classic)"
+   - Click "Generate new token" → "Generate new token (classic)"
+   - Give it a note like "My Development Computer"
+   - Set expiration (90 days recommended for learning)
+   - Check the "repo" scope (gives full repository access)
+   - Scroll down and click "Generate token"
+   - **IMPORTANT**: Copy the token immediately - you won't see it again!
+
+2. **Use the Token:**
+   - When you run `git push`, Git will ask for your username and password
+   - Username: Your GitHub username
+   - Password: Paste your Personal Access Token (not your actual password!)
+   - On Mac/Linux, Git may save this in your keychain
+   - On Windows, Git Credential Manager will save it
+
+#### Option 2: SSH Key (More Secure, One-Time Setup)
+
+1. **Generate SSH Key:**
+```bash
+# Check if you already have an SSH key
+ls -al ~/.ssh
+
+# If not, generate one (press Enter for all prompts)
+ssh-keygen -t ed25519 -C "your.email@example.com"
+```
+
+2. **Add SSH Key to GitHub:**
+```bash
+# Copy your public key (Mac/Linux)
+cat ~/.ssh/id_ed25519.pub
+
+# Copy your public key (Windows with Git Bash)
+cat ~/.ssh/id_ed25519.pub | clip
+```
+   - Go to GitHub → Settings → SSH and GPG keys
+   - Click "New SSH key"
+   - Paste your key and save
+
+3. **Test Connection:**
+```bash
+ssh -T git@github.com
+```
+
+4. **Use SSH URLs when cloning:**
+```bash
+# Instead of HTTPS
+git clone git@github.com:4-b100m/etceter4.git
+```
+
+**For Beginners**: Start with Personal Access Token - it's simpler and works immediately.
+
 ---
 
 ## 3. 🐱 GitHub Setup and Basics
@@ -242,6 +312,15 @@ GitHub is a platform where developers store, share, and collaborate on code proj
 - **Push**: Upload your commits to GitHub
 - **Pull**: Download changes from GitHub
 - **Pull Request**: Request to merge your changes into someone else's project
+- **Branch**: A parallel version of your code (like a save file in a game)
+- **Main/Master Branch**: The primary branch of a repository
+
+**Note about Branch Names**: 
+- Older repositories (including this one) use `master` as the default branch name
+- Newer repositories typically use `main` as the default branch name
+- When you see commands with `origin main` or `origin master`, use whichever matches your repository
+- To check your repository's default branch: `git branch` (the one with * is your current branch)
+- This tutorial uses `master` because that's what this project uses
 
 ### Your First Repository
 
@@ -291,7 +370,7 @@ git add filename.txt         # Add specific file
 git commit -m "Describe what you changed"
 
 # 5. Push changes to GitHub
-git push origin main
+git push origin master
 ```
 
 ### Practice Exercise
@@ -306,7 +385,7 @@ git push origin main
 git status
 git add README.md
 git commit -m "Updated README with hello message"
-git push origin main
+git push origin master
 ```
 7. Check your GitHub repository to see the changes!
 
@@ -410,6 +489,17 @@ code .
 2. Try different themes (Dark+, Light+, etc.)
 3. Pick one you like!
 
+#### Understanding ESLint (Code Quality)
+This project includes ESLint configuration for checking JavaScript code quality. The `.eslintrc.json` file defines coding standards.
+
+**Optional - Enable ESLint in VS Code:**
+1. Install the "ESLint" extension in VS Code
+2. It will automatically check your JavaScript code
+3. Yellow/red squiggly lines show potential issues
+4. Hover over them to see suggestions
+
+**Note for beginners**: Don't worry about ESLint errors initially - focus on making your code work first. As you gain experience, these tools help write cleaner, more consistent code.
+
 ---
 
 ## 5. 🚀 Setting Up This Project (ETCETER4)
@@ -460,16 +550,27 @@ etceter4/
 
 ### Running the Project
 
-This project includes a development server. Start it with:
+This project includes a development server using browser-sync. Start it with:
 
 ```bash
 npm test
 ```
 
-This command starts a local server that will:
-- Serve your website at a local address (like `http://localhost:3000`)
+**Note**: Although the command is named "test", it actually starts a development server (not unit tests). This is a common practice in older projects. The command will:
+- Serve your website at a local address (usually `http://localhost:3000`)
 - Automatically refresh the page when you make changes
 - Watch for changes in HTML, CSS, and JavaScript files
+
+You'll see output like:
+```
+[Browsersync] Access URLs:
+ --------------------------------------
+       Local: http://localhost:3000
+    External: http://192.168.x.x:3000
+ --------------------------------------
+```
+
+Your default browser should open automatically. If not, manually open the Local URL shown in your terminal.
 
 ### Opening in VS Code
 
@@ -515,7 +616,7 @@ code .
 git status                    # See what changed
 git add .                     # Stage all changes
 git commit -m "Describe your changes"
-git push origin main          # Upload to GitHub
+git push origin master        # Upload to GitHub
 ```
 
 ### Making Your First Change
@@ -530,7 +631,7 @@ Let's practice by making a small change to this project:
 git status
 git add README.md
 git commit -m "Added my learning notes section to README"
-git push origin main
+git push origin master
 ```
 
 ### Understanding Git Status Messages
@@ -560,7 +661,11 @@ When you run `git status`, you'll see files in different states:
    - Bad: "stuff" or "changes"
 3. **Check status before committing**: Always run `git status` first
 4. **Don't commit everything**: Use `.gitignore` for files you don't want to track
+   - Never commit `node_modules/` folder (it's huge and regenerable)
+   - Don't commit sensitive data (passwords, API keys, tokens)
 5. **Pull before you push**: If working with others, always pull recent changes first
+6. **Work on branches for experiments**: The default branch (`master` in this project) should stay stable
+7. **Be careful with force commands**: Avoid `git push --force` unless you know exactly what you're doing
 
 ### VS Code Best Practices
 
@@ -602,13 +707,26 @@ When you run `git status`, you'll see files in different states:
 - **Solution**: You're not in a Git repository folder
 - **Fix**: Navigate to your project folder or run `git init` to start a new repository
 
-**Problem**: "Your branch is ahead of origin/main"
+**Problem**: "Your branch is ahead of origin/master"
 - **Solution**: You have local commits that aren't on GitHub yet
-- **Fix**: Run `git push origin main`
+- **Fix**: Run `git push origin master`
 
 **Problem**: "Please tell me who you are"
 - **Solution**: Git doesn't know your identity
 - **Fix**: Run the git config commands from earlier in this tutorial
+
+**Problem**: "Authentication failed" or "Password incorrect" when pushing
+- **Solution**: GitHub no longer accepts passwords - you need a Personal Access Token
+- **Fix**: See the "Setting Up GitHub Authentication" section earlier in this tutorial
+- **Quick fix**: Generate a Personal Access Token on GitHub and use it as your password
+
+**Problem**: "Permission denied (publickey)" when pushing
+- **Solution**: You're using SSH but haven't set up SSH keys
+- **Fix**: Either set up SSH keys (see authentication section) or use HTTPS instead
+
+**Problem**: "Failed to push some refs" or "Updates were rejected"
+- **Solution**: Remote has changes you don't have locally
+- **Fix**: Run `git pull origin master` first, then push again
 
 **Problem**: Merge conflicts
 - **Solution**: This happens when Git can't automatically combine changes
@@ -641,6 +759,26 @@ When you run `git status`, you'll see files in different states:
 **Problem**: Browser shows "Cannot GET /"
 - **Solution**: The server isn't running or isn't serving the right files
 - **Fix**: Make sure your development server is running (`npm test`)
+
+**Problem**: `npm test` command not found or doesn't work
+- **Solution**: npm isn't installed or not in your PATH
+- **Fix**: Verify Node.js installation with `node --version` and `npm --version`
+
+### Cross-Platform Issues
+
+**Problem**: Commands don't work on Windows
+- **Solution**: Some commands differ between operating systems
+- **Windows alternatives**:
+  - Use PowerShell instead of Command Prompt
+  - Replace `ls` with `dir` (or use `ls` in PowerShell)
+  - Replace `cat` with `type`
+  - Replace `rm` with `del`
+  - For better compatibility, consider installing Git Bash (comes with Git for Windows)
+
+**Problem**: Path separators causing issues
+- **Windows uses**: `\` (backslash) for paths like `C:\Users\Name`
+- **Mac/Linux use**: `/` (forward slash) for paths like `/home/name`
+- **In Git and most tools**: Always use `/` regardless of OS
 
 ### Getting Help
 
@@ -744,8 +882,8 @@ mkdir newfolder       # Create folder
 git status            # Check status
 git add .             # Stage all changes
 git commit -m "msg"   # Save changes
-git push origin main  # Upload to GitHub
-git pull origin main  # Download from GitHub
+git push origin master # Upload to GitHub
+git pull origin master # Download from GitHub
 ```
 
 ### Essential VS Code Shortcuts

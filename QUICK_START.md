@@ -40,8 +40,10 @@ code .
 ```bash
 git add README.md
 git commit -m "Added my name to contributors"
-git push origin main
+git push origin master
 ```
+
+**Note**: If this is your first time pushing to GitHub, you'll need to authenticate. See the [GitHub Authentication section](BEGINNER_TUTORIAL.md#setting-up-github-authentication) in the full tutorial for setup instructions. Use a Personal Access Token, not your password!
 
 ## What's Next?
 

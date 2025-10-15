@@ -36,6 +36,8 @@ Use this checklist to make sure you have everything set up correctly before star
 - [ ] Repository cloned to your computer: `git clone https://github.com/4-b100m/etceter4.git`
 - [ ] Can navigate to project folder: `cd etceter4`
 - [ ] Dependencies installed: `npm install` (completed without major errors)
+  - **Note**: You may see warnings - this is normal for older projects
+  - The important thing is that `node_modules` folder is created
 - [ ] Development server runs: `npm test` (shows "Access URLs" with localhost)
 - [ ] Can open project in VS Code: `code .`
 
@@ -44,7 +46,7 @@ Use this checklist to make sure you have everything set up correctly before star
 - [ ] Checked Git status: `git status` (shows modified files)
 - [ ] Staged changes: `git add filename` or `git add .`
 - [ ] Committed changes: `git commit -m "Your message"`
-- [ ] Pushed to GitHub: `git push origin main` (may need to set up authentication)
+- [ ] Pushed to GitHub: `git push origin master` (may need to set up authentication)
 
 ## Verification
 

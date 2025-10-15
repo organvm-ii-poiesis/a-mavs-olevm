@@ -2,9 +2,6 @@
   "name": "etceter4",
   "version": "1.0.0",
   "description": "home of the soul.",
-  "engines": { 
-    "npm" : "~1.0.20"
-  },
   "main": "index.html",
   "dependencies": {},
   "devDependencies": {
@@ -16,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/destroyme/etceter4.git"
+    "url": "git+https://github.com/4-b100m/etceter4.git"
   },
   "author": "et ceter4",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/destroyme/etceter4/issues"
+    "url": "https://github.com/4-b100m/etceter4/issues"
   },
-  "homepage": "https://github.com/destroyme/etceter4#readme"
+  "homepage": "https://github.com/4-b100m/etceter4#readme"
 }
