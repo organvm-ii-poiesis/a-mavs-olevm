@@ -93,9 +93,14 @@ The site automatically deploys to GitHub Pages when changes are pushed to the `m
 
 ## 🔒 Security
 
+- **Zero known vulnerabilities** in dependencies
+- Comprehensive Content Security Policy (CSP)
+- Security headers (X-Frame-Options, CSP, HSTS-ready)
 - Regular security audits via `npm audit`
 - Dependabot for automatic dependency updates
-- No known vulnerabilities in current dependencies
+- SRI (Subresource Integrity) hashes for all CDN resources
+
+See [SECURITY.md](SECURITY.md) for full security documentation.
 
 ## 🤝 Contributing
 
@@ -106,6 +111,8 @@ The site automatically deploys to GitHub Pages when changes are pushed to the `m
 5. Commit your changes (`git commit -m 'Add amazing feature'`)
 6. Push to the branch (`git push origin feature/amazing-feature`)
 7. Open a Pull Request
+
+See [SECURITY.md](SECURITY.md) for security guidelines and [EDGE_CASES.md](EDGE_CASES.md) for known limitations.
 
 ## 📄 License
 

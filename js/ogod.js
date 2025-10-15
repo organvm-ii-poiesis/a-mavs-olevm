@@ -2,8 +2,6 @@
  * Changes the background image positions for OGOD pages
  */
 
-var s = false;
-
 function r() {
     $("#bgi").width($(window).width() * 21);
     $("#bgi").height($(window).height() * 21);

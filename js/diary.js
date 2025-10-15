@@ -136,7 +136,7 @@ Carousel.prototype.emitSlide = function (dir) {
     $( this.id ).trigger( "carousel:slide", [this.index, this.indexLoadLeft, this.indexLoadRight, this.images, dir, this] );
 }
 
-var stillsCarousel = new Carousel({
+const stillsCarousel = new Carousel({
     "id": "#stills",
     "images": [["diary", 125]],
     "total": 125,
@@ -145,7 +145,7 @@ var stillsCarousel = new Carousel({
     "caption": $('#stillsCaption')
 });
 
-var stillsData = {
+const stillsData = {
     "diary" : {
         "1": "Fires, fury, absolution.<br>Delusion, fantasy, insincerity.<br>Constants follow us.<br>News breaks us.",
         "2": "Culture, rocks, freedom.<br>Eat me, hide me.",
@@ -355,22 +355,23 @@ $('.carousel').on('slid.bs.carousel', function () {
     if (pages[7].hasAllData === true) {
         // console.log('not loading any more images');
         return;
-    } else 
-    var index = $('.carousel .active').index('.carousel .item');
-    console.log('index = ' + index);
-    if (index + 1 === 9) {
-        // console.log('9th image loaded, loading new set');
-        appendImagesTo("#diaryCarouselInner", "img/photos/diary/", "diary", ".jpg", 11, 21);
-        return;
-    } else if (index + 1 === 20) {
-        // console.log('20th image loaded, loading new set');
-        appendImagesTo("#diaryCarouselInner", "img/photos/diary/", "diary", ".jpg", 22, 32);
-        return;
-    } else if (index + 1 === 30) {
-        // console.log('30th image loaded, loading rest of diary');
-        appendImagesTo("#diaryCarouselInner", "img/photos/diary/", "diary", ".jpg", 33, 63);
-        pages[7].hasAllData = true;
-        return;
+    } else {
+        const index = $('.carousel .active').index('.carousel .item');
+        console.log('index = ' + index);
+        if (index + 1 === 9) {
+            // console.log('9th image loaded, loading new set');
+            appendImagesTo("#diaryCarouselInner", "img/photos/diary/", "diary", ".jpg", 11, 21);
+            return;
+        } else if (index + 1 === 20) {
+            // console.log('20th image loaded, loading new set');
+            appendImagesTo("#diaryCarouselInner", "img/photos/diary/", "diary", ".jpg", 22, 32);
+            return;
+        } else if (index + 1 === 30) {
+            // console.log('30th image loaded, loading rest of diary');
+            appendImagesTo("#diaryCarouselInner", "img/photos/diary/", "diary", ".jpg", 33, 63);
+            pages[7].hasAllData = true;
+            return;
+        }
     }
 });
 

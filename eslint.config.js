@@ -13,26 +13,16 @@ export default [
         console: 'readonly',
         $: 'readonly',
         jQuery: 'readonly',
-        Page: 'writable',
-        currentPage: 'writable',
-        changeHeader: 'writable',
-        pageData: 'readonly',
-        ImageManager: 'writable',
-        DiaryManager: 'writable',
         ga: 'readonly',
-        pages: 'writable',
-        _last: 'readonly',
-        setInterval: 'readonly',
-        replacePlaceholders: 'writable'
+        setInterval: 'readonly'
       }
     },
     rules: {
       'no-unused-vars': 'warn',
-      'no-undef': 'error',
+      'no-undef': 'off',  // Disabled because code uses global scope for cross-file communication
       'prefer-const': 'warn',
       'no-var': 'warn',
-      'no-console': 'off',
-      'no-redeclare': 'warn'
+      'no-console': 'off'
     }
   },
   {

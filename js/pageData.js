@@ -3,7 +3,7 @@
  * 
  */
 
-var _pID = {
+const _pID = {
     "landing": "#landing",
     "menu": "#menu",
     "sound": "#sound",
@@ -16,7 +16,7 @@ var _pID = {
     "info": "#info"
 }
 
-var pages = [];
+let pages = [];
 
 pages.menu = new Page ({
     "id": _pID.menu,

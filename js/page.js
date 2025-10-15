@@ -1,12 +1,12 @@
 "use strict"; 
 
 /**
- * @global {String} currentPage - string containing the element tag of the page you're on 
- * @global {String} adIsLoaded - tells us whether or not the ad has been loaded
+ * @global {Object} currentPage - current page object
+ * @global {Boolean} adIsLoaded - tells us whether or not the ad has been loaded
  */
 
-var currentPage = {};
-var adIsLoaded = false;
+let currentPage = {};
+const adIsLoaded = false;
 
 /** 
  * Page Object
