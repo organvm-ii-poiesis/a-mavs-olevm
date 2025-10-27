@@ -223,7 +223,7 @@ var soundCanvas = function ( p ) {
  * 
  */
 
-// TODO : Make two distinct clouds - they repel one another - each cloud contains different emotions
+// Render two distinct emotional clouds that repel one another and keep their vocabularies separate.
 var wordsCanvas = function( p ) {
 
     "use strict";
@@ -233,48 +233,61 @@ var wordsCanvas = function( p ) {
     var textBounds = p.createVector(12,30);
     var rate = p.createVector(0.008, 0.008);
     var bezierRate = 1;
-    var wordTotal = 30; 
     var wordCloud = [];
 
-    var words = [
-        'KPI',         'death',         'callback',
-        'forever',     'growth',        'capture',
-        'society',     'taste',         'empty',
-        'disgust',     'forgiveness',   'sell',
-        'purchase',    'buy',           'fear',
-        'remorse',     'life',          'love',
-        'forget',      'sculpture',     'market',
-        'common',      'take',          'question',
-        'rain',        'clouds',        'AI',
-        'numbers',     'scene',         'return',
-        'personality', 'stakeholder',   'budget',
-        'pain',        'depression',    'hate',
-        'constant',    'repetition',    'space',
-        'rape',        'kind',          'AIDS',
-        'minotaur',    'gone',          'end',
-        'trust',       'hope',          'joust',
-        'fist',        'bye',           'good',
+    var emotionGroups = [
+        {
+            name: 'solace',
+            emotions: [
+                'forgiveness', 'growth',      'life',
+                'love',        'trust',       'hope',
+                'good',        'kind',        'return',
+                'rain',        'clouds',      'taste',
+                'society',     'common',      'capture',
+                'forever',     'purchase',    'stakeholder'
+            ],
+            members: [],
+            offset: undefined,
+            color: undefined,
+            spread: 220
+        },
+        {
+            name: 'discord',
+            emotions: [
+                'death',       'callback',    'empty',
+                'disgust',     'sell',        'buy',
+                'fear',        'remorse',     'forget',
+                'market',      'AI',          'numbers',
+                'scene',       'personality', 'budget',
+                'pain',        'depression',  'hate',
+                'constant',    'repetition',  'space',
+                'rape',        'AIDS',        'minotaur',
+                'gone',        'end',         'joust',
+                'fist',        'KPI'
+            ],
+            members: [],
+            offset: undefined,
+            color: undefined,
+            spread: 220
+        }
     ];
 
-    function Word ( text ) {
-            this.bezierTime = p.random();
-            this.bezierReverse = Math.random() >= 0.5;
-            this.location = p.createVector(p.random(-20,20), p.random(-20,20));
-            this.text = text;
-            this.textSize = Math.floor(p.random(18,28) + 1);
-            this.noiseTime = p.createVector(p.random(-10,10), p.random(-10,10));
+    function Word ( text, group ) {
+        this.group = group;
+        this.bezierTime = p.random();
+        this.bezierReverse = Math.random() >= 0.5;
+        this.location = p.createVector(0, 0);
+        this.text = text;
+        this.textSize = Math.floor(p.random(18,28) + 1);
+        this.noiseTime = p.createVector(p.random(-10,10), p.random(-10,10));
+        this._resetLocation();
     }
-    
-    function getRandomWord () {
-        // don't repeat any words
-        do {
-            var randomWord = words[Math.floor(Math.random() * words.length)];
-        } while ( wordCloud.some(hasWord) );
 
-        function hasWord ( word ) {
-            return word.text === randomWord;
-        }
-        return randomWord;
+    Word.prototype._resetLocation = function () {
+        var offset = this.group.offset;
+        var localSpread = this.group.spread;
+        var randomOffset = p.createVector(p.random(-localSpread, localSpread), p.random(-localSpread, localSpread));
+        this.location = p5.Vector.add(offset, randomOffset);
     }
 
     Word.prototype._2DRandomWalk = function () {
@@ -282,14 +295,15 @@ var wordsCanvas = function( p ) {
         var _ny = p.noise(this.noiseTime.y);
         this.noiseTime.add(rate);
 
-        var _x = p.map(_nx, 0, 1, -bounds.x, bounds.x);
-        var _y = p.map(_ny, 0, 1, -bounds.y, bounds.y);
+        var _x = p.map(_nx, 0, 1, -bounds.x, bounds.x) + this.group.offset.x;
+        var _y = p.map(_ny, 0, 1, -bounds.y, bounds.y) + this.group.offset.y;
         this.location.set(_x,_y);
     }
 
     Word.prototype.update = function () {
         this._2DRandomWalk();
         this._updateBezier();
+        this._enforceBounds();
     }
 
     Word.prototype._updateBezier = function () {
@@ -314,6 +328,95 @@ var wordsCanvas = function( p ) {
         this.textSize = size;
     }
 
+    Word.prototype._enforceBounds = function () {
+        var spread = this.group.spread;
+        this.location.x = p.constrain(this.location.x, this.group.offset.x - spread, this.group.offset.x + spread);
+        this.location.y = p.constrain(this.location.y, this.group.offset.y - bounds.y, this.group.offset.y + bounds.y);
+    }
+
+    Word.prototype.applyRepulsion = function ( force ) {
+        this.location.add(force);
+    }
+
+    function buildWordCloud () {
+        wordCloud.length = 0;
+        emotionGroups.forEach(function (group, index) {
+            var xOffset = index === 0 ? -bounds.x / 3 : bounds.x / 3;
+            group.offset = p.createVector(xOffset, 0);
+            group.color = index === 0 ? p.color(30, 120, 200) : p.color(180, 50, 60);
+            group.members = [];
+
+            group.emotions.forEach(function (emotion) {
+                var word = new Word(emotion, group);
+                wordCloud.push(word);
+                group.members.push(word);
+            });
+        });
+    }
+
+    function calculateGroupCenters () {
+        emotionGroups.forEach(function (group) {
+            if (group.members.length === 0) {
+                group.center = p.createVector(group.offset.x, group.offset.y);
+                return;
+            }
+
+            var center = p.createVector(0, 0);
+            group.members.forEach(function (member) {
+                center.add(member.location);
+            });
+            center.div(group.members.length);
+            group.center = center;
+        });
+    }
+
+    function applyGroupRepulsion () {
+        if (emotionGroups.length < 2) {
+            return;
+        }
+
+        for (var i = 0; i < emotionGroups.length; i++) {
+            var group = emotionGroups[i];
+            var otherGroup = emotionGroups[(i + 1) % emotionGroups.length];
+            var direction = p5.Vector.sub(group.center, otherGroup.center);
+
+            if (direction.magSq() === 0) {
+                direction = p.createVector(p.random(-1, 1), p.random(-1, 1));
+            }
+
+            var distance = direction.mag();
+            var strength = p.map(distance, 0, bounds.x * 2, 3, 0.4, true);
+            direction.normalize().mult(strength);
+
+            group.members.forEach(function (member) {
+                member.applyRepulsion(direction);
+                member._enforceBounds();
+            });
+        }
+    }
+
+    function resolveWordFont () {
+        var preferred = 'Bodoni MT';
+        var fallbacks = ['Garamond', 'Georgia', 'serif'];
+
+        try {
+            if (document && document.fonts && typeof document.fonts.check === 'function') {
+                if (document.fonts.check('12px "' + preferred + '"')) {
+                    return preferred;
+                }
+                for (var i = 0; i < fallbacks.length; i++) {
+                    if (document.fonts.check('12px "' + fallbacks[i] + '"')) {
+                        return fallbacks[i];
+                    }
+                }
+            }
+        } catch (err) {
+            // Accessing document.fonts can throw in some environments – fall back to defaults.
+        }
+
+        return fallbacks[fallbacks.length - 1];
+    }
+
     /*
      *
      * Setup
@@ -322,15 +425,10 @@ var wordsCanvas = function( p ) {
 
     p.setup = function () {
         p.createCanvas(p.windowWidth, p.windowHeight);
-        
-        // TODO: do some error checking to see if we have Bodoni MT & fallback to Garamond or Georgia
-        p.textFont("Futura");
-        
 
-        // populate the word cloud
-        for (var i = 0; i < wordTotal; i++) {
-            wordCloud.push(new Word(getRandomWord()));
-        }
+        p.textFont(resolveWordFont());
+
+        buildWordCloud();
     }
 
     /*
@@ -344,18 +442,27 @@ var wordsCanvas = function( p ) {
         p.background(155, 155, 155,);
         p.translate(center.x, center.y);
 
-        for (var i = 0; i < wordTotal; i++) {
-            var currentWord = wordCloud[i];
+        wordCloud.forEach(function (currentWord) {
             currentWord.update();
-            p.fill(0);
+        });
+
+        calculateGroupCenters();
+        applyGroupRepulsion();
+
+        wordCloud.forEach(function (currentWord) {
+            p.fill(currentWord.group.color);
             p.textSize(currentWord.textSize);
             p.text(currentWord.text, currentWord.location.x, currentWord.location.y);
-        }
+        });
     }
 
     p.windowResized = function () {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
         center.set(p.windowWidth / 2, (p.windowHeight - footerHeight) / 2);
+        emotionGroups.forEach(function (group, index) {
+            var xOffset = index === 0 ? -bounds.x / 3 : bounds.x / 3;
+            group.offset.set(xOffset, 0);
+        });
     }
 
 }

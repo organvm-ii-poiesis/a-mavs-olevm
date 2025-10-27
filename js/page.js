@@ -140,7 +140,7 @@ function fadeInPage (_Page, _cb) {
         // fade in next section
         $(_Page.id).velocity("fadeIn", {
             delay: 0,
-            duration: 0, // 500
+            duration: 500,
             display: _display,
             easing: "easeInSine",
             begin: function () {
