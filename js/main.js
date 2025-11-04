@@ -1,13 +1,29 @@
-/*
+/**
+ * @file main.js
+ * @description Main application entry point for etceter4.com
+ * Handles document ready initialization, page routing based on URL hash,
+ * and provides polyfills for older browser compatibility.
+ *
+ * @requires jQuery
+ * @requires page.js - Page navigation and management system
+ * @requires pageData.js - Page configuration and data
+ *
+ * @global {Object} currentPage - The currently active page object (from page.js)
  *
  * Considering following the idiomatic style guide
  * https://www.npmjs.com/package/eslint-config-idiomatic
  * https://github.com/rwaldron/idiomatic.js
- *
  */
 
 /**
- * Document on load functions
+ * Document ready handler - Application initialization
+ * @listens document#ready
+ *
+ * Flow:
+ * 1. Check for hash in URL (e.g., #landing, #diary, #stills)
+ * 2. If hash exists, show that section and initialize it
+ * 3. If no hash, default to showing the landing page
+ * 4. Sets the global currentPage variable to track active page
  */
 
 $(document).ready(function () {

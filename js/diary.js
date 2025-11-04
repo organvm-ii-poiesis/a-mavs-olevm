@@ -1,19 +1,26 @@
 /**
- * @file Handles image loading & processing.
+ * @file diary.js
+ * @description Handles diary/journal entry image loading and processing
+ * Manages lazy loading of diary images using placeholder replacement technique
+ *
  * @author gabriel
+ * @requires jQuery
  */
 
 /**
- * appendImagesTo
+ * Appends a series of numbered images to a DOM element
+ * Used for gallery-style image loading with sequential numbering
  *
- * @summary Appends images to an element
+ * @param {string} element - CSS selector for the container element
+ * @param {string} location - Base path to the image directory
+ * @param {string} prefix - Filename prefix before the number (e.g., "image_")
+ * @param {string} fileExtension - File extension including the period (e.g., ".jpg", ".png")
+ * @param {number} start - Starting number (inclusive)
+ * @param {number} end - Ending number (inclusive)
  *
- * @param {string} element - html element you're appending to
- * @param {string} location - pathway to the images
- * @param {string} prefix - prefix of the name of the images are
- * @param {string} fileExtension - file extension of the images. Must include a period (.)
- * @param {number} start - integer value we should start at (inclusive)
- * @param {number} end - integer value we should stop at (inclusive)
+ * @example
+ * // Appends image_1.jpg through image_10.jpg from img/photos/
+ * appendImagesTo('#gallery', 'img/photos/', 'image_', '.jpg', 1, 10);
  */
 
 function appendImagesTo(element, location, prefix, fileExtension, start, end) {
@@ -34,13 +41,20 @@ function appendImagesTo(element, location, prefix, fileExtension, start, end) {
 }
 
 /**
- * replacePlaceholders
+ * Replaces placeholder images with actual images for lazy loading
+ * Searches for images with src="img/placeholder.jpg" and replaces them
+ * with the actual source from the data-src attribute
  *
- * @summary Replaces the placeholders of any images within a page
+ * Performance optimization: Only loads images when the page is initialized,
+ * reducing initial page load time
  *
- * @param {string} element - html element to search
+ * @param {string} element - CSS selector for the container to search within
+ *
+ * @example
+ * // HTML: <img src="img/placeholder.jpg" data-src="img/actual-image.jpg" />
+ * // After calling: <img src="img/actual-image.jpg" data-src="img/actual-image.jpg" />
+ * replacePlaceholders('#diary');
  */
-
 function replacePlaceholders(element) {
   const dstills = $(element).find("img[src='img/placeholder.jpg']");
   if (dstills.length !== 0) {
