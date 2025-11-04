@@ -209,31 +209,7 @@ Comprehensive documentation is available for all aspects of the Pantheon:
 
 - [PANTHEON_ARCHITECTURE.md](PANTHEON_ARCHITECTURE.md) - Complete temple structure and expansion plans
 - [LIVING_PANTHEON_GENERATIVE.md](LIVING_PANTHEON_GENERATIVE.md) - Breathing, generative architecture concepts
-- [TRANSFORMATION_PLAN.md](TRANSFORMATION_PLAN.md) - The Five Pillars transformation journey
-- [PANTHEON_EXPANSION_SUMMARY.md](PANTHEON_EXPANSION_SUMMARY.md) - Summary of expanded chambers
-
-### Professional & Academic
-
-- [PROFESSIONAL_PANTHEON_CV.md](PROFESSIONAL_PANTHEON_CV.md) - Professional identity and CV architecture
-- [MACRO_REVIEW_SUMMARY.md](MACRO_REVIEW_SUMMARY.md) - Project overview and status
-
-### Technical Guides
-
-- [BEGINNER_TUTORIAL.md](BEGINNER_TUTORIAL.md) - Complete guide for new developers
-- [QUICK_START.md](QUICK_START.md) - Get running in 5 minutes
-- [SETUP_CHECKLIST.md](SETUP_CHECKLIST.md) - Installation verification
-- [LIVE_PREVIEW_GUIDE.md](LIVE_PREVIEW_GUIDE.md) - Local development server setup
-- [MEDIA_INFRASTRUCTURE_GUIDE.md](MEDIA_INFRASTRUCTURE_GUIDE.md) - Audio/video handling
-- [NAMING_SYSTEM.md](NAMING_SYSTEM.md) - Comprehensive naming conventions and tools
-- [EDGE_CASES.md](EDGE_CASES.md) - Known limitations and workarounds
-- [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) - Vercel deployment guide
-
-### Project Management
-
-- [ACTIVATION_COMPLETE.md](ACTIVATION_COMPLETE.md) - Implementation completion status
-- [AUDIT_SUMMARY.md](AUDIT_SUMMARY.md) - Security and quality audits
-- [SESSION_SUMMARY_2025-11-03.md](SESSION_SUMMARY_2025-11-03.md) - Development session notes
-
+For a comprehensive list of documentation files and guides, see [DOCUMENTATION.md](DOCUMENTATION.md).
 ## 🤝 Contributing
 
 1. Fork the repository
