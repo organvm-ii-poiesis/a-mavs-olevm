@@ -7,7 +7,9 @@ If you discover a security vulnerability in this project, please email etceter4@
 ## Security Measures Implemented
 
 ### 1. Content Security Policy (CSP)
+
 The `.htaccess` file implements a comprehensive CSP that:
+
 - Restricts script sources to trusted CDNs (jQuery, Velocity.js, Google Analytics)
 - Allows frames only from Bandcamp and YouTube for embedded content
 - Prevents inline script execution (with exceptions for Google Analytics)
@@ -15,12 +17,15 @@ The `.htaccess` file implements a comprehensive CSP that:
 - Restricts font and image sources
 
 **Note:** The CSP currently uses `'unsafe-inline'` for scripts due to inline Google Analytics code. For improved security, consider:
+
 - Moving analytics to a separate external file
 - Using CSP nonces or hashes for inline scripts
 - Implementing Google Tag Manager instead of inline GA code
 
 ### 2. Security Headers
+
 Additional security headers configured:
+
 - `X-Frame-Options: DENY` - Prevents clickjacking attacks
 - `X-Content-Type-Options: nosniff` - Prevents MIME type sniffing
 - `X-XSS-Protection: 1; mode=block` - Enables browser XSS protection
@@ -28,14 +33,17 @@ Additional security headers configured:
 - `Permissions-Policy` - Restricts access to sensitive browser features
 
 ### 3. HTTPS/HSTS
-HSTS (HTTP Strict Transport Security) is prepared in `.htaccess` but commented out. 
+
+HSTS (HTTP Strict Transport Security) is prepared in `.htaccess` but commented out.
 
 **Action Required:** Uncomment the HSTS header once HTTPS is fully deployed:
+
 ```apache
 Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 ```
 
 ### 4. Dependency Management
+
 - All dependencies are up-to-date with no known vulnerabilities
 - Automated dependency updates via Dependabot
 - Weekly security audits in CI/CD pipeline
@@ -125,4 +133,4 @@ Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains
 
 ---
 
-*Last Updated: October 2024*
+_Last Updated: October 2024_

@@ -15,23 +15,27 @@ class InteractiveCV {
   init() {
     // Set up facet buttons
     document.querySelectorAll('.facet-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', e => {
         const facet = e.target.dataset.facet;
         this.switchFacet(facet);
       });
     });
 
     // Set up mode toggle buttons
-    document.getElementById('mode-professional').addEventListener('click', () => {
-      this.switchMode('professional');
-    });
-    document.getElementById('mode-experimental').addEventListener('click', () => {
-      this.switchMode('experimental');
-    });
+    document
+      .getElementById('mode-professional')
+      .addEventListener('click', () => {
+        this.switchMode('professional');
+      });
+    document
+      .getElementById('mode-experimental')
+      .addEventListener('click', () => {
+        this.switchMode('experimental');
+      });
 
     // Set up lens buttons
     document.querySelectorAll('.lens-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', e => {
         const lens = e.target.dataset.lens;
         this.switchLens(lens);
       });
@@ -76,11 +80,18 @@ class InteractiveCV {
     this.currentMode = mode;
 
     // Update button states
-    document.getElementById('mode-professional').classList.toggle('active', mode === 'professional');
-    document.getElementById('mode-experimental').classList.toggle('active', mode === 'experimental');
+    document
+      .getElementById('mode-professional')
+      .classList.toggle('active', mode === 'professional');
+    document
+      .getElementById('mode-experimental')
+      .classList.toggle('active', mode === 'experimental');
 
     // Update body class
-    document.body.classList.toggle('experimental-mode', mode === 'experimental');
+    document.body.classList.toggle(
+      'experimental-mode',
+      mode === 'experimental'
+    );
 
     // In experimental mode, you might add subtle glitches, animations, etc.
     if (mode === 'experimental') {
@@ -120,7 +131,8 @@ class InteractiveCV {
   enableExperimentalMode() {
     // Add subtle glitch effects
     this.glitchInterval = setInterval(() => {
-      if (Math.random() < 0.05) { // 5% chance per interval
+      if (Math.random() < 0.05) {
+        // 5% chance per interval
         this.subtleGlitch();
       }
     }, 2000);
@@ -172,7 +184,11 @@ class InteractiveCV {
 
     if (parts[0]) {
       const facet = parts[0];
-      if (['overview', 'academic', 'professor', 'designer', 'artist'].includes(facet)) {
+      if (
+        ['overview', 'academic', 'professor', 'designer', 'artist'].includes(
+          facet
+        )
+      ) {
         this.switchFacet(facet);
       }
     }
@@ -205,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (target) {
         target.scrollIntoView({
           behavior: 'smooth',
-          block: 'start'
+          block: 'start',
         });
       }
     });
@@ -217,10 +233,12 @@ function shareCV() {
   const url = window.location.href;
 
   if (navigator.share) {
-    navigator.share({
-      title: 'ET CETER4 - CV',
-      url: url
-    }).catch(err => console.log('Share failed', err));
+    navigator
+      .share({
+        title: 'ET CETER4 - CV',
+        url: url,
+      })
+      .catch(err => console.log('Share failed', err));
   } else if (navigator.clipboard) {
     navigator.clipboard.writeText(url).then(() => {
       alert('CV link copied to clipboard!');

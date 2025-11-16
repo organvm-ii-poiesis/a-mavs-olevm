@@ -5,6 +5,7 @@ Welcome to the complete beginner's guide for getting started with essential web 
 ## 🎯 What You'll Learn
 
 By the end of this tutorial, you'll be able to:
+
 - Navigate and use the terminal/command line confidently
 - Set up and use Git and GitHub for version control
 - Install and configure VS Code for web development
@@ -27,6 +28,7 @@ The terminal (also called command line, shell, or console) is a text-based way t
 ### What is the Terminal?
 
 The terminal allows you to:
+
 - Navigate through folders (directories)
 - Run programs and commands
 - Install software
@@ -36,16 +38,19 @@ The terminal allows you to:
 ### Opening the Terminal
 
 **On Mac:**
+
 - Press `Cmd + Space` to open Spotlight
 - Type "Terminal" and press Enter
 - Or go to Applications > Utilities > Terminal
 
 **On Windows:**
+
 - Press `Win + R`, type `cmd`, and press Enter
 - Or search for "Command Prompt" in the Start menu
 - For a better experience, install Windows Terminal from the Microsoft Store
 
 **On Linux:**
+
 - Press `Ctrl + Alt + T`
 - Or search for "Terminal" in your applications
 
@@ -128,21 +133,25 @@ NVM allows you to install and switch between different versions of Node.js easil
 
 1. Open your terminal
 2. Install NVM with this command:
+
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
 ```
 
 3. Close and reopen your terminal, or run:
+
 ```bash
 source ~/.bashrc
 ```
 
 4. Install the latest LTS (Long Term Support) version of Node.js:
+
 ```bash
 nvm install --lts
 ```
 
 5. Use the LTS version as default:
+
 ```bash
 nvm use --lts
 nvm alias default node
@@ -156,6 +165,7 @@ nvm alias default node
    - Run the installer (may need admin privileges)
    - Open a new Command Prompt or PowerShell **as Administrator**
    - Install Node.js:
+
    ```powershell
    nvm install lts
    nvm use lts
@@ -179,6 +189,7 @@ nvm alias default node
 #### Verify Installation
 
 Check that Node.js and npm are installed:
+
 ```bash
 node --version
 npm --version
@@ -191,20 +202,24 @@ You should see version numbers for both.
 Git is a version control system that tracks changes in your code and helps you collaborate with others.
 
 **On Mac:**
+
 - Install using Homebrew: `brew install git`
 - Or download from: https://git-scm.com/download/mac
 
 **On Windows:**
+
 - Download from: https://git-scm.com/download/win
 - Run the installer (accept default settings)
 
 **On Linux (Ubuntu/Debian):**
+
 ```bash
 sudo apt update
 sudo apt install git
 ```
 
 **On Linux (CentOS/RHEL):**
+
 ```bash
 sudo yum install git
 ```
@@ -218,6 +233,7 @@ git --version
 #### Configure Git
 
 Set up your name and email (this will appear in your commits):
+
 ```bash
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
@@ -251,6 +267,7 @@ git config --global user.email "your.email@example.com"
 #### Option 2: SSH Key (More Secure, One-Time Setup)
 
 1. **Generate SSH Key:**
+
 ```bash
 # Check if you already have an SSH key
 ls -al ~/.ssh
@@ -260,6 +277,7 @@ ssh-keygen -t ed25519 -C "your.email@example.com"
 ```
 
 2. **Add SSH Key to GitHub:**
+
 ```bash
 # Copy your public key (Mac/Linux)
 cat ~/.ssh/id_ed25519.pub
@@ -267,16 +285,19 @@ cat ~/.ssh/id_ed25519.pub
 # Copy your public key (Windows with Git Bash)
 cat ~/.ssh/id_ed25519.pub | clip
 ```
-   - Go to GitHub → Settings → SSH and GPG keys
-   - Click "New SSH key"
-   - Paste your key and save
+
+- Go to GitHub → Settings → SSH and GPG keys
+- Click "New SSH key"
+- Paste your key and save
 
 3. **Test Connection:**
+
 ```bash
 ssh -T git@github.com
 ```
 
 4. **Use SSH URLs when cloning:**
+
 ```bash
 # Instead of HTTPS
 git clone git@github.com:4-b100m/etceter4.git
@@ -315,11 +336,12 @@ GitHub is a platform where developers store, share, and collaborate on code proj
 - **Branch**: A parallel version of your code (like a save file in a game)
 - **Main/Master Branch**: The primary branch of a repository
 
-**Note about Branch Names**: 
+**Note about Branch Names**:
+
 - Older repositories (including this one) use `master` as the default branch name
 - Newer repositories typically use `main` as the default branch name
 - When you see commands with `origin main` or `origin master`, use whichever matches your repository
-- To check your repository's default branch: `git branch` (the one with * is your current branch)
+- To check your repository's default branch: `git branch` (the one with \* is your current branch)
 - This tutorial uses `master` because that's what this project uses
 
 ### Your First Repository
@@ -340,14 +362,19 @@ GitHub is a platform where developers store, share, and collaborate on code proj
 1. On your repository page, click the green "Code" button
 2. Copy the HTTPS URL
 3. In your terminal, navigate to where you want the project:
+
 ```bash
 cd Desktop  # or wherever you want to put it
 ```
+
 4. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/my-first-repo.git
 ```
+
 5. Go into the project folder:
+
 ```bash
 cd my-first-repo
 ```
@@ -381,29 +408,34 @@ git push origin master
 4. Add a line like "Hello, world! This is my first edit."
 5. Save the file
 6. In terminal, run:
+
 ```bash
 git status
 git add README.md
 git commit -m "Updated README with hello message"
 git push origin master
 ```
+
 7. Check your GitHub repository to see the changes!
 
 ### Understanding Fork vs Clone
 
 **When to Clone:**
+
 - You own the repository (it's yours)
 - You have write access (you're a collaborator)
 - You want a local copy to work with
 - **Example**: This ETCETER4 project - you can clone it to experiment locally
 
 **When to Fork:**
+
 - You don't own the repository
 - You want to contribute to someone else's project
 - You need your own copy on GitHub to push changes to
 - **Process**: Fork on GitHub → Clone your fork → Make changes → Push to your fork → Create Pull Request
 
-**Important for beginners**: 
+**Important for beginners**:
+
 - You can clone any public repository to learn from it
 - But you can only push changes to repositories you own or have access to
 - If you want to contribute to others' projects, fork first!
@@ -424,6 +456,7 @@ Visual Studio Code (VS Code) is a free, powerful code editor that's perfect for 
 ### First-Time Setup
 
 When you first open VS Code, you might see:
+
 - Welcome tab with helpful links
 - Theme selection (choose what you like)
 - Extension recommendations
@@ -436,26 +469,27 @@ Extensions add functionality to VS Code. Install these essential ones:
    - Click Extensions icon (or press `Ctrl+Shift+X`)
    - Search "Live Server"
    - Click Install
-   - *What it does*: Creates a local server to preview your websites
+   - _What it does_: Creates a local server to preview your websites
 
 2. **Prettier - Code formatter**
    - Search and install "Prettier"
-   - *What it does*: Automatically formats your code to look neat
+   - _What it does_: Automatically formats your code to look neat
 
 3. **Auto Rename Tag**
    - Search and install "Auto Rename Tag"
-   - *What it does*: When you change an HTML opening tag, it automatically changes the closing tag
+   - _What it does_: When you change an HTML opening tag, it automatically changes the closing tag
 
 4. **Bracket Pair Colorizer** (or use built-in bracket colorization)
-   - *What it does*: Colors matching brackets to help you see code structure
+   - _What it does_: Colors matching brackets to help you see code structure
 
 5. **GitLens**
    - Search and install "GitLens"
-   - *What it does*: Shows Git information inline with your code
+   - _What it does_: Shows Git information inline with your code
 
 ### Basic VS Code Navigation
 
 #### Key Interface Elements:
+
 - **Activity Bar** (left side): File explorer, search, Git, extensions
 - **Editor Area** (center): Where you write code
 - **Panel** (bottom): Terminal, output, problems
@@ -464,18 +498,21 @@ Extensions add functionality to VS Code. Install these essential ones:
 #### Important Keyboard Shortcuts:
 
 **File Operations:**
+
 - `Ctrl+N` (Win/Linux) or `Cmd+N` (Mac): New file
 - `Ctrl+O` (Win/Linux) or `Cmd+O` (Mac): Open file
 - `Ctrl+S` (Win/Linux) or `Cmd+S` (Mac): Save file
 - `Ctrl+Shift+S` (Win/Linux) or `Cmd+Shift+S` (Mac): Save as
 
 **Editing:**
+
 - `Ctrl+Z` (Win/Linux) or `Cmd+Z` (Mac): Undo
 - `Ctrl+Y` (Win/Linux) or `Cmd+Shift+Z` (Mac): Redo
 - `Ctrl+F` (Win/Linux) or `Cmd+F` (Mac): Find in file
 - `Ctrl+H` (Win/Linux) or `Cmd+Option+F` (Mac): Find and replace
 
 **Navigation:**
+
 - `Ctrl+P` (Win/Linux) or `Cmd+P` (Mac): Quick open file
 - `Ctrl+Shift+P` (Win/Linux) or `Cmd+Shift+P` (Mac): Command palette
 - `Ctrl+\`` (Win/Linux) or `Cmd+\`` (Mac): Toggle terminal
@@ -483,20 +520,24 @@ Extensions add functionality to VS Code. Install these essential ones:
 ### Opening a Project in VS Code
 
 #### Method 1: From VS Code
+
 1. File → Open Folder
 2. Navigate to your project folder
 3. Click "Select Folder"
 
 #### Method 2: From Terminal
+
 ```bash
 cd your-project-folder
 code .
 ```
+
 (The `.` means "current directory")
 
 ### Basic Configuration
 
 #### Setting Up Prettier
+
 1. Go to File → Preferences → Settings (or `Ctrl+,`)
 2. Search for "format on save"
 3. Check the "Format On Save" box
@@ -504,14 +545,17 @@ code .
 5. Select "Prettier - Code formatter"
 
 #### Customizing Your Theme
+
 1. Go to File → Preferences → Color Theme
 2. Try different themes (Dark+, Light+, etc.)
 3. Pick one you like!
 
 #### Understanding ESLint (Code Quality)
+
 This project includes ESLint configuration for checking JavaScript code quality. The `.eslintrc.json` file defines coding standards.
 
 **Optional - Enable ESLint in VS Code:**
+
 1. Install the "ESLint" extension in VS Code
 2. It will automatically check your JavaScript code
 3. Yellow/red squiggly lines show potential issues
@@ -529,14 +573,19 @@ Now let's put everything together and get this specific project running on your 
 
 1. Open your terminal
 2. Navigate to where you want the project:
+
 ```bash
 cd Desktop  # or wherever you prefer
 ```
+
 3. Clone the repository:
+
 ```bash
 git clone https://github.com/4-b100m/etceter4.git
 ```
+
 4. Go into the project folder:
+
 ```bash
 cd etceter4
 ```
@@ -570,6 +619,7 @@ etceter4/
 ```
 
 **Critical Files to Understand:**
+
 - **`.gitignore`**: Lists files/folders that Git should never track (like `node_modules/`, sensitive data)
 - **`package.json`**: Defines project dependencies and scripts
 - **`node_modules/`**: Installed dependencies - can be 100+ MB, never commit this folder!
@@ -583,11 +633,13 @@ npm test
 ```
 
 **Note**: Although the command is named "test", it actually starts a development server (not unit tests). This is a common practice in older projects. The command will:
+
 - Serve your website at a local address (usually `http://localhost:3000`)
 - Automatically refresh the page when you make changes
 - Watch for changes in HTML, CSS, and JavaScript files
 
 You'll see output like:
+
 ```
 [Browsersync] Access URLs:
  --------------------------------------
@@ -605,6 +657,7 @@ code .
 ```
 
 This opens the entire project in VS Code, where you can:
+
 - See the file structure in the sidebar
 - Edit any file
 - Use the integrated terminal
@@ -619,12 +672,14 @@ Here's the typical workflow you'll follow when working on projects:
 ### Daily Workflow
 
 1. **Start your development session:**
+
 ```bash
 cd your-project-folder
 npm test  # or whatever command starts your local server
 ```
 
 2. **Open your code editor:**
+
 ```bash
 code .
 ```
@@ -638,6 +693,7 @@ code .
    - Look for errors in the browser console (F12)
 
 5. **Save your work with Git:**
+
 ```bash
 git status                    # See what changed
 git add .                     # Stage all changes
@@ -653,6 +709,7 @@ Let's practice by making a small change to this project:
 2. **Add a line** at the end: `## My Learning Notes - [Your Name]`
 3. **Save the file** (`Ctrl+S` or `Cmd+S`)
 4. **Commit your changes:**
+
 ```bash
 git status
 git add README.md
@@ -665,7 +722,7 @@ git push origin master
 When you run `git status`, you'll see files in different states:
 
 - **Red files**: Modified but not staged
-- **Green files**: Staged and ready to commit  
+- **Green files**: Staged and ready to commit
 - **Untracked files**: New files Git doesn't know about
 
 ---
@@ -682,7 +739,7 @@ When you run `git status`, you'll see files in different states:
 ### Git Best Practices
 
 1. **Commit early and often**: Small, frequent commits are better than large ones
-2. **Write clear commit messages**: 
+2. **Write clear commit messages**:
    - Good: "Fix navigation menu on mobile"
    - Bad: "stuff" or "changes"
 3. **Check status before committing**: Always run `git status` first
@@ -713,6 +770,7 @@ When you run `git status`, you'll see files in different states:
 ### Security Best Practices (CRITICAL!)
 
 **Never commit these to Git:**
+
 1. **Passwords or API keys**: Never hardcode credentials in your code
 2. **Personal Access Tokens**: Keep these secret - treat them like passwords
 3. **Private keys**: SSH keys, encryption keys, etc.
@@ -721,6 +779,7 @@ When you run `git status`, you'll see files in different states:
 6. **Personal information**: Phone numbers, addresses, real names in code comments
 
 **How to protect yourself:**
+
 - Check `.gitignore` includes `node_modules/` and `.env`
 - Before pushing, run `git status` and verify what you're committing
 - Use environment variables for sensitive data
@@ -736,82 +795,100 @@ When you run `git status`, you'll see files in different states:
 ### Terminal Issues
 
 **Problem**: "Command not found"
+
 - **Solution**: The program isn't installed or not in your PATH
 - **Check**: Try `which commandname` (Mac/Linux) or `where commandname` (Windows)
 
 **Problem**: "Permission denied"
+
 - **Solution**: You might need administrator privileges
 - **Try**: Add `sudo` before the command (Mac/Linux) or run terminal as administrator (Windows)
 
 **Problem**: Can't find a file or folder
+
 - **Solution**: Use `ls` or `dir` to see what's available, check your current location with `pwd`
 
 ### Git Issues
 
 **Problem**: "Fatal: not a git repository"
+
 - **Solution**: You're not in a Git repository folder
 - **Fix**: Navigate to your project folder or run `git init` to start a new repository
 
 **Problem**: "Your branch is ahead of origin/master"
+
 - **Solution**: You have local commits that aren't on GitHub yet
 - **Fix**: Run `git push origin master`
 
 **Problem**: "Please tell me who you are"
+
 - **Solution**: Git doesn't know your identity
 - **Fix**: Run the git config commands from earlier in this tutorial
 
 **Problem**: "Authentication failed" or "Password incorrect" when pushing
+
 - **Solution**: GitHub no longer accepts passwords - you need a Personal Access Token
 - **Fix**: See the "Setting Up GitHub Authentication" section earlier in this tutorial
 - **Quick fix**: Generate a Personal Access Token on GitHub and use it as your password
 
 **Problem**: "Permission denied (publickey)" when pushing
+
 - **Solution**: You're using SSH but haven't set up SSH keys
 - **Fix**: Either set up SSH keys (see authentication section) or use HTTPS instead
 
 **Problem**: "Failed to push some refs" or "Updates were rejected"
+
 - **Solution**: Remote has changes you don't have locally
 - **Fix**: Run `git pull origin master` first, then push again
 
 **Problem**: Merge conflicts
+
 - **Solution**: This happens when Git can't automatically combine changes
 - **Fix**: Open the conflicted files, look for `<<<<<<<` markers, resolve manually
 
 ### VS Code Issues
 
 **Problem**: Extensions not working
+
 - **Solution**: Reload VS Code or restart it
 - **Try**: `Ctrl+Shift+P` then type "Reload Window"
 
 **Problem**: Formatting not working
+
 - **Solution**: Make sure Prettier is set as your default formatter
 - **Check**: Settings → Format On Save should be enabled
 
 **Problem**: Terminal not opening
+
 - **Solution**: VS Code can't find your shell
 - **Fix**: Check VS Code settings for terminal configuration
 
 ### Project-Specific Issues
 
 **Problem**: `npm install` fails
+
 - **Solution**: Try deleting `node_modules` folder and `package-lock.json`, then run `npm install` again
 - **Alternative**: Make sure you have the right version of Node.js
 
 **Problem**: "Port already in use"
+
 - **Solution**: Another process is using the same port
 - **Fix**: Kill the other process or use a different port
 
 **Problem**: Browser shows "Cannot GET /"
+
 - **Solution**: The server isn't running or isn't serving the right files
 - **Fix**: Make sure your development server is running (`npm test`)
 
 **Problem**: `npm test` command not found or doesn't work
+
 - **Solution**: npm isn't installed or not in your PATH
 - **Fix**: Verify Node.js installation with `node --version` and `npm --version`
 
 ### Cross-Platform Issues
 
 **Problem**: Commands don't work on Windows
+
 - **Solution**: Some commands differ between operating systems
 - **Windows alternatives**:
   - Use PowerShell instead of Command Prompt
@@ -821,6 +898,7 @@ When you run `git status`, you'll see files in different states:
   - For better compatibility, consider installing Git Bash (comes with Git for Windows)
 
 **Problem**: Path separators causing issues
+
 - **Windows uses**: `\` (backslash) for paths like `C:\Users\Name`
 - **Mac/Linux use**: `/` (forward slash) for paths like `/home/name`
 - **In Git and most tools**: Always use `/` regardless of OS
@@ -828,6 +906,7 @@ When you run `git status`, you'll see files in different states:
 ### Getting Help
 
 When you're stuck:
+
 1. **Read the error message carefully**
 2. **Google the exact error message**
 3. **Check Stack Overflow** - most common problems have been solved
@@ -877,17 +956,20 @@ Congratulations! You now have the foundation for web development. Here's what to
 ### Learning Resources
 
 **Free Resources:**
+
 - [freeCodeCamp](https://freecodecamp.org) - Interactive coding lessons
 - [MDN Web Docs](https://developer.mozilla.org) - Comprehensive web technology docs
 - [Git Handbook](https://guides.github.com/introduction/git-handbook/) - Git learning
 - [VS Code Tips](https://code.visualstudio.com/docs/getstarted/tips-and-tricks) - Editor productivity
 
 **YouTube Channels:**
+
 - Traversy Media
-- The Net Ninja  
+- The Net Ninja
 - freeCodeCamp
 
 **Practice Platforms:**
+
 - CodePen - For experimenting with front-end code
 - GitHub - For hosting your projects
 - Netlify/Vercel - For deploying websites
@@ -899,7 +981,7 @@ Congratulations! You now have the foundation for web development. Here's what to
 You've just learned the essential tools that every web developer uses daily! Remember:
 
 - **The terminal** is your command center
-- **Git and GitHub** keep your code safe and enable collaboration  
+- **Git and GitHub** keep your code safe and enable collaboration
 - **VS Code** is your development environment
 - **npm** manages your project dependencies
 
@@ -914,6 +996,7 @@ Happy coding! 🚀
 ## 📖 Quick Reference
 
 ### Essential Terminal Commands
+
 ```bash
 pwd                    # Where am I?
 ls / dir              # What's here?
@@ -923,6 +1006,7 @@ mkdir newfolder       # Create folder
 ```
 
 ### Essential Git Commands
+
 ```bash
 git status            # Check status
 git add .             # Stage all changes
@@ -932,15 +1016,17 @@ git pull origin master # Download from GitHub
 ```
 
 ### Essential VS Code Shortcuts
+
 ```bash
 Ctrl+N               # New file
 Ctrl+S               # Save
-Ctrl+`               # Toggle terminal  
+Ctrl+`               # Toggle terminal
 Ctrl+P               # Open file quickly
 Ctrl+Shift+P         # Command palette
 ```
 
 ### Getting This Project Running
+
 ```bash
 git clone https://github.com/4-b100m/etceter4.git
 cd etceter4
@@ -951,4 +1037,4 @@ code .
 
 ---
 
-*This tutorial was created to help beginners get started with web development. If you found it helpful or have suggestions for improvement, please let us know!*
+_This tutorial was created to help beginners get started with web development. If you found it helpful or have suggestions for improvement, please let us know!_

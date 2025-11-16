@@ -1,4 +1,5 @@
 # LIVE PREVIEW & DEPLOYMENT GUIDE
+
 **See Your Site Live While You Build**
 
 ---
@@ -10,11 +11,13 @@ Your site has **automatic deployment** to GitHub Pages configured! Every time yo
 ### Your Live Site URL
 
 **GitHub Pages URL:**
+
 ```
 https://4-b100m.github.io/etceter4/
 ```
 
 **Custom Domain (if configured):**
+
 ```
 https://etceter4.com
 ```
@@ -81,12 +84,14 @@ npm run dev
 ```
 
 **What happens:**
+
 - Server starts at `http://localhost:3000`
 - **Auto-reload** on file changes
 - **Live updates** as you edit
 - Works exactly like the live site
 
 **Features:**
+
 - Hot reload (no manual refresh!)
 - Synchronized browsing across devices
 - Network access (test on phone)
@@ -144,6 +149,7 @@ git push origin master
 ## Branch-Based Preview (Advanced)
 
 ### Problem
+
 Currently, only `master` deploys. You can't preview branches live.
 
 ### Solution: Add Branch Previews
@@ -199,6 +205,7 @@ jobs:
 5. **Deploy!**
 
 **Result:**
+
 - Master deploys to: `https://etceter4.vercel.app`
 - Every branch gets preview: `https://etceter4-git-branch-name.vercel.app`
 - Pull requests show preview link automatically
@@ -226,6 +233,7 @@ jobs:
 5. **Deploy!**
 
 **Result:**
+
 - Master deploys to: `https://etceter4.netlify.app`
 - Branch deploys: `https://branch-name--etceter4.netlify.app`
 - PR previews automatic
@@ -261,6 +269,7 @@ curl -I https://4-b100m.github.io/etceter4/ | head -n 1
 **Use:** Browser-sync locally (`npm run dev`)
 
 **Advantages:**
+
 - Instant updates as you type
 - No waiting for deploys
 - Perfect for CSS/HTML tweaking
@@ -271,6 +280,7 @@ curl -I https://4-b100m.github.io/etceter4/ | head -n 1
 **Use:** Vercel or Netlify branch previews
 
 **Advantages:**
+
 - Real URLs to share
 - Test on actual hosting environment
 - See exactly how it will look live
@@ -281,6 +291,7 @@ curl -I https://4-b100m.github.io/etceter4/ | head -n 1
 **Use:** GitHub Pages (current setup)
 
 **Advantages:**
+
 - Free hosting
 - Automatic from master
 - Simple and reliable
@@ -324,6 +335,7 @@ gh run list --limit 5  # (requires GitHub CLI)
 When running `npm run dev`:
 
 1. Note your computer's IP address:
+
    ```bash
    # Mac/Linux
    ifconfig | grep "inet "
@@ -344,12 +356,14 @@ When running `npm run dev`:
 ### Site Not Updating After Push
 
 **Check:**
+
 1. Did GitHub Actions run? (Check Actions tab)
 2. Did it pass? (Green check marks)
 3. Cache issue? (Hard refresh: Cmd+Shift+R or Ctrl+Shift+R)
 4. Still old? Clear browser cache completely
 
 **Force cache clear:**
+
 ```bash
 # Add query parameter to URL
 https://4-b100m.github.io/etceter4/?v=2
@@ -359,6 +373,7 @@ https://4-b100m.github.io/etceter4/?v=2
 ### Local Server Not Starting
 
 **Fix:**
+
 ```bash
 # Reinstall dependencies
 npm install
@@ -373,6 +388,7 @@ python3 -m http.server 8000
 ### Can't Access on Phone
 
 **Fix:**
+
 1. Ensure phone on same WiFi
 2. Check firewall isn't blocking
 3. Use correct IP address
@@ -385,16 +401,19 @@ python3 -m http.server 8000
 ### Get Notified
 
 **Option 1: GitHub Mobile App**
+
 - Install GitHub mobile app
 - Get push notifications for deployments
 - See status immediately
 
 **Option 2: Email Notifications**
+
 - Go to: https://github.com/settings/notifications
 - Enable "Actions" notifications
 - Get email on deploy success/failure
 
 **Option 3: Discord/Slack Integration**
+
 - Add webhook to GitHub Actions
 - Get deploy notifications in Discord/Slack
 
@@ -405,11 +424,13 @@ python3 -m http.server 8000
 ### Once Live, Monitor Performance
 
 **Tools:**
+
 - **Lighthouse:** Run in Chrome DevTools
 - **PageSpeed Insights:** https://pagespeed.web.dev/
 - **WebPageTest:** https://webpagetest.org/
 
 **Check:**
+
 - Load time
 - Mobile performance
 - Accessibility score
@@ -422,6 +443,7 @@ python3 -m http.server 8000
 ### Right Now
 
 1. **Commit latest changes:**
+
    ```bash
    git add LIVING_PANTHEON_GENERATIVE.md LIVE_PREVIEW_GUIDE.md
    git commit -m "Add living Pantheon generative systems + live preview guide"
@@ -429,6 +451,7 @@ python3 -m http.server 8000
    ```
 
 2. **Merge to master** (to deploy):
+
    ```bash
    git checkout master
    git merge claude/pantheon-expansion-011CUY6DYFS4hsQwwxY8Qp5B
@@ -436,6 +459,7 @@ python3 -m http.server 8000
    ```
 
 3. **Visit your live site** (2-3 min after push):
+
    ```
    https://4-b100m.github.io/etceter4/
    ```
@@ -481,5 +505,5 @@ Share: https://4-b100m.github.io/etceter4/
 
 ---
 
-*Guide by: Claude (Anthropic)*
-*Date: October 27, 2025*
+_Guide by: Claude (Anthropic)_
+_Date: October 27, 2025_

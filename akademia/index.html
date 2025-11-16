@@ -1,232 +1,214 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Akademia | ET CETER4</title>
-    <meta name="description" content="Academic chamber of ET CETER4 - Essays, research, papers, and scholarly work">
+    <meta name="description" content="Academic chamber of ET CETER4 - Essays, research, papers, and scholarly work" />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/vendor/tachyons/css/tachyons.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/normalize.css" />
+    <link rel="stylesheet" href="../css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
 
     <style>
-        .akademia-hero {
-            min-height: 40vh;
-            background: linear-gradient(135deg, rgba(0,255,255,0.1), rgba(255,0,255,0.1));
-            border-bottom: 3px solid rgba(0,255,255,0.5);
-        }
+      .akademia-hero {
+        min-height: 40vh;
+        background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+        border-bottom: 3px solid rgba(0, 255, 255, 0.5);
+      }
 
-        .content-card {
-            background: rgba(0,0,0,0.8);
-            border: 2px solid rgba(0,255,255,0.3);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
+      .content-card {
+        background: rgba(0, 0, 0, 0.8);
+        border: 2px solid rgba(0, 255, 255, 0.3);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
 
-        .content-card:hover {
-            border-color: rgba(0,255,255,0.8);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,255,255,0.2);
-        }
+      .content-card:hover {
+        border-color: rgba(0, 255, 255, 0.8);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+      }
 
-        .category-icon {
-            font-size: 3rem;
-            line-height: 1;
-        }
+      .category-icon {
+        font-size: 3rem;
+        line-height: 1;
+      }
 
-        .essay-list-item {
-            border-left: 3px solid transparent;
-            transition: all 0.2s ease;
-        }
+      .essay-list-item {
+        border-left: 3px solid transparent;
+        transition: all 0.2s ease;
+      }
 
-        .essay-list-item:hover {
-            border-left-color: #00ffff;
-            background: rgba(0,255,255,0.05);
-        }
+      .essay-list-item:hover {
+        border-left-color: #00ffff;
+        background: rgba(0, 255, 255, 0.05);
+      }
 
-        .tag {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: rgba(0,255,255,0.1);
-            border: 1px solid rgba(0,255,255,0.3);
-            border-radius: 20px;
-            font-size: 0.875rem;
-            margin: 0.25rem;
-        }
+      .tag {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: rgba(0, 255, 255, 0.1);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        border-radius: 20px;
+        font-size: 0.875rem;
+        margin: 0.25rem;
+      }
     </style>
-</head>
-<body class="bg-black white futura">
+  </head>
+  <body class="bg-black white futura">
     <!-- Header -->
     <header class="akademia-hero flex items-center justify-center">
-        <div class="tc">
-            <h1 class="f1 f-headline-ns mb3 fw6 cyan">Ἀκαδημία</h1>
-            <h2 class="f3 f2-ns fw3 white-70">AKADEMIA</h2>
-            <p class="f5 f4-ns white-70 mt3 measure center">
-                The Academic Chamber • Scholarship & Research • Knowledge & Critique
-            </p>
-        </div>
+      <div class="tc">
+        <h1 class="f1 f-headline-ns mb3 fw6 cyan">Ἀκαδημία</h1>
+        <h2 class="f3 f2-ns fw3 white-70">AKADEMIA</h2>
+        <p class="f5 f4-ns white-70 mt3 measure center">
+          The Academic Chamber • Scholarship & Research • Knowledge & Critique
+        </p>
+      </div>
     </header>
 
     <!-- Navigation -->
     <nav class="bg-black-90 bb b--cyan pa3 tc">
-        <a href="../index.html" class="link cyan hover-white ph3">Home</a>
-        <a href="#essays" class="link cyan hover-white ph3">Essays</a>
-        <a href="#papers" class="link cyan hover-white ph3">Papers</a>
-        <a href="#research" class="link cyan hover-white ph3">Research</a>
-        <a href="#reviews" class="link cyan hover-white ph3">Reviews</a>
-        <a href="#tutorials" class="link cyan hover-white ph3">Tutorials</a>
-        <a href="cv/index.html" class="link magenta hover-white ph3">CV</a>
+      <a href="../index.html" class="link cyan hover-white ph3">Home</a>
+      <a href="#essays" class="link cyan hover-white ph3">Essays</a>
+      <a href="#papers" class="link cyan hover-white ph3">Papers</a>
+      <a href="#research" class="link cyan hover-white ph3">Research</a>
+      <a href="#reviews" class="link cyan hover-white ph3">Reviews</a>
+      <a href="#tutorials" class="link cyan hover-white ph3">Tutorials</a>
+      <a href="cv/index.html" class="link magenta hover-white ph3">CV</a>
     </nav>
 
     <!-- Main Content -->
     <main class="page-wrap center pa4">
-        <!-- Introduction -->
-        <section class="mv5">
-            <div class="measure-wide center">
-                <p class="f4 lh-copy white-90">
-                    Welcome to the Akademia, the scholarly chamber of ET CETER4. This space houses
-                    academic writing, research, critical analysis, and educational content spanning
-                    music theory, cultural studies, technology, and interdisciplinary thought.
-                </p>
-            </div>
-        </section>
+      <!-- Introduction -->
+      <section class="mv5">
+        <div class="measure-wide center">
+          <p class="f4 lh-copy white-90">
+            Welcome to the Akademia, the scholarly chamber of ET CETER4. This space houses academic writing, research,
+            critical analysis, and educational content spanning music theory, cultural studies, technology, and
+            interdisciplinary thought.
+          </p>
+        </div>
+      </section>
 
-        <!-- Content Categories -->
-        <section class="mv5">
-            <div class="flex flex-wrap justify-center">
-                <!-- Essays -->
-                <div class="w-100 w-50-m w-third-l pa3">
-                    <a href="#essays" class="link">
-                        <div class="content-card pa4 tc h-100">
-                            <div class="category-icon mb3">📝</div>
-                            <h3 class="f3 cyan mb2">Essays</h3>
-                            <p class="f5 white-70 lh-copy">
-                                Long-form explorations of ideas, culture, and creative practice
-                            </p>
-                            <p class="f6 white-50 mt3">0 published</p>
-                        </div>
-                    </a>
-                </div>
+      <!-- Content Categories -->
+      <section class="mv5">
+        <div class="flex flex-wrap justify-center">
+          <!-- Essays -->
+          <div class="w-100 w-50-m w-third-l pa3">
+            <a href="#essays" class="link">
+              <div class="content-card pa4 tc h-100">
+                <div class="category-icon mb3">📝</div>
+                <h3 class="f3 cyan mb2">Essays</h3>
+                <p class="f5 white-70 lh-copy">Long-form explorations of ideas, culture, and creative practice</p>
+                <p class="f6 white-50 mt3">0 published</p>
+              </div>
+            </a>
+          </div>
 
-                <!-- Papers -->
-                <div class="w-100 w-50-m w-third-l pa3">
-                    <a href="#papers" class="link">
-                        <div class="content-card pa4 tc h-100">
-                            <div class="category-icon mb3">📄</div>
-                            <h3 class="f3 cyan mb2">Papers</h3>
-                            <p class="f5 white-70 lh-copy">
-                                Academic research papers and formal scholarly work
-                            </p>
-                            <p class="f6 white-50 mt3">0 published</p>
-                        </div>
-                    </a>
-                </div>
+          <!-- Papers -->
+          <div class="w-100 w-50-m w-third-l pa3">
+            <a href="#papers" class="link">
+              <div class="content-card pa4 tc h-100">
+                <div class="category-icon mb3">📄</div>
+                <h3 class="f3 cyan mb2">Papers</h3>
+                <p class="f5 white-70 lh-copy">Academic research papers and formal scholarly work</p>
+                <p class="f6 white-50 mt3">0 published</p>
+              </div>
+            </a>
+          </div>
 
-                <!-- Research -->
-                <div class="w-100 w-50-m w-third-l pa3">
-                    <a href="#research" class="link">
-                        <div class="content-card pa4 tc h-100">
-                            <div class="category-icon mb3">🔬</div>
-                            <h3 class="f3 cyan mb2">Research</h3>
-                            <p class="f5 white-70 lh-copy">
-                                Ongoing investigations and experimental studies
-                            </p>
-                            <p class="f6 white-50 mt3">0 projects</p>
-                        </div>
-                    </a>
-                </div>
+          <!-- Research -->
+          <div class="w-100 w-50-m w-third-l pa3">
+            <a href="#research" class="link">
+              <div class="content-card pa4 tc h-100">
+                <div class="category-icon mb3">🔬</div>
+                <h3 class="f3 cyan mb2">Research</h3>
+                <p class="f5 white-70 lh-copy">Ongoing investigations and experimental studies</p>
+                <p class="f6 white-50 mt3">0 projects</p>
+              </div>
+            </a>
+          </div>
 
-                <!-- Reviews -->
-                <div class="w-100 w-50-m w-third-l pa3">
-                    <a href="#reviews" class="link">
-                        <div class="content-card pa4 tc h-100">
-                            <div class="category-icon mb3">💭</div>
-                            <h3 class="f3 cyan mb2">Reviews</h3>
-                            <p class="f5 white-70 lh-copy">
-                                Critical analysis of books, music, art, and ideas
-                            </p>
-                            <p class="f6 white-50 mt3">0 reviews</p>
-                        </div>
-                    </a>
-                </div>
+          <!-- Reviews -->
+          <div class="w-100 w-50-m w-third-l pa3">
+            <a href="#reviews" class="link">
+              <div class="content-card pa4 tc h-100">
+                <div class="category-icon mb3">💭</div>
+                <h3 class="f3 cyan mb2">Reviews</h3>
+                <p class="f5 white-70 lh-copy">Critical analysis of books, music, art, and ideas</p>
+                <p class="f6 white-50 mt3">0 reviews</p>
+              </div>
+            </a>
+          </div>
 
-                <!-- Tutorials -->
-                <div class="w-100 w-50-m w-third-l pa3">
-                    <a href="#tutorials" class="link">
-                        <div class="content-card pa4 tc h-100">
-                            <div class="category-icon mb3">🎓</div>
-                            <h3 class="f3 cyan mb2">Tutorials</h3>
-                            <p class="f5 white-70 lh-copy">
-                                Educational guides and teaching materials
-                            </p>
-                            <p class="f6 white-50 mt3">0 tutorials</p>
-                        </div>
-                    </a>
-                </div>
+          <!-- Tutorials -->
+          <div class="w-100 w-50-m w-third-l pa3">
+            <a href="#tutorials" class="link">
+              <div class="content-card pa4 tc h-100">
+                <div class="category-icon mb3">🎓</div>
+                <h3 class="f3 cyan mb2">Tutorials</h3>
+                <p class="f5 white-70 lh-copy">Educational guides and teaching materials</p>
+                <p class="f6 white-50 mt3">0 tutorials</p>
+              </div>
+            </a>
+          </div>
 
-                <!-- CV -->
-                <div class="w-100 w-50-m w-third-l pa3">
-                    <a href="cv/index.html" class="link">
-                        <div class="content-card pa4 tc h-100">
-                            <div class="category-icon mb3">👤</div>
-                            <h3 class="f3 magenta mb2">Curriculum Vitae</h3>
-                            <p class="f5 white-70 lh-copy">
-                                Professional credentials and accomplishments
-                            </p>
-                            <p class="f6 white-50 mt3">Interactive CV</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
+          <!-- CV -->
+          <div class="w-100 w-50-m w-third-l pa3">
+            <a href="cv/index.html" class="link">
+              <div class="content-card pa4 tc h-100">
+                <div class="category-icon mb3">👤</div>
+                <h3 class="f3 magenta mb2">Curriculum Vitae</h3>
+                <p class="f5 white-70 lh-copy">Professional credentials and accomplishments</p>
+                <p class="f6 white-50 mt3">Interactive CV</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
 
-        <!-- Featured Content (placeholder for future) -->
-        <section id="essays" class="mv5 pt4">
-            <h2 class="f2 cyan mb4">Recent Essays</h2>
-            <div class="content-card pa4">
-                <p class="f5 white-70 tc pa4">
-                    Essay content coming soon. This chamber is under active construction.
-                </p>
-            </div>
-        </section>
+      <!-- Featured Content (placeholder for future) -->
+      <section id="essays" class="mv5 pt4">
+        <h2 class="f2 cyan mb4">Recent Essays</h2>
+        <div class="content-card pa4">
+          <p class="f5 white-70 tc pa4">Essay content coming soon. This chamber is under active construction.</p>
+        </div>
+      </section>
 
-        <section id="papers" class="mv5 pt4">
-            <h2 class="f2 cyan mb4">Academic Papers</h2>
-            <div class="content-card pa4">
-                <p class="f5 white-70 tc pa4">
-                    Academic papers coming soon. This chamber is under active construction.
-                </p>
-            </div>
-        </section>
+      <section id="papers" class="mv5 pt4">
+        <h2 class="f2 cyan mb4">Academic Papers</h2>
+        <div class="content-card pa4">
+          <p class="f5 white-70 tc pa4">Academic papers coming soon. This chamber is under active construction.</p>
+        </div>
+      </section>
 
-        <!-- Topics & Tags -->
-        <section class="mv5">
-            <h2 class="f2 cyan mb4 tc">Topics of Interest</h2>
-            <div class="tc">
-                <span class="tag cyan">Music Theory</span>
-                <span class="tag cyan">Sound Studies</span>
-                <span class="tag cyan">Digital Culture</span>
-                <span class="tag cyan">Technology & Art</span>
-                <span class="tag cyan">Creative Coding</span>
-                <span class="tag cyan">Philosophy</span>
-                <span class="tag cyan">Education</span>
-                <span class="tag cyan">Interdisciplinary Research</span>
-                <span class="tag cyan">Cultural Criticism</span>
-                <span class="tag cyan">Performance Studies</span>
-            </div>
-        </section>
+      <!-- Topics & Tags -->
+      <section class="mv5">
+        <h2 class="f2 cyan mb4 tc">Topics of Interest</h2>
+        <div class="tc">
+          <span class="tag cyan">Music Theory</span>
+          <span class="tag cyan">Sound Studies</span>
+          <span class="tag cyan">Digital Culture</span>
+          <span class="tag cyan">Technology & Art</span>
+          <span class="tag cyan">Creative Coding</span>
+          <span class="tag cyan">Philosophy</span>
+          <span class="tag cyan">Education</span>
+          <span class="tag cyan">Interdisciplinary Research</span>
+          <span class="tag cyan">Cultural Criticism</span>
+          <span class="tag cyan">Performance Studies</span>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
     <footer class="bg-black-90 white-70 pa4 tc mt5 bt b--cyan">
-        <p class="f6">
-            Akademia Chamber • Part of the ETCETER4 Pantheon
-        </p>
-        <p class="f7 mt2">
-            <a href="../index.html" class="link cyan hover-white">Return to Pantheon</a>
-        </p>
+      <p class="f6">Akademia Chamber • Part of the ETCETER4 Pantheon</p>
+      <p class="f7 mt2">
+        <a href="../index.html" class="link cyan hover-white">Return to Pantheon</a>
+      </p>
     </footer>
-</body>
+  </body>
 </html>

@@ -5,18 +5,21 @@ A comprehensive naming strategies and dynamic name search system for the ET CETE
 ## Features
 
 ### 🎯 Exhaustive Naming Strategies
+
 - **Multiple Case Conventions**: camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE
 - **Context-Aware Suggestions**: Functions, variables, page IDs, CSS classes, constants
 - **Domain-Specific Patterns**: Audio, visual, text, and navigation naming patterns tailored for ET CETER4
 - **Quality Scoring**: Readability, context appropriateness, and semantic meaning evaluation
 
 ### 🔍 Dynamic Name Search Engine
+
 - **Intelligent Context Detection**: Automatically determines the best naming context
 - **Fuzzy Matching**: Finds similar existing names and suggests improvements
 - **Personalized Preferences**: User profiles for different roles (Developer, Artist, Musician, Writer)
 - **Real-time Suggestions**: Generate multiple naming options with quality scores
 
 ### 👤 User Preference Profiles
+
 - **Developer**: Terse, conservative naming focused on functionality
 - **Artist**: Creative, visual-focused with kebab-case preference
 - **Musician**: Audio-domain focused with creative naming
@@ -24,6 +27,7 @@ A comprehensive naming strategies and dynamic name search system for the ET CETE
 - **Default**: Balanced approach suitable for general use
 
 ### 🧪 Comprehensive Testing
+
 - **40+ Test Cases**: Covering all major functionality
 - **Browser Integration**: Works seamlessly in both Node.js and browser environments
 - **Live Testing Interface**: Interactive demo with real-time feedback
@@ -37,16 +41,20 @@ A comprehensive naming strategies and dynamic name search system for the ET CETE
 ETCETERNaming.init('ARTIST'); // or 'DEVELOPER', 'MUSICIAN', 'WRITER', 'DEFAULT'
 
 // Get naming suggestions
-const suggestions = ETCETERNaming.suggest("show new page", "function");
+const suggestions = ETCETERNaming.suggest('show new page', 'function');
 console.log(suggestions); // ["showNewPage", "displayNewPage", "renderPage", ...]
 
 // Validate existing names
-const validation = ETCETERNaming.validate("btn", "navigation button", "variable");
+const validation = ETCETERNaming.validate(
+  'btn',
+  'navigation button',
+  'variable'
+);
 console.log(validation.isValid); // false
 console.log(validation.suggestions); // ["navigationButton", "navBtn", ...]
 
 // Get improvement suggestions
-const improvements = ETCETERNaming.improve("x", "show new section");
+const improvements = ETCETERNaming.improve('x', 'show new section');
 console.log(improvements.suggestions); // ["showNewSection", "displaySection", ...]
 ```
 
@@ -56,9 +64,9 @@ console.log(improvements.suggestions); // ["showNewSection", "displaySection", .
 // Use the full search engine for detailed results
 const engine = NameSearchEngine.initialize().setUserProfile('MUSICIAN');
 const result = engine.search('sound control volume', {
-    context: NamingContexts.FUNCTION,
-    maxResults: 5,
-    existingNames: ['playSound', 'stopSound']
+  context: NamingContexts.FUNCTION,
+  maxResults: 5,
+  existingNames: ['playSound', 'stopSound'],
 });
 
 console.log(result.suggestions); // Detailed suggestions with scores and explanations
@@ -80,21 +88,25 @@ naming-demo.html          # Interactive demo interface
 ## Naming Conventions
 
 ### Functions
+
 - **Pattern**: `verbNoun` or `verbObject`
 - **Examples**: `showNewSection`, `loadPageData`, `validateUserInput`
 - **Prefixes**: get, set, is, has, can, should, will, init, load, show, hide, toggle
 
 ### Variables
+
 - **Pattern**: `descriptiveNoun` or `adjectiveNoun`
 - **Examples**: `currentPage`, `isLoading`, `userData`
 - **Prefixes**: is, has, can, should, will, current, selected, active
 
 ### Page IDs
+
 - **Pattern**: `#entity` or `#entity-type`
 - **Examples**: `#landing`, `#menu`, `#diary-page`
 - **Convention**: kebab-case with # prefix
 
 ### CSS Classes
+
 - **Pattern**: `prefix-entity-modifier`
 - **Examples**: `et-page-container`, `nav-button-active`
 - **Convention**: kebab-case with meaningful prefixes
@@ -102,21 +114,25 @@ naming-demo.html          # Interactive demo interface
 ## ET CETER4 Domain Patterns
 
 ### Audio Elements
+
 - **Prefixes**: sound, audio, music, track, beat, rhythm, melody, harmony
 - **Suffixes**: Player, Control, Volume, Track, Album, Playlist
 - **Example**: `soundControlVolume`, `audioTrackPlayer`
 
 ### Visual Elements
+
 - **Prefixes**: vision, visual, image, photo, still, video, graphic, art
 - **Suffixes**: Gallery, Carousel, Viewer, Display, Canvas, Frame
 - **Example**: `imageGalleryViewer`, `visualDisplayCanvas`
 
 ### Text Elements
+
 - **Prefixes**: word, text, story, diary, blog, poem, verse, line
 - **Suffixes**: Editor, Reader, Writer, Content, Body, Paragraph
 - **Example**: `textEditorContent`, `diaryReaderView`
 
 ### Navigation
+
 - **Prefixes**: nav, menu, link, button, back, forward, up, down
 - **Suffixes**: Navigation, Menu, Link, Button, Control, Handler
 - **Example**: `navMenuControl`, `backButtonHandler`

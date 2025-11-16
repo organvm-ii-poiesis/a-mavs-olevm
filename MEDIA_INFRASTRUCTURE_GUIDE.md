@@ -1,7 +1,8 @@
 # SELF-HOSTED MEDIA INFRASTRUCTURE
+
 **Complete Guide for Audio & Video Hosting**
 
-*Part of the ETCETER4 Pantheon Project*
+_Part of the ETCETER4 Pantheon Project_
 
 ---
 
@@ -18,6 +19,7 @@ This document provides **step-by-step instructions** for building a completely s
 ### Benefits
 
 **Ownership & Control:**
+
 - Complete control over presentation
 - No platform censorship or removal
 - Custom branding and experience
@@ -25,18 +27,21 @@ This document provides **step-by-step instructions** for building a completely s
 - Permanent availability
 
 **Independence:**
+
 - Not dependent on platform policies
 - No subscription fees (Bandcamp, etc.)
 - No bandwidth throttling
 - No forced updates
 
 **Customization:**
+
 - Branded players
 - Custom features
 - Integration with your aesthetic
 - Unique user experience
 
 **Analytics:**
+
 - See exactly who listens/watches
 - Understand engagement
 - No platform blackbox
@@ -44,6 +49,7 @@ This document provides **step-by-step instructions** for building a completely s
 ### External Links as Distribution
 
 **Keep External Presence:**
+
 - Spotify: Discovery and playlists
 - Bandcamp: Sales and community
 - YouTube: SEO and reach
@@ -83,6 +89,7 @@ This document provides **step-by-step instructions** for building a completely s
 **Recommended: Howler.js**
 
 **Why Howler.js:**
+
 - Simple, powerful API
 - HTML5 Audio + Web Audio API
 - Cross-browser compatible
@@ -92,6 +99,7 @@ This document provides **step-by-step instructions** for building a completely s
 - Free and open source
 
 **Alternatives:**
+
 - Tone.js (for synthesis and effects)
 - Web Audio API (raw, more complex)
 - Audio.js (simpler, less features)
@@ -103,18 +111,21 @@ This document provides **step-by-step instructions** for building a completely s
 **Recommended Formats:**
 
 **Primary: MP3**
+
 - Universal compatibility
 - Good compression
 - 320kbps for high quality
 - 192kbps for standard quality
 
 **Secondary: FLAC** (optional, for audiophiles)
+
 - Lossless compression
 - Larger file sizes
 - Higher quality
 - Offer as download option
 
 **Avoid:**
+
 - WAV (too large for streaming)
 - WMA (poor compatibility)
 - OGG (declining support)
@@ -216,9 +227,11 @@ ffmpeg -i input.mp3 -i cover.jpg -map 0:0 -map 1:0 -c copy -id3v2_version 3 \
 
 ```html
 <!-- In index.html, before closing body -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"
-        integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2divM+5618mZLrYJNGNH4D8zjlYu4jpKU7TG4l4MdA=="
-        crossorigin="anonymous"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"
+  integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2divM+5618mZLrYJNGNH4D8zjlYu4jpKU7TG4l4MdA=="
+  crossorigin="anonymous"
+></script>
 ```
 
 **Step 2: Create Player HTML**
@@ -244,14 +257,14 @@ ffmpeg -i input.mp3 -i cover.jpg -map 0:0 -map 1:0 -c copy -id3v2_version 3 \
     <span id="current-time">0:00</span>
     <div class="progress-bar">
       <div id="progress" class="progress-fill"></div>
-      <input type="range" id="seek-bar" min="0" max="100" value="0">
+      <input type="range" id="seek-bar" min="0" max="100" value="0" />
     </div>
     <span id="duration">0:00</span>
   </div>
 
   <div class="player-volume">
     <button id="mute">🔊</button>
-    <input type="range" id="volume" min="0" max="100" value="80">
+    <input type="range" id="volume" min="0" max="100" value="80" />
   </div>
 
   <div class="player-playlist">
@@ -315,7 +328,7 @@ class AudioPlayer {
       },
       onseek: () => {
         requestAnimationFrame(this.updateProgress.bind(this));
-      }
+      },
     });
 
     this.currentTrackIndex = index;
@@ -349,7 +362,9 @@ class AudioPlayer {
   }
 
   prevTrack() {
-    const prevIndex = (this.currentTrackIndex - 1 + this.playlist.length) % this.playlist.length;
+    const prevIndex =
+      (this.currentTrackIndex - 1 + this.playlist.length) %
+      this.playlist.length;
     this.loadTrack(prevIndex);
     this.play();
   }
@@ -381,7 +396,8 @@ class AudioPlayer {
 
       document.getElementById('progress').style.width = percentage + '%';
       document.getElementById('seek-bar').value = percentage;
-      document.getElementById('current-time').textContent = this.formatTime(seek);
+      document.getElementById('current-time').textContent =
+        this.formatTime(seek);
 
       if (this.isPlaying) {
         requestAnimationFrame(this.updateProgress.bind(this));
@@ -392,7 +408,8 @@ class AudioPlayer {
   updateDuration() {
     if (this.sound) {
       const duration = this.sound.duration();
-      document.getElementById('duration').textContent = this.formatTime(duration);
+      document.getElementById('duration').textContent =
+        this.formatTime(duration);
     }
   }
 
@@ -437,12 +454,12 @@ class AudioPlayer {
     });
 
     // Seek
-    document.getElementById('seek-bar').addEventListener('input', (e) => {
+    document.getElementById('seek-bar').addEventListener('input', e => {
       this.seek(e.target.value);
     });
 
     // Volume
-    document.getElementById('volume').addEventListener('input', (e) => {
+    document.getElementById('volume').addEventListener('input', e => {
       this.setVolume(e.target.value);
     });
 
@@ -461,15 +478,15 @@ class AudioPlayer {
 // Initialize player with OGOD album
 const ogodPlaylist = [
   {
-    title: "Intro",
-    artist: "ET CETER4",
-    file: "https://r2.etceter4.com/media/audio/albums/ogod/01-intro.mp3"
+    title: 'Intro',
+    artist: 'ET CETER4',
+    file: 'https://r2.etceter4.com/media/audio/albums/ogod/01-intro.mp3',
   },
   {
-    title: "Track Two",
-    artist: "ET CETER4",
-    file: "https://r2.etceter4.com/media/audio/albums/ogod/02-track-two.mp3"
-  }
+    title: 'Track Two',
+    artist: 'ET CETER4',
+    file: 'https://r2.etceter4.com/media/audio/albums/ogod/02-track-two.mp3',
+  },
   // ... more tracks
 ];
 
@@ -607,6 +624,7 @@ const player = new AudioPlayer(ogodPlaylist);
 **Recommended: Video.js**
 
 **Why Video.js:**
+
 - Industry standard
 - Highly customizable
 - Plugin ecosystem
@@ -616,6 +634,7 @@ const player = new AudioPlayer(ogodPlaylist);
 - Free and open source
 
 **Alternatives:**
+
 - Plyr (simpler, modern UI)
 - MediaElement.js (lighter weight)
 - Native HTML5 video (minimal features)
@@ -627,6 +646,7 @@ const player = new AudioPlayer(ogodPlaylist);
 **Recommended Format: MP4 (H.264)**
 
 **Multiple Quality Levels:**
+
 - 1080p (HD) - 5-10 Mbps bitrate
 - 720p (HD Ready) - 2.5-5 Mbps bitrate
 - 480p (SD) - 1-2 Mbps bitrate
@@ -707,15 +727,15 @@ ffmpeg -i output-1080p.mp4 -ss 00:00:10 -vframes 1 poster.jpg
   "description": "Full performance from Electronica 1.3 festival",
   "tags": ["#live", "#performance", "#2015", "#electronica"],
   "qualities": [
-    {"label": "1080p", "file": "video-1080p.mp4", "size": "1.2GB"},
-    {"label": "720p", "file": "video-720p.mp4", "size": "600MB"},
-    {"label": "480p", "file": "video-480p.mp4", "size": "300MB"},
-    {"label": "360p", "file": "video-360p.mp4", "size": "150MB"}
+    { "label": "1080p", "file": "video-1080p.mp4", "size": "1.2GB" },
+    { "label": "720p", "file": "video-720p.mp4", "size": "600MB" },
+    { "label": "480p", "file": "video-480p.mp4", "size": "300MB" },
+    { "label": "360p", "file": "video-360p.mp4", "size": "150MB" }
   ],
   "poster": "poster.jpg",
   "thumbnails": "thumbnails.vtt",
   "subtitles": [
-    {"language": "en", "label": "English", "file": "subtitles-en.vtt"}
+    { "language": "en", "label": "English", "file": "subtitles-en.vtt" }
   ],
   "external": {
     "youtube": "https://youtube.com/watch?v=..."
@@ -731,7 +751,7 @@ ffmpeg -i output-1080p.mp4 -ss 00:00:10 -vframes 1 poster.jpg
 
 ```html
 <!-- In head -->
-<link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet">
+<link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
 
 <!-- Before closing body -->
 <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
@@ -741,38 +761,49 @@ ffmpeg -i output-1080p.mp4 -ss 00:00:10 -vframes 1 poster.jpg
 
 ```html
 <div class="video-container">
-  <video id="video-player"
-         class="video-js vjs-default-skin vjs-big-play-centered"
-         controls
-         preload="auto"
-         width="1280"
-         height="720"
-         poster="media/video/performances/2015-electronica/poster.jpg"
-         data-setup='{}'>
-
+  <video
+    id="video-player"
+    class="video-js vjs-default-skin vjs-big-play-centered"
+    controls
+    preload="auto"
+    width="1280"
+    height="720"
+    poster="media/video/performances/2015-electronica/poster.jpg"
+    data-setup="{}"
+  >
     <!-- Multiple quality sources -->
-    <source src="media/video/performances/2015-electronica/video-1080p.mp4"
-            type="video/mp4"
-            label="1080p"
-            res="1080">
-    <source src="media/video/performances/2015-electronica/video-720p.mp4"
-            type="video/mp4"
-            label="720p"
-            res="720">
-    <source src="media/video/performances/2015-electronica/video-480p.mp4"
-            type="video/mp4"
-            label="480p"
-            res="480">
+    <source
+      src="media/video/performances/2015-electronica/video-1080p.mp4"
+      type="video/mp4"
+      label="1080p"
+      res="1080"
+    />
+    <source
+      src="media/video/performances/2015-electronica/video-720p.mp4"
+      type="video/mp4"
+      label="720p"
+      res="720"
+    />
+    <source
+      src="media/video/performances/2015-electronica/video-480p.mp4"
+      type="video/mp4"
+      label="480p"
+      res="480"
+    />
 
     <!-- Subtitles/captions -->
-    <track kind="captions"
-           src="media/video/performances/2015-electronica/subtitles-en.vtt"
-           srclang="en"
-           label="English">
+    <track
+      kind="captions"
+      src="media/video/performances/2015-electronica/subtitles-en.vtt"
+      srclang="en"
+      label="English"
+    />
 
     <!-- Thumbnails for scrubbing -->
-    <track kind="metadata"
-           src="media/video/performances/2015-electronica/thumbnails.vtt">
+    <track
+      kind="metadata"
+      src="media/video/performances/2015-electronica/thumbnails.vtt"
+    />
 
     <p class="vjs-no-js">
       To view this video please enable JavaScript, and consider upgrading to a
@@ -789,7 +820,9 @@ ffmpeg -i output-1080p.mp4 -ss 00:00:10 -vframes 1 poster.jpg
     </p>
     <div class="video-links">
       <a href="#" class="download-link">Download (1080p)</a>
-      <a href="https://youtube.com/watch?v=..." class="external-link">Watch on YouTube</a>
+      <a href="https://youtube.com/watch?v=..." class="external-link"
+        >Watch on YouTube</a
+      >
     </div>
   </div>
 </div>
@@ -828,36 +861,36 @@ const player = videojs('video-player', {
       'subsCapsButton',
       'audioTrackButton',
       'qualitySelector', // Need plugin for this
-      'fullscreenToggle'
-    ]
-  }
+      'fullscreenToggle',
+    ],
+  },
 });
 
 // Quality selector plugin
 // (You'll need videojs-quality-selector plugin or similar)
 
 // Custom events
-player.on('play', function() {
+player.on('play', function () {
   console.log('Video started playing');
   // Track analytics
 });
 
-player.on('pause', function() {
+player.on('pause', function () {
   console.log('Video paused');
 });
 
-player.on('ended', function() {
+player.on('ended', function () {
   console.log('Video ended');
   // Show related videos, next in playlist, etc.
 });
 
-player.on('error', function() {
+player.on('error', function () {
   console.error('Video error:', player.error());
   // Show fallback or error message
 });
 
 // Keyboard shortcuts
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
   if (e.code === 'Space') {
     e.preventDefault();
     if (player.paused()) {
@@ -920,7 +953,11 @@ document.addEventListener('keydown', function(e) {
 }
 
 .vjs-control-bar {
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent) !important;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8),
+    transparent
+  ) !important;
 }
 
 .vjs-play-progress {
@@ -983,6 +1020,7 @@ document.addEventListener('keydown', function(e) {
 ### Recommended: Cloudflare R2
 
 **Why Cloudflare R2:**
+
 - **Zero egress fees** (no bandwidth charges!)
 - S3-compatible API
 - $0.015/GB storage (very cheap)
@@ -993,22 +1031,26 @@ document.addEventListener('keydown', function(e) {
 **Setup Process:**
 
 **Step 1: Create Cloudflare Account**
+
 1. Go to cloudflare.com
 2. Sign up (free tier available)
 3. Add payment method (required for R2)
 
 **Step 2: Create R2 Bucket**
+
 1. Go to R2 in dashboard
 2. Click "Create bucket"
 3. Name it (e.g., "etceter4-media")
 4. Choose location (auto for best performance)
 
 **Step 3: Generate Access Credentials**
+
 1. Go to R2 settings
 2. Create API token
 3. Save Access Key ID and Secret Access Key
 
 **Step 4: Configure Public Access (Optional)**
+
 1. Enable public access for media bucket
 2. Or use signed URLs for private content
 
@@ -1048,14 +1090,17 @@ aws s3api put-object-acl --bucket etceter4-media \
 ### Cloudflare R2 Pricing
 
 **Storage:**
+
 - $0.015 per GB/month
 - First 10 GB free
 
 **Operations:**
+
 - Class A (writes): $4.50 per million requests
 - Class B (reads): $0.36 per million requests
 
 **Egress:**
+
 - **FREE** (This is the big advantage!)
 
 **Example Costs:**
@@ -1071,6 +1116,7 @@ Total: ~$0.75/month
 ```
 
 **Scaling:**
+
 ```
 100 GB media, 100,000 plays/month = ~$1.50/month
 500 GB media, 500,000 plays/month = ~$7.50/month
@@ -1086,11 +1132,13 @@ Total: ~$0.75/month
 ### Option 2: GitHub Pages + Git LFS
 
 **Pros:**
+
 - Free (100GB storage)
 - Built into existing GitHub repo
 - Version control for media
 
 **Cons:**
+
 - 100GB limit
 - 100GB bandwidth/month limit
 - Not ideal for streaming
@@ -1103,17 +1151,20 @@ Total: ~$0.75/month
 ### Option 3: Self-Hosted Server
 
 **Pros:**
+
 - Complete control
 - No external dependencies
 - Can be very cheap (used hardware)
 
 **Cons:**
+
 - Requires technical setup
 - Bandwidth costs can be high
 - Maintenance burden
 - Uptime concerns
 
 **Cost:**
+
 - VPS: $5-20/month (DigitalOcean, Linode, etc.)
 - Home server: One-time hardware cost + electricity
 
@@ -1122,11 +1173,13 @@ Total: ~$0.75/month
 ### Option 4: Hybrid (Recommended for Most)
 
 **Setup:**
+
 - Site on GitHub Pages (free)
 - Media on Cloudflare R2 (~$1-10/month)
 - Keep external links (Spotify, etc.) for distribution
 
 **Benefits:**
+
 - Best of both worlds
 - Affordable
 - Performant
@@ -1139,40 +1192,47 @@ Total: ~$0.75/month
 ### Moving from External Platforms
 
 **Step 1: Inventory** (Week 1)
+
 - List all audio/video content
 - Note current locations (Bandcamp, YouTube, etc.)
 - Document file formats and quality
 
 **Step 2: Download** (Week 1-2)
+
 - Download highest quality versions
 - Use youtube-dl for YouTube
 - Download from Bandcamp/Spotify (if you own files)
 
 **Step 3: Process** (Week 2-3)
+
 - Convert to standard formats (MP3, MP4)
 - Create multiple quality levels
 - Generate metadata files
 - Create artwork/thumbnails
 
 **Step 4: Upload** (Week 3)
+
 - Set up R2 bucket
 - Upload organized files
 - Test accessibility
 - Configure permissions
 
 **Step 5: Implement Players** (Week 4-5)
+
 - Add Howler.js audio player
 - Add Video.js video player
 - Style to match site aesthetic
 - Test on multiple devices
 
 **Step 6: Update Site** (Week 5-6)
+
 - Replace external embeds with custom players
 - Add download options
 - Keep external links for distribution
 - Update navigation
 
 **Step 7: Test & Launch** (Week 6)
+
 - Cross-browser testing
 - Mobile testing
 - Performance testing
@@ -1180,6 +1240,7 @@ Total: ~$0.75/month
 - Launch!
 
 **Step 8: Monitor** (Ongoing)
+
 - Check bandwidth usage
 - Monitor costs
 - Gather feedback
@@ -1192,18 +1253,21 @@ Total: ~$0.75/month
 ### Regular Tasks
 
 **Monthly:**
+
 - Review bandwidth usage
 - Check R2 costs
 - Update any broken links
 - Add new content
 
 **Quarterly:**
+
 - Review analytics
 - Optimize slow-loading files
 - Update player libraries
 - Backup media files
 
 **Annually:**
+
 - Review storage costs
 - Consider format updates
 - Archive old content
@@ -1216,16 +1280,19 @@ Total: ~$0.75/month
 **Critical: Always maintain backups!**
 
 **3-2-1 Backup Rule:**
+
 - 3 copies of data
 - 2 different media types
 - 1 off-site backup
 
 **Implementation:**
+
 1. **Primary:** R2 bucket (cloud)
 2. **Secondary:** Local hard drive
 3. **Tertiary:** External hard drive (off-site)
 
 **Automation:**
+
 ```bash
 # Automated backup script
 #!/bin/bash
@@ -1248,6 +1315,7 @@ fi
 ### Immediate Actions
 
 **This Week:**
+
 1. Create Cloudflare account
 2. Set up R2 bucket
 3. Upload one test album
@@ -1255,6 +1323,7 @@ fi
 5. Test and refine
 
 **Next Week:**
+
 1. Upload remaining albums
 2. Add video player
 3. Upload first video
@@ -1262,6 +1331,7 @@ fi
 5. Mobile testing
 
 **This Month:**
+
 1. Complete media migration
 2. Update all pages
 3. Add metadata
@@ -1275,26 +1345,31 @@ fi
 ### Tools & Libraries
 
 **Audio:**
+
 - Howler.js: howlerjs.com
 - Wavesurfer.js: wavesurfer-js.org (waveform viz)
 - Tone.js: tonejs.github.io (synthesis)
 
 **Video:**
+
 - Video.js: videojs.com
 - Plyr: plyr.io
 - MediaElement.js: mediaelementjs.com
 
 **Processing:**
+
 - FFmpeg: ffmpeg.org (audio/video conversion)
 - HandBrake: handbrake.fr (video conversion GUI)
 - Audacity: audacityteam.org (audio editing)
 
 **Storage:**
+
 - Cloudflare R2: developers.cloudflare.com/r2
 - AWS S3: aws.amazon.com/s3
 - Backblaze B2: backblaze.com/b2
 
 **Deployment:**
+
 - AWS CLI: aws.amazon.com/cli
 - Rclone: rclone.org (cloud sync)
 - Cyberduck: cyberduck.io (GUI client)
@@ -1316,8 +1391,8 @@ You now have a complete blueprint for building self-hosted audio and video infra
 
 ---
 
-*Guide by: Anthony James Padavano & Claude (Anthropic)*
-*Date: October 27, 2025*
-*Status: Ready for Implementation*
+_Guide by: Anthony James Padavano & Claude (Anthropic)_
+_Date: October 27, 2025_
+_Status: Ready for Implementation_
 
-🎵 *Your music, your platform, your rules* 🎬
+🎵 _Your music, your platform, your rules_ 🎬

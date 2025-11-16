@@ -44,6 +44,7 @@ akademia/
 ### Essays
 
 1. **Create HTML file** in `essays/` directory:
+
 ```bash
 cp essays/essay-template.html essays/your-essay-title.html
 ```
@@ -51,6 +52,7 @@ cp essays/essay-template.html essays/your-essay-title.html
 2. **Edit the essay** with your content
 
 3. **Update config.js**:
+
 ```javascript
 {
     id: 'unique-id-001',
@@ -78,6 +80,7 @@ Same process as essays, but in `papers/` directory with more formal academic str
 ### Research Projects
 
 Document ongoing research with:
+
 - Project overview
 - Methodology
 - Current findings
@@ -87,6 +90,7 @@ Document ongoing research with:
 ### Reviews
 
 Critical analysis format:
+
 - Subject information
 - Context and background
 - Analysis
@@ -97,6 +101,7 @@ Critical analysis format:
 ### Tutorials
 
 Step-by-step educational content:
+
 - Prerequisites
 - Learning objectives
 - Steps with code examples
@@ -108,62 +113,65 @@ Step-by-step educational content:
 ```html
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Essay Title | Akademia</title>
     <!-- Standard ET CETER4 meta tags -->
-</head>
-<body>
+  </head>
+  <body>
     <article class="essay">
-        <header>
-            <h1>Essay Title</h1>
-            <div class="meta">
-                <span class="author">Author</span>
-                <span class="date">Date</span>
-                <span class="category">Category</span>
-            </div>
-            <div class="tags">Tags</div>
-        </header>
+      <header>
+        <h1>Essay Title</h1>
+        <div class="meta">
+          <span class="author">Author</span>
+          <span class="date">Date</span>
+          <span class="category">Category</span>
+        </div>
+        <div class="tags">Tags</div>
+      </header>
 
-        <section class="abstract">
-            <h2>Abstract</h2>
-            <p>Brief summary...</p>
-        </section>
+      <section class="abstract">
+        <h2>Abstract</h2>
+        <p>Brief summary...</p>
+      </section>
 
-        <section class="content">
-            <!-- Essay content -->
-        </section>
+      <section class="content">
+        <!-- Essay content -->
+      </section>
 
-        <section class="references">
-            <h2>References</h2>
-            <!-- Citations -->
-        </section>
+      <section class="references">
+        <h2>References</h2>
+        <!-- Citations -->
+      </section>
 
-        <footer>
-            <div class="citations">
-                <h3>Cite This Work</h3>
-                <p class="citation apa">APA citation</p>
-                <p class="citation mla">MLA citation</p>
-            </div>
-        </footer>
+      <footer>
+        <div class="citations">
+          <h3>Cite This Work</h3>
+          <p class="citation apa">APA citation</p>
+          <p class="citation mla">MLA citation</p>
+        </div>
+      </footer>
     </article>
-</body>
+  </body>
 </html>
 ```
 
 ## Styling Guidelines
 
 ### Typography
+
 - Headings: Futura (sans-serif)
 - Body text: Bodoni MT (serif) for readability
 - Code: Monospace
 
 ### Color Scheme
+
 - Primary: Cyan (#00FFFF) for headings and links
 - Secondary: Magenta (#FF00FF) for highlights
 - Background: Black (#000000)
 - Text: White (#FFFFFF) with varying opacity
 
 ### Spacing
+
 - Line height: 1.6-1.8 for body text
 - Paragraph spacing: 1.5rem
 - Section spacing: 3rem
@@ -171,19 +179,25 @@ Step-by-step educational content:
 ## Academic Standards
 
 ### Citations
+
 Use proper academic citation formats:
+
 - **APA** for social sciences
 - **MLA** for humanities
 - **Chicago** for history/arts
 
 ### Footnotes
+
 Support for:
+
 - Inline references [1]
 - Footnote links
 - Bibliography section
 
 ### Metadata
+
 Include:
+
 - DOI (if published elsewhere)
 - Keywords for search
 - Abstract (150-300 words)
@@ -193,30 +207,37 @@ Include:
 ## Integration with Main Site
 
 ### Navigation
+
 Link to Akademia from main menu:
+
 ```html
 <a href="/akademia/index.html">Akademia</a>
 ```
 
 ### Search Integration
+
 Essays/papers should be searchable via site-wide search (when implemented).
 
 ### RSS Feed
+
 Future: Generate RSS feed for academic content updates.
 
 ## PDF Generation
 
 ### Option 1: Manual Export
+
 1. Write in Markdown
 2. Convert to HTML
 3. Export to PDF via browser print
 
 ### Option 2: Automated (Planned)
+
 - Use Pandoc for Markdown → PDF
 - LaTeX templates for formal papers
 - Automated bibliography generation
 
 ### Example Pandoc Command:
+
 ```bash
 pandoc essay.md \
   -o essay.pdf \
@@ -228,6 +249,7 @@ pandoc essay.md \
 ## Content Guidelines
 
 ### Essays
+
 - Length: 1500-5000 words
 - Structure: Introduction, Body, Conclusion
 - Tone: Scholarly but accessible
@@ -235,18 +257,21 @@ pandoc essay.md \
 - Images: Relevant, captioned, credited
 
 ### Papers
+
 - Length: 3000-10000 words
 - Structure: Abstract, Introduction, Literature Review, Methodology, Results, Discussion, Conclusion
 - Peer review: Optional but encouraged
 - Data: Share when possible
 
 ### Reviews
+
 - Length: 500-2000 words
 - Structure: Overview, Analysis, Critique, Recommendation
 - Fair use: Quote responsibly
 - Disclosure: Any conflicts of interest
 
 ### Tutorials
+
 - Length: Variable (as needed for clarity)
 - Structure: Goals, Prerequisites, Steps, Practice, Resources
 - Code: Tested and working
@@ -264,6 +289,7 @@ pandoc essay.md \
 ## Future Enhancements
 
 ### Planned Features
+
 - [ ] Comment system for academic discussion
 - [ ] Citation manager integration (Zotero)
 - [ ] Collaborative writing features
@@ -274,6 +300,7 @@ pandoc essay.md \
 - [ ] Multi-language support
 
 ### Integration Plans
+
 - [ ] Connect to Agora for political essays
 - [ ] Link to Bibliotheke for reading lists
 - [ ] Cross-reference with Symposion for dialogue
@@ -282,23 +309,27 @@ pandoc essay.md \
 ## Resources
 
 ### Writing Tools
+
 - **Markdown Editors**: Typora, iA Writer, VS Code
 - **Reference Managers**: Zotero, Mendeley
 - **Citation Generators**: CitationMachine.net, EasyBib
 
 ### Style Guides
+
 - [APA Style](https://apastyle.apa.org/)
 - [MLA Handbook](https://www.mla.org/MLA-Style)
 - [Chicago Manual of Style](https://www.chicagomanualofstyle.org/)
 
 ### Academic Writing
-- Strunk & White, *The Elements of Style*
-- Booth et al., *The Craft of Research*
-- Williams & Bizup, *Style: Lessons in Clarity and Grace*
+
+- Strunk & White, _The Elements of Style_
+- Booth et al., _The Craft of Research_
+- Williams & Bizup, _Style: Lessons in Clarity and Grace_
 
 ## Current Status
 
 **Implemented:**
+
 - ✅ Akademia index page with categories
 - ✅ Directory structure created
 - ✅ Essay configuration system
@@ -306,10 +337,12 @@ pandoc essay.md \
 - ✅ Integration with existing CV system
 
 **In Progress:**
+
 - 🔨 Essay template creation
 - 🔨 Sample essay content
 
 **Planned:**
+
 - ⏳ Paper templates
 - ⏳ Research project templates
 - ⏳ Review templates

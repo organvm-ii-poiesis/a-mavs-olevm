@@ -32,7 +32,7 @@ File System Structure:
 
 Commands to navigate:
 • pwd              → Shows current location
-• ls / dir         → Lists contents  
+• ls / dir         → Lists contents
 • cd folder-name   → Enter folder
 • cd ..            → Go up one level
 • cd               → Go to home directory
@@ -135,7 +135,7 @@ etceter4/                        ← Main project folder
 ❌ Error: "command not found"
 💡 Solution: The program isn't installed or not in your PATH
 
-❌ Error: "Permission denied"  
+❌ Error: "Permission denied"
 💡 Solution: Try with 'sudo' (Mac/Linux) or run as administrator (Windows)
 
 ❌ Error: "fatal: not a git repository"

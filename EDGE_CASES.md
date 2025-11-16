@@ -42,17 +42,21 @@ This document outlines potential blindspots, edge cases, and areas for improveme
 ### 🔴 HIGH PRIORITY
 
 #### 1. Global Scope Architecture
+
 **Current State:**
+
 - JavaScript files communicate via global scope
 - Functions/objects defined in one file are used in others
 - No module bundler or ES6 modules
 
 **Edge Cases:**
+
 - Variable name collisions if new code is added
 - Race conditions if script load order changes
 - Difficult to debug cross-file dependencies
 
 **Recommendation:**
+
 ```javascript
 // Current (global scope):
 // page.js
@@ -71,17 +75,21 @@ const menu = new Page({ ... });
 ```
 
 #### 2. Script Load Order Dependency
+
 **Current State:**
+
 - Scripts loaded in specific order in HTML
 - No dependency management
 - Relies on synchronous script loading
 
 **Edge Cases:**
+
 - If scripts load out of order (async/defer), code breaks
 - Page load performance impacted by synchronous loading
 - Difficult to lazy-load features
 
 **Affected Files:**
+
 ```html
 <!-- Critical load order: -->
 <script src="js/main.js"></script>
@@ -91,17 +99,21 @@ const menu = new Page({ ... });
 ```
 
 #### 3. jQuery Dependency Throughout
+
 **Current State:**
+
 - Heavy reliance on jQuery 3.7.1
 - All DOM manipulation uses jQuery
 - Velocity.js depends on jQuery
 
 **Edge Cases:**
+
 - jQuery API changes could break code
 - Performance overhead for simple operations
 - Harder to migrate to modern frameworks
 
 **Example:**
+
 ```javascript
 // jQuery-dependent code
 $("#landing").removeClass("dn");
@@ -115,37 +127,50 @@ document.getElementById("landing").classList.remove("dn");
 ### 🟡 MEDIUM PRIORITY
 
 #### 4. Carousel Implementation
+
 **Current State:**
+
 - Custom carousel in images.js and diary.js
 - Index-based image loading
 - Hardcoded image counts
 
 **Edge Cases:**
+
 ```javascript
 // images.js line 139-146
 const stillsCarousel = new Carousel({
-    "total": 44 + 5 + 28 + 6,  // Hardcoded totals
-    "images": [["media", 44], ["faster", 28], ["slip", 6], ["live", 5]]
+  total: 44 + 5 + 28 + 6, // Hardcoded totals
+  images: [
+    ['media', 44],
+    ['faster', 28],
+    ['slip', 6],
+    ['live', 5],
+  ],
 });
 ```
 
 **Issues:**
+
 - Adding/removing images requires code changes
 - No validation that image count matches reality
 - Breaks silently if images are missing
 
 **Recommendation:**
+
 - Generate image lists dynamically
 - Add error handling for missing images
 - Create config file for image metadata
 
 #### 5. Page State Management
+
 **Current State:**
+
 - Global `currentPage` object tracks state
 - Boolean flags for initialization and loading states
 - No state history or undo capability
 
 **Edge Cases:**
+
 ```javascript
 // page.js
 let currentPage = {};
@@ -153,53 +178,63 @@ let currentPage = {};
 ```
 
 **Issues:**
+
 - Race conditions if multiple animations occur
 - No way to cancel in-flight transitions
 - State can become inconsistent if errors occur
 
 **Recommendation:**
+
 - Implement proper state machine
 - Add transition cancellation
 - Add error recovery mechanisms
 
 #### 6. Placeholder Image Loading
+
 **Current State:**
+
 - Images use `data-src` with placeholder
 - `replacePlaceholders()` swaps to real images
 - Defined in both images.js and diary.js (duplicate code)
 
 **Edge Cases:**
+
 ```javascript
 function replacePlaceholders(element) {
-    const images = $(element).find("img[src='img/placeholder.jpg']");
-    // What if placeholder path changes?
-    // What if data-src is missing?
-    // No error handling
+  const images = $(element).find("img[src='img/placeholder.jpg']");
+  // What if placeholder path changes?
+  // What if data-src is missing?
+  // No error handling
 }
 ```
 
 **Issues:**
+
 - Duplicate function definition (DRY violation)
 - No fallback if image fails to load
 - No loading indicators
 - Marked as unused by linter (false positive)
 
 #### 7. Mobile Menu Implementation
+
 **Current State:**
+
 - Hamburger menu for mobile
 - Uses class toggles for state
 - No accessibility features
 
 **Edge Cases:**
+
 ```javascript
-$(".c-hamburger").on("click", function() {
-    // Simple toggle - no keyboard support
-    // No ARIA attributes
-    // No focus management
+$('.c-hamburger').on('click', function () {
+  // Simple toggle - no keyboard support
+  // No ARIA attributes
+  // No focus management
 });
 ```
 
 **Issues:**
+
 - Not keyboard accessible
 - Screen readers won't understand state
 - No ESC key to close
@@ -208,84 +243,101 @@ $(".c-hamburger").on("click", function() {
 ### 🟢 LOW PRIORITY
 
 #### 8. Animation Performance
+
 **Current State:**
+
 - Velocity.js for page transitions
 - Opacity animations with delays
 - Hardcoded durations
 
 **Edge Cases:**
+
 ```javascript
-$(_Page.id).velocity("fadeIn", {
-    delay: 0,
-    duration: 0, // Currently set to 0 - animations disabled?
-    // ...
+$(_Page.id).velocity('fadeIn', {
+  delay: 0,
+  duration: 0, // Currently set to 0 - animations disabled?
+  // ...
 });
 ```
 
 **Note:** Animations are currently disabled (duration: 0). This may be intentional for development.
 
 #### 9. URL Hash Navigation
+
 **Current State:**
+
 - Uses URL hash for routing
 - Checks hash on page load
 - No history management
 
 **Edge Cases:**
+
 ```javascript
 $(document).ready(function () {
-    const hash = window.location.hash;
-    if (hash) {
-        // What if hash is invalid?
-        // What about browser back button?
-    }
+  const hash = window.location.hash;
+  if (hash) {
+    // What if hash is invalid?
+    // What about browser back button?
+  }
 });
 ```
 
 **Issues:**
+
 - No validation of hash values
 - No handling of invalid pages
 - Browser back/forward may not work correctly
 - No browser history updates
 
 #### 10. Analytics Implementation
+
 **Current State:**
+
 - Google Analytics inline in HTML
 - Legacy analytics.js (not gtag.js)
 - No consent management
 
 **Edge Cases:**
+
 - GDPR compliance concerns
 - Ad blockers will break analytics
 - No fallback if GA is blocked
 - Using deprecated UA- tracking (not GA4)
 
 #### 11. Error Handling
+
 **Current State:**
+
 - Minimal error handling throughout
 - Some console.log statements
 - No user-facing error messages
 
 **Issues:**
+
 ```javascript
 // pageData.js
-$.cachedScript("js/vendor/p5.js").done(function(script, textStatus) {
-    // No .fail() handler
-    // What if script doesn't load?
+$.cachedScript('js/vendor/p5.js').done(function (script, textStatus) {
+  // No .fail() handler
+  // What if script doesn't load?
 });
 ```
 
 #### 12. Unused Code
+
 **Current State:**
+
 - Large sections of HTML commented out
 - Unused variables flagged by linter
 - Legacy files in dependencies
 
 **Examples:**
+
 - `adIsLoaded` variable unused
 - `s` variable in ogod.js removed
 - Many HTML sections commented out (sound, video, blog, etc.)
 
 **Recommendation:**
+
 - Remove commented code
 - Archive legacy files
 - Clean up unused variables
@@ -349,6 +401,7 @@ $.cachedScript("js/vendor/p5.js").done(function(script, textStatus) {
 ## Recommendations Summary
 
 ### Immediate Actions
+
 1. ✅ Fixed CSP for Bandcamp/YouTube
 2. ✅ Updated all dependencies
 3. ✅ Converted var to const/let
@@ -356,6 +409,7 @@ $.cachedScript("js/vendor/p5.js").done(function(script, textStatus) {
 5. ✅ Added SECURITY.md documentation
 
 ### Short-term (1-3 months)
+
 1. Add error handling for image loading
 2. Implement ARIA attributes for accessibility
 3. Add keyboard support for mobile menu
@@ -363,6 +417,7 @@ $.cachedScript("js/vendor/p5.js").done(function(script, textStatus) {
 5. Add GDPR consent management
 
 ### Long-term (3-6 months)
+
 1. Migrate to ES6 modules with bundler
 2. Add automated testing (Jest, Playwright)
 3. Implement proper state management
@@ -371,6 +426,7 @@ $.cachedScript("js/vendor/p5.js").done(function(script, textStatus) {
 6. Implement service worker for offline support
 
 ### Nice-to-have
+
 1. Add TypeScript for type safety
 2. Implement CI/CD performance budgets
 3. Add visual regression testing
@@ -382,6 +438,7 @@ $.cachedScript("js/vendor/p5.js").done(function(script, textStatus) {
 The modernization has successfully addressed the most critical security and code quality issues. The codebase is now significantly more maintainable and secure. However, the global scope architecture and lack of module system present architectural constraints that should be addressed in future iterations.
 
 **Overall Risk Level:** 🟡 Medium
+
 - Security: 🟢 Low Risk (all critical issues resolved)
 - Code Quality: 🟡 Medium Risk (some technical debt remains)
 - Maintainability: 🟡 Medium Risk (global scope, no modules)
@@ -389,5 +446,5 @@ The modernization has successfully addressed the most critical security and code
 
 ---
 
-*Generated: October 2024*
-*Author: Copilot SWE Agent*
+_Generated: October 2024_
+_Author: Copilot SWE Agent_

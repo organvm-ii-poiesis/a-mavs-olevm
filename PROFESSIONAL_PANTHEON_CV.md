@@ -1,4 +1,5 @@
 # PROFESSIONAL PANTHEON
+
 **Academic, Professor, Designer, Artist - Four Facets, One Temple**
 
 ---
@@ -27,6 +28,7 @@ You operate in **four distinct but interconnected roles**:
 **Primary Location:** Akademia (Chamber 6)
 
 **Structure:**
+
 ```
 /akademia
   /cv                    - Interactive CV/Resume
@@ -49,277 +51,289 @@ You operate in **four distinct but interconnected roles**:
 <!-- /akademia/cv/index.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Anthony James Padavano - CV</title>
-  <meta name="description" content="Academic, Professor, Designer, Artist">
-  <link rel="stylesheet" href="../../css/styles.css">
-  <link rel="stylesheet" href="css/cv-styles.css">
-</head>
-<body class="cv-body">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Anthony James Padavano - CV</title>
+    <meta name="description" content="Academic, Professor, Designer, Artist" />
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="css/cv-styles.css" />
+  </head>
+  <body class="cv-body">
+    <!-- Mode Selector -->
+    <nav class="cv-mode-selector">
+      <button class="mode-btn active" data-mode="overview">Overview</button>
+      <button class="mode-btn" data-mode="academic">Academic</button>
+      <button class="mode-btn" data-mode="teaching">Teaching</button>
+      <button class="mode-btn" data-mode="design">Design</button>
+      <button class="mode-btn" data-mode="artistic">Artistic</button>
+      <button class="mode-btn" data-mode="traditional">Traditional CV</button>
+    </nav>
 
-  <!-- Mode Selector -->
-  <nav class="cv-mode-selector">
-    <button class="mode-btn active" data-mode="overview">Overview</button>
-    <button class="mode-btn" data-mode="academic">Academic</button>
-    <button class="mode-btn" data-mode="teaching">Teaching</button>
-    <button class="mode-btn" data-mode="design">Design</button>
-    <button class="mode-btn" data-mode="artistic">Artistic</button>
-    <button class="mode-btn" data-mode="traditional">Traditional CV</button>
-  </nav>
-
-  <!-- Header -->
-  <header class="cv-header">
-    <h1>Anthony James Padavano</h1>
-    <p class="title-rotating">
-      <span>Academic</span>
-      <span class="separator">·</span>
-      <span>Professor</span>
-      <span class="separator">·</span>
-      <span>Designer</span>
-      <span class="separator">·</span>
-      <span>Artist</span>
-    </p>
-    <div class="contact-info">
-      <a href="mailto:etceter4@etceter4.com">etceter4@etceter4.com</a>
-      <a href="https://etceter4.com">etceter4.com</a>
-    </div>
-  </header>
-
-  <!-- Overview Mode (Default) -->
-  <section class="cv-section" data-section="overview">
-    <div class="four-facets">
-      <div class="facet academic-facet">
-        <h2>Academic</h2>
-        <ul>
-          <li>Research in [Your Field]</li>
-          <li>Publications: [Number] peer-reviewed</li>
-          <li>Current research: [Topic]</li>
-        </ul>
-        <a href="#" class="facet-link" data-goto="academic">Explore Academic Work →</a>
-      </div>
-
-      <div class="facet teaching-facet">
-        <h2>Professor</h2>
-        <ul>
-          <li>Teaching since [Year]</li>
-          <li>Courses: [List key courses]</li>
-          <li>Students mentored: [Number]</li>
-        </ul>
-        <a href="#" class="facet-link" data-goto="teaching">Explore Teaching →</a>
-      </div>
-
-      <div class="facet design-facet">
-        <h2>Designer</h2>
-        <ul>
-          <li>UX/UI Design</li>
-          <li>Web Design & Development</li>
-          <li>Visual Design Systems</li>
-        </ul>
-        <a href="#" class="facet-link" data-goto="design">Explore Design Work →</a>
-      </div>
-
-      <div class="facet artistic-facet">
-        <h2>Artist</h2>
-        <ul>
-          <li>Composer (4 albums)</li>
-          <li>Multimedia installations</li>
-          <li>Experimental web art</li>
-        </ul>
-        <a href="#" class="facet-link" data-goto="artistic">Explore Artistic Practice →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Academic Mode -->
-  <section class="cv-section hidden" data-section="academic">
-    <h2>Academic Profile</h2>
-
-    <div class="cv-subsection">
-      <h3>Education</h3>
-      <div class="education-item">
-        <span class="degree">Ph.D., [Field]</span>
-        <span class="institution">[University], [Year]</span>
-        <p class="dissertation">Dissertation: "[Title]"</p>
-      </div>
-      <!-- More education items -->
-    </div>
-
-    <div class="cv-subsection">
-      <h3>Research Interests</h3>
-      <ul class="research-interests">
-        <li>Topic 1</li>
-        <li>Topic 2</li>
-        <li>Topic 3</li>
-      </ul>
-    </div>
-
-    <div class="cv-subsection">
-      <h3>Publications</h3>
-      <div class="publication-filters">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="peer-reviewed">Peer-Reviewed</button>
-        <button class="filter-btn" data-filter="books">Books</button>
-        <button class="filter-btn" data-filter="chapters">Book Chapters</button>
-      </div>
-
-      <div class="publications-list">
-        <!-- Publications dynamically loaded from JSON -->
-      </div>
-    </div>
-
-    <div class="cv-subsection">
-      <h3>Grants & Funding</h3>
-      <!-- Grant list -->
-    </div>
-
-    <div class="cv-subsection">
-      <h3>Conference Presentations</h3>
-      <!-- Presentation list -->
-    </div>
-  </section>
-
-  <!-- Teaching Mode -->
-  <section class="cv-section hidden" data-section="teaching">
-    <h2>Teaching Profile</h2>
-
-    <div class="cv-subsection">
-      <h3>Teaching Philosophy</h3>
-      <p class="philosophy-statement">
-        [Your teaching philosophy - 2-3 paragraphs]
+    <!-- Header -->
+    <header class="cv-header">
+      <h1>Anthony James Padavano</h1>
+      <p class="title-rotating">
+        <span>Academic</span>
+        <span class="separator">·</span>
+        <span>Professor</span>
+        <span class="separator">·</span>
+        <span>Designer</span>
+        <span class="separator">·</span>
+        <span>Artist</span>
       </p>
-    </div>
+      <div class="contact-info">
+        <a href="mailto:etceter4@etceter4.com">etceter4@etceter4.com</a>
+        <a href="https://etceter4.com">etceter4.com</a>
+      </div>
+    </header>
 
-    <div class="cv-subsection">
-      <h3>Courses Taught</h3>
-      <div class="courses-grid">
-        <div class="course-card">
-          <h4>[Course Number]: [Course Name]</h4>
-          <p class="course-level">Undergraduate / Graduate</p>
-          <p class="course-description">Brief description...</p>
-          <a href="#" class="course-link">View Syllabus →</a>
+    <!-- Overview Mode (Default) -->
+    <section class="cv-section" data-section="overview">
+      <div class="four-facets">
+        <div class="facet academic-facet">
+          <h2>Academic</h2>
+          <ul>
+            <li>Research in [Your Field]</li>
+            <li>Publications: [Number] peer-reviewed</li>
+            <li>Current research: [Topic]</li>
+          </ul>
+          <a href="#" class="facet-link" data-goto="academic"
+            >Explore Academic Work →</a
+          >
         </div>
-        <!-- More courses -->
-      </div>
-    </div>
 
-    <div class="cv-subsection">
-      <h3>Student Outcomes</h3>
-      <ul>
-        <li>Ph.D. students supervised: [Number]</li>
-        <li>Master's theses directed: [Number]</li>
-        <li>Student placements: [Examples]</li>
-      </ul>
-    </div>
-
-    <div class="cv-subsection">
-      <h3>Curriculum Development</h3>
-      <!-- List of programs/courses developed -->
-    </div>
-  </section>
-
-  <!-- Design Mode -->
-  <section class="cv-section hidden" data-section="design">
-    <h2>Design Portfolio</h2>
-
-    <div class="design-grid">
-      <div class="design-project">
-        <img src="img/design/project-1.jpg" alt="Project">
-        <h3>Project Name</h3>
-        <p class="project-type">UX/UI Design</p>
-        <a href="#" class="project-link">View Case Study →</a>
-      </div>
-      <!-- More projects -->
-    </div>
-
-    <div class="cv-subsection">
-      <h3>Design Skills</h3>
-      <div class="skills-list">
-        <span class="skill">UX Research</span>
-        <span class="skill">Interface Design</span>
-        <span class="skill">Web Development</span>
-        <span class="skill">Design Systems</span>
-        <span class="skill">HTML/CSS/JS</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Artistic Mode -->
-  <section class="cv-section hidden" data-section="artistic">
-    <h2>Artistic Practice</h2>
-
-    <div class="cv-subsection">
-      <h3>Discography</h3>
-      <div class="albums-list">
-        <div class="album-item">
-          <img src="img/photos/artwork/ogod-cover.jpg" alt="OGOD">
-          <div class="album-info">
-            <h4>OGOD</h4>
-            <p class="year">2015</p>
-            <p class="description">Visual album, 29 tracks</p>
-            <a href="../../#sound" class="album-link">Listen →</a>
-          </div>
+        <div class="facet teaching-facet">
+          <h2>Professor</h2>
+          <ul>
+            <li>Teaching since [Year]</li>
+            <li>Courses: [List key courses]</li>
+            <li>Students mentored: [Number]</li>
+          </ul>
+          <a href="#" class="facet-link" data-goto="teaching"
+            >Explore Teaching →</a
+          >
         </div>
-        <!-- More albums -->
-      </div>
-    </div>
 
-    <div class="cv-subsection">
-      <h3>Exhibitions & Performances</h3>
-      <div class="exhibitions-list">
-        <div class="exhibition-item">
-          <span class="year">2015</span>
-          <span class="title">Live @ Electronica 1.3</span>
-          <span class="venue">[Venue Name]</span>
+        <div class="facet design-facet">
+          <h2>Designer</h2>
+          <ul>
+            <li>UX/UI Design</li>
+            <li>Web Design & Development</li>
+            <li>Visual Design Systems</li>
+          </ul>
+          <a href="#" class="facet-link" data-goto="design"
+            >Explore Design Work →</a
+          >
         </div>
-        <!-- More exhibitions -->
+
+        <div class="facet artistic-facet">
+          <h2>Artist</h2>
+          <ul>
+            <li>Composer (4 albums)</li>
+            <li>Multimedia installations</li>
+            <li>Experimental web art</li>
+          </ul>
+          <a href="#" class="facet-link" data-goto="artistic"
+            >Explore Artistic Practice →</a
+          >
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="cv-subsection">
-      <h3>Artistic Statement</h3>
-      <p class="artist-statement">
-        [Your artistic statement - 2-3 paragraphs about your practice]
-      </p>
-    </div>
-  </section>
+    <!-- Academic Mode -->
+    <section class="cv-section hidden" data-section="academic">
+      <h2>Academic Profile</h2>
 
-  <!-- Traditional CV Mode (PDF-like) -->
-  <section class="cv-section cv-traditional hidden" data-section="traditional">
-    <div class="cv-traditional-content">
-      <h2>Curriculum Vitae</h2>
-
-      <div class="cv-category">
+      <div class="cv-subsection">
         <h3>Education</h3>
-        <!-- Traditional list format -->
+        <div class="education-item">
+          <span class="degree">Ph.D., [Field]</span>
+          <span class="institution">[University], [Year]</span>
+          <p class="dissertation">Dissertation: "[Title]"</p>
+        </div>
+        <!-- More education items -->
       </div>
 
-      <div class="cv-category">
-        <h3>Academic Appointments</h3>
-        <!-- Traditional list -->
+      <div class="cv-subsection">
+        <h3>Research Interests</h3>
+        <ul class="research-interests">
+          <li>Topic 1</li>
+          <li>Topic 2</li>
+          <li>Topic 3</li>
+        </ul>
       </div>
 
-      <div class="cv-category">
+      <div class="cv-subsection">
         <h3>Publications</h3>
-        <!-- Traditional format -->
+        <div class="publication-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="peer-reviewed">
+            Peer-Reviewed
+          </button>
+          <button class="filter-btn" data-filter="books">Books</button>
+          <button class="filter-btn" data-filter="chapters">
+            Book Chapters
+          </button>
+        </div>
+
+        <div class="publications-list">
+          <!-- Publications dynamically loaded from JSON -->
+        </div>
       </div>
 
-      <!-- etc. - full traditional CV -->
+      <div class="cv-subsection">
+        <h3>Grants & Funding</h3>
+        <!-- Grant list -->
+      </div>
 
-      <button class="download-pdf">
-        Download PDF Version
-      </button>
-    </div>
-  </section>
+      <div class="cv-subsection">
+        <h3>Conference Presentations</h3>
+        <!-- Presentation list -->
+      </div>
+    </section>
 
-  <!-- Navigation back to Pantheon -->
-  <nav class="cv-footer">
-    <a href="../../#menu" class="back-link">← Return to Pantheon</a>
-    <a href="../../#akademia" class="back-link">← Return to Akademia</a>
-  </nav>
+    <!-- Teaching Mode -->
+    <section class="cv-section hidden" data-section="teaching">
+      <h2>Teaching Profile</h2>
 
-  <script src="js/cv-interactive.js"></script>
-</body>
+      <div class="cv-subsection">
+        <h3>Teaching Philosophy</h3>
+        <p class="philosophy-statement">
+          [Your teaching philosophy - 2-3 paragraphs]
+        </p>
+      </div>
+
+      <div class="cv-subsection">
+        <h3>Courses Taught</h3>
+        <div class="courses-grid">
+          <div class="course-card">
+            <h4>[Course Number]: [Course Name]</h4>
+            <p class="course-level">Undergraduate / Graduate</p>
+            <p class="course-description">Brief description...</p>
+            <a href="#" class="course-link">View Syllabus →</a>
+          </div>
+          <!-- More courses -->
+        </div>
+      </div>
+
+      <div class="cv-subsection">
+        <h3>Student Outcomes</h3>
+        <ul>
+          <li>Ph.D. students supervised: [Number]</li>
+          <li>Master's theses directed: [Number]</li>
+          <li>Student placements: [Examples]</li>
+        </ul>
+      </div>
+
+      <div class="cv-subsection">
+        <h3>Curriculum Development</h3>
+        <!-- List of programs/courses developed -->
+      </div>
+    </section>
+
+    <!-- Design Mode -->
+    <section class="cv-section hidden" data-section="design">
+      <h2>Design Portfolio</h2>
+
+      <div class="design-grid">
+        <div class="design-project">
+          <img src="img/design/project-1.jpg" alt="Project" />
+          <h3>Project Name</h3>
+          <p class="project-type">UX/UI Design</p>
+          <a href="#" class="project-link">View Case Study →</a>
+        </div>
+        <!-- More projects -->
+      </div>
+
+      <div class="cv-subsection">
+        <h3>Design Skills</h3>
+        <div class="skills-list">
+          <span class="skill">UX Research</span>
+          <span class="skill">Interface Design</span>
+          <span class="skill">Web Development</span>
+          <span class="skill">Design Systems</span>
+          <span class="skill">HTML/CSS/JS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Artistic Mode -->
+    <section class="cv-section hidden" data-section="artistic">
+      <h2>Artistic Practice</h2>
+
+      <div class="cv-subsection">
+        <h3>Discography</h3>
+        <div class="albums-list">
+          <div class="album-item">
+            <img src="img/photos/artwork/ogod-cover.jpg" alt="OGOD" />
+            <div class="album-info">
+              <h4>OGOD</h4>
+              <p class="year">2015</p>
+              <p class="description">Visual album, 29 tracks</p>
+              <a href="../../#sound" class="album-link">Listen →</a>
+            </div>
+          </div>
+          <!-- More albums -->
+        </div>
+      </div>
+
+      <div class="cv-subsection">
+        <h3>Exhibitions & Performances</h3>
+        <div class="exhibitions-list">
+          <div class="exhibition-item">
+            <span class="year">2015</span>
+            <span class="title">Live @ Electronica 1.3</span>
+            <span class="venue">[Venue Name]</span>
+          </div>
+          <!-- More exhibitions -->
+        </div>
+      </div>
+
+      <div class="cv-subsection">
+        <h3>Artistic Statement</h3>
+        <p class="artist-statement">
+          [Your artistic statement - 2-3 paragraphs about your practice]
+        </p>
+      </div>
+    </section>
+
+    <!-- Traditional CV Mode (PDF-like) -->
+    <section
+      class="cv-section cv-traditional hidden"
+      data-section="traditional"
+    >
+      <div class="cv-traditional-content">
+        <h2>Curriculum Vitae</h2>
+
+        <div class="cv-category">
+          <h3>Education</h3>
+          <!-- Traditional list format -->
+        </div>
+
+        <div class="cv-category">
+          <h3>Academic Appointments</h3>
+          <!-- Traditional list -->
+        </div>
+
+        <div class="cv-category">
+          <h3>Publications</h3>
+          <!-- Traditional format -->
+        </div>
+
+        <!-- etc. - full traditional CV -->
+
+        <button class="download-pdf">Download PDF Version</button>
+      </div>
+    </section>
+
+    <!-- Navigation back to Pantheon -->
+    <nav class="cv-footer">
+      <a href="../../#menu" class="back-link">← Return to Pantheon</a>
+      <a href="../../#akademia" class="back-link">← Return to Akademia</a>
+    </nav>
+
+    <script src="js/cv-interactive.js"></script>
+  </body>
 </html>
 ```
 
@@ -339,7 +353,7 @@ class InteractiveCV {
   init() {
     // Mode selector buttons
     document.querySelectorAll('.mode-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', e => {
         const mode = e.target.dataset.mode;
         this.switchMode(mode);
       });
@@ -347,7 +361,7 @@ class InteractiveCV {
 
     // Facet links
     document.querySelectorAll('.facet-link').forEach(link => {
-      link.addEventListener('click', (e) => {
+      link.addEventListener('click', e => {
         e.preventDefault();
         const goto = e.target.dataset.goto;
         this.switchMode(goto);
@@ -476,7 +490,6 @@ MUSEUM (Chamber 1)
 ```html
 <!-- museum/index.html -->
 <section id="museum" class="chamber">
-
   <!-- Lens Selector -->
   <nav class="museum-lenses">
     <h2>Choose Your Lens</h2>
@@ -500,13 +513,11 @@ MUSEUM (Chamber 1)
 
   <!-- Timeline of Work -->
   <div class="museum-timeline">
-
     <!-- Work Item (changes based on lens) -->
     <div class="work-item" data-work-id="ogod-2015">
-
       <!-- Default View -->
       <div class="work-view default-view active">
-        <img src="../img/photos/artwork/ogod-cover.jpg" alt="OGOD">
+        <img src="../img/photos/artwork/ogod-cover.jpg" alt="OGOD" />
         <h3>OGOD</h3>
         <p class="year">2015</p>
         <p class="description">Visual album, 29 tracks exploring...</p>
@@ -515,7 +526,7 @@ MUSEUM (Chamber 1)
 
       <!-- Collector View -->
       <div class="work-view collector-view hidden">
-        <img src="../img/photos/artwork/ogod-cover.jpg" alt="OGOD">
+        <img src="../img/photos/artwork/ogod-cover.jpg" alt="OGOD" />
         <h3>OGOD</h3>
         <p class="year">2015</p>
 
@@ -525,12 +536,19 @@ MUSEUM (Chamber 1)
             <li><strong>Format:</strong> Digital album + Visual experience</li>
             <li><strong>Edition:</strong> Unlimited digital</li>
             <li><strong>Availability:</strong> Bandcamp, streaming</li>
-            <li><strong>Provenance:</strong> Self-released, independently produced</li>
-            <li><strong>Notable:</strong> Complete 29-page visual album intact</li>
+            <li>
+              <strong>Provenance:</strong> Self-released, independently produced
+            </li>
+            <li>
+              <strong>Notable:</strong> Complete 29-page visual album intact
+            </li>
           </ul>
 
           <h4>Market Context</h4>
-          <p>Early example of web-based visual album format, predating mainstream adoption of the form...</p>
+          <p>
+            Early example of web-based visual album format, predating mainstream
+            adoption of the form...
+          </p>
 
           <h4>Acquisition</h4>
           <a href="https://etceter4.bandcamp.com" class="acquire-link">
@@ -541,13 +559,17 @@ MUSEUM (Chamber 1)
 
       <!-- Archaeologist View -->
       <div class="work-view archaeologist-view hidden">
-        <img src="../img/photos/artwork/ogod-cover.jpg" alt="OGOD">
+        <img src="../img/photos/artwork/ogod-cover.jpg" alt="OGOD" />
         <h3>OGOD</h3>
         <p class="year">2015</p>
 
         <div class="archaeological-info">
           <h4>Historical Context</h4>
-          <p>Created during [contextual period]. Follows <em>ProgressionDigression</em> (2012) and precedes the 2016 site restructuring...</p>
+          <p>
+            Created during [contextual period]. Follows
+            <em>ProgressionDigression</em> (2012) and precedes the 2016 site
+            restructuring...
+          </p>
 
           <h4>Production Context</h4>
           <ul>
@@ -558,7 +580,10 @@ MUSEUM (Chamber 1)
           </ul>
 
           <h4>Evolution</h4>
-          <p>Represents a shift from [earlier style] toward [new approach]. Notable for integration of visual and sonic elements...</p>
+          <p>
+            Represents a shift from [earlier style] toward [new approach].
+            Notable for integration of visual and sonic elements...
+          </p>
 
           <h4>Archival Status</h4>
           <ul>
@@ -576,22 +601,34 @@ MUSEUM (Chamber 1)
 
       <!-- Critique View -->
       <div class="work-view critique-view hidden">
-        <img src="../img/photos/artwork/ogod-cover.jpg" alt="OGOD">
+        <img src="../img/photos/artwork/ogod-cover.jpg" alt="OGOD" />
         <h3>OGOD</h3>
         <p class="year">2015</p>
 
         <div class="critical-analysis">
           <h4>Formal Qualities</h4>
-          <p>The work operates through [formal analysis]. Its structure employs [technique], creating [effect]...</p>
+          <p>
+            The work operates through [formal analysis]. Its structure employs
+            [technique], creating [effect]...
+          </p>
 
           <h4>Conceptual Framework</h4>
-          <p>OGOD engages with themes of [theme 1], [theme 2], positioning itself within discourses of [field]...</p>
+          <p>
+            OGOD engages with themes of [theme 1], [theme 2], positioning itself
+            within discourses of [field]...
+          </p>
 
           <h4>Theoretical Context</h4>
-          <p>Can be read through [theoretical lens], particularly in relation to [theorist]'s concept of [concept]...</p>
+          <p>
+            Can be read through [theoretical lens], particularly in relation to
+            [theorist]'s concept of [concept]...
+          </p>
 
           <h4>Technical Innovation</h4>
-          <p>Notable for its [technical aspect], which challenges conventions of [medium/genre]...</p>
+          <p>
+            Notable for its [technical aspect], which challenges conventions of
+            [medium/genre]...
+          </p>
 
           <h4>Critical Reception</h4>
           <blockquote>
@@ -607,13 +644,10 @@ MUSEUM (Chamber 1)
           </ul>
         </div>
       </div>
-
     </div>
 
     <!-- More work items... -->
-
   </div>
-
 </section>
 ```
 
@@ -632,7 +666,7 @@ class MuseumLenses {
 
   init() {
     document.querySelectorAll('.lens-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', e => {
         const lens = e.target.closest('.lens-btn').dataset.lens;
         this.switchLens(lens);
       });
@@ -669,7 +703,7 @@ class MuseumLenses {
     // Analytics
     if (window.gtag) {
       gtag('event', 'lens_change', {
-        'lens': lens
+        lens: lens,
       });
     }
   }
@@ -721,6 +755,7 @@ vercel
 ```
 
 Follow prompts:
+
 - Link to existing project? No
 - Project name: `etceter4`
 - Directory: `./`
@@ -835,6 +870,7 @@ vercel --prod
 5. Deploy!
 
 **Result:**
+
 - Master: `https://etceter4.netlify.app`
 - Branches: `https://branch-name--etceter4.netlify.app`
 - PRs: Automatic preview links in comments
@@ -870,6 +906,7 @@ git push origin presentation/investor-demo
 **Step 4: Get shareable URL** (automatic!)
 
 Vercel/Netlify will comment on the commit with:
+
 ```
 ✅ Preview deployed!
 URL: https://etceter4-git-presentation-investor-demo.vercel.app
@@ -878,6 +915,7 @@ URL: https://etceter4-git-presentation-investor-demo.vercel.app
 **Step 5: Share with stakeholders**
 
 Email template:
+
 ```
 Subject: ETCETER4 - Portfolio Review
 
@@ -967,7 +1005,6 @@ class SiteMode {
 
       // Update toggle button
       document.querySelector('.mode-current').textContent = 'Professional';
-
     } else {
       // Enable full experimental mode
       document.body.classList.add('experimental-mode');
@@ -1050,9 +1087,10 @@ https://etceter4.vercel.app?mode=experimental
   function trackSection(section) {
     if (window.gtag) {
       gtag('event', 'section_view', {
-        'section': section,
-        'mode': document.body.classList.contains('professional-mode')
-          ? 'professional' : 'experimental'
+        section: section,
+        mode: document.body.classList.contains('professional-mode')
+          ? 'professional'
+          : 'experimental',
       });
     }
   }
@@ -1069,8 +1107,8 @@ https://etceter4.vercel.app?mode=experimental
       const timeSpent = Date.now() - sectionTimer[section];
       if (window.gtag) {
         gtag('event', 'time_spent', {
-          'section': section,
-          'duration': Math.floor(timeSpent / 1000) // seconds
+          section: section,
+          duration: Math.floor(timeSpent / 1000), // seconds
         });
       }
     }
@@ -1079,6 +1117,7 @@ https://etceter4.vercel.app?mode=experimental
 ```
 
 Then you can see:
+
 - Which sections investors look at most
 - How long they spend
 - Which lens they prefer (collector, archaeologist, critique)
@@ -1091,28 +1130,33 @@ Then you can see:
 ### This Week: Core Professional Structure
 
 **Day 1-2: CV Page**
+
 - Create `/akademia/cv/` directory
 - Build interactive CV with mode switching
 - Add your actual content (education, publications, etc.)
 - Export publications to JSON
 
 **Day 3: Museum Lenses**
+
 - Add lens selector to museum
 - Create three views for each work item
 - Write collector, archaeologist, critique descriptions
 
 **Day 4: Vercel/Netlify Setup**
+
 - Install Vercel CLI
 - Deploy project
 - Test branch previews
 - Configure custom domain (optional)
 
 **Day 5: Professional Mode Toggle**
+
 - Implement site-wide mode switcher
 - Test professional vs. experimental views
 - Ensure clean presentation for stakeholders
 
 **Weekend: Content**
+
 - Write CV content
 - Write museum lens descriptions
 - Create presentation branch
@@ -1143,5 +1187,5 @@ Then you can see:
 
 **The Pantheon is now a professional instrument—showcasing academic rigor, teaching excellence, design expertise, and artistic vision, all while maintaining experimental edge. Perfect for first readers, investors, and review committees.** 🏛️✨📄
 
-*Architecture by: Anthony James Padavano & Claude (Anthropic)*
-*Date: October 27, 2025*
+_Architecture by: Anthony James Padavano & Claude (Anthropic)_
+_Date: October 27, 2025_

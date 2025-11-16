@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * Footer Tests
  * prep: create an element within the body that has 3 tiers

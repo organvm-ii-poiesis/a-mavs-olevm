@@ -1,7 +1,8 @@
 # THE LIVING PANTHEON
+
 **Generative, Breathing, Constantly-Moving Architecture**
 
-*Inspired by Radiohead's Kid A & Hail to the Thief Era Websites*
+_Inspired by Radiohead's Kid A & Hail to the Thief Era Websites_
 
 ---
 
@@ -9,7 +10,7 @@
 
 The Pantheon is not a static museum. It's a **living organism** - constantly shifting, morphing, breathing. Visitors enter a space that is never quite the same twice. Images fade between states. The labyrinth grows. Music pages pulse with subtle life. Everything moves, but slowly, subtly—almost imperceptibly.
 
-**Core Principle:** *"The temple breathes"*
+**Core Principle:** _"The temple breathes"_
 
 ---
 
@@ -18,6 +19,7 @@ The Pantheon is not a static museum. It's a **living organism** - constantly shi
 ### What Made Those Sites Special
 
 **Kid A Website (2000):**
+
 - Dark, unsettling atmosphere
 - Minotaur in a labyrinth metaphor
 - Abstract navigation (no clear "click here")
@@ -29,6 +31,7 @@ The Pantheon is not a static museum. It's a **living organism** - constantly shi
 - Flash-based animation and interactivity
 
 **Hail to the Thief Website (2003):**
+
 - Political/paranoid atmosphere
 - More structured but still abstract
 - Animated illustrations
@@ -38,6 +41,7 @@ The Pantheon is not a static museum. It's a **living organism** - constantly shi
 - Sense of things happening "behind" the visible layer
 
 **Key Elements to Adopt:**
+
 1. Constant subtle motion
 2. Glitch aesthetic (controlled)
 3. Hidden pathways and discoveries
@@ -54,12 +58,14 @@ The Pantheon is not a static museum. It's a **living organism** - constantly shi
 ### Current State vs. Future State
 
 **Current (Static):**
+
 - 12 diary entries from 2015-2016
 - Fixed HTML pages
 - Historical archive
 - Manual additions only
 
 **Future (Generative & Growing):**
+
 - Labyrinth constantly expands
 - New paths appear over time
 - Auto-generated connections
@@ -72,9 +78,11 @@ The Pantheon is not a static museum. It's a **living organism** - constantly shi
 ### Generative System Design
 
 #### Layer 1: The Core Labyrinth (Manual Curation)
+
 Your existing 12 diary entries + new entries you write
 
 **Structure:**
+
 ```
 /labyrinth/
   /core/
@@ -87,9 +95,11 @@ Your existing 12 diary entries + new entries you write
 ```
 
 #### Layer 2: The Growing Labyrinth (Semi-Generated)
+
 Fragments, notes, observations that appear between major entries
 
 **Example Fragments:**
+
 - Single sentences that redirect
 - Abstract poetry snippets
 - Code fragments
@@ -98,36 +108,41 @@ Fragments, notes, observations that appear between major entries
 - Momentary thoughts
 
 **Generation Method:**
+
 ```javascript
 // Fragment generator
 const fragments = [
-  "the signal degrades",
-  "loop returning to itself",
-  "memory of a memory",
-  "static between stations",
-  "etc etc etc etc",
+  'the signal degrades',
+  'loop returning to itself',
+  'memory of a memory',
+  'static between stations',
+  'etc etc etc etc',
   // ... hundreds more
 ];
 
 // Generate a random path
 function generateFragmentPath() {
   const fragment = fragments[Math.floor(Math.random() * fragments.length)];
-  const nextPath = labyrinthPaths[Math.floor(Math.random() * labyrinthPaths.length)];
+  const nextPath =
+    labyrinthPaths[Math.floor(Math.random() * labyrinthPaths.length)];
 
   return createFragmentPage(fragment, nextPath);
 }
 ```
 
 #### Layer 3: The Dream Labyrinth (Fully Generative)
+
 AI-assisted content generation based on your existing writing style
 
 **Implementation:**
+
 - Train on your diary entries, blog posts, lyrics
 - Generate "dream-like" text fragments
 - Recombine your own words in new ways
 - Create uncanny valley effect (sounds like you but isn't quite)
 
 **Tools:**
+
 - Markov chain text generation
 - GPT-style language models (fine-tuned on your work)
 - Cut-up technique (Burroughs/Bowie method)
@@ -138,10 +153,12 @@ AI-assisted content generation based on your existing writing style
 ### Loophole Function Expansion
 
 **Current Loophole:**
+
 - Auto-redirecting text experience
 - Single page with redirect
 
 **Expanded Loophole:**
+
 - **Multiple loopholes** scattered throughout site
 - Enter from one, exit from another (wormholes)
 - Fragments that loop back on themselves
@@ -155,80 +172,95 @@ AI-assisted content generation based on your existing writing style
 <!-- loophole-fragment-01.html -->
 <!DOCTYPE html>
 <html>
-<head>
-  <title>///</title>
-  <style>
-    body {
-      background: #000;
-      color: #0f0;
-      font-family: 'Courier New', monospace;
-      font-size: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      animation: glitch 0.3s infinite;
-    }
-
-    @keyframes glitch {
-      0% { transform: translate(0); }
-      20% { transform: translate(-2px, 2px); }
-      40% { transform: translate(-2px, -2px); }
-      60% { transform: translate(2px, 2px); }
-      80% { transform: translate(2px, -2px); }
-      100% { transform: translate(0); }
-    }
-
-    .text {
-      max-width: 80%;
-      text-align: center;
-      line-height: 1.8;
-      text-shadow: 2px 2px 4px rgba(0, 255, 0, 0.5);
-    }
-  </style>
-</head>
-<body onload="setTimeout(function(){window.location = getRandomExit();}, Math.random() * 5000 + 3000)">
-  <div class="text" id="fragment"></div>
-
-  <script>
-    const fragments = [
-      "the loop returns / always returns / has always been returning",
-      "you are here<br>you were here<br>you will have been here",
-      "signal: degraded<br>meaning: unstable<br>location: uncertain",
-      "etc<br>etc<br>etc<br>etc<br>etc",
-      "between the between<br>behind the behind"
-    ];
-
-    const exits = [
-      '../labyrinth/core/040615.html',
-      '../#words',
-      '../analog.html',
-      'loophole-fragment-02.html',
-      '../#menu'
-    ];
-
-    function getRandomExit() {
-      return exits[Math.floor(Math.random() * exits.length)];
-    }
-
-    // Display random fragment
-    document.getElementById('fragment').innerHTML =
-      fragments[Math.floor(Math.random() * fragments.length)];
-
-    // Random glitch effect
-    setInterval(() => {
-      if (Math.random() > 0.9) {
-        document.body.style.background = Math.random() > 0.5 ? '#000' : '#fff';
-        document.body.style.color = Math.random() > 0.5 ? '#0f0' : '#f00';
-        setTimeout(() => {
-          document.body.style.background = '#000';
-          document.body.style.color = '#0f0';
-        }, 100);
+  <head>
+    <title>///</title>
+    <style>
+      body {
+        background: #000;
+        color: #0f0;
+        font-family: 'Courier New', monospace;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        animation: glitch 0.3s infinite;
       }
-    }, 500);
-  </script>
-</body>
+
+      @keyframes glitch {
+        0% {
+          transform: translate(0);
+        }
+        20% {
+          transform: translate(-2px, 2px);
+        }
+        40% {
+          transform: translate(-2px, -2px);
+        }
+        60% {
+          transform: translate(2px, 2px);
+        }
+        80% {
+          transform: translate(2px, -2px);
+        }
+        100% {
+          transform: translate(0);
+        }
+      }
+
+      .text {
+        max-width: 80%;
+        text-align: center;
+        line-height: 1.8;
+        text-shadow: 2px 2px 4px rgba(0, 255, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body
+    onload="setTimeout(function(){window.location = getRandomExit();}, Math.random() * 5000 + 3000)"
+  >
+    <div class="text" id="fragment"></div>
+
+    <script>
+      const fragments = [
+        'the loop returns / always returns / has always been returning',
+        'you are here<br>you were here<br>you will have been here',
+        'signal: degraded<br>meaning: unstable<br>location: uncertain',
+        'etc<br>etc<br>etc<br>etc<br>etc',
+        'between the between<br>behind the behind',
+      ];
+
+      const exits = [
+        '../labyrinth/core/040615.html',
+        '../#words',
+        '../analog.html',
+        'loophole-fragment-02.html',
+        '../#menu',
+      ];
+
+      function getRandomExit() {
+        return exits[Math.floor(Math.random() * exits.length)];
+      }
+
+      // Display random fragment
+      document.getElementById('fragment').innerHTML =
+        fragments[Math.floor(Math.random() * fragments.length)];
+
+      // Random glitch effect
+      setInterval(() => {
+        if (Math.random() > 0.9) {
+          document.body.style.background =
+            Math.random() > 0.5 ? '#000' : '#fff';
+          document.body.style.color = Math.random() > 0.5 ? '#0f0' : '#f00';
+          setTimeout(() => {
+            document.body.style.background = '#000';
+            document.body.style.color = '#0f0';
+          }, 100);
+        }
+      }, 500);
+    </script>
+  </body>
 </html>
 ```
 
@@ -239,6 +271,7 @@ AI-assisted content generation based on your existing writing style
 ### Visual Concept
 
 Images don't sit still. They slowly **morph** between 2-3 states:
+
 - Photograph → Glitched version → Abstract interpretation
 - Portrait → Blurred → Pixelated → Back to portrait
 - Album art → Deconstructed → Reconstructed
@@ -255,9 +288,17 @@ Images don't sit still. They slowly **morph** between 2-3 states:
 ```html
 <!-- Morphing Image Container -->
 <div class="morph-container">
-  <img src="img/photos/diary/diary1.jpg" class="morph-img morph-img-1" alt="">
-  <img src="img/photos/diary/diary1-glitch.jpg" class="morph-img morph-img-2" alt="">
-  <img src="img/photos/diary/diary1-abstract.jpg" class="morph-img morph-img-3" alt="">
+  <img src="img/photos/diary/diary1.jpg" class="morph-img morph-img-1" alt="" />
+  <img
+    src="img/photos/diary/diary1-glitch.jpg"
+    class="morph-img morph-img-2"
+    alt=""
+  />
+  <img
+    src="img/photos/diary/diary1-abstract.jpg"
+    class="morph-img morph-img-3"
+    alt=""
+  />
 </div>
 ```
 
@@ -299,23 +340,46 @@ Images don't sit still. They slowly **morph** between 2-3 states:
 }
 
 @keyframes morphFade2 {
-  0%, 100% { opacity: 0; }
-  25% { opacity: 0.7; }
-  50% { opacity: 1; }
-  75% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.7;
+  }
 }
 
 @keyframes morphFade3 {
-  0%, 100% { opacity: 0; }
-  25% { opacity: 0.5; }
-  50% { opacity: 0.9; }
-  75% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  75% {
+    opacity: 0.5;
+  }
 }
 
 /* Optional: Subtle scale/transform during morph */
 @keyframes breathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
 }
 
 .morph-container {
@@ -351,7 +415,7 @@ class ImageMorpher {
   async loadImages() {
     this.loadedImages = await Promise.all(
       this.images.map(src => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           const img = new Image();
           img.onload = () => resolve(img);
           img.src = src;
@@ -378,7 +442,8 @@ class ImageMorpher {
 
   drawMorphedFrame(progress) {
     const from = this.loadedImages[this.currentIndex];
-    const to = this.loadedImages[(this.currentIndex + 1) % this.loadedImages.length];
+    const to =
+      this.loadedImages[(this.currentIndex + 1) % this.loadedImages.length];
 
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -423,14 +488,11 @@ class ImageMorpher {
 }
 
 // Usage
-const morpher = new ImageMorpher(
-  document.getElementById('morph-container'),
-  [
-    'img/photos/diary/diary1.jpg',
-    'img/photos/diary/diary1-glitch.jpg',
-    'img/photos/diary/diary1-abstract.jpg'
-  ]
-);
+const morpher = new ImageMorpher(document.getElementById('morph-container'), [
+  'img/photos/diary/diary1.jpg',
+  'img/photos/diary/diary1-glitch.jpg',
+  'img/photos/diary/diary1-abstract.jpg',
+]);
 ```
 
 ---
@@ -440,6 +502,7 @@ const morpher = new ImageMorpher(
 ### Constant Movement Design
 
 **Music pages should:**
+
 - Album art slowly rotates (1 rotation per 5 minutes)
 - Waveforms pulse with ambient sound
 - Track lists subtly fade in/out
@@ -460,9 +523,11 @@ const morpher = new ImageMorpher(
   <!-- Album Display -->
   <div class="album-container">
     <div class="album-art-wrapper">
-      <img src="img/photos/artwork/ogod-cover.jpg"
-           class="album-art rotating breathing"
-           alt="OGOD">
+      <img
+        src="img/photos/artwork/ogod-cover.jpg"
+        class="album-art rotating breathing"
+        alt="OGOD"
+      />
       <div class="vinyl-overlay"></div>
     </div>
 
@@ -472,9 +537,15 @@ const morpher = new ImageMorpher(
 
       <div class="tracklist">
         <!-- Tracks fade in/out individually -->
-        <div class="track fading-track" style="animation-delay: 0s">01. Intro</div>
-        <div class="track fading-track" style="animation-delay: 2s">02. Track Two</div>
-        <div class="track fading-track" style="animation-delay: 4s">03. Track Three</div>
+        <div class="track fading-track" style="animation-delay: 0s">
+          01. Intro
+        </div>
+        <div class="track fading-track" style="animation-delay: 2s">
+          02. Track Two
+        </div>
+        <div class="track fading-track" style="animation-delay: 4s">
+          03. Track Three
+        </div>
         <!-- etc -->
       </div>
     </div>
@@ -482,7 +553,7 @@ const morpher = new ImageMorpher(
 
   <!-- Ambient Audio (always playing quietly) -->
   <audio id="ambient-sound" autoplay loop>
-    <source src="media/audio/ambient/drone.mp3" type="audio/mpeg">
+    <source src="media/audio/ambient/drone.mp3" type="audio/mpeg" />
   </audio>
 </section>
 ```
@@ -496,8 +567,12 @@ const morpher = new ImageMorpher(
 }
 
 @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Breathing scale effect */
@@ -506,8 +581,13 @@ const morpher = new ImageMorpher(
 }
 
 @keyframes breathe {
-  0%, 100% { transform: scale(1) rotate(var(--rotation, 0deg)); }
-  50% { transform: scale(1.05) rotate(var(--rotation, 0deg)); }
+  0%,
+  100% {
+    transform: scale(1) rotate(var(--rotation, 0deg));
+  }
+  50% {
+    transform: scale(1.05) rotate(var(--rotation, 0deg));
+  }
 }
 
 /* Glitching text */
@@ -516,17 +596,23 @@ const morpher = new ImageMorpher(
 }
 
 @keyframes glitch {
-  0%, 90%, 100% {
+  0%,
+  90%,
+  100% {
     transform: translate(0);
     text-shadow: 0 0 0 transparent;
   }
   91% {
     transform: translate(-2px, 2px);
-    text-shadow: 2px -2px 0 cyan, -2px 2px 0 magenta;
+    text-shadow:
+      2px -2px 0 cyan,
+      -2px 2px 0 magenta;
   }
   92% {
     transform: translate(2px, -2px);
-    text-shadow: -2px 2px 0 cyan, 2px -2px 0 magenta;
+    text-shadow:
+      -2px 2px 0 cyan,
+      2px -2px 0 magenta;
   }
   93% {
     transform: translate(0);
@@ -541,8 +627,13 @@ const morpher = new ImageMorpher(
 }
 
 @keyframes fadeInOut {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Vinyl overlay */
@@ -555,7 +646,7 @@ const morpher = new ImageMorpher(
   background: repeating-radial-gradient(
     circle at center,
     transparent 0%,
-    rgba(0,0,0,0.1) 2%,
+    rgba(0, 0, 0, 0.1) 2%,
     transparent 4%
   );
   animation: vinyl-spin 300s linear infinite;
@@ -563,8 +654,12 @@ const morpher = new ImageMorpher(
 }
 
 @keyframes vinyl-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 ```
 
@@ -596,7 +691,7 @@ class SoundBackground {
         vx: (Math.random() - 0.5) * 0.2,
         vy: (Math.random() - 0.5) * 0.2,
         size: Math.random() * 2 + 1,
-        opacity: Math.random() * 0.5
+        opacity: Math.random() * 0.5,
       });
     }
   }
@@ -605,7 +700,8 @@ class SoundBackground {
     // Gradient background that slowly shifts
     const time = Date.now() * 0.0001;
     const gradient = this.ctx.createLinearGradient(
-      0, 0,
+      0,
+      0,
       this.canvas.width,
       this.canvas.height
     );
@@ -662,14 +758,19 @@ class SoundBackground {
   applyGlitch() {
     const sliceHeight = Math.random() * 50 + 10;
     const y = Math.random() * (this.canvas.height - sliceHeight);
-    const imageData = this.ctx.getImageData(0, y, this.canvas.width, sliceHeight);
+    const imageData = this.ctx.getImageData(
+      0,
+      y,
+      this.canvas.width,
+      sliceHeight
+    );
 
     // RGB shift
     const data = imageData.data;
     const shift = Math.floor(Math.random() * 20) - 10;
 
     for (let i = 0; i < data.length; i += 4) {
-      const shiftedIndex = i + (shift * 4);
+      const shiftedIndex = i + shift * 4;
       if (shiftedIndex >= 0 && shiftedIndex < data.length) {
         data[i] = data[shiftedIndex]; // R channel
       }
@@ -709,8 +810,15 @@ section {
 }
 
 @keyframes sectionBreathe {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.01); opacity: 0.98; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.01);
+    opacity: 0.98;
+  }
 }
 
 /* Subtle color shift */
@@ -719,19 +827,32 @@ body {
 }
 
 @keyframes bodyColorShift {
-  0% { filter: hue-rotate(0deg); }
-  50% { filter: hue-rotate(10deg); }
-  100% { filter: hue-rotate(0deg); }
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(10deg);
+  }
+  100% {
+    filter: hue-rotate(0deg);
+  }
 }
 
 /* Text subtly drifts */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   animation: textDrift var(--drift-duration) ease-in-out infinite;
 }
 
 @keyframes textDrift {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
 }
 
 /* Links pulse on hover */
@@ -744,8 +865,13 @@ a:hover {
 }
 
 @keyframes linkPulse {
-  0%, 100% { text-shadow: 0 0 5px currentColor; }
-  50% { text-shadow: 0 0 20px currentColor; }
+  0%,
+  100% {
+    text-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 20px currentColor;
+  }
 }
 ```
 
@@ -779,7 +905,7 @@ class GlobalGlitchSystem {
       this.textGlitch,
       this.colorGlitch,
       this.positionGlitch,
-      this.imageGlitch
+      this.imageGlitch,
     ];
 
     const glitch = glitchTypes[Math.floor(Math.random() * glitchTypes.length)];
@@ -805,12 +931,15 @@ class GlobalGlitchSystem {
 
   glitchText(text) {
     const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`█▓▒░';
-    return text.split('').map(char => {
-      if (Math.random() < 0.1) {
-        return glitchChars[Math.floor(Math.random() * glitchChars.length)];
-      }
-      return char;
-    }).join('');
+    return text
+      .split('')
+      .map(char => {
+        if (Math.random() < 0.1) {
+          return glitchChars[Math.floor(Math.random() * glitchChars.length)];
+        }
+        return char;
+      })
+      .join('');
   }
 
   colorGlitch() {
@@ -867,7 +996,7 @@ const glitchSystem = new GlobalGlitchSystem(0.02);
 ```html
 <!-- Ambient sound that plays throughout site -->
 <audio id="ambient-drone" autoplay loop>
-  <source src="media/audio/ambient/temple-drone.mp3" type="audio/mpeg">
+  <source src="media/audio/ambient/temple-drone.mp3" type="audio/mpeg" />
 </audio>
 
 <script>
@@ -911,12 +1040,14 @@ const glitchSystem = new GlobalGlitchSystem(0.02);
 ## VIII. Implementation Roadmap
 
 ### Phase 1: Core Animation System (Week 1)
+
 - [ ] Implement global CSS animations (breathing, drifting)
 - [ ] Add random glitch system (JavaScript)
 - [ ] Test performance across browsers
 - [ ] Ensure subtlety (shouldn't be distracting)
 
 ### Phase 2: Image Morphing (Week 2)
+
 - [ ] Create 2-3 versions of key images (photo, glitch, abstract)
 - [ ] Implement CSS-based morphing for stills
 - [ ] Implement canvas-based morphing for complex effects
@@ -924,6 +1055,7 @@ const glitchSystem = new GlobalGlitchSystem(0.02);
 - [ ] Apply to album artwork
 
 ### Phase 3: Animated Music Pages (Week 3)
+
 - [ ] Design rotating album art system
 - [ ] Implement animated background (particles/gradients)
 - [ ] Add waveform visualization
@@ -931,6 +1063,7 @@ const glitchSystem = new GlobalGlitchSystem(0.02);
 - [ ] Integrate with existing Sound section
 
 ### Phase 4: Generative Labyrinth (Week 4)
+
 - [ ] Create fragment generation system
 - [ ] Write/collect 100+ text fragments
 - [ ] Build loophole network (multiple entry/exit points)
@@ -938,12 +1071,14 @@ const glitchSystem = new GlobalGlitchSystem(0.02);
 - [ ] Add glitch effects to labyrinth pages
 
 ### Phase 5: Ambient Sound Layer (Week 5)
+
 - [ ] Create/source ambient drone tracks
 - [ ] Implement global audio system
 - [ ] Add subtle volume changes based on interaction
 - [ ] Chamber-specific ambient sounds
 
 ### Phase 6: Polish & Optimization (Week 6)
+
 - [ ] Performance testing
 - [ ] Reduce resource usage where needed
 - [ ] Cross-browser compatibility
@@ -959,6 +1094,7 @@ const glitchSystem = new GlobalGlitchSystem(0.02);
 **Challenge:** Constant animation can be resource-intensive
 
 **Solutions:**
+
 1. Use CSS animations (GPU-accelerated) over JavaScript
 2. Limit particle count on mobile devices
 3. Use `requestAnimationFrame` for JavaScript animations
@@ -967,7 +1103,9 @@ const glitchSystem = new GlobalGlitchSystem(0.02);
 
 ```javascript
 // Performance optimization
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reducedMotion = window.matchMedia(
+  '(prefers-reduced-motion: reduce)'
+).matches;
 
 if (reducedMotion) {
   // Disable or reduce animations
@@ -1002,12 +1140,14 @@ document.addEventListener('visibilitychange', () => {
 - **Growing:** The labyrinth constantly expands
 
 **Visitor Experience:**
+
 - First visit: "This feels alive"
 - Second visit: "Wait, that wasn't there before"
 - Third visit: "I keep discovering new paths"
 - Ongoing: "This place breathes with me"
 
 **Inspiration Sources:**
+
 - Radiohead Kid A/Hail to the Thief websites
 - David Lynch's ambience
 - Mark Z. Danielewski's House of Leaves
@@ -1023,18 +1163,21 @@ document.addEventListener('visibilitychange', () => {
 ### Immediate Actions
 
 **This Week:**
+
 1. Implement global CSS animation system
 2. Test on your existing pages
 3. Create first morphing image test (diary carousel)
 4. Build first loophole fragment page
 
 **Next Week:**
+
 1. Create 2-3 glitched versions of existing images
 2. Implement particle background for Sound section
 3. Write 20-30 text fragments for labyrinth
 4. Source or create ambient drone track
 
 **This Month:**
+
 1. Complete morphing system across all image galleries
 2. Animate all music pages with constant motion
 3. Build network of 10+ loophole fragments
@@ -1061,8 +1204,8 @@ Like a living temple, it **evolves and grows**, responding to time, to visits, t
 
 ---
 
-*Architecture by: Anthony James Padavano & Claude (Anthropic)*
-*Date: October 27, 2025*
-*Status: Generative Systems Designed, Ready to Implement*
+_Architecture by: Anthony James Padavano & Claude (Anthropic)_
+_Date: October 27, 2025_
+_Status: Generative Systems Designed, Ready to Implement_
 
 🌀 **The labyrinth grows. The temple breathes. The signal degrades beautifully.** 🌀

@@ -1,42 +1,50 @@
 # 🚀 Quick Start Guide
 
-*New to coding? Start with [BEGINNER_TUTORIAL.md](BEGINNER_TUTORIAL.md) for a comprehensive guide.*
+_New to coding? Start with [BEGINNER_TUTORIAL.md](BEGINNER_TUTORIAL.md) for a comprehensive guide._
 
 ## Get This Project Running in 5 Minutes
 
 ### Prerequisites
+
 - Node.js installed ([download here](https://nodejs.org/))
 - Git installed ([download here](https://git-scm.com/))
 - VS Code installed ([download here](https://code.visualstudio.com/))
 
 ### Step 1: Clone the Project
+
 ```bash
 git clone https://github.com/4-b100m/etceter4.git
 cd etceter4
 ```
 
 ### Step 2: Install Dependencies
+
 ```bash
 npm install
 ```
 
 ### Step 3: Start Development Server
+
 ```bash
 npm test
 ```
+
 Your browser should open automatically showing the site at `http://localhost:3000`
 
 ### Step 4: Open in VS Code
+
 ```bash
 code .
 ```
 
 ### Step 5: Make Your First Change
+
 1. Open `README.md` in VS Code
 2. Add your name to the contributors section
 3. Save the file (`Ctrl+S` or `Cmd+S`)
 
 ### Step 6: Commit Your Changes
+
 ```bash
 git add README.md
 git commit -m "Added my name to contributors"

@@ -5,6 +5,7 @@ This guide explains how to deploy ETCETER4 to Vercel for preview deployments and
 ## Why Vercel?
 
 Vercel provides:
+
 - **Automatic branch previews** - Every branch gets its own URL for sharing with stakeholders
 - **Zero-config deployments** - Just push to GitHub and deploy
 - **Fast global CDN** - Content delivered from edge locations worldwide
@@ -33,6 +34,7 @@ Vercel provides:
 ### 3. Configure Settings (Optional)
 
 In Project Settings:
+
 - **Domains:** Add custom domain if desired (e.g., `etceter4.com`)
 - **Git:** Enable branch deployments for all branches
 - **Environment Variables:** None needed for this static site
@@ -42,6 +44,7 @@ In Project Settings:
 ### Scenario 1: Share Current Branch with Investor
 
 1. **Push your current branch to GitHub:**
+
    ```bash
    git add .
    git commit -m "Update CV with new publications"
@@ -64,6 +67,7 @@ In Project Settings:
 The CV supports shareable URLs with specific facets, modes, and lenses:
 
 **Example URLs:**
+
 ```
 # Academic facet, professional mode, collector lens
 https://etceter4.vercel.app/akademia/cv/#academic/professional/collector
@@ -76,6 +80,7 @@ https://etceter4.vercel.app/akademia/cv/#designer/professional/archaeologist
 ```
 
 **To share a specific view:**
+
 1. Navigate to the CV page on your preview deployment
 2. Select desired facet, mode, and lens
 3. Copy the URL (it updates automatically)
@@ -84,6 +89,7 @@ https://etceter4.vercel.app/akademia/cv/#designer/professional/archaeologist
 ### Scenario 3: Preview Before Publishing
 
 1. **Create a preview branch:**
+
    ```bash
    git checkout -b preview/investor-demo
    git push origin preview/investor-demo
@@ -115,6 +121,7 @@ https://etceter4.vercel.app/akademia/cv/#designer/professional/archaeologist
    - Set "Production Branch" to `main` (or `master`)
 
 2. **Deploy to production:**
+
    ```bash
    git checkout main
    git merge your-feature-branch
@@ -128,6 +135,7 @@ https://etceter4.vercel.app/akademia/cv/#designer/professional/archaeologist
 ### Option 2: GitHub Pages + Vercel
 
 You can use both simultaneously:
+
 - **GitHub Pages** - Official public site (`4-b100m.github.io/etceter4`)
 - **Vercel** - Preview deployments and alternative production URL
 
@@ -147,6 +155,7 @@ No conflicts - they serve from different domains.
 ### Rolling Back
 
 If a production deployment has issues:
+
 1. Go to Deployments tab
 2. Find previous working deployment
 3. Click "..." menu > **"Promote to Production"**
@@ -155,6 +164,7 @@ If a production deployment has issues:
 ### Deleting Old Previews
 
 Vercel automatically keeps recent deployments, but you can manually delete old previews:
+
 1. Deployments tab
 2. Find old preview deployment
 3. Click "..." menu > **"Delete"**
@@ -164,6 +174,7 @@ Vercel automatically keeps recent deployments, but you can manually delete old p
 ### For Academic Reviewers
 
 Share CV in **Professional Mode** with **Archaeologist Lens:**
+
 ```
 https://etceter4.vercel.app/akademia/cv/#academic/professional/archaeologist
 ```
@@ -173,6 +184,7 @@ This shows research context, methodology, and scholarly impact.
 ### For Investors
 
 Share CV in **Professional Mode** with **Collector Lens:**
+
 ```
 https://etceter4.vercel.app/akademia/cv/#overview/professional/collector
 ```
@@ -182,6 +194,7 @@ This provides clean, high-level overview of accomplishments.
 ### For Creative Collaborators
 
 Share in **Experimental Mode** with **Critique Lens:**
+
 ```
 https://etceter4.vercel.app/akademia/cv/#artist/experimental/critique
 ```
@@ -191,6 +204,7 @@ This shows conceptual framework and artistic positioning.
 ### For Students/Mentees
 
 Share full site with specific sections:
+
 ```
 https://etceter4.vercel.app/#sound    (Music)
 https://etceter4.vercel.app/#words    (Writing)
@@ -200,6 +214,7 @@ https://etceter4.vercel.app/loophole.html  (Interactive work)
 ## Monitoring Performance
 
 Vercel provides analytics:
+
 - **Analytics Tab:** Page views, visitors, top pages
 - **Speed Insights:** Loading times, Core Web Vitals
 - **Deployment Logs:** Build process, errors
@@ -209,6 +224,7 @@ Free tier includes basic analytics; paid tiers offer more detailed data.
 ## Cost
 
 **Free Tier Includes:**
+
 - 100 GB bandwidth/month
 - Unlimited deployments
 - Automatic HTTPS
@@ -218,6 +234,7 @@ Free tier includes basic analytics; paid tiers offer more detailed data.
 Your static site will easily fit within free tier limits.
 
 **Paid Tier ($20/month):**
+
 - 1 TB bandwidth
 - Advanced analytics
 - Password protection for previews
@@ -228,11 +245,13 @@ Your static site will easily fit within free tier limits.
 ### Deployment Failed
 
 **Check build logs:**
+
 1. Go to failed deployment
 2. Click "View Build Logs"
 3. Look for errors
 
 **Common issues:**
+
 - Missing files (check .gitignore)
 - Case-sensitive paths
 - Relative path errors
@@ -240,11 +259,13 @@ Your static site will easily fit within free tier limits.
 ### Preview URL Not Updating
 
 **Force redeploy:**
+
 1. Go to Deployments
 2. Click "..." on latest deployment
 3. Select **"Redeploy"**
 
 Or make an empty commit:
+
 ```bash
 git commit --allow-empty -m "Trigger redeploy"
 git push
@@ -253,6 +274,7 @@ git push
 ### Wrong Files Being Served
 
 **Check .vercelignore:**
+
 - Make sure important files aren't being ignored
 - Remove exclusions that shouldn't be there
 
@@ -277,6 +299,7 @@ git push
 ### Subdomain for CV
 
 You might want:
+
 - Main site: `etceter4.com`
 - CV only: `cv.etceter4.com`
 
@@ -287,10 +310,12 @@ Set up separate projects in Vercel or use routing rules.
 You can keep GitHub Pages for official deployment while using Vercel for previews:
 
 **.github/workflows/deploy.yml** (GitHub Pages)
+
 - Triggers on push to main
 - Deploys to GitHub Pages
 
 **Vercel** (automatic)
+
 - Triggers on push to any branch
 - Creates preview URLs
 
@@ -311,6 +336,7 @@ See [Vercel documentation](https://vercel.com/docs) or check your deployment log
 ---
 
 **Summary:**
+
 - Push branch → Vercel auto-deploys → Share preview URL
 - Each branch gets unique URL for stakeholder review
 - Production deploys from main branch

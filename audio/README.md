@@ -29,12 +29,14 @@ audio/
 ## File Format Requirements
 
 ### Audio Files
+
 - **Primary Format:** MP3 (320kbps for high quality, 192kbps for standard)
 - **File Naming:** `##-track-title.mp3` (e.g., `01-intro.mp3`)
 - **Metadata:** ID3v2.3 tags with title, artist, album, year, track number
 - **Cover Art:** Embedded album art (500x500px minimum)
 
 ### Configuration
+
 - **config.js:** Central configuration for all albums
 - Contains track listings, metadata, external links
 - Update this file when adding new tracks
@@ -119,18 +121,21 @@ const player = new AudioPlayer({
 ## Storage Options
 
 ### Option 1: Direct Hosting (Current)
+
 - Files stored in `/audio/` directory
 - Served directly by web server
 - Simple but limited scalability
 - Good for small catalogs
 
 ### Option 2: Cloudflare R2 (Recommended for Production)
+
 - Object storage with CDN delivery
 - Cost-effective ($0.015/GB storage, $0.01/GB egress)
 - Automatic global distribution
 - See MEDIA_INFRASTRUCTURE_GUIDE.md for setup
 
 ### Option 3: GitHub LFS
+
 - Large file storage via Git LFS
 - Free tier: 1GB storage, 1GB bandwidth/month
 - Good for version control
@@ -139,6 +144,7 @@ const player = new AudioPlayer({
 ## Current Status
 
 **Implemented:**
+
 - ✅ Audio player module (audioPlayer.js)
 - ✅ Player styling (audioPlayer.css)
 - ✅ Album configuration structure
@@ -146,6 +152,7 @@ const player = new AudioPlayer({
 - ✅ Documentation
 
 **Pending:**
+
 - ⏳ Upload actual audio files
 - ⏳ Set up Cloudflare R2 (optional)
 - ⏳ Add waveform visualization
@@ -158,11 +165,13 @@ const player = new AudioPlayer({
 To integrate the audio player into existing pages:
 
 1. Include CSS in `<head>`:
+
 ```html
-<link rel="stylesheet" href="/css/audioPlayer.css">
+<link rel="stylesheet" href="/css/audioPlayer.css" />
 ```
 
 2. Include scripts before `</body>`:
+
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
 <script src="/audio/albums/config.js"></script>
@@ -170,32 +179,37 @@ To integrate the audio player into existing pages:
 ```
 
 3. Add container div:
+
 ```html
 <div id="audio-player-container"></div>
 ```
 
 4. Initialize in pageData.js or inline:
+
 ```javascript
 const player = new AudioPlayer({
-    id: 'main-player',
-    container: '#audio-player-container',
-    tracks: albumsConfig.ogod.tracks
+  id: 'main-player',
+  container: '#audio-player-container',
+  tracks: albumsConfig.ogod.tracks,
 });
 ```
 
 ## Roadmap
 
 ### Phase 1: Basic Playback (✅ Complete)
+
 - Custom audio player
 - Playlist support
 - Basic controls
 
 ### Phase 2: Enhanced Features (Current)
+
 - Upload audio files
 - Set up R2 storage
 - Add visualizations
 
 ### Phase 3: Advanced Features
+
 - Streaming optimization (HLS)
 - Lyrics/metadata sync
 - Social sharing
@@ -204,6 +218,7 @@ const player = new AudioPlayer({
 ## Support
 
 For issues or questions:
+
 - See MEDIA_INFRASTRUCTURE_GUIDE.md for detailed setup
 - Check Howler.js docs: https://howlerjs.com/
 - Review audioPlayer.js source code

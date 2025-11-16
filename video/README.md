@@ -27,6 +27,7 @@ video/
 ## File Format Requirements
 
 ### Video Files
+
 - **Primary Format:** MP4 (H.264 codec)
 - **Resolution:** 1080p (1920x1080) recommended, 720p minimum
 - **Bitrate:** 5-8 Mbps for 1080p, 3-5 Mbps for 720p
@@ -34,6 +35,7 @@ video/
 - **File Naming:** Descriptive kebab-case (e.g., `live-performance-2024.mp4`)
 
 ### Supporting Files
+
 - **Posters:** JPG/PNG, same resolution as video
 - **Thumbnails:** JPG/PNG, 320x180px (16:9 aspect ratio)
 - **Subtitles:** WebVTT format (.vtt files)
@@ -131,25 +133,25 @@ Edit `video/config.js`:
 
 ```javascript
 performances: {
-    videos: [
+  videos: [
+    {
+      id: 1,
+      title: 'Video Title',
+      description: 'Video description',
+      src: '/video/performances/video-title.mp4',
+      poster: '/img/photos/live/video-title-poster.jpg',
+      thumbnail: '/img/photos/live/video-title-thumb.jpg',
+      duration: '5:30',
+      date: '2024-01-15',
+      subtitles: [
         {
-            id: 1,
-            title: 'Video Title',
-            description: 'Video description',
-            src: '/video/performances/video-title.mp4',
-            poster: '/img/photos/live/video-title-poster.jpg',
-            thumbnail: '/img/photos/live/video-title-thumb.jpg',
-            duration: '5:30',
-            date: '2024-01-15',
-            subtitles: [
-                {
-                    label: 'English',
-                    lang: 'en',
-                    src: '/video/performances/video-title-en.vtt'
-                }
-            ]
-        }
-    ]
+          label: 'English',
+          lang: 'en',
+          src: '/video/performances/video-title-en.vtt',
+        },
+      ],
+    },
+  ];
 }
 ```
 
@@ -159,13 +161,13 @@ In your HTML:
 
 ```html
 <!-- Load Video.js CSS -->
-<link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet">
+<link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
 
 <!-- Load Video.js -->
 <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
 
 <!-- Load custom player CSS and JS -->
-<link rel="stylesheet" href="/css/videoPlayer.css">
+<link rel="stylesheet" href="/css/videoPlayer.css" />
 <script src="/video/config.js"></script>
 <script src="/js/videoPlayer.js"></script>
 
@@ -174,23 +176,25 @@ In your HTML:
 
 <!-- Initialize -->
 <script>
-    const videoPlayer = new VideoPlayer({
-        id: 'main-video-player',
-        container: '#video-player-container',
-        videos: videosConfig.performances.videos
-    });
+  const videoPlayer = new VideoPlayer({
+    id: 'main-video-player',
+    container: '#video-player-container',
+    videos: videosConfig.performances.videos,
+  });
 </script>
 ```
 
 ## Storage Options
 
 ### Option 1: Direct Hosting (Current)
+
 - Files stored in `/video/` directory
 - Served directly by web server
 - Simple but bandwidth-intensive
 - Good for small catalogs
 
 ### Option 2: Cloudflare R2 + Stream (Recommended)
+
 - **R2 Storage:** $0.015/GB storage, $0.01/GB egress
 - **Cloudflare Stream:** $1/1000 minutes stored, $1/1000 minutes delivered
 - Automatic encoding, adaptive streaming
@@ -198,12 +202,14 @@ In your HTML:
 - See MEDIA_INFRASTRUCTURE_GUIDE.md for setup
 
 ### Option 3: Cloudflare R2 + Video.js
+
 - Store MP4 files in R2
 - Serve via public bucket or Workers
 - Use Video.js for playback
 - More control than Stream, cheaper for high traffic
 
 ### Option 4: GitHub LFS
+
 - Free tier: 1GB storage, 1GB bandwidth/month
 - Good for archival, not streaming
 - Not recommended for video
@@ -250,22 +256,23 @@ Add to config:
 
 ```javascript
 subtitles: [
-    {
-        label: 'English',
-        lang: 'en',
-        src: '/video/path/subtitles-en.vtt'
-    },
-    {
-        label: 'Español',
-        lang: 'es',
-        src: '/video/path/subtitles-es.vtt'
-    }
-]
+  {
+    label: 'English',
+    lang: 'en',
+    src: '/video/path/subtitles-en.vtt',
+  },
+  {
+    label: 'Español',
+    lang: 'es',
+    src: '/video/path/subtitles-es.vtt',
+  },
+];
 ```
 
 ## Current Status
 
 **Implemented:**
+
 - ✅ Video player module (videoPlayer.js)
 - ✅ Custom Video.js theme styling
 - ✅ Playlist with thumbnails
@@ -274,6 +281,7 @@ subtitles: [
 - ✅ Documentation
 
 **Pending:**
+
 - ⏳ Upload video files
 - ⏳ Set up Cloudflare R2/Stream (optional)
 - ⏳ Add quality selector plugin
@@ -305,16 +313,19 @@ npm install --save videojs-playlist videojs-playlist-ui
 ## Performance Optimization
 
 ### Compression
+
 - Use CRF 22-23 for good quality/size balance
 - Enable faststart for web delivery
 - Keep bitrate under 8 Mbps for 1080p
 
 ### Delivery
+
 - Use CDN (Cloudflare R2, etc.)
 - Enable caching headers
 - Consider HLS for adaptive streaming
 
 ### Lazy Loading
+
 - Use poster images
 - Set preload="metadata"
 - Only load video when user initiates playback
@@ -322,18 +333,21 @@ npm install --save videojs-playlist videojs-playlist-ui
 ## Troubleshooting
 
 ### Video Won't Play
+
 - Check browser console for errors
 - Verify file format is MP4 with H.264 codec
 - Ensure MIME types are correct on server
 - Test with different browsers
 
 ### Slow Loading
+
 - Reduce bitrate/resolution
 - Use HLS adaptive streaming
 - Enable CDN delivery
 - Compress files further
 
 ### Subtitles Not Showing
+
 - Verify .vtt file format
 - Check CORS headers if loading from different domain
 - Ensure file paths are correct
