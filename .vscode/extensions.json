@@ -1,0 +1,39 @@
+{
+  "recommendations": [
+    // GitHub Copilot
+    "github.copilot",
+    "github.copilot-chat",
+    
+    // Code quality and formatting
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    
+    // HTML/CSS helpers
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "pranaygp.vscode-css-peek",
+    "ecmel.vscode-html-css",
+    
+    // Live server for development
+    "ritwickdey.liveserver",
+    
+    // Git helpers
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    
+    // Markdown support
+    "yzhang.markdown-all-in-one",
+    
+    // Path intellisense
+    "christian-kohler.path-intellisense",
+    
+    // Bracket colorization (if not using VS Code built-in)
+    "coenraads.bracket-pair-colorizer-2",
+    
+    // Better comments
+    "aaron-bond.better-comments",
+    
+    // EditorConfig support
+    "editorconfig.editorconfig"
+  ]
+}

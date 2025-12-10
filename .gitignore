@@ -2,7 +2,12 @@ npm-debug.log
 .DS_STORE
 *.swp
 node_modules/
-.vscode/
+# VSCode - allow project settings, ignore user-specific files
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
 
 # Logs
 logs
