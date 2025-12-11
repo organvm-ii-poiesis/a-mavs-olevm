@@ -27,6 +27,9 @@
     // Path intellisense
     "christian-kohler.path-intellisense",
     
+    // Bracket colorization (if not using VS Code built-in)
+    "coenraads.bracket-pair-colorizer-2",
+    
     // Better comments
     "aaron-bond.better-comments",
     
