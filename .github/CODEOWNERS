@@ -1,0 +1,44 @@
+# GitHub CODEOWNERS for etceter4
+# This file defines code ownership for better review assignments and context
+
+# Default owners for everything in the repo
+* @ivi374forivi
+
+# Core configuration files
+/.github/ @ivi374forivi
+/.vscode/ @ivi374forivi
+package.json @ivi374forivi
+package-lock.json @ivi374forivi
+eslint.config.js @ivi374forivi
+.prettierrc @ivi374forivi
+.gitignore @ivi374forivi
+vercel.json @ivi374forivi
+
+# Documentation
+*.md @ivi374forivi
+/docs/ @ivi374forivi
+
+# JavaScript files
+/js/ @ivi374forivi
+*.js @ivi374forivi
+
+# Stylesheets
+/css/ @ivi374forivi
+*.css @ivi374forivi
+
+# HTML files
+*.html @ivi374forivi
+
+# Media files
+/img/ @ivi374forivi
+/audio/ @ivi374forivi
+/video/ @ivi374forivi
+
+# Special sections
+/ogod/ @ivi374forivi
+/akademia/ @ivi374forivi
+/labyrinth/ @ivi374forivi
+
+# Security-sensitive files
+SECURITY.md @ivi374forivi
+.htaccess @ivi374forivi
