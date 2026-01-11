@@ -1,7 +1,7 @@
 /**
  * @file diary.js
- * @description Handles diary/journal entry image loading and processing
- * Manages lazy loading of diary images using placeholder replacement technique
+ * @description Provides generic image loading, placeholder replacement, and carousel utilities for use in the diary/journal section.
+ * Note: This code may duplicate functionality found in images.js. Consider consolidating shared logic if possible.
  *
  * @author gabriel
  * @requires jQuery

@@ -188,7 +188,7 @@ const stillsData = {
   media: {
     1: 'Fires, fury, absolution.<br>Delusion, fantasy, insincerity.<br>Constants follow us.<br>News breaks us.',
     2: 'Culture, rocks, freedom.<br>Eat me, hide me.',
-    3: "It's simple, belive us. Believe us. Believe us.",
+    3: "It's simple, believe us. Believe us. Believe us.",
     4: '',
     5: '',
     6: '',
