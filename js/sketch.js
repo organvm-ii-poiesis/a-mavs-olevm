@@ -1,8 +1,83 @@
 'use strict';
 
-var myp5;
-var visionImage;
-var footerHeight = $('footer').css('height').replace('px', '');
+let myp5;
+let visionImage;
+let isSketchTransitioning = false;
+const footerHeight = $('footer').css('height').replace('px', '');
+
+/**
+ * Safely removes the current p5 instance
+ * Uses a flag to prevent race conditions during canvas transitions
+ * @returns {Promise<void>}
+ */
+function safeRemoveP5() {
+  return new Promise(resolve => {
+    if (myp5 && !isSketchTransitioning) {
+      isSketchTransitioning = true;
+      try {
+        myp5.remove();
+      } catch (err) {
+        console.warn('P5.js removal warning:', err.message);
+      }
+      myp5 = undefined;
+      // Small delay to ensure DOM cleanup completes
+      setTimeout(() => {
+        isSketchTransitioning = false;
+        resolve();
+      }, 50);
+    } else {
+      resolve();
+    }
+  });
+}
+
+/**
+ * Switches to a new p5 canvas with safe cleanup
+ * @param {Function} canvasFunc - The p5 sketch function
+ * @param {string} canvasId - Identifier for the canvas type
+ */
+function switchCanvas(canvasFunc, canvasId) {
+  if (isSketchTransitioning) {
+    return;
+  }
+
+  if ($('#menuPageCanvasWrapper canvas').is('#defaultCanvas1')) {
+    removeCanvas();
+  }
+
+  if (!myp5) {
+    try {
+      myp5 = new p5(canvasFunc, 'menuPageCanvasWrapper');
+      myp5.id = canvasId;
+    } catch (err) {
+      console.error('P5.js canvas creation error:', err.message);
+    }
+  } else if (myp5.id !== canvasId) {
+    safeRemoveP5().then(() => {
+      try {
+        myp5 = new p5(canvasFunc, 'menuPageCanvasWrapper');
+        myp5.id = canvasId;
+      } catch (err) {
+        console.error('P5.js canvas creation error:', err.message);
+      }
+    });
+  }
+}
+
+/**
+ * Cleanup all p5 resources - call on page exit
+ */
+function cleanupSketch() {
+  if (myp5) {
+    try {
+      myp5.remove();
+    } catch (err) {
+      console.warn('P5.js cleanup warning:', err.message);
+    }
+    myp5 = undefined;
+  }
+  isSketchTransitioning = false;
+}
 
 /*
  *
@@ -11,67 +86,19 @@ var footerHeight = $('footer').css('height').replace('px', '');
  */
 
 $('#menu #toWordsPage').mouseenter(function () {
-  if ($('#menuPageCanvasWrapper canvas').is('#defaultCanvas1')) {
-    removeCanvas();
-  }
-
-  if (!myp5) {
-    myp5 = new p5(wordsCanvas, 'menuPageCanvasWrapper');
-    myp5.id = 'words';
-  } else if (myp5.id !== 'words') {
-    myp5.remove();
-    myp5 = undefined;
-    myp5 = new p5(wordsCanvas, 'menuPageCanvasWrapper');
-    myp5.id = 'words';
-  }
+  switchCanvas(wordsCanvas, 'words');
 });
 
 $('#menu #toSoundPage').mouseenter(function () {
-  if ($('#menuPageCanvasWrapper canvas').is('#defaultCanvas1')) {
-    removeCanvas();
-  }
-
-  if (!myp5) {
-    myp5 = new p5(soundCanvas, 'menuPageCanvasWrapper');
-    myp5.id = 'sound';
-  } else if (myp5.id !== 'sound') {
-    myp5.remove();
-    myp5 = undefined;
-    myp5 = new p5(soundCanvas, 'menuPageCanvasWrapper');
-    myp5.id = 'sound';
-  }
+  switchCanvas(soundCanvas, 'sound');
 });
 
 $('#menu #toVisionPage').mouseenter(function () {
-  if ($('#menuPageCanvasWrapper canvas').is('#defaultCanvas1')) {
-    removeCanvas();
-  }
-
-  if (!myp5) {
-    myp5 = new p5(visionCanvas, 'menuPageCanvasWrapper');
-    myp5.id = 'vision';
-  } else if (myp5.id !== 'vision') {
-    myp5.remove();
-    myp5 = undefined;
-    myp5 = new p5(visionCanvas, 'menuPageCanvasWrapper');
-    myp5.id = 'vision';
-  }
+  switchCanvas(visionCanvas, 'vision');
 });
 
 $('#menu #toInfoPage').mouseenter(function () {
-  if ($('#menuPageCanvasWrapper canvas').is('#defaultCanvas1')) {
-    removeCanvas();
-  }
-
-  if (!myp5) {
-    myp5 = new p5(infoCanvas, 'menuPageCanvasWrapper');
-    myp5.id = 'words';
-  } else if (myp5.id !== 'words') {
-    myp5.remove();
-    myp5 = undefined;
-    myp5 = new p5(infoCanvas, 'menuPageCanvasWrapper');
-    myp5.id = 'words';
-  }
+  switchCanvas(infoCanvas, 'words');
 });
 
 // // for vision canvas
@@ -91,17 +118,17 @@ $('#menu #toInfoPage').mouseenter(function () {
  *
  */
 
-var soundCanvas = function (p) {
-  var fr = 14;
-  var bounds = p.createVector(0, p.windowWidth);
-  var leftMargin = 10;
-  var charSize = p.createVector(20, 20);
-  var noisesWidth = p.windowWidth / charSize.x;
-  var noisesHeight = (p.windowHeight - footerHeight) / charSize.y;
-  var noisesTotal = Math.floor(noisesWidth * noisesHeight);
-  var ySeperator = 25;
-  var noises = [];
-  var color = {};
+const soundCanvas = function (p) {
+  const fr = 14;
+  const bounds = p.createVector(0, p.windowWidth);
+  const leftMargin = 10;
+  const charSize = p.createVector(20, 20);
+  let noisesWidth = p.windowWidth / charSize.x;
+  let noisesHeight = (p.windowHeight - footerHeight) / charSize.y;
+  let noisesTotal = Math.floor(noisesWidth * noisesHeight);
+  const ySeperator = 25;
+  const noises = [];
+  let color = {};
 
   function Noise() {
     this.character = getCharacter();
@@ -168,23 +195,27 @@ var soundCanvas = function (p) {
    */
 
   p.setup = function () {
-    p.createCanvas(p.windowWidth, p.windowHeight);
-    p.frameRate(fr);
+    try {
+      p.createCanvas(p.windowWidth, p.windowHeight);
+      p.frameRate(fr);
 
-    color = {
-      cyan: p.color('cyan'),
-      yellow: p.color('yellow'),
-      black: p.color('black'),
-      magenta: p.color('magenta'),
-    };
+      color = {
+        cyan: p.color('cyan'),
+        yellow: p.color('yellow'),
+        black: p.color('black'),
+        magenta: p.color('magenta'),
+      };
 
-    p.textSize(32);
-    p.textAlign(p.CENTER, p.CENTER);
+      p.textSize(32);
+      p.textAlign(p.CENTER, p.CENTER);
 
-    // populate the noise
-    for (var i = 0; i < noisesTotal; i++) {
-      noises.push(new Noise());
-      noises[i].setLocation(noises[i - 1]);
+      // populate the noise
+      for (let i = 0; i < noisesTotal; i++) {
+        noises.push(new Noise());
+        noises[i].setLocation(noises[i - 1]);
+      }
+    } catch (err) {
+      console.error('Sound canvas setup error:', err.message);
     }
   };
 
@@ -195,16 +226,21 @@ var soundCanvas = function (p) {
    */
 
   p.draw = function () {
-    p.background(255, 55, 100);
-    for (var i = 0; i < noisesTotal; i++) {
-      var currentNoise = noises[i];
-      var prevNoise = noises[i - 1];
-
-      // currentNoise.setColor(prevNoise);
-
-      // currentNoise.update();
-      p.fill(getColor());
-      p.text(getCharacter(), currentNoise.location.x, currentNoise.location.y);
+    try {
+      p.background(255, 55, 100);
+      for (let i = 0; i < noisesTotal; i++) {
+        const currentNoise = noises[i];
+        if (currentNoise && currentNoise.location) {
+          p.fill(getColor());
+          p.text(
+            getCharacter(),
+            currentNoise.location.x,
+            currentNoise.location.y
+          );
+        }
+      }
+    } catch (err) {
+      console.error('Sound canvas draw error:', err.message);
     }
   };
 
@@ -230,20 +266,20 @@ var soundCanvas = function (p) {
  */
 
 // Render two distinct emotional clouds that repel one another and keep their vocabularies separate.
-var wordsCanvas = function (p) {
+const wordsCanvas = function (p) {
   'use strict';
 
-  var center = p.createVector(
+  const center = p.createVector(
     p.windowWidth / 2,
     (p.windowHeight - footerHeight) / 2
   );
-  var bounds = p.createVector(700, 300);
-  var textBounds = p.createVector(12, 30);
-  var rate = p.createVector(0.008, 0.008);
-  var bezierRate = 1;
-  var wordCloud = [];
+  const bounds = p.createVector(700, 300);
+  const textBounds = p.createVector(12, 30);
+  const rate = p.createVector(0.008, 0.008);
+  const bezierRate = 1;
+  const wordCloud = [];
 
-  var emotionGroups = [
+  const emotionGroups = [
     {
       name: 'solace',
       emotions: [
@@ -485,11 +521,13 @@ var wordsCanvas = function (p) {
    */
 
   p.setup = function () {
-    p.createCanvas(p.windowWidth, p.windowHeight);
-
-    p.textFont(resolveWordFont());
-
-    buildWordCloud();
+    try {
+      p.createCanvas(p.windowWidth, p.windowHeight);
+      p.textFont(resolveWordFont());
+      buildWordCloud();
+    } catch (err) {
+      console.error('Words canvas setup error:', err.message);
+    }
   };
 
   /*
@@ -499,22 +537,34 @@ var wordsCanvas = function (p) {
    */
 
   p.draw = function () {
-    p.background(1);
-    p.background(155, 155, 155);
-    p.translate(center.x, center.y);
+    try {
+      p.background(1);
+      p.background(155, 155, 155);
+      p.translate(center.x, center.y);
 
-    wordCloud.forEach(function (currentWord) {
-      currentWord.update();
-    });
+      wordCloud.forEach(function (currentWord) {
+        if (currentWord) {
+          currentWord.update();
+        }
+      });
 
-    calculateGroupCenters();
-    applyGroupRepulsion();
+      calculateGroupCenters();
+      applyGroupRepulsion();
 
-    wordCloud.forEach(function (currentWord) {
-      p.fill(currentWord.group.color);
-      p.textSize(currentWord.textSize);
-      p.text(currentWord.text, currentWord.location.x, currentWord.location.y);
-    });
+      wordCloud.forEach(function (currentWord) {
+        if (currentWord && currentWord.group && currentWord.location) {
+          p.fill(currentWord.group.color);
+          p.textSize(currentWord.textSize);
+          p.text(
+            currentWord.text,
+            currentWord.location.x,
+            currentWord.location.y
+          );
+        }
+      });
+    } catch (err) {
+      console.error('Words canvas draw error:', err.message);
+    }
   };
 
   p.windowResized = function () {
@@ -533,15 +583,15 @@ var wordsCanvas = function (p) {
  *
  */
 
-var visionCanvas = function (p) {
-  var heightOfCanvas = p.windowHeight - footerHeight;
-  var imageSlices = [];
-  var totalSlices = 5;
-  var sliceHeightBigRatio = heightOfCanvas * (70 / 100);
-  var sliceHeightSmallRatio = heightOfCanvas * (0.2 / 1);
-  var topSpeed = 5;
-  var pg;
-  var img;
+const visionCanvas = function (p) {
+  const heightOfCanvas = p.windowHeight - footerHeight;
+  const imageSlices = [];
+  const totalSlices = 5;
+  const sliceHeightBigRatio = heightOfCanvas * (70 / 100);
+  const sliceHeightSmallRatio = heightOfCanvas * (0.2 / 1);
+  const topSpeed = 5;
+  let pg;
+  let img;
 
   function ImageSlice(heightWeight) {
     var height;
@@ -641,14 +691,16 @@ var visionCanvas = function (p) {
   p.preload = function () {};
 
   p.setup = function () {
-    // p.background(255,55,100);
-    p.createCanvas(p.windowWidth, p.windowHeight);
-    // img = p.loadImage(visionImage.src);
+    try {
+      p.createCanvas(p.windowWidth, p.windowHeight);
 
-    // create the image slices
-    for (var i = 0; i < totalSlices; i++) {
-      imageSlices.push(new ImageSlice(p.random()));
-      imageSlices[i].location.sub(0, 0);
+      // create the image slices
+      for (let i = 0; i < totalSlices; i++) {
+        imageSlices.push(new ImageSlice(p.random()));
+        imageSlices[i].location.sub(0, 0);
+      }
+    } catch (err) {
+      console.error('Vision canvas setup error:', err.message);
     }
   };
 
@@ -659,25 +711,29 @@ var visionCanvas = function (p) {
    */
 
   p.draw = function () {
-    p.background(120, 255, 10);
-    p.rect(0, 0, 0, 0); // this acts as a reset for some reason
-    p.drawingContext.globalCompositeOperation = 'difference';
-    // pg.background(255, 0, 0); // for some reason, this works too
+    try {
+      p.background(120, 255, 10);
+      p.rect(0, 0, 0, 0); // this acts as a reset for some reason
+      p.drawingContext.globalCompositeOperation = 'difference';
 
-    // draw in all slices
-    for (var i = 0; i < totalSlices; i++) {
-      var currentSlice = imageSlices[i];
-      currentSlice.update();
-      currentSlice.checkEdges();
-      currentSlice.slice.background(255);
-      p.image(
-        currentSlice.slice,
-        currentSlice.location.x,
-        currentSlice.location.y
-      );
+      // draw in all slices
+      for (let i = 0; i < totalSlices; i++) {
+        const currentSlice = imageSlices[i];
+        if (currentSlice && currentSlice.slice && currentSlice.location) {
+          currentSlice.update();
+          currentSlice.checkEdges();
+          currentSlice.slice.background(255);
+          p.image(
+            currentSlice.slice,
+            currentSlice.location.x,
+            currentSlice.location.y
+          );
+        }
+      }
+      p.drawingContext.globalCompositeOperation = 'overlay';
+    } catch (err) {
+      console.error('Vision canvas draw error:', err.message);
     }
-    p.drawingContext.globalCompositeOperation = 'overlay';
-    // p.image(img, 0, 0); // IMAGE
   };
 
   p.windowResized = function () {
@@ -691,11 +747,11 @@ var visionCanvas = function (p) {
  *
  */
 
-var infoCanvas = function (p) {
-  var forces = {};
-  var lines = [];
-  var maxLines = 50;
-  var lineLengthBounds = p.createVector(0, 0);
+const infoCanvas = function (p) {
+  const forces = {};
+  const lines = [];
+  const maxLines = 50;
+  const lineLengthBounds = p.createVector(0, 0);
 
   function Line() {
     this.location = p.createVector(
@@ -753,10 +809,14 @@ var infoCanvas = function (p) {
   p.preload = function () {};
 
   p.setup = function () {
-    p.createCanvas(p.windowWidth, p.windowHeight);
+    try {
+      p.createCanvas(p.windowWidth, p.windowHeight);
 
-    for (var i = 0; i < 20; i++) {
-      lines.push(new Line());
+      for (let i = 0; i < 20; i++) {
+        lines.push(new Line());
+      }
+    } catch (err) {
+      console.error('Info canvas setup error:', err.message);
     }
   };
 
@@ -767,12 +827,17 @@ var infoCanvas = function (p) {
    */
 
   p.draw = function () {
-    p.background(p.color('rgba(50, 100, 205, 1.00)'));
+    try {
+      p.background(p.color('rgba(50, 100, 205, 1.00)'));
 
-    for (var i = 0; i < lines.length; i++) {
-      lines[i].update();
-      // lines[i].checkEdges();
-      lines[i].display();
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i]) {
+          lines[i].update();
+          lines[i].display();
+        }
+      }
+    } catch (err) {
+      console.error('Info canvas draw error:', err.message);
     }
   };
 
@@ -781,10 +846,12 @@ var infoCanvas = function (p) {
   };
 
   p.keyPressed = function () {
-    if (p.keyCode == p.UP_ARROW) {
+    if (p.keyCode === p.UP_ARROW) {
+      // Handle up arrow key
     }
 
-    if (p.keyCode == p.DOWN_ARROW) {
+    if (p.keyCode === p.DOWN_ARROW) {
+      // Handle down arrow key
     }
   };
 

@@ -18,8 +18,8 @@
     # Feature Policy / Permissions Policy
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()"
     
-    # HSTS for HTTPS (uncomment if serving over HTTPS)
-    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    # HSTS for HTTPS - enables strict transport security
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
 # Cache Control for Performance

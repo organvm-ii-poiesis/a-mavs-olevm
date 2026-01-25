@@ -2,11 +2,23 @@
 
 /**
  * @global {Object} currentPage - current page object
- * @global {Boolean} adIsLoaded - tells us whether or not the ad has been loaded
+ * @global {string} transitionState - current transition state (IDLE, TRANSITIONING, READY)
  */
 
 let currentPage = {};
-const adIsLoaded = false;
+
+/**
+ * Transition State Machine
+ * Prevents race conditions during page navigation
+ * States: IDLE → TRANSITIONING → READY
+ */
+const TransitionState = {
+  IDLE: 'IDLE',
+  TRANSITIONING: 'TRANSITIONING',
+  READY: 'READY',
+};
+
+let transitionState = TransitionState.IDLE;
 
 /**
  * Page Class
@@ -99,6 +111,7 @@ class Page {
  *
  * @summary - Navigates from the currently loaded section to the section provided (loading section).
  * It performs an animation that fades out the current section, then fades in the loading section.
+ * Uses a state machine to prevent race conditions during navigation.
  *
  * @param {String} loadingSection - page to be faded in
  * @returns {Boolean} true if successful
@@ -106,18 +119,50 @@ class Page {
  */
 
 function showNewSection(_loadingSection) {
-  if (!_loadingSection || currentPage.isLoading) {
-    return false; // loadingSection isn't defined, or the page is loading
-  } else {
+  // Prevent navigation if already transitioning or invalid input
+  if (
+    !_loadingSection ||
+    currentPage.isLoading ||
+    transitionState === TransitionState.TRANSITIONING
+  ) {
+    return false;
+  }
+
+  try {
     const loadingSection = Page.findPage(_loadingSection);
+
+    // Set state to transitioning
+    transitionState = TransitionState.TRANSITIONING;
+
+    // Update URL hash for browser history (set flag to prevent double navigation)
+    if (typeof isNavigating !== 'undefined') {
+      isNavigating = true;
+    }
+    window.location.hash = _loadingSection;
+    if (typeof isNavigating !== 'undefined') {
+      setTimeout(() => {
+        isNavigating = false;
+      }, ETCETER4_CONFIG.animations.navigationDebounce);
+    }
 
     loadingSection.initPage();
 
     fadeOutPage(currentPage, () => {
-      fadeInPage(loadingSection);
+      fadeInPage(loadingSection, () => {
+        // Set state to ready when transition completes
+        transitionState = TransitionState.READY;
+        setTimeout(() => {
+          transitionState = TransitionState.IDLE;
+        }, ETCETER4_CONFIG.animations.transitionCooldown);
+      });
     });
+
+    return true;
+  } catch (error) {
+    console.error(`Navigation error: ${error.message}`);
+    transitionState = TransitionState.IDLE;
+    return false;
   }
-  return true;
 }
 
 /**
@@ -131,33 +176,57 @@ function fadeInPage(_Page, _cb) {
   let _display;
 
   if (_Page.isLoading === false) {
-    // make sure opacity is 0 & then the object is there
-    $(_Page.id).css('opacity', 0);
-    if (_Page.id === '#stills' || _Page.id === '#diary') {
-      _display = 'table';
-    }
+    try {
+      // make sure opacity is 0 & then the object is there
+      $(_Page.id).css('opacity', 0);
+      if (_Page.id === '#stills' || _Page.id === '#diary') {
+        _display = 'table';
+      }
 
-    // fade in next section
-    $(_Page.id).velocity('fadeIn', {
-      delay: 0,
-      duration: 500,
-      display: _display,
-      easing: 'easeInSine',
-      begin() {
-        _Page.isLoading = true;
-      },
-      complete() {
-        // console.log("Finished Fade In")
-        _Page.isLoading = false;
-        window.currentPage = _Page;
-        if (_cb) {
-          _cb();
+      // fade in next section
+      $(_Page.id).velocity('fadeIn', {
+        delay: 0,
+        duration: ETCETER4_CONFIG.animations.fadeInDuration,
+        display: _display,
+        easing: 'easeInSine',
+        begin() {
+          _Page.isLoading = true;
+        },
+        complete() {
+          try {
+            _Page.isLoading = false;
+            window.currentPage = _Page;
+
+            // Manage focus for accessibility
+            if (typeof manageFocus === 'function') {
+              manageFocus(_Page.id);
+            }
+
+            // Announce page transition to screen readers
+            if (typeof announcePageTransition === 'function') {
+              announcePageTransition(_Page.id);
+            }
+
+            if (_cb) {
+              _cb();
+            }
+          } catch (completeError) {
+            console.error(
+              'FadeIn complete callback error:',
+              completeError.message
+            );
+            _Page.isLoading = false;
+            transitionState = TransitionState.IDLE;
+          }
           return true;
-        } else {
-          return true;
-        }
-      },
-    });
+        },
+      });
+    } catch (error) {
+      console.error('FadeIn animation error:', error.message);
+      _Page.isLoading = false;
+      transitionState = TransitionState.IDLE;
+      return false;
+    }
   } else {
     // prevents fast clicking of the buttons from overloading the function
     return false;
@@ -173,34 +242,52 @@ function fadeInPage(_Page, _cb) {
 
 function fadeOutPage(_Page, _cb) {
   if (_Page.isLoading === false) {
-    const displayOfPage = $(_Page.id).css('display');
-    // make sure it's not fading out a hidden or non existant element
-    if (displayOfPage !== undefined && displayOfPage !== 'none') {
-      $(_Page.id).velocity('fadeOut', {
-        delay: 1000,
-        duration: 200, // 200-300
-        easing: 'ease-out',
-        begin() {
-          currentPage = _Page;
-          _Page.isLoading = true;
-        },
-        complete() {
-          // hide the current page when faded out
-          // console.log('Finished fadeout');
-          $(_Page.id).addClass('dn');
-          _Page.isLoading = false;
-          currentPage.isLoading = false;
-          if (_cb) {
-            _cb();
+    try {
+      const displayOfPage = $(_Page.id).css('display');
+      // make sure it's not fading out a hidden or non existant element
+      if (displayOfPage !== undefined && displayOfPage !== 'none') {
+        $(_Page.id).velocity('fadeOut', {
+          delay: ETCETER4_CONFIG.animations.fadeOutDelay,
+          duration: ETCETER4_CONFIG.animations.fadeOutDuration,
+          easing: 'ease-out',
+          begin() {
+            currentPage = _Page;
+            _Page.isLoading = true;
+          },
+          complete() {
+            try {
+              // hide the current page when faded out
+              $(_Page.id).addClass('dn');
+              _Page.isLoading = false;
+              currentPage.isLoading = false;
+              if (_cb) {
+                _cb();
+              }
+            } catch (completeError) {
+              console.error(
+                'FadeOut complete callback error:',
+                completeError.message
+              );
+              _Page.isLoading = false;
+              currentPage.isLoading = false;
+              transitionState = TransitionState.IDLE;
+            }
             return true;
-          } else {
-            return true;
-          }
-        },
-      });
-    } else {
+          },
+        });
+      } else {
+        currentPage.isLoading = false;
+        if (_cb) {
+          _cb();
+        }
+        return false; // Page isn't loaded
+      }
+    } catch (error) {
+      console.error('FadeOut animation error:', error.message);
+      _Page.isLoading = false;
       currentPage.isLoading = false;
-      return false; // Page isn't loaded
+      transitionState = TransitionState.IDLE;
+      return false;
     }
   } else {
     return false; // Page is already loading
@@ -284,15 +371,134 @@ $('#VideoBackButton5').on('click', () => {
  * Mobile Menu Button
  */
 
-$('.c-hamburger').on('click', () => {
-  const hamburgerMenu = $('.c-hamburger');
+$('.c-hamburger').on('click', function () {
+  const hamburgerMenu = $(this);
   const mobileMenu = $('.mobileMenu');
 
   if (hamburgerMenu.hasClass('is-active')) {
     hamburgerMenu.removeClass('is-active');
+    hamburgerMenu.attr('aria-expanded', 'false');
     mobileMenu.removeClass('open');
+    // Unlock scroll when menu closes
+    document.body.style.overflow = '';
   } else {
     hamburgerMenu.addClass('is-active');
+    hamburgerMenu.attr('aria-expanded', 'true');
     mobileMenu.addClass('open');
+    // Lock scroll when menu opens
+    document.body.style.overflow = 'hidden';
   }
 });
+
+/**
+ * Keyboard Navigation
+ * Provides accessible keyboard controls for site navigation
+ */
+
+document.addEventListener('keydown', event => {
+  // Skip if user is typing in an input field
+  if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+    return;
+  }
+
+  switch (event.key) {
+    case 'Escape':
+      // Go back/up in navigation hierarchy
+      if (currentPage && typeof currentPage.getBackElement === 'function') {
+        const backPage = currentPage.getBackElement();
+        if (backPage && backPage.id) {
+          showNewSection(backPage.id);
+        }
+      }
+      break;
+
+    case 'Enter':
+    case ' ':
+      // Activate focused element
+      if (document.activeElement && document.activeElement.click) {
+        // Prevent space from scrolling
+        if (event.key === ' ') {
+          event.preventDefault();
+        }
+        document.activeElement.click();
+      }
+      break;
+
+    case 'ArrowLeft':
+      // Previous item in carousels
+      if (currentPage && currentPage.id === '#stills') {
+        $('#stills-left').trigger('click');
+      } else if (currentPage && currentPage.id === '#diary') {
+        $('#stills-left-diary').trigger('click');
+      }
+      break;
+
+    case 'ArrowRight':
+      // Next item in carousels
+      if (currentPage && currentPage.id === '#stills') {
+        $('#stills-right').trigger('click');
+      } else if (currentPage && currentPage.id === '#diary') {
+        $('#stills-right-diary').trigger('click');
+      }
+      break;
+
+    case 'Home':
+      // Go to landing page
+      showNewSection('#landing');
+      break;
+
+    case 'm':
+    case 'M':
+      // Go to menu (if not typing)
+      if (!event.ctrlKey && !event.metaKey) {
+        showNewSection('#menu');
+      }
+      break;
+  }
+});
+
+/**
+ * Focus management for accessibility
+ * Ensures proper focus handling during page transitions
+ */
+function manageFocus(pageId) {
+  const page = $(pageId);
+  if (page.length) {
+    // Set focus to the first focusable element in the page
+    const focusable = page
+      .find('a, button, input, [tabindex]:not([tabindex="-1"])')
+      .first();
+    if (focusable.length) {
+      focusable.trigger('focus');
+    }
+  }
+}
+
+/**
+ * Announce page transition to screen readers
+ * Uses aria-live region for accessibility
+ * @param {string} pageId - The page identifier (e.g., '#menu')
+ */
+function announcePageTransition(pageId) {
+  const announcer = document.getElementById('page-announcer');
+  if (!announcer) {
+    return;
+  }
+
+  // Map page IDs to friendly names
+  const pageNames = {
+    '#landing': 'Landing page',
+    '#menu': 'Main menu',
+    '#words': 'Words section',
+    '#vision': 'Vision section',
+    '#sound': 'Sound section',
+    '#info': 'Info section',
+    '#video': 'Video section',
+    '#stills': 'Stills gallery',
+    '#diary': 'Diary gallery',
+    '#blog': 'Blog section',
+  };
+
+  const pageName = pageNames[pageId] || pageId.replace('#', '') + ' page';
+  announcer.textContent = `Navigated to ${pageName}`;
+}

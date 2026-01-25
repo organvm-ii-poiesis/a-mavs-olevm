@@ -64,3 +64,20 @@ temp/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# IDE
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Lighthouse CI
+.lighthouseci/
+
+# Build artifacts
+dist/
+build/

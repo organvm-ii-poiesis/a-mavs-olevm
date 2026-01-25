@@ -25,6 +25,82 @@
 [Globals / $globals]
 */
 
+/*------------------------------------------------------------------
+[Accessibility / $a11y]
+*/
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 9999;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Screen reader only - visually hidden but accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus visible styles for keyboard navigation */
+:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Remove default focus outline when using mouse */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Ensure links and buttons have visible focus states */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.3);
+}
+
+/* High contrast focus for dark backgrounds */
+.bg-black a:focus-visible,
+.bg-dark-red a:focus-visible,
+.black a:focus-visible {
+  outline-color: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*------------------------------------------------------------------
+[Layout / $layout]
+*/
+
 .page-wrap {
   max-width: 87.5rem; /* 1400px */
 }
@@ -197,7 +273,7 @@
     min-width: 23rem;
   }
 
-  w-20rem-ns {
+  .w-20rem-ns {
     width: 20rem;
   }
 
@@ -298,7 +374,7 @@
   text-decoration: none;
 }
 .white-link:hover {
-  color: white;
+  color: black;
   background-color: white;
   text-decoration: line-through;
 }
@@ -318,7 +394,7 @@
   text-decoration: none;
 }
 .cyan-link:hover {
-  color: cyan;
+  color: black;
   background-color: cyan;
   text-decoration: line-through;
 }
@@ -338,7 +414,7 @@
   text-decoration: none;
 }
 .black-link:hover {
-  color: black;
+  color: white;
   background-color: black;
   text-decoration: line-through;
 }
@@ -358,7 +434,7 @@
   text-decoration: none;
 }
 .magenta-link:hover {
-  color: magenta;
+  color: white;
   background-color: magenta;
   text-decoration: line-through;
 }
@@ -378,7 +454,7 @@
   text-decoration: none;
 }
 .yellow-link:hover {
-  color: yellow;
+  color: black;
   background-color: yellow;
   text-decoration: line-through;
 }
@@ -398,7 +474,7 @@
   text-decoration: none;
 }
 .red-link:hover {
-  color: red;
+  color: white;
   background-color: red;
   text-decoration: line-through;
 }
@@ -418,7 +494,7 @@
   text-decoration: none;
 }
 .pink-link:hover {
-  color: pink;
+  color: black;
   background-color: pink;
   text-decoration: line-through;
 }
@@ -438,7 +514,7 @@
   text-decoration: none;
 }
 .blue-link:hover {
-  color: blue;
+  color: white;
   background-color: blue;
   text-decoration: line-through;
 }
@@ -458,7 +534,7 @@
   text-decoration: none;
 }
 .green-link:hover {
-  color: green;
+  color: white;
   background-color: green;
   text-decoration: line-through;
 }
@@ -567,8 +643,8 @@
 
 ._enterButton {
   background-color: black;
-  height: 24px;
-  width: 24px;
+  height: 44px;
+  width: 44px;
   border-radius: 60px;
   transition: 2s;
   border: 1px black;
@@ -590,11 +666,11 @@
   position: absolute;
   display: block;
   content: '';
-  left: -7.5px;
-  top: -7.5px;
+  left: -3px;
+  top: -3px;
   transform-origin: center;
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   border-radius: 80px;
   border: 1px solid red;
   animation-delay: 0.5s;
@@ -621,7 +697,7 @@
 */
 
 #menuPageMenu {
-  height: 296px;
+  height: 18.5rem; /* 296px */
 }
 
 /*
@@ -636,9 +712,10 @@
   content: '';
   left: 0;
   right: 0;
-  top: 16.6px;
+  top: 1rem;
   margin: 0 auto;
-  width: 206px;
+  width: 12.875rem; /* 206px */
+  max-width: 80%;
   height: 1px;
   background-color: #989898;
 }
@@ -649,9 +726,10 @@
   content: '';
   left: 0;
   right: 0;
-  top: 16.6px;
+  top: 1rem;
   margin: 0 auto;
-  width: 206px;
+  width: 12.875rem; /* 206px */
+  max-width: 80%;
   height: 1px;
   background-color: #989898;
 }
@@ -901,8 +979,8 @@ i.social-icon svg:hover {
 .c-hamburger {
   position: relative;
   overflow: hidden;
-  width: 2.5rem; /* width & height of the container */
-  height: 2.5rem;
+  width: 2.75rem; /* width & height of the container - min 44px for touch */
+  height: 2.75rem;
   padding: 0px;
   font-size: 0;
   text-indent: -9999px;

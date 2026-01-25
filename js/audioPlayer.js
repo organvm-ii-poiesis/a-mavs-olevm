@@ -13,6 +13,8 @@ class AudioPlayer {
     this.volume = 0.8;
     this.howl = null;
     this.container = config.container;
+    this.loadFailed = false;
+    this.progressInterval = null;
 
     this.init();
   }
@@ -134,8 +136,11 @@ class AudioPlayer {
       this.howl.unload();
     }
 
+    // Reset load state
+    this.loadFailed = false;
     this.currentTrackIndex = index;
     const track = this.tracks[index];
+    const self = this;
 
     // Create new Howl instance
     this.howl = new Howl({
@@ -147,8 +152,9 @@ class AudioPlayer {
       onend: () => this.nextTrack(),
       onload: () => this.updateDuration(),
       onloaderror: (id, error) => {
+        self.loadFailed = true;
         console.error('Error loading track:', error);
-        $(`#${this.id}-title`).text('Error loading track');
+        $(`#${self.id}-title`).text('Error loading track');
       },
     });
 
@@ -165,9 +171,11 @@ class AudioPlayer {
   }
 
   play() {
-    if (this.howl) {
+    if (this.howl && !this.loadFailed) {
       this.howl.play();
       this.isPlaying = true;
+    } else if (this.loadFailed) {
+      console.warn('Cannot play: track failed to load');
     }
   }
 

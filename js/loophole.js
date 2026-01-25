@@ -1,27 +1,60 @@
-// LOOPHOLE RANDOMIZER
+'use strict';
+
+/**
+ * LOOPHOLE RANDOMIZER
+ * Navigate to a random labyrinth page
+ */
 function randomlinks() {
-  var myrandom = Math.round(Math.random() * 12);
-  var links = new Array();
-  links[0] = 'labyrinth/040615.html';
-  links[1] = 'labyrinth/040715.html';
-  links[2] = 'labyrinth/040815.html';
-  links[3] = 'labyrinth/040915.html';
-  links[4] = 'labyrinth/041015.html';
-  links[5] = 'labyrinth/041315.html';
-  links[6] = 'labyrinth/041415.html';
-  links[7] = 'labyrinth/041715.html';
-  links[8] = 'labyrinth/042115.html';
-  links[9] = 'labyrinth/042215.html';
-  links[10] = 'labyrinth/051815.html';
-  links[11] = 'labyrinth/072716.html';
-  window.location = links[myrandom];
+  const links = [
+    'labyrinth/040615.html',
+    'labyrinth/040715.html',
+    'labyrinth/040815.html',
+    'labyrinth/040915.html',
+    'labyrinth/041015.html',
+    'labyrinth/041315.html',
+    'labyrinth/041415.html',
+    'labyrinth/041715.html',
+    'labyrinth/042115.html',
+    'labyrinth/042215.html',
+    'labyrinth/051815.html',
+    'labyrinth/072716.html',
+  ];
+  const randomIndex = Math.floor(Math.random() * links.length);
+  window.location.href = links[randomIndex];
 }
 
-var totalCount = 99;
+const totalCount = 99;
+
+/**
+ * Set a random background image
+ * Uses modern CSS approach instead of deprecated document.body.background
+ */
 function ChangeIt() {
-  var num = Math.ceil(Math.random() * totalCount);
-  document.body.background = 'bgimages/' + num + '.jpg';
-  document.body.style.backgroundRepeat = 'repeat'; // Background repeat
+  const num = Math.ceil(Math.random() * totalCount);
+  document.body.style.backgroundImage = 'url(bgimages/' + num + '.jpg)';
+  document.body.style.backgroundRepeat = 'repeat';
 }
 
-ChangeIt();
+/**
+ * Initialize loophole page with event handlers
+ * Attaches click handlers to all loophole links
+ */
+function initLoophole() {
+  // Attach event handlers to all loophole links
+  const loopholeLinks = document.querySelectorAll('#loop a[href="#"]');
+  loopholeLinks.forEach(function (link) {
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      randomlinks();
+    });
+  });
+
+  ChangeIt();
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLoophole);
+} else {
+  initLoophole();
+}
