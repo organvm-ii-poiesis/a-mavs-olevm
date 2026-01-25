@@ -312,7 +312,9 @@ $('#toMenuPage').on('click', () => {
 $('#toWordsPage').on('click', () => {
   showNewSection('#words');
 });
-// $("#toSoundPage").on("click", function() { showNewSection("#sound"); });
+$('#toSoundPage').on('click', () => {
+  showNewSection('#sound');
+});
 $('#toVisionPage').on('click', () => {
   showNewSection('#vision');
 });
@@ -499,6 +501,6 @@ function announcePageTransition(pageId) {
     '#blog': 'Blog section',
   };
 
-  const pageName = pageNames[pageId] || pageId.replace('#', '') + ' page';
+  const pageName = pageNames[pageId] || `${pageId.replace('#', '')} page`;
   announcer.textContent = `Navigated to ${pageName}`;
 }
