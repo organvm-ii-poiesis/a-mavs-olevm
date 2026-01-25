@@ -4,6 +4,7 @@ export default [
   js.configs.recommended,
   {
     files: [
+      'js/config.js',
       'js/main.js',
       'js/page.js',
       'js/pageData.js',
@@ -19,6 +20,7 @@ export default [
         window: 'readonly',
         document: 'readonly',
         console: 'readonly',
+        navigator: 'readonly',
         $: 'readonly',
         jQuery: 'readonly',
         ga: 'readonly',

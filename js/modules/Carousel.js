@@ -26,20 +26,23 @@
 function appendImagesTo(element, location, prefix, fileExtension, start, end) {
   const srcContents = location + prefix;
   const $element = $(element);
+  // Performance optimization: Build string first to minimize DOM reflows
+  // Instead of appending in each iteration, batch into single append
+  let content = '';
   while (start <= end) {
-    $element.append(
+    content +=
       '<div id="stillsImage" class="dn v-mid heightControl-stills min-h-21_875rem min-h-28_125rem-ns tc h-100">' +
-        '<img class="mw-100 mh-100 w-auto h-auto anim anim-easeout" src="' +
-        srcContents +
-        start +
-        fileExtension +
-        '" alt="Gallery image ' +
-        start +
-        '"/>' +
-        '</div>'
-    );
+      '<img class="mw-100 mh-100 w-auto h-auto anim anim-easeout" src="' +
+      srcContents +
+      start +
+      fileExtension +
+      '" alt="Gallery image ' +
+      start +
+      '"/>' +
+      '</div>';
     start++;
   }
+  $element.append(content);
 }
 
 /**

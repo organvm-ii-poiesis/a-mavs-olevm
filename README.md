@@ -209,7 +209,8 @@ Comprehensive documentation is available for all aspects of the Pantheon:
 
 - [PANTHEON_ARCHITECTURE.md](PANTHEON_ARCHITECTURE.md) - Complete temple structure and expansion plans
 - [LIVING_PANTHEON_GENERATIVE.md](LIVING_PANTHEON_GENERATIVE.md) - Breathing, generative architecture concepts
-  For a comprehensive list of documentation files and guides, see [DOCUMENTATION.md](DOCUMENTATION.md).
+
+For a comprehensive list of documentation files and guides, see [docs/INDEX.md](docs/INDEX.md).
 
 ## 🤝 Contributing
 

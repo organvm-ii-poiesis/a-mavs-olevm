@@ -69,9 +69,9 @@ pages.menu = new Page({
   tier: 2,
   downLinks: [_pID.words, _pID.sound, _pID.vision, _pID.info],
   upLinks: [_pID.landing],
-  initialize: function () {
+  initialize() {
     // get the lib and sketch
-    $.cachedScript('js/vendor/p5.js').done(function (script, textStatus) {});
+    $.cachedScript('js/vendor/p5.js').done((script, textStatus) => {});
     // $.cachedScript( "js/sketch.js" ).done(function( script, textStatus ) {});
   },
 });
@@ -85,7 +85,7 @@ pages.sound = new Page({
   id: _pID.sound,
   tier: 3,
   upLinks: [_pID.menu],
-  initialize: function () {
+  initialize() {
     // add the iFrames
     const _iFrames = [
       '<iframe style="border: 0; width: 300px; height: 300px;" src="https://bandcamp.com/EmbeddedPlayer/album=3780915385/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/"><a href="https://music.etceter4.com/album/ogod">OGOD by ET CETER4</a></iframe>',
@@ -109,7 +109,7 @@ pages.stills = new Page({
   id: _pID.stills,
   tier: 4,
   upLinks: [_pID.vision],
-  initialize: function () {
+  initialize() {
     replacePlaceholders(this.id);
   },
 });
@@ -123,7 +123,7 @@ pages.diary = new Page({
   id: _pID.diary,
   tier: 4,
   upLinks: [_pID.words],
-  initialize: function () {
+  initialize() {
     replacePlaceholders(this.id);
   },
 });
@@ -177,7 +177,7 @@ jQuery.cachedScript = function (url, options) {
   options = $.extend(options || {}, {
     dataType: 'script',
     cache: true,
-    url: url,
+    url,
   });
 
   // Use $.ajax() since it is more flexible than $.getScript

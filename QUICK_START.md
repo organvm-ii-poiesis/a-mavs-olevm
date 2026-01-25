@@ -26,7 +26,7 @@ npm install
 ### Step 3: Start Development Server
 
 ```bash
-npm test
+npm run dev
 ```
 
 Your browser should open automatically showing the site at `http://localhost:3000`
