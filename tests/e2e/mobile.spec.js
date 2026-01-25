@@ -5,9 +5,10 @@
 
 import { test, expect, devices } from '@playwright/test';
 
-test.describe('Mobile Menu', () => {
-  test.use({ ...devices['Pixel 5'] });
+// Configure mobile device at file level (required by Playwright)
+test.use({ ...devices['Pixel 5'] });
 
+test.describe('Mobile Menu', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
