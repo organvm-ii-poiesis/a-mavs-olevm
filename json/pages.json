@@ -1,0 +1,24 @@
+[{
+    "name": "Landing Page",
+    "element": "#new",
+    "tier": 0,
+    "downLinks": ["Splash"],
+    "upLinks": [],
+    "trace": ""
+},
+{
+    "name": "Splash",
+    "element": "#splash",
+    "tier": 1,
+    "downLinks": ["Menu"],
+    "upLinks": ["Landing Page"],
+    "trace": ""
+},
+{
+    "name": "Words",
+    "element": "#new",
+    "tier": 3,
+    "downLinks": ["Diary", "Blog"],
+    "upLinks": ["Menu"],
+    "trace": ""
+}]

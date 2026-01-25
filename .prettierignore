@@ -1,0 +1,15 @@
+# Ignore vendor files and dependencies
+node_modules
+css/vendor
+js/vendor
+dependencies
+*.min.js
+*.min.css
+
+# Ignore legacy files that need manual cleanup
+ogod/*.html
+labyrinth/*.html
+html/*.html
+
+# Build artifacts
+dist

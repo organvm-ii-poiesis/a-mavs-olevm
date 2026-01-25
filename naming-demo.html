@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ET CETER4 || Naming System Demo</title>
+    <meta
+      name="description"
+      content="ET CETER4 Naming System - Dynamic name suggestions and personalized preferences"
+    />
+    <meta name="author" content="ET CETER4" />
+
+    <style>
+      body {
+        font-family: 'Courier New', monospace;
+        background: #000;
+        color: #0f0;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1,
+      h2 {
+        color: #fff;
+        text-shadow: 0 0 10px #0f0;
+      }
+
+      .demo-section {
+        background: #111;
+        border: 1px solid #333;
+        margin: 20px 0;
+        padding: 20px;
+        border-radius: 5px;
+      }
+
+      .input-group {
+        margin: 10px 0;
+      }
+
+      label {
+        display: inline-block;
+        width: 120px;
+        color: #fff;
+      }
+
+      input,
+      select,
+      button {
+        background: #222;
+        border: 1px solid #555;
+        color: #0f0;
+        padding: 8px;
+        margin: 5px;
+        border-radius: 3px;
+      }
+
+      button {
+        background: #333;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #555;
+      }
+
+      .suggestions {
+        background: #001100;
+        border: 1px solid #0f0;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+      }
+
+      .suggestion-item {
+        padding: 5px 0;
+        border-bottom: 1px solid #333;
+      }
+
+      .score {
+        color: #ff0;
+        font-weight: bold;
+      }
+
+      .validation-result {
+        background: #110000;
+        border: 1px solid #f00;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+      }
+
+      .validation-result.valid {
+        background: #001100;
+        border-color: #0f0;
+      }
+
+      .console-output {
+        background: #000;
+        border: 1px solid #555;
+        padding: 15px;
+        margin: 10px 0;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        max-height: 300px;
+        overflow-y: scroll;
+      }
+
+      .profile-selector {
+        background: #222;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+      }
+
+      .et-logo {
+        text-align: center;
+        font-size: 2em;
+        margin: 20px 0;
+        text-shadow: 0 0 20px #0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="et-logo">ET CETER4 || Naming System</div>
+
+      <div class="demo-section">
+        <h2>🎯 User Profile Selection</h2>
+        <div class="profile-selector">
+          <label for="userProfile">Profile:</label>
+          <select id="userProfile">
+            <option value="DEFAULT">Default</option>
+            <option value="DEVELOPER">Developer</option>
+            <option value="ARTIST" selected>Artist</option>
+            <option value="MUSICIAN">Musician</option>
+            <option value="WRITER">Writer</option>
+          </select>
+          <button onclick="switchProfile()">Switch Profile</button>
+        </div>
+        <div id="profileInfo" class="suggestions"></div>
+      </div>
+
+      <div class="demo-section">
+        <h2>🔍 Name Search & Suggestions</h2>
+        <div class="input-group">
+          <label for="searchInput">Describe:</label>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="e.g., show new page, sound control, image gallery"
+            value="show new page"
+          />
+        </div>
+        <div class="input-group">
+          <label for="contextType">Context:</label>
+          <select id="contextType">
+            <option value="">Auto-detect</option>
+            <option value="function">Function</option>
+            <option value="variable">Variable</option>
+            <option value="page">Page ID</option>
+            <option value="class">CSS Class</option>
+            <option value="id">Element ID</option>
+          </select>
+        </div>
+        <button onclick="searchNames()">Get Suggestions</button>
+        <div id="searchResults" class="suggestions"></div>
+      </div>
+
+      <div class="demo-section">
+        <h2>✅ Name Validation</h2>
+        <div class="input-group">
+          <label for="nameToValidate">Name:</label>
+          <input type="text" id="nameToValidate" placeholder="e.g., showNewSection" value="showNewSection" />
+        </div>
+        <div class="input-group">
+          <label for="nameDescription">Description:</label>
+          <input type="text" id="nameDescription" placeholder="What does it do?" value="show new section" />
+        </div>
+        <div class="input-group">
+          <label for="nameType">Type:</label>
+          <select id="nameType">
+            <option value="function">Function</option>
+            <option value="variable">Variable</option>
+            <option value="page">Page ID</option>
+            <option value="class">CSS Class</option>
+            <option value="id">Element ID</option>
+          </select>
+        </div>
+        <button onclick="validateName()">Validate Name</button>
+        <div id="validationResults" class="validation-result"></div>
+      </div>
+
+      <div class="demo-section">
+        <h2>🔧 Name Improvement</h2>
+        <div class="input-group">
+          <label for="nameToImprove">Current Name:</label>
+          <input type="text" id="nameToImprove" placeholder="e.g., x, temp1, btn" value="btn" />
+        </div>
+        <div class="input-group">
+          <label for="improveDescription">What it should be:</label>
+          <input type="text" id="improveDescription" placeholder="What does it do?" value="navigation button" />
+        </div>
+        <button onclick="improveName()">Get Improvements</button>
+        <div id="improvementResults" class="suggestions"></div>
+      </div>
+
+      <div class="demo-section">
+        <h2>📊 Existing Code Analysis</h2>
+        <button onclick="analyzeCode()">Analyze Current Codebase</button>
+        <button onclick="rollForward()">Roll Forward Existing Names</button>
+        <div id="analysisResults" class="console-output"></div>
+      </div>
+
+      <div class="demo-section">
+        <h2>📚 Naming Guidelines</h2>
+        <button onclick="showGuidelines()">Show Guidelines</button>
+        <div id="guidelinesResults" class="console-output"></div>
+      </div>
+
+      <div class="demo-section">
+        <h2>🧪 Live Testing</h2>
+        <button onclick="runTests()">Run Naming System Tests</button>
+        <div id="testResults" class="console-output"></div>
+      </div>
+    </div>
+
+    <!-- Load the naming system -->
+    <script src="js/namingStrategies.js"></script>
+    <script src="js/nameSearch.js"></script>
+    <script src="js/namingAPI.js"></script>
+    <script src="js/test/namingTests.js"></script>
+
+    <script>
+      // Demo interface functions
+      function switchProfile() {
+        var profile = document.getElementById('userProfile').value;
+        ETCETERNaming.setProfile(profile);
+
+        var preferences = ETCETERNaming.engine.userPreferences;
+        document.getElementById('profileInfo').innerHTML =
+          '<strong>Current Profile: ' +
+          profile +
+          '</strong><br>' +
+          'Case Preference: ' +
+          preferences.casePreference +
+          '<br>' +
+          'Verbosity: ' +
+          preferences.verbosity +
+          '<br>' +
+          'Domain Focus: ' +
+          preferences.domainFocus +
+          '<br>' +
+          'Creativity Level: ' +
+          preferences.creativityLevel +
+          '<br>' +
+          'Abbreviation Tolerance: ' +
+          preferences.abbreviationTolerance;
+      }
+
+      function searchNames() {
+        var input = document.getElementById('searchInput').value;
+        var type = document.getElementById('contextType').value;
+
+        if (!input) {
+          alert('Please enter a description');
+          return;
+        }
+
+        var result = ETCETERNaming.engine.search(input, {
+          context: type ? null : undefined,
+          maxResults: 8,
+        });
+
+        var html = '<strong>Suggestions for: "' + input + '"</strong><br>';
+        html += '<em>Context: ' + result.context.convention.name + '</em><br><br>';
+
+        result.suggestions.forEach(function (suggestion, index) {
+          html +=
+            '<div class="suggestion-item">' +
+            '<strong>' +
+            (index + 1) +
+            '.</strong> ' +
+            '<code>' +
+            suggestion.name +
+            '</code> ' +
+            '<span class="score">(' +
+            suggestion.score.overall +
+            '/100)</span><br>' +
+            '<small>' +
+            suggestion.explanation +
+            '</small>' +
+            '</div>';
+        });
+
+        document.getElementById('searchResults').innerHTML = html;
+      }
+
+      function validateName() {
+        var name = document.getElementById('nameToValidate').value;
+        var description = document.getElementById('nameDescription').value;
+        var type = document.getElementById('nameType').value;
+
+        if (!name || !description) {
+          alert('Please enter both name and description');
+          return;
+        }
+
+        var result = ETCETERNaming.validate(name, description, type);
+        var element = document.getElementById('validationResults');
+
+        element.className = 'validation-result ' + (result.isValid ? 'valid' : '');
+
+        var html =
+          '<strong>Validation Result</strong><br>' +
+          'Score: <span class="score">' +
+          result.score +
+          '/100</span><br>' +
+          'Status: ' +
+          (result.isValid ? '✅ Valid' : '❌ Needs Improvement') +
+          '<br>';
+
+        if (result.issues.length > 0) {
+          html += '<br><strong>Issues:</strong><br>';
+          result.issues.forEach(function (issue) {
+            html += '• ' + issue + '<br>';
+          });
+        }
+
+        if (result.suggestions.length > 0) {
+          html += '<br><strong>Alternative Suggestions:</strong><br>';
+          result.suggestions.forEach(function (suggestion) {
+            html += '• <code>' + suggestion + '</code><br>';
+          });
+        }
+
+        element.innerHTML = html;
+      }
+
+      function improveName() {
+        var name = document.getElementById('nameToImprove').value;
+        var description = document.getElementById('improveDescription').value;
+
+        if (!name || !description) {
+          alert('Please enter both current name and description');
+          return;
+        }
+
+        var result = ETCETERNaming.improve(name, description);
+
+        var html = '<strong>' + result.message + '</strong><br><br>';
+
+        if (result.issues && result.issues.length > 0) {
+          html += '<strong>Issues with current name:</strong><br>';
+          result.issues.forEach(function (issue) {
+            html += '• ' + issue + '<br>';
+          });
+          html += '<br>';
+        }
+
+        if (result.suggestions.length > 0) {
+          html += '<strong>Suggested improvements:</strong><br>';
+          result.suggestions.forEach(function (suggestion, index) {
+            html +=
+              '<div class="suggestion-item">' +
+              '<strong>' +
+              (index + 1) +
+              '.</strong> ' +
+              '<code>' +
+              suggestion +
+              '</code>' +
+              '</div>';
+          });
+        }
+
+        document.getElementById('improvementResults').innerHTML = html;
+      }
+
+      function analyzeCode() {
+        var analysis = ETCETERNaming.analyzeCodebase();
+        var html = '<strong>Codebase Analysis:</strong><br><br>';
+
+        html += JSON.stringify(analysis, null, 2).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+
+        document.getElementById('analysisResults').innerHTML = html;
+      }
+
+      function rollForward() {
+        var suggestions = ETCETERNaming.rollForwardExisting();
+        var html = '<strong>Roll Forward Analysis:</strong><br><br>';
+
+        if (Object.keys(suggestions).length === 0) {
+          html += '✅ All existing names follow good practices!';
+        } else {
+          html += 'Consider improving these names:<br><br>';
+          Object.keys(suggestions).forEach(function (key) {
+            var item = suggestions[key];
+            html += '<strong>' + key + ':</strong><br>';
+            html += 'Current: <code>' + item.current + '</code><br>';
+            if (item.suggestions.length > 0) {
+              html +=
+                'Suggestions: ' +
+                item.suggestions
+                  .map(function (s) {
+                    return '<code>' + s + '</code>';
+                  })
+                  .join(', ') +
+                '<br>';
+            }
+            html += '<br>';
+          });
+        }
+
+        document.getElementById('analysisResults').innerHTML = html;
+      }
+
+      function showGuidelines() {
+        var guidelines = ETCETERNaming.generateGuidelines();
+        var html = '<strong>ET CETER4 Naming Guidelines:</strong><br><br>';
+
+        html += '<strong>Conventions:</strong><br>';
+        Object.keys(guidelines.conventions).forEach(function (key) {
+          html += key + ': <code>' + guidelines.conventions[key] + '</code><br>';
+        });
+
+        html += '<br><strong>Best Practices:</strong><br>';
+        guidelines.bestPractices.forEach(function (practice) {
+          html += '• ' + practice + '<br>';
+        });
+
+        html += '<br><strong>User Profiles:</strong><br>';
+        guidelines.userProfiles.forEach(function (profile) {
+          html += '• ' + profile + '<br>';
+        });
+
+        document.getElementById('guidelinesResults').innerHTML = html;
+      }
+
+      function runTests() {
+        var testResults = document.getElementById('testResults');
+        testResults.innerHTML = 'Running tests...<br>';
+
+        // Capture console output for tests
+        var originalLog = console.log;
+        var originalGroup = console.group;
+        var originalGroupEnd = console.groupEnd;
+        var originalError = console.error;
+
+        var output = '';
+        console.log = function () {
+          output += Array.prototype.slice.call(arguments).join(' ') + '<br>';
+        };
+        console.group = function () {
+          output += '<strong>' + Array.prototype.slice.call(arguments).join(' ') + '</strong><br>';
+        };
+        console.groupEnd = function () {
+          output += '<br>';
+        };
+        console.error = function () {
+          output += '<span style="color: red;">' + Array.prototype.slice.call(arguments).join(' ') + '</span><br>';
+        };
+
+        try {
+          var summary = runAllTests();
+
+          // Restore console
+          console.log = originalLog;
+          console.group = originalGroup;
+          console.groupEnd = originalGroupEnd;
+          console.error = originalError;
+
+          testResults.innerHTML = output;
+        } catch (error) {
+          // Restore console
+          console.log = originalLog;
+          console.group = originalGroup;
+          console.groupEnd = originalGroupEnd;
+          console.error = originalError;
+
+          testResults.innerHTML = 'Error running tests: ' + error.message;
+        }
+      }
+
+      // Initialize the interface
+      document.addEventListener('DOMContentLoaded', function () {
+        switchProfile(); // Initialize profile display
+
+        // Add some demo interactions
+        console.log('🎨 ET CETER4 Naming System Demo Ready!');
+        console.log('Try the interface above or use the API directly:');
+        console.log('ETCETERNaming.suggest("show page", "function")');
+        console.log('ETCETERNaming.validate("showNewSection", "show new section", "function")');
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1066 @@
+@charset "UTF-8";
+
+/*------------------------------------------------------------------
+[Table of contents]
+
+- Globals / $globals
+- Header  / $header
+- Pages   / $pages
+- Footer  / $footer
+-------------------------------------------------------------------*/
+
+/*
+
+    For the love of god, don't auto format this.
+
+    Also, here are the current dimensions for the Media Queries:
+
+    @media screen and (min-width: 46.875em)
+    @media screen and (min-width: 46.875em) and (max-width: 60em)
+    @media screen and (min-width: 60em)
+
+*/
+
+/*------------------------------------------------------------------
+[Globals / $globals]
+*/
+
+/*------------------------------------------------------------------
+[Accessibility / $a11y]
+*/
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 9999;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Screen reader only - visually hidden but accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus visible styles for keyboard navigation */
+:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Remove default focus outline when using mouse */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Ensure links and buttons have visible focus states */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.3);
+}
+
+/* High contrast focus for dark backgrounds */
+.bg-black a:focus-visible,
+.bg-dark-red a:focus-visible,
+.black a:focus-visible {
+  outline-color: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*------------------------------------------------------------------
+[Layout / $layout]
+*/
+
+.page-wrap {
+  max-width: 87.5rem; /* 1400px */
+}
+.shadedow {
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+}
+.txtshdw-white {
+  text-shadow: 0px 1px 5px white;
+}
+.flex-grow-1 {
+  flex-grow: 1;
+}
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+.z-n1 {
+  z-index: -1;
+}
+.left-50 {
+  left: 50%;
+}
+.left-n50 {
+  left: -50%;
+}
+.top-0 {
+  top: 0;
+}
+.top-50 {
+  top: 50%;
+}
+.top-n50 {
+  top: -50%;
+}
+.top-6rem {
+  top: 6rem;
+}
+.bg-transparent {
+  background: transparent;
+}
+.translate-n50 {
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.figure {
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
+
+.hz-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media only screen and (min-width: 46.875em) {
+  .left-50-ns {
+    left: 50%;
+  }
+  .left-n50-ns {
+    left: -50%;
+  }
+  .translate-n50-ns {
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+  .top-0-ns {
+    top: 0;
+  }
+}
+
+/*
+
+    Fonts
+    http://www.cssfontstack.com/Bodoni-MT
+    http://www.cssfontstack.com/Futura 
+
+*/
+
+.bodoni {
+  font-family: 'Bodoni MT', Didot, 'Didot LT STD', 'Hoefler Text', Garamond, 'Times New Roman', serif;
+}
+.futura {
+  font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+}
+.pb-6rem {
+  padding-bottom: 5rem;
+}
+
+.tji {
+  text-align: justify;
+} /* justify's inline spaced text */
+.tji-fix {
+  height: 43px;
+} /* fix for the height of the element */
+
+.tji:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 1px;
+}
+
+/* 
+
+    Widths & Heights
+
+*/
+
+.min-w-15rem {
+  min-width: 15rem;
+} /* 240px */
+
+.w-18_750rem {
+  width: 18.75rem;
+} /* 300px */
+.w-20rem {
+  width: 20rem;
+} /* 320px */
+
+.mw108rem {
+  max-width: 108rem;
+}
+.mw62_500rem {
+  max-width: 62.5rem;
+}
+
+.mh-100 {
+  max-height: 100%;
+}
+.mh-100rem {
+  max-height: 100rem;
+}
+.min-h-100vh {
+  min-height: 100vh;
+}
+.min-h-21_875rem {
+  min-height: 21.875rem;
+} /* 350px */
+.min-h-28_125rem {
+  min-height: 28.125rem;
+} /* 450px */
+
+.h-6_250rem {
+  height: 6.25rem;
+} /* 100px */
+.h-18_750rem {
+  height: 18.75rem;
+} /* 300px */
+.h-21_875rem {
+  min-height: 21.875rem;
+} /* 350px */
+.h-28_125rem {
+  min-height: 28.125rem;
+} /* 450px */
+.h-30rem {
+  height: 30rem;
+} /* 480px */
+
+.vh-85 {
+  height: 85vh;
+}
+
+/* Not Small */
+@media only screen and (min-width: 46.875em) {
+  .min-w-23rem-ns {
+    min-width: 23rem;
+  }
+
+  .w-20rem-ns {
+    width: 20rem;
+  }
+
+  .mh-100rem-ns {
+    max-height: 100rem;
+  }
+  .min-h-21_875rem-ns {
+    min-height: 21.875rem;
+  } /* 350px */
+  .min-h-28_125rem-ns {
+    min-height: 28.125rem;
+  } /* 450px */
+
+  .h-21_875rem-ns {
+    min-height: 21.875rem;
+  } /* 350px */
+  .h-28_125rem-ns {
+    min-height: 28.125rem;
+  } /* 450px */
+  .h-30rem-ns {
+    height: 30rem;
+  }
+
+  .mw108rem-ns {
+    max-width: 108rem;
+  }
+
+  .vh-85-ns {
+    height: 85vh;
+  }
+}
+
+/* 
+    
+    Fonts
+    
+*/
+
+.f-1_125rem {
+  font-size: 1.125rem;
+} /* 18px */
+.f-1_250rem {
+  font-size: 1.25rem;
+} /* 20px */
+.f-2_0625rem {
+  font-size: 2.0625rem;
+} /* 33px */
+.f-2_125rem {
+  font-size: 2.125rem;
+} /* 34px */
+.f-2_250rem {
+  font-size: 2.25rem;
+} /* 36px */
+.f-4_00rem {
+  font-size: 4rem;
+}
+.f-10_00rem {
+  font-size: 10rem;
+}
+
+@media screen and (min-width: 46.875em) {
+  .f-1_125rem-ns {
+    font-size: 1.125rem;
+  } /* 18px */
+  .f-1_250rem-ns {
+    font-size: 1.25rem;
+  } /* 20px */
+  .f-2_0625rem-ns {
+    font-size: 2.0625rem;
+  } /* 33px */
+  .f-2_125rem-ns {
+    font-size: 2.125rem;
+  } /* 34px */
+  .f-2_250rem-ns {
+    font-size: 2.25rem;
+  } /* 36px */
+  .f-4_00rem-ns {
+    font-size: 4rem;
+  }
+  .f-10_00rem-ns {
+    font-size: 10rem;
+  }
+}
+
+/* 
+    
+    Link Styling
+    
+*/
+
+.white-link:link {
+  color: white;
+  background-color: transparent;
+}
+.white-link:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+.white-link:hover {
+  color: black;
+  background-color: white;
+  text-decoration: line-through;
+}
+.white-link:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+.cyan-link:link {
+  color: cyan;
+  background-color: transparent;
+}
+.cyan-link:visited {
+  color: cyan;
+  background-color: transparent;
+  text-decoration: none;
+}
+.cyan-link:hover {
+  color: black;
+  background-color: cyan;
+  text-decoration: line-through;
+}
+.cyan-link:active {
+  color: cyan;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+.black-link:link {
+  color: black;
+  background-color: transparent;
+}
+.black-link:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+.black-link:hover {
+  color: white;
+  background-color: black;
+  text-decoration: line-through;
+}
+.black-link:active {
+  color: black;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+.magenta-link:link {
+  color: magenta;
+  background-color: transparent;
+}
+.magenta-link:visited {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: none;
+}
+.magenta-link:hover {
+  color: white;
+  background-color: magenta;
+  text-decoration: line-through;
+}
+.magenta-link:active {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+.yellow-link:link {
+  color: yellow;
+  background-color: transparent;
+}
+.yellow-link:visited {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: none;
+}
+.yellow-link:hover {
+  color: black;
+  background-color: yellow;
+  text-decoration: line-through;
+}
+.yellow-link:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+.red-link:link {
+  color: red;
+  background-color: transparent;
+}
+.red-link:visited {
+  color: red;
+  background-color: transparent;
+  text-decoration: none;
+}
+.red-link:hover {
+  color: white;
+  background-color: red;
+  text-decoration: line-through;
+}
+.red-link:active {
+  color: red;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+.pink-link:link {
+  color: pink;
+  background-color: transparent;
+}
+.pink-link:visited {
+  color: pink;
+  background-color: transparent;
+  text-decoration: none;
+}
+.pink-link:hover {
+  color: black;
+  background-color: pink;
+  text-decoration: line-through;
+}
+.pink-link:active {
+  color: pink;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+.blue-link:link {
+  color: blue;
+  background-color: transparent;
+}
+.blue-link:visited {
+  color: blue;
+  background-color: transparent;
+  text-decoration: none;
+}
+.blue-link:hover {
+  color: white;
+  background-color: blue;
+  text-decoration: line-through;
+}
+.blue-link:active {
+  color: blue;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+.green-link:link {
+  color: green;
+  background-color: transparent;
+}
+.green-link:visited {
+  color: green;
+  background-color: transparent;
+  text-decoration: none;
+}
+.green-link:hover {
+  color: white;
+  background-color: green;
+  text-decoration: line-through;
+}
+.green-link:active {
+  color: green;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+.clear-button:focus {
+  outline: none;
+}
+
+/*
+
+    Animations
+
+*/
+
+.fadeIn {
+  transition: opacity 0.35s ease-in;
+}
+.fadeIn:hover {
+  opacity: 1;
+}
+.fadeIn:active {
+  opacity: 0.25;
+  transition: opacity 0.1s ease-in;
+}
+
+.anim {
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+}
+
+.anim-easein {
+  animation-timing-function: ease-in;
+}
+
+.anim-easeout {
+  animation-timing-function: ease-out;
+}
+
+@keyframes anim-fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.anim-fadeIn {
+  animation-name: anim-fadeIn;
+}
+
+/*------------------------------------------------------------------
+[Pages / $pages]
+*/
+
+/*
+
+    The Landing Page
+
+*/
+
+@keyframes pulseA {
+  0% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: scale(0.7, 0.7);
+  }
+  50% {
+    transform: scale(1.3, 1.3);
+    opacity: 0;
+  }
+  51% {
+    transform: scale(0.7, 0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseB {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.3, 1.3);
+    opacity: 0;
+  }
+  51% {
+    transform: scale(0.7, 0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
+._enterButton {
+  background-color: black;
+  height: 44px;
+  width: 44px;
+  border-radius: 60px;
+  transition: 2s;
+  border: 1px black;
+}
+
+._enterButton:visited,
+._enterButton:active,
+._enterButton:focus {
+  background-color: black;
+}
+
+._enterButton:hover {
+  background-color: black;
+  transform: scale(1, 1);
+}
+
+._enterButton:before,
+._enterButton:after {
+  position: absolute;
+  display: block;
+  content: '';
+  left: -3px;
+  top: -3px;
+  transform-origin: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 80px;
+  border: 1px solid red;
+  animation-delay: 0.5s;
+}
+._enterButton:before {
+  animation-name: pulseA;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+._enterButton:after {
+  animation-name: pulseB;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  /*animation-direction: alternate;*/
+}
+
+/*
+
+    Menu Page
+
+*/
+
+#menuPageMenu {
+  height: 18.5rem; /* 296px */
+}
+
+/*
+
+    Sounds Page
+
+*/
+
+#textContainer:before {
+  position: absolute;
+  display: block;
+  content: '';
+  left: 0;
+  right: 0;
+  top: 1rem;
+  margin: 0 auto;
+  width: 12.875rem; /* 206px */
+  max-width: 80%;
+  height: 1px;
+  background-color: #989898;
+}
+
+._line-modal:before {
+  position: absolute;
+  display: block;
+  content: '';
+  left: 0;
+  right: 0;
+  top: 1rem;
+  margin: 0 auto;
+  width: 12.875rem; /* 206px */
+  max-width: 80%;
+  height: 1px;
+  background-color: #989898;
+}
+
+/* 
+
+    Stills Page
+
+*/
+
+@media screen and (min-width: 46.875em) {
+  .pr-calc-ns {
+    padding-right: calc(20% - 4vw);
+  }
+  .pl-calc-ns {
+    padding-left: calc(15%);
+  }
+}
+
+._captionSeperator:before {
+  position: absolute;
+  display: block;
+  content: '';
+  left: 0;
+  right: 0;
+  top: 15px;
+  width: 80%;
+  margin: 0 auto;
+  height: 1px;
+  background-color: #989898;
+}
+
+.heightControl-stills {
+  height: calc(100vh - 300px);
+}
+
+/*
+
+    Video
+
+*/
+
+/*
+    Shamelessly taken from: https://avexdesigns.com/responsive-youtube-embed/
+*/
+
+.youtubeContainer {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+}
+
+.youtubeContainer iframe,
+.youtubeContainer object,
+.youtubeContainer embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+
+    Diary
+
+*/
+
+.heightControl-diary {
+  height: calc(100vh - 7rem);
+}
+
+/*
+
+    Ad
+
+*/
+
+.hide-top {
+  position: fixed; /* prevents scrolling when the element isn't in focus */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%); /* puts the elements on below the content so it can slide up */
+  transition: all 0.3s ease-in-out;
+}
+
+.ad-container {
+  height: 500px;
+  max-width: 62.5rem;
+  top: 0rem;
+}
+
+.ad-img {
+  max-width: 420px;
+  max-height: 420px;
+}
+
+.ad-button-container {
+  width: 23rem;
+}
+
+.ad-button {
+  width: 137px;
+}
+
+.mainsite-button {
+  width: 70%;
+}
+/* Not Small */
+@media screen and (min-width: 46.875em) {
+  .ad-container-ns {
+    margin: auto;
+    top: -6rem;
+  }
+
+  .ad-img-ns {
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .ad-img-container {
+    height: 500px;
+  }
+
+  .ad-button {
+    width: 167px;
+  }
+}
+
+/*
+
+    Mobile Menu
+
+*/
+
+.mobileMenu {
+  position: fixed; /* prevents scrolling when the element isn't in focus */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(100%); /* puts the elements on below the content so it can slide up */
+  transition: all 0.3s ease-in-out;
+}
+
+.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/*.margin-hack {
+    *margin-top: expression(this.offsetHeight < this.parentNode.offsetHeight ? parseInt((this.parentNode.offsetHeight - this.offsetHeight) / 2) + "px" : "0");
+}*/
+
+/* 
+
+    The styling to the seperator element in the mobile menu
+                   
+                   ----/-/-/-/-/-/----
+
+ */
+
+._etcDashedLine:before,
+._etcDashedLine:after {
+  position: absolute;
+  display: block;
+  top: 9px;
+  width: 50%; /* in respect to the width of the span element*/
+  height: 1px; /* thickness of the lines */
+  background-color: cyan;
+  content: '';
+}
+
+/* The line on the right */
+._etcDashedLine:after {
+  right: 0;
+  background-color: yellow;
+}
+
+/*------------------------------------------------------------------
+[Footer / $footer]
+*/
+
+footer {
+  height: 5rem;
+}
+
+.audioPlayer {
+  max-width: 22rem;
+  min-width: 13rem;
+  width: 29%;
+}
+
+/*.social-link {
+    width: 30px;
+    height: 30px;
+}*/
+
+.social-link:hover {
+  background-color: transparent; /* resets the hover */
+}
+
+/* 
+
+    SVG Social Icons Tags 
+
+*/
+
+.social-icon {
+  width: 30px;
+  height: 30px;
+}
+
+i.social-icon svg {
+  width: 30px;
+  height: 30px;
+  fill: black;
+}
+
+i.social-icon svg:hover {
+  fill: white;
+}
+
+/* 
+
+    Mobile Hamburger
+    (careful, it's a bit cray)
+
+        -----          \  /
+        -----   --->    x
+        -----         /  \    
+
+    http://callmenick.com/post/animating-css-only-hamburger-menu-icons
+
+*/
+
+.c-hamburger {
+  position: relative;
+  overflow: hidden;
+  width: 2.75rem; /* width & height of the container - min 44px for touch */
+  height: 2.75rem;
+  padding: 0px;
+  font-size: 0;
+  text-indent: -9999px;
+  appearance: none; /* prevents the element from using a platform-native styling */
+  box-shadow: none;
+  border-radius: none;
+  border: none;
+  cursor: pointer;
+  background: white;
+  transition: background 0.3s;
+}
+
+.c-hamburger:focus {
+  outline: none;
+} /* Removes the border when the button is clicked */
+
+/* This is the center line of the hamburger */
+.c-hamburger span {
+  display: block;
+  position: absolute;
+  top: 20px; /* distance to the center of the container */
+  left: 0rem; /* left & right determine padding from the left & right sides of the container */
+  right: 0rem;
+  height: 3px; /* thickness of the line */
+  background: black; /* color of the lines */
+}
+
+/* The top (before) and bottom (after) lines of the hamburger */
+.c-hamburger span:before,
+.c-hamburger span:after {
+  position: absolute;
+  display: block;
+  left: 0;
+  width: 100%; /* makes the lines the width of the span element*/
+  height: 3px; /* thickness of the lines */
+  background-color: black;
+  content: '';
+}
+
+.c-hamburger span:before {
+  top: -15px;
+} /* how far top line is from the top of the container */
+.c-hamburger span:after {
+  bottom: -15px;
+}
+
+/* styling on the active state */
+
+.c-hamburger--htx span {
+  transition: background 0s 0.3s;
+}
+.c-hamburger--htx span::before {
+  transition-property: top, transform;
+}
+.c-hamburger--htx span::after {
+  transition-property: bottom, transform;
+}
+
+.c-hamburger--htx span:before,
+.c-hamburger--htx span:after {
+  transition-duration: 0.3s, 0.3s;
+  transition-delay: 0.3s, 0s;
+}
+
+/* active state, i.e. menu open */
+.c-hamburger--htx.is-active span {
+  background: none;
+}
+
+.c-hamburger--htx.is-active span::before,
+.c-hamburger--htx.is-active span::after {
+  transition-delay: 0s, 0.3s;
+}
+
+.c-hamburger--htx.is-active span::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.c-hamburger--htx.is-active span::after {
+  bottom: 0;
+  transform: rotate(-45deg);
+}

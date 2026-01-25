@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<!--
+  Flaticon icon font: Flaticon
+  Creation date: 03/02/2016 12:39
+-->
+<html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Flaticon WebFont</title>
+    <link href="http://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="flaticon.css">
+    <meta charset="UTF-8">
+    <style>
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, 
+    figure, figcaption, footer, header, hgroup, 
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure, 
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+    body {
+        line-height: 1;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    body {
+        font-family: 'Varela Round', Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        color: #222;
+    }
+    a {
+        color: #333;
+        border-bottom: 1px solid #a9fd00;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    * {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+        font-family: Flaticon;
+        font-size: 30px;
+        font-style: normal;
+        margin-left: 20px;
+        color: #333;
+    }
+    .wrapper {
+        max-width: 600px;
+        margin: auto;
+        padding: 0 1em;
+    }
+    .title {
+        font-size: 1.25em;
+        text-align: center;
+        margin-bottom: 1em;
+        text-transform: uppercase;
+    }
+    header {
+        text-align: center;
+        background-color: #222;
+        color: #fff;
+        padding: 1em;
+    }
+    header .logo {
+        width: 210px;
+        height: 38px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 1em;
+        border: none;
+    }
+    header strong {
+        font-size: 1.95em;
+        font-weight: bold;
+        vertical-align: middle;
+        margin-top: 5px;
+        display: inline-block;
+    }
+    .demo {
+        margin: 2em auto;
+        line-height: 1.25em;
+    }
+    .demo ul li {
+        margin-bottom: 1em;
+    }
+    .demo ul li .num {
+        color: #222;
+        border-radius: 20px;
+        display: inline-block;
+        width: 26px;
+        padding: 3px;
+        height: 26px;
+        text-align: center;
+        margin-right: 0.5em;
+        border: 1px solid #222;
+    }
+    .demo ul li code {
+        background-color: #222;
+        border-radius: 4px;
+        padding: 0.25em 0.5em;
+        display: inline-block;
+        color: #fff;
+        font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+        font-weight: lighter;
+        margin-top: 1em;
+        font-size: 0.8em;
+        word-break: break-all;
+    }
+    .demo ul li code.big {
+        padding: 1em;
+        font-size: 0.9em;
+    }
+    .demo ul li code .red {
+        color: #EF3159;
+    }
+    .demo ul li code .green {
+        color: #ACFF65;
+    }
+    .demo ul li code .yellow {
+        color: #FFFF99;
+    }
+    .demo ul li code .blue {
+        color: #99D3FF;
+    }
+    .demo ul li code .purple {
+        color: #A295FF;
+    }
+    .demo ul li code .dots {
+        margin-top: 0.5em;
+        display: block;
+    }
+    #glyphs {
+        border-bottom: 1px solid #ccc;
+        padding: 2em 0;
+        text-align: center;
+    }
+    .glyph {
+        display: inline-block;
+        width: 9em;
+        margin: 1em;
+        text-align: center;
+        vertical-align: top;
+        background: #FFF;
+    }
+    .glyph .glyph-icon {
+        padding: 10px;
+        display: block;
+        font-family:"Flaticon";
+        font-size: 64px;
+        line-height: 1;
+    }
+    .glyph .glyph-icon:before {
+        font-size: 64px;
+        color: #222;
+        margin-left: 0;
+    }
+    .class-name {
+        font-size: 0.65em;
+        background-color: #222;
+        color: #fff;
+        border-radius: 4px 4px 0 0;
+        padding: 0.5em;
+        color: #FFFF99;
+        font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+    }
+    .author-name {
+        font-size: 0.6em;
+        background-color: #fcfcfd;
+        border: 1px solid #DEDEE4;
+        border-top: 0;
+        border-radius: 0 0 4px 4px;
+        padding: 0.5em;
+    }
+    .class-name:last-child {
+        font-size: 10px;
+        color:#888;
+    }
+    .class-name:last-child a {
+        font-size: 10px;
+        color:#555;
+    }
+    .class-name:last-child a:hover {
+        color:#a9fd00;
+    }
+    .glyph > input {
+        display: block;
+        width: 100px;
+        margin: 5px auto;
+        text-align: center;
+        font-size: 12px;
+        cursor: text;
+    }
+    .glyph > input.icon-input {
+        font-family:"Flaticon";
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    .attribution .title {
+        margin-top: 2em;
+    }
+    .attribution textarea {
+        background-color: #fcfcfd;
+        padding: 1em;
+        border: none;
+        box-shadow: none;
+        border: 1px solid #DEDEE4;
+        border-radius: 4px;
+        resize: none;
+        width: 100%;
+        height: 150px;
+        font-size: 0.8em;
+        font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+        -webkit-appearance: none;
+    }
+    .iconsuse {
+        margin: 2em auto;
+        text-align: center;
+        max-width: 1200px;
+    }
+    .iconsuse:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+    .iconsuse .image {
+        float: left;
+        width: 25%;
+        padding: 0 1em;
+    }
+    .iconsuse .image p {
+        margin-bottom: 1em;
+    }
+    .iconsuse .image span {
+        display: block;
+        font-size: 0.65em;
+        background-color: #222;
+        color: #fff;
+        border-radius: 4px;
+        padding: 0.5em;
+        color: #FFFF99;
+        margin-top: 1em;
+        font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+    }
+    #footer {
+        text-align: center;
+        background-color: #4C5B5C;
+        color: #7c9192;
+        padding: 1em;
+    }
+    #footer a {
+        border: none;
+        color: #a9fd00;
+        font-weight: normal;
+    }
+    @media (max-width: 960px) {
+        .iconsuse .image {
+            width: 50%;
+        }
+    }
+    @media (max-width: 560px) {
+        .iconsuse .image {
+            width: 100%;
+        }
+    }
+    </style>
+</head>
+
+<body class="characters-off">
+
+    <header>
+        <a href="http://www.flaticon.com" target="_blank" class="logo">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" viewBox="0 0 560.875 102.036" enable-background="new 0 0 560.875 102.036" xml:space="preserve">
+                <defs>
+                </defs>
+                <g>
+                    <g class="letters">
+                        <path fill="#ffffff" d="M141.596,29.675c0-3.777,2.985-6.767,6.764-6.767h34.438c3.426,0,6.15,2.728,6.15,6.15
+                        c0,3.43-2.724,6.149-6.15,6.149h-27.674v13.091h23.719c3.429,0,6.151,2.724,6.151,6.15c0,3.43-2.723,6.149-6.151,6.149h-23.719
+                        v17.574c0,3.773-2.986,6.761-6.764,6.761c-3.779,0-6.764-2.989-6.764-6.761V29.675z"></path>
+                        <path fill="#ffffff" d="M193.844,29.149c0-3.781,2.985-6.767,6.764-6.767c3.776,0,6.763,2.985,6.763,6.767v42.957h25.039
+                        c3.426,0,6.149,2.726,6.149,6.153c0,3.425-2.723,6.15-6.149,6.15h-31.802c-3.779,0-6.764-2.986-6.764-6.768V29.149z"></path>
+                        <path fill="#ffffff" d="M241.891,75.71l21.438-48.407c1.492-3.341,4.215-5.357,7.906-5.357h0.792
+                        c3.686,0,6.323,2.017,7.815,5.357l21.439,48.407c0.436,0.967,0.701,1.845,0.701,2.723c0,3.602-2.809,6.501-6.414,6.501
+                        c-3.161,0-5.269-1.845-6.499-4.655l-4.132-9.661h-27.059l-4.301,10.102c-1.144,2.631-3.426,4.214-6.237,4.214
+                        c-3.517,0-6.24-2.81-6.24-6.325C241.1,77.64,241.451,76.677,241.891,75.71z M279.932,58.666l-8.521-20.297l-8.526,20.297H279.932
+                        z"></path>
+                        <path fill="#ffffff" d="M314.864,35.387H301.86c-3.429,0-6.239-2.813-6.239-6.238c0-3.429,2.811-6.24,6.239-6.24h39.533
+                        c3.426,0,6.237,2.811,6.237,6.24c0,3.425-2.811,6.238-6.237,6.238h-13.001v42.785c0,3.773-2.99,6.761-6.764,6.761
+                        c-3.779,0-6.764-2.989-6.764-6.761V35.387z"></path>
+                        <path fill="#A9FD00" d="M352.615,29.149c0-3.781,2.985-6.767,6.767-6.767c3.774,0,6.761,2.985,6.761,6.767v49.024
+                        c0,3.773-2.987,6.761-6.761,6.761c-3.781,0-6.767-2.989-6.767-6.761V29.149z"></path>
+                        <path fill="#A9FD00" d="M374.132,53.836v-0.179c0-17.481,13.178-31.801,32.065-31.801c9.22,0,15.459,2.458,20.557,6.238
+                        c1.402,1.054,2.637,2.985,2.637,5.357c0,3.692-2.985,6.59-6.681,6.59c-1.845,0-3.071-0.702-4.044-1.319
+                        c-3.776-2.813-7.729-4.393-12.562-4.393c-10.364,0-17.831,8.611-17.831,19.154v0.173c0,10.542,7.291,19.329,17.831,19.329
+                        c5.715,0,9.492-1.756,13.359-4.834c1.049-0.874,2.458-1.491,4.039-1.491c3.429,0,6.325,2.813,6.325,6.236
+                        c0,2.106-1.056,3.78-2.282,4.834c-5.539,4.834-12.036,7.733-21.878,7.733C387.572,85.464,374.132,71.493,374.132,53.836z"></path>
+                        <path fill="#A9FD00" d="M433.009,53.836v-0.179c0-17.481,13.79-31.801,32.766-31.801c18.981,0,32.592,14.143,32.592,31.628v0.173
+                        c0,17.483-13.785,31.807-32.769,31.807C446.625,85.464,433.009,71.32,433.009,53.836z M484.224,53.836v-0.179
+                        c0-10.539-7.725-19.326-18.626-19.326c-10.893,0-18.449,8.611-18.449,19.154v0.173c0,10.542,7.73,19.329,18.626,19.329
+                        C476.676,72.986,484.224,64.378,484.224,53.836z"></path>
+                        <path fill="#A9FD00" d="M506.233,29.321c0-3.774,2.99-6.763,6.767-6.763h1.401c3.252,0,5.183,1.583,7.029,3.953l26.093,34.265
+                        V29.059c0-3.692,2.99-6.677,6.681-6.677c3.683,0,6.671,2.985,6.671,6.677v48.934c0,3.78-2.987,6.765-6.764,6.765h-0.436
+                        c-3.257,0-5.188-1.581-7.034-3.953l-27.056-35.492v32.944c0,3.687-2.985,6.676-6.678,6.676c-3.683,0-6.673-2.989-6.673-6.676
+                        V29.321z"></path>
+                    </g>
+                    <g class="insignia">
+                        <path fill="#ffffff" d="M48.372,56.137h12.517l11.156-18.537H37.186L25.688,18.539h57.825L94.668,0H9.271
+                        C5.925,0,2.842,1.801,1.198,4.716c-1.644,2.907-1.593,6.482,0.134,9.343l50.38,83.501c1.678,2.781,4.689,4.476,7.938,4.476
+                        c3.246,0,6.257-1.695,7.935-4.476l2.898-4.804L48.372,56.137z"></path>
+                        <g class="i">
+                            <path fill="#A9FD00" d="M93.575,18.539h0.031v0.004l21.652,0.004l2.705-4.488c1.727-2.861,1.778-6.436,0.133-9.343
+                            C116.454,1.801,113.371,0,110.026,0h-5.294L93.575,18.539z"></path>
+                            <polygon fill="#A9FD00" points="88.291,27.356 64.725,66.486 75.519,84.404 109.942,27.356"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+        </a>
+        <strong>Font Demo</strong>
+    </header>
+
+
+    <section class="demo wrapper">
+
+        <p class="title">Instructions</p>
+
+        <ul>
+            <li>
+                <span class="num">1</span>Copy the "Fonts" files and CSS files to your website CSS folder.
+            </li>
+            <li>
+                <span class="num">2</span>Add the CSS link to your website source code on header.
+                <code class="big">
+                    &lt;<span class="red">head</span>&gt;
+                    <br/><span class="dots">...</span>
+                    <br/>&lt;<span class="red">link</span> <span class="green">rel</span>=<span class="yellow">"stylesheet"</span> <span class="green">type</span>=<span class="yellow">"text/css"</span> <span class="green">href</span>=<span class="yellow">"your_website_domain/css_root/flaticon.css"</span>&gt;
+                    <br/><span class="dots">...</span>
+                    <br/>&lt;/<span class="red">head</span>&gt;
+                </code>
+            </li>
+
+            <li>
+                <p>
+                    <span class="num">3</span>Use the icon class on <code>"<span class="blue">display</span>:<span class="purple"> inline</span>"</code> elements:
+                    <br />
+                    Use example: <code>&lt;<span class="red">i</span> <span class="green">class</span>=<span class="yellow">&quot;flaticon-airplane49&quot;</span>&gt;&lt;/<span class="red">i</span>&gt;</code> or <code>&lt;<span class="red">span</span> <span class="green">class</span>=<span class="yellow">&quot;flaticon-airplane49&quot;</span>&gt;&lt;/<span class="red">span</span>&gt;</code>
+            </li>
+        </ul>
+
+    </section>
+
+
+
+
+   <section id="glyphs">          
+    
+      
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-1-49259"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-1-49259</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-1-49259" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-10-49268"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-10-49268</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-10-49268" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-100-49358"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-100-49358</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-100-49358" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-101-49359"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-101-49359</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-101-49359" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-102-49360"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-102-49360</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-102-49360" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-103-49361"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-103-49361</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-103-49361" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-104-49362"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-104-49362</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-104-49362" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-105-49363"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-105-49363</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-105-49363" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-106-49364"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-106-49364</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-106-49364" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-107-49365"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-107-49365</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-107-49365" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-108-49366"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-108-49366</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-108-49366" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-109-49367"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-109-49367</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-109-49367" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-11-49269"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-11-49269</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-11-49269" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-110-49368"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-110-49368</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-110-49368" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-111-49369"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-111-49369</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-111-49369" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-112-49370"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-112-49370</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-112-49370" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-113-49371"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-113-49371</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-113-49371" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-114-49372"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-114-49372</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-114-49372" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-115-49373"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-115-49373</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-115-49373" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-116-49374"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-116-49374</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-116-49374" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-117-49375"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-117-49375</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-117-49375" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-118-49376"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-118-49376</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-118-49376" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-119-49377"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-119-49377</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-119-49377" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-12-49270"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-12-49270</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-12-49270" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-120-49378"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-120-49378</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-120-49378" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-121-49379"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-121-49379</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-121-49379" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-122-49380"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-122-49380</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-122-49380" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-123-49381"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-123-49381</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-123-49381" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-124-49382"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-124-49382</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-124-49382" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-125-49383"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-125-49383</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-125-49383" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-126-49384"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-126-49384</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-126-49384" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-127-49385"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-127-49385</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-127-49385" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-128-49386"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-128-49386</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-128-49386" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-129-49387"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-129-49387</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-129-49387" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-13-49271"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-13-49271</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-13-49271" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-130-49388"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-130-49388</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-130-49388" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-131-49389"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-131-49389</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-131-49389" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-132-49390"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-132-49390</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-132-49390" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-133-49391"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-133-49391</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-133-49391" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-134-49392"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-134-49392</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-134-49392" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-135-49393"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-135-49393</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-135-49393" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-136-49394"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-136-49394</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-136-49394" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-137-49395"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-137-49395</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-137-49395" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-138-49396"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-138-49396</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-138-49396" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-139-49397"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-139-49397</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-139-49397" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-14-49272"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-14-49272</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-14-49272" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-140-49398"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-140-49398</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-140-49398" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-141-49399"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-141-49399</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-141-49399" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-142-49400"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-142-49400</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-142-49400" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-143-49401"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-143-49401</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-143-49401" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-144-49402"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-144-49402</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-144-49402" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-145-49403"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-145-49403</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-145-49403" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-146-49404"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-146-49404</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-146-49404" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-147-49405"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-147-49405</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-147-49405" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-148-49406"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-148-49406</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-148-49406" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-149-49407"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-149-49407</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-149-49407" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-15-49273"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-15-49273</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-15-49273" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-150-49408"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-150-49408</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-150-49408" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-151-49409"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-151-49409</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-151-49409" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-152-49410"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-152-49410</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-152-49410" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-153-49411"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-153-49411</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-153-49411" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-154-49412"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-154-49412</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-154-49412" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-155-49413"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-155-49413</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-155-49413" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-156-49415"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-156-49415</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-156-49415" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-157-49416"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-157-49416</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-157-49416" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-158-49417"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-158-49417</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-158-49417" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-159-49418"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-159-49418</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-159-49418" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-16-49274"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-16-49274</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-16-49274" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-160-49419"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-160-49419</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-160-49419" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-161-49420"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-161-49420</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-161-49420" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-162-49421"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-162-49421</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-162-49421" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-163-49422"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-163-49422</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-163-49422" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-164-49423"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-164-49423</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-164-49423" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-165-49424"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-165-49424</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-165-49424" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-166-49425"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-166-49425</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-166-49425" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-167-49426"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-167-49426</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-167-49426" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-168-49427"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-168-49427</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-168-49427" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-169-49428"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-169-49428</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-169-49428" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-17-49275"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-17-49275</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-17-49275" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-170-49429"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-170-49429</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-170-49429" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-171-49430"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-171-49430</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-171-49430" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-172-49431"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-172-49431</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-172-49431" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-173-49432"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-173-49432</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-173-49432" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-174-49433"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-174-49433</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-174-49433" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-175-49434"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-175-49434</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-175-49434" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-176-49435"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-176-49435</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-176-49435" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-177-49436"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-177-49436</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-177-49436" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-178-49437"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-178-49437</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-178-49437" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-179-49438"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-179-49438</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-179-49438" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-18-49276"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-18-49276</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-18-49276" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-180-49439"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-180-49439</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-180-49439" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-181-49440"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-181-49440</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-181-49440" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-182-49441"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-182-49441</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-182-49441" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-183-49442"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-183-49442</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-183-49442" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-184-49443"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-184-49443</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-184-49443" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-185-49444"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-185-49444</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-185-49444" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-186-49445"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-186-49445</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-186-49445" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-187-49446"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-187-49446</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-187-49446" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-188-49447"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-188-49447</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-188-49447" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-189-49448"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-189-49448</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-189-49448" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-19-49277"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-19-49277</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-19-49277" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-190-49449"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-190-49449</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-190-49449" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-191-49450"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-191-49450</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-191-49450" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-192-49451"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-192-49451</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-192-49451" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-193-49452"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-193-49452</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-193-49452" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-194-49453"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-194-49453</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-194-49453" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-195-49454"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-195-49454</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-195-49454" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-196-49455"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-196-49455</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-196-49455" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-197-49456"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-197-49456</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-197-49456" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-198-49457"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-198-49457</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-198-49457" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-199-49458"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-199-49458</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-199-49458" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-2-49260"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-2-49260</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-2-49260" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-20-49278"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-20-49278</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-20-49278" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-200-49459"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-200-49459</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-200-49459" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-201-49460"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-201-49460</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-201-49460" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-202-49461"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-202-49461</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-202-49461" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-203-49462"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-203-49462</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-203-49462" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-21-49279"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-21-49279</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-21-49279" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-22-49280"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-22-49280</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-22-49280" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-23-49281"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-23-49281</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-23-49281" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-24-49282"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-24-49282</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-24-49282" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-25-49283"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-25-49283</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-25-49283" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-26-49284"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-26-49284</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-26-49284" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-27-49285"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-27-49285</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-27-49285" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-28-49286"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-28-49286</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-28-49286" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-29-49287"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-29-49287</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-29-49287" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-3-49261"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-3-49261</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-3-49261" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-30-49288"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-30-49288</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-30-49288" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-31-49289"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-31-49289</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-31-49289" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-32-49290"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-32-49290</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-32-49290" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-33-49291"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-33-49291</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-33-49291" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-34-49292"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-34-49292</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-34-49292" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-35-49293"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-35-49293</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-35-49293" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-36-49294"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-36-49294</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-36-49294" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-37-49295"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-37-49295</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-37-49295" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-38-49296"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-38-49296</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-38-49296" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-39-49297"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-39-49297</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-39-49297" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-4-49262"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-4-49262</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-4-49262" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-40-49298"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-40-49298</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-40-49298" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-41-49299"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-41-49299</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-41-49299" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-42-49300"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-42-49300</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-42-49300" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-43-49301"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-43-49301</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-43-49301" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-44-49302"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-44-49302</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-44-49302" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-45-49303"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-45-49303</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-45-49303" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-46-49304"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-46-49304</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-46-49304" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-47-49305"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-47-49305</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-47-49305" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-48-49306"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-48-49306</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-48-49306" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-49-49307"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-49-49307</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-49-49307" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-49258"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-49258</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-49258" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-5-49263"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-5-49263</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-5-49263" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-50-49308"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-50-49308</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-50-49308" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-51-49309"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-51-49309</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-51-49309" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-52-49310"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-52-49310</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-52-49310" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-53-49311"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-53-49311</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-53-49311" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-54-49312"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-54-49312</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-54-49312" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-55-49313"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-55-49313</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-55-49313" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-56-49314"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-56-49314</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-56-49314" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-57-49315"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-57-49315</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-57-49315" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-58-49316"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-58-49316</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-58-49316" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-59-49317"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-59-49317</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-59-49317" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-6-49264"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-6-49264</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-6-49264" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-60-49318"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-60-49318</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-60-49318" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-61-49319"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-61-49319</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-61-49319" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-62-49320"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-62-49320</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-62-49320" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-63-49321"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-63-49321</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-63-49321" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-64-49322"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-64-49322</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-64-49322" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-65-49323"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-65-49323</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-65-49323" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-66-49324"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-66-49324</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-66-49324" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-67-49325"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-67-49325</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-67-49325" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-68-49326"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-68-49326</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-68-49326" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-69-49327"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-69-49327</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-69-49327" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-7-49265"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-7-49265</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-7-49265" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-70-49328"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-70-49328</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-70-49328" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-71-49329"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-71-49329</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-71-49329" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-72-49330"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-72-49330</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-72-49330" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-73-49331"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-73-49331</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-73-49331" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-74-49332"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-74-49332</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-74-49332" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-75-49333"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-75-49333</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-75-49333" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-76-49334"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-76-49334</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-76-49334" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-77-49335"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-77-49335</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-77-49335" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-78-49336"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-78-49336</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-78-49336" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-79-49337"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-79-49337</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-79-49337" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-8-49266"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-8-49266</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-8-49266" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-80-49338"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-80-49338</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-80-49338" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-81-49339"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-81-49339</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-81-49339" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-82-49340"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-82-49340</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-82-49340" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-83-49341"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-83-49341</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-83-49341" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-84-49342"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-84-49342</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-84-49342" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-85-49343"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-85-49343</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-85-49343" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-86-49344"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-86-49344</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-86-49344" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-87-49345"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-87-49345</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-87-49345" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-88-49346"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-88-49346</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-88-49346" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-89-49347"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-89-49347</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-89-49347" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-9-49267"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-9-49267</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-9-49267" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-90-49348"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-90-49348</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-90-49348" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-91-49349"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-91-49349</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-91-49349" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-92-49350"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-92-49350</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-92-49350" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-93-49351"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-93-49351</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-93-49351" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-94-49352"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-94-49352</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-94-49352" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-95-49353"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-95-49353</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-95-49353" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-96-49354"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-96-49354</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-96-49354" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-97-49355"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-97-49355</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-97-49355" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-98-49356"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-98-49356</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-98-49356" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+        <div class="glyph"><div class="glyph-icon flaticon-social-icons-rounded-99-49357"></div>
+            <div class="class-name">.flaticon-social-icons-rounded-99-49357</div>
+            <div class="author-name">Author: <a data-file="social-icons-rounded-99-49357" href="http://www.flaticon.com/authors/freepik-1">Freepik</a> </div> 
+        </div>        
+        
+
+    </section>
+
+
+
+    <section class="attribution wrapper"   style="text-align:center;">
+
+      <div class="title">License and attribution:</div><div class="attrDiv">Font generated by <a href="http://www.flaticon.com">flaticon.com</a>. <div> <p>Under <a href="http://media005.freepik.com/flaticon/license/license.pdf">Flaticon Basic License</a>: <a data-file="social-icons-rounded-203-49462" href="http://www.flaticon.com/authors/freepik-1">Freepik</a></p> </div>
+      </div>
+      <div class="title">Copy the Attribution License:</div>
+
+    <textarea onclick="this.focus();this.select();">Font generated by &lt;a href=&quot;http://www.flaticon.com&quot;&gt;flaticon.com&lt;/a&gt;.  <p>Under <a href="http://media005.freepik.com/flaticon/license/license.pdf">Flaticon Basic License</a>: <a data-file="social-icons-rounded-203-49462" href="http://www.flaticon.com/authors/freepik-1">Freepik</a></p> 
+     </textarea>
+
+    </section>
+
+    <section class="iconsuse">
+
+          <div class="title">Examples:</div>            
+             
+            <div class="image">
+                <p>
+                    <i class="glyph-icon flaticon-social-icons-rounded-1-49259"></i> 
+                    <span>&lt;i class=&quot;flaticon-social-icons-rounded-1-49259&quot;&gt;&lt;/i&gt;</span>
+                </p>
+            </div>
+            
+            <div class="image">
+                <p>
+                    <i class="glyph-icon flaticon-social-icons-rounded-10-49268"></i> 
+                    <span>&lt;i class=&quot;flaticon-social-icons-rounded-10-49268&quot;&gt;&lt;/i&gt;</span>
+                </p>
+            </div>
+            
+            <div class="image">
+                <p>
+                    <i class="glyph-icon flaticon-social-icons-rounded-100-49358"></i> 
+                    <span>&lt;i class=&quot;flaticon-social-icons-rounded-100-49358&quot;&gt;&lt;/i&gt;</span>
+                </p>
+            </div>
+            
+            <div class="image">
+                <p>
+                    <i class="glyph-icon flaticon-social-icons-rounded-101-49359"></i> 
+                    <span>&lt;i class=&quot;flaticon-social-icons-rounded-101-49359&quot;&gt;&lt;/i&gt;</span>
+                </p>
+            </div>
+                       
+        </div>
+                            
+    </section>
+
+<div id="footer">
+    <div>Generated by <a href="http://www.flaticon.com">flaticon.com</a>
+    </div>
+</div>
+
+
+
+</body>
+</html>

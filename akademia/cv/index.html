@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Descriptive Metas -->
+    <title>ET CETER4 - Curriculum Vitae</title>
+    <meta name="description" content="ET CETER4 - Academic, Professor, Designer, Artist" />
+    <meta name="author" content="ET CETER4" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="cv.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../img/favicon.ico" />
+  </head>
+
+  <body class="min-vh-100 w-100 futura fw1 bg-near-white black">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-100 bg-white-90 bb b--black-10 z-999 ph3 ph4-l">
+      <div class="flex items-center justify-between pv3">
+        <a href="../../index.html" class="f4 fw6 black no-underline dim">← ETCETER4</a>
+
+        <!-- Mode Toggle -->
+        <div class="flex items-center">
+          <span class="f6 mr2 o-60">Mode:</span>
+          <button id="mode-professional" class="mode-toggle-btn active f6 fw6 ph3 pv2 bn br2 mr2 pointer dim">
+            Professional
+          </button>
+          <button id="mode-experimental" class="mode-toggle-btn f6 fw6 ph3 pv2 bn br2 pointer dim">Experimental</button>
+        </div>
+
+        <!-- Museum Lens Toggle -->
+        <div class="flex items-center ml4">
+          <span class="f6 mr2 o-60">Lens:</span>
+          <button class="lens-btn active f6 ph3 pv2 bn br2 mr2 pointer dim" data-lens="collector">Collector</button>
+          <button class="lens-btn f6 ph3 pv2 bn br2 mr2 pointer dim" data-lens="archaeologist">Archaeologist</button>
+          <button class="lens-btn f6 ph3 pv2 bn br2 pointer dim" data-lens="critique">Critique</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt5 ph3 ph5-l pb5">
+      <!-- Header Section -->
+      <header class="tc pv5 mt4">
+        <h1 class="f1 f-headline-ns fw1 mb0">ET CETER4</h1>
+        <div class="f4 f3-ns fw3 mt3 mb4 o-70">
+          <span class="db dib-ns">Academic</span>
+          <span class="dn-ns"> • </span>
+          <span class="db dib-ns">Professor</span>
+          <span class="dn-ns"> • </span>
+          <span class="db dib-ns">Designer</span>
+          <span class="dn-ns"> • </span>
+          <span class="db dib-ns">Artist</span>
+        </div>
+      </header>
+
+      <!-- Facet Navigation -->
+      <nav class="tc pv4 bb b--black-10">
+        <button class="facet-btn active f4 fw6 ph4 pv3 mr3 mb3 bn br2 pointer dim" data-facet="overview">
+          Overview
+        </button>
+        <button class="facet-btn f4 fw6 ph4 pv3 mr3 mb3 bn br2 pointer dim" data-facet="academic">Academic</button>
+        <button class="facet-btn f4 fw6 ph4 pv3 mr3 mb3 bn br2 pointer dim" data-facet="professor">Professor</button>
+        <button class="facet-btn f4 fw6 ph4 pv3 mr3 mb3 bn br2 pointer dim" data-facet="designer">Designer</button>
+        <button class="facet-btn f4 fw6 ph4 pv3 mb3 bn br2 pointer dim" data-facet="artist">Artist</button>
+      </nav>
+
+      <!-- Overview Section -->
+      <section id="overview-section" class="cv-section pt5 center measure-wide">
+        <article class="pv4 bt b--black-10">
+          <h2 class="f2 fw6 mb3">Synthesis of Practice</h2>
+          <p class="f4 lh-copy measure">
+            ET CETER4 is a multifaceted practitioner working at the intersections of scholarship, pedagogy, design, and
+            artistic creation. This integrated approach views research, teaching, creative practice, and critical making
+            as mutually reinforcing modes of inquiry and expression.
+          </p>
+        </article>
+
+        <article class="pv4 bt b--black-10">
+          <h3 class="f3 fw6 mb3">Research Interests</h3>
+          <div class="flex flex-wrap">
+            <span class="f5 ph3 pv2 mr2 mb2 ba br2 b--black-20">Digital Humanities</span>
+            <span class="f5 ph3 pv2 mr2 mb2 ba br2 b--black-20">Sound Studies</span>
+            <span class="f5 ph3 pv2 mr2 mb2 ba br2 b--black-20">Experimental Media</span>
+            <span class="f5 ph3 pv2 mr2 mb2 ba br2 b--black-20">Computational Aesthetics</span>
+            <span class="f5 ph3 pv2 mr2 mb2 ba br2 b--black-20">Critical Making</span>
+            <span class="f5 ph3 pv2 mr2 mb2 ba br2 b--black-20">Web Poetics</span>
+          </div>
+        </article>
+
+        <article class="pv4 bt b--black-10">
+          <h3 class="f3 fw6 mb3">Contact</h3>
+          <p class="f4 lh-copy">
+            <a href="mailto:contact@etceter4.com" class="link black dim bb">contact@etceter4.com</a>
+          </p>
+        </article>
+      </section>
+
+      <!-- Academic Section -->
+      <section id="academic-section" class="cv-section hidden pt5 center measure-wide">
+        <article class="pv4">
+          <h2 class="f2 fw6 mb4">Academic Research & Publications</h2>
+
+          <!-- Work Item Template -->
+          <div class="work-item pv4 bt b--black-10">
+            <h3 class="f3 fw5 mb3">Example Publication Title</h3>
+
+            <!-- Collector View -->
+            <div class="work-view collector-view">
+              <p class="f4 lh-copy measure mb3">
+                A groundbreaking study examining the intersection of computational methods and aesthetic theory,
+                published in a leading peer-reviewed journal.
+              </p>
+              <div class="f5 o-60">
+                <span class="db">Journal of Digital Humanities, Vol. 12, No. 3</span>
+                <span class="db">2024</span>
+              </div>
+            </div>
+
+            <!-- Archaeologist View -->
+            <div class="work-view archaeologist-view hidden">
+              <p class="f5 lh-copy measure mb3 i">
+                This publication emerged from a three-year research project funded by [Institution]. The methodology
+                combined computational text analysis with close reading practices, reflecting a turn toward hybrid
+                methods in digital humanities circa 2020-2024.
+              </p>
+              <div class="f6 o-60">
+                <span class="db">Research conducted: 2021-2023</span>
+                <span class="db">Peer review process: 14 months</span>
+                <span class="db">Citations (as of 2025): 47</span>
+              </div>
+            </div>
+
+            <!-- Critique View -->
+            <div class="work-view critique-view hidden">
+              <p class="f5 lh-copy measure mb3">
+                <span class="db mb2"
+                  ><strong>Intervention:</strong> Challenges conventional approaches to [topic] by proposing a framework
+                  that integrates computational and humanistic methods.</span
+                >
+                <span class="db mb2"
+                  ><strong>Methodology:</strong> Mixed methods combining quantitative analysis with qualitative
+                  interpretation.</span
+                >
+                <span class="db"
+                  ><strong>Impact:</strong> Contributed to ongoing debates about [field], particularly influencing
+                  approaches to [specific area].</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <!-- Add more work items here -->
+          <div class="pv4 tc o-60">
+            <em>Additional publications to be populated from CV data...</em>
+          </div>
+        </article>
+
+        <article class="pv4 bt b--black-10">
+          <h2 class="f2 fw6 mb4">Conferences & Presentations</h2>
+          <p class="f4 lh-copy measure o-60">Conference presentations to be populated...</p>
+        </article>
+      </section>
+
+      <!-- Professor Section -->
+      <section id="professor-section" class="cv-section hidden pt5 center measure-wide">
+        <article class="pv4">
+          <h2 class="f2 fw6 mb4">Teaching Experience</h2>
+
+          <div class="work-item pv4 bt b--black-10">
+            <h3 class="f3 fw5 mb3">Course: Digital Media & Society</h3>
+
+            <!-- Collector View -->
+            <div class="work-view collector-view">
+              <p class="f4 lh-copy measure mb3">
+                Upper-level seminar exploring the cultural, political, and aesthetic dimensions of digital media.
+                Students engage in critical analysis and creative practice.
+              </p>
+              <div class="f5 o-60">
+                <span class="db">Undergraduate/Graduate</span>
+                <span class="db">Enrollment: 20-25 students</span>
+              </div>
+            </div>
+
+            <!-- Archaeologist View -->
+            <div class="work-view archaeologist-view hidden">
+              <p class="f5 lh-copy measure mb3 i">
+                Developed in 2018 in response to student demand for critical digital studies. The syllabus has evolved
+                to incorporate more recent scholarship on platform studies, algorithmic culture, and creative coding
+                practices.
+              </p>
+              <div class="f6 o-60">
+                <span class="db">First taught: Fall 2018</span>
+                <span class="db">Iterations: 8</span>
+                <span class="db">Student evaluations: 4.7/5.0 average</span>
+              </div>
+            </div>
+
+            <!-- Critique View -->
+            <div class="work-view critique-view hidden">
+              <p class="f5 lh-copy measure mb3">
+                <span class="db mb2"
+                  ><strong>Pedagogical Approach:</strong> Combines theoretical readings with hands-on making,
+                  emphasizing "thinking through making."</span
+                >
+                <span class="db mb2"
+                  ><strong>Learning Outcomes:</strong> Students develop critical frameworks for analyzing digital
+                  culture while building technical skills.</span
+                >
+                <span class="db"
+                  ><strong>Innovation:</strong> Integrates creative practice as research method, not just outcome.</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="pv4 tc o-60">
+            <em>Additional courses to be populated...</em>
+          </div>
+        </article>
+
+        <article class="pv4 bt b--black-10">
+          <h2 class="f2 fw6 mb4">Advising & Mentorship</h2>
+          <p class="f4 lh-copy measure o-60">Student advising experience to be populated...</p>
+        </article>
+      </section>
+
+      <!-- Designer Section -->
+      <section id="designer-section" class="cv-section hidden pt5 center measure-wide">
+        <article class="pv4">
+          <h2 class="f2 fw6 mb4">Design Practice & Projects</h2>
+
+          <div class="work-item pv4 bt b--black-10">
+            <h3 class="f3 fw5 mb3">ETCETER4 Website</h3>
+
+            <!-- Collector View -->
+            <div class="work-view collector-view">
+              <p class="f4 lh-copy measure mb3">
+                Multi-year web-based project serving as both portfolio and experimental space. Features non-linear
+                navigation, generative systems, and integration of music, writing, and visual work.
+              </p>
+              <div class="f5 o-60">
+                <span class="db">2010-present</span>
+                <span class="db"
+                  ><a href="https://4-b100m.github.io/etceter4/" class="link black dim">View Project →</a></span
+                >
+              </div>
+            </div>
+
+            <!-- Archaeologist View -->
+            <div class="work-view archaeologist-view hidden">
+              <p class="f5 lh-copy measure mb3 i">
+                Initiated in 2010 as a portfolio site, evolved into an experimental web labyrinth. Went dormant in
+                2016-2017, with most content commented out. Revived in 2025 with expanded architectural vision
+                incorporating 15 "chambers" inspired by classical architecture.
+              </p>
+              <div class="f6 o-60">
+                <span class="db">Technologies: HTML5, CSS3, JavaScript, P5.js</span>
+                <span class="db">Design influences: Radiohead (Kid A era), web brutalism</span>
+                <span class="db">Architecture: Five Pillars + Pantheon expansion</span>
+              </div>
+            </div>
+
+            <!-- Critique View -->
+            <div class="work-view critique-view hidden">
+              <p class="f5 lh-copy measure mb3">
+                <span class="db mb2"
+                  ><strong>Concept:</strong> Challenges conventional portfolio structure by embracing non-linear,
+                  exploratory navigation inspired by the metaphor of a labyrinth.</span
+                >
+                <span class="db mb2"
+                  ><strong>Technical Approach:</strong> Hash-based routing, generative visuals, self-hosted media
+                  infrastructure.</span
+                >
+                <span class="db"
+                  ><strong>Significance:</strong> Demonstrates integration of design thinking, technical implementation,
+                  and conceptual art practice.</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="pv4 tc o-60">
+            <em>Additional design projects to be populated...</em>
+          </div>
+        </article>
+
+        <article class="pv4 bt b--black-10">
+          <h2 class="f2 fw6 mb4">Design Philosophy</h2>
+          <p class="f4 lh-copy measure">
+            Design as inquiry: using the process of making to explore questions about media, interaction, and meaning.
+            Emphasis on experimental approaches that blur boundaries between utility and expression.
+          </p>
+        </article>
+      </section>
+
+      <!-- Artist Section -->
+      <section id="artist-section" class="cv-section hidden pt5 center measure-wide">
+        <article class="pv4">
+          <h2 class="f2 fw6 mb4">Artistic Practice</h2>
+
+          <div class="work-item pv4 bt b--black-10">
+            <h3 class="f3 fw5 mb3">OGOD (2015)</h3>
+
+            <!-- Collector View -->
+            <div class="work-view collector-view">
+              <p class="f4 lh-copy measure mb3">
+                29-track album with accompanying 29-page visual album. Experimental electronic music combining glitch
+                aesthetics, sampling, and synthesis.
+              </p>
+              <div class="f5 o-60">
+                <span class="db">Album + Visual Component</span>
+                <span class="db">2015</span>
+                <span class="db"><a href="../../index.html#sound" class="link black dim">Listen →</a></span>
+              </div>
+            </div>
+
+            <!-- Archaeologist View -->
+            <div class="work-view archaeologist-view hidden">
+              <p class="f5 lh-copy measure mb3 i">
+                Created during a period of intensive output (2010-2015), OGOD represents the culmination of earlier
+                experiments. The visual album component integrates photography, glitch art, and typographic
+                experimentation. Production tools included [DAW], with heavy use of Max/MSP patches.
+              </p>
+              <div class="f6 o-60">
+                <span class="db">Recording period: 2014-2015</span>
+                <span class="db">Tracks: 29</span>
+                <span class="db">Duration: [XX:XX]</span>
+              </div>
+            </div>
+
+            <!-- Critique View -->
+            <div class="work-view critique-view hidden">
+              <p class="f5 lh-copy measure mb3">
+                <span class="db mb2"
+                  ><strong>Aesthetic Strategy:</strong> Employs glitch and degradation as compositional techniques, not
+                  just surface effects.</span
+                >
+                <span class="db mb2"
+                  ><strong>Intermediality:</strong> The visual album doesn't merely accompany the music but creates a
+                  parallel narrative structure.</span
+                >
+                <span class="db"
+                  ><strong>Context:</strong> Engages with traditions of electronic music while incorporating influences
+                  from hip-hop production and sound art.</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="work-item pv4 bt b--black-10">
+            <h3 class="f3 fw5 mb3">Loophole (2016)</h3>
+
+            <!-- Collector View -->
+            <div class="work-view collector-view">
+              <p class="f4 lh-copy measure mb3">
+                Interactive web-based text piece exploring repetition, fragmentation, and digital reading. Glitched
+                typography and non-linear navigation.
+              </p>
+              <div class="f5 o-60">
+                <span class="db">Web-based artwork</span>
+                <span class="db">2016</span>
+                <span class="db"><a href="../../loophole.html" class="link black dim">Experience →</a></span>
+              </div>
+            </div>
+
+            <!-- Archaeologist View -->
+            <div class="work-view archaeologist-view hidden">
+              <p class="f5 lh-copy measure mb3 i">
+                Created during transition period when much of the ETCETER4 site was being commented out. Represents an
+                interest in web-native poetics and the affordances of HTML/CSS for experimental writing. Influenced by
+                net.art practices of the 1990s-2000s.
+              </p>
+              <div class="f6 o-60">
+                <span class="db">Created: 2016</span>
+                <span class="db">Technologies: HTML, CSS, JavaScript</span>
+                <span class="db">Form: Interactive hypertext</span>
+              </div>
+            </div>
+
+            <!-- Critique View -->
+            <div class="work-view critique-view hidden">
+              <p class="f5 lh-copy measure mb3">
+                <span class="db mb2"
+                  ><strong>Conceptual Framework:</strong> Interrogates the "loop" as both technical structure (in code)
+                  and metaphor for compulsive reading/clicking behaviors.</span
+                >
+                <span class="db mb2"
+                  ><strong>Medium-Specificity:</strong> Exploits web-specific affordances that wouldn't translate to
+                  print or other media.</span
+                >
+                <span class="db"
+                  ><strong>Lineage:</strong> Positions itself within traditions of concrete poetry, net.art, and
+                  electronic literature.</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="pv4 tc o-60">
+            <em>Additional artworks to be populated...</em>
+          </div>
+        </article>
+
+        <article class="pv4 bt b--black-10">
+          <h2 class="f2 fw6 mb4">Exhibitions & Performances</h2>
+          <p class="f4 lh-copy measure o-60">Exhibition and performance history to be populated...</p>
+        </article>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="tc pv5 ph3 o-60">
+      <p class="f5">
+        <a href="../../index.html" class="link black dim bb">Return to Main Site</a>
+      </p>
+      <p class="f6 mt3">
+        This CV is itself an experiment in form — a living document that reflects the integration of research, teaching,
+        design, and artistic practice.
+      </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="cv.js"></script>
+  </body>
+</html>

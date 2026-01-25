@@ -1,0 +1,1786 @@
+@charset "UTF-8";
+
+/*------------------------------------------------------------------
+[Table of contents]
+
+- Globals / $globals
+- Header  / $header
+- Pages   / $pages
+- Footer  / $footer
+-------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------
+[Globals / $globals]
+*/
+
+* {
+  /*outline: red solid 1px;*/
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#mainContainer {
+  height: 100%;
+}
+
+.clearfix:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/*------------------------------------------------------------------
+[Pages / $pages]
+*/
+
+#pages {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 63px;
+}
+
+#new {
+  display: none;
+  height: 100%;
+  background-color: white;
+}
+
+#new p {
+  color: white;
+  font-family: 'Futura';
+  font-weight: normal;
+  font-size: 2.5rem;
+  text-align: justify;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 3rem;
+  margin-top: top;
+  margin-bottom: auto;
+  width: 100%;
+  height: 100%;
+}
+
+#new p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#newheader {
+  padding-top: 10px;
+}
+
+#splash {
+  height: 100%;
+  display: none;
+  background-color: black;
+}
+
+#splash p {
+  color: white;
+  font-family: 'Futura';
+  font-weight: normal;
+  font-size: 3.5rem;
+  text-align: justify;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 6rem;
+  margin-top: top;
+  margin-bottom: auto;
+  width: 100%;
+  height: 100%;
+}
+
+#splash p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#menu {
+  height: 100%;
+  display: none;
+  background-color: white;
+}
+
+#menu p {
+  font-family: 'Futura';
+  font-weight: normal;
+  font-size: 3.5rem;
+  text-align: justify;
+  color: black;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 6rem;
+  margin-top: top;
+  margin-bottom: auto;
+}
+
+#menu p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#words {
+  height: 100%;
+  display: none;
+  background-color: black;
+}
+
+#words p {
+  font-family: 'Futura';
+  font-weight: normal;
+  font-size: 3.5rem;
+  text-align: justify;
+  color: black;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 6rem;
+  margin-top: top;
+  margin-bottom: auto;
+}
+
+#words p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#diary {
+  height: 100%;
+  display: none;
+  background-color: black;
+}
+
+#diarySize {
+  height: inherit;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#diary .carousel {
+  background-color: black;
+}
+
+#diary .item {
+  height: 100%;
+}
+
+#diary img {
+  max-height: 550px;
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#blog {
+  height: 100%;
+  display: none;
+  background-color: white;
+}
+
+#blog p {
+  font-family: 'Futura';
+  font-weight: normal;
+  font-size: 1rem;
+  /*text-align: justify;*/
+  color: black;
+  text-decoration: none;
+}
+
+#blog p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#blog a {
+  line-height: 1rem;
+}
+
+hr {
+  height: 30px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px 0 0 0;
+  border-radius: 20px;
+}
+
+hr:before {
+  /*Not really supposed to work, but does */
+  display: block;
+  content: '';
+  height: 30px;
+  margin-top: -31px;
+  border-style: solid;
+  border-color: black;
+  border-width: 0 0 1px 0;
+  border-radius: 20px;
+}
+
+#music {
+  height: 100%;
+  display: none;
+  background-color: #00ffff;
+}
+
+#music p {
+  font-family: 'Futura';
+  text-align: justify;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 1.8rem;
+  line-height: 1.5rem;
+  margin-top: top;
+  margin-bottom: auto;
+  padding: 0px 10px;
+}
+
+#music p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#OGODvisual {
+  height: 100%;
+  background-color: white;
+  overflow-y: scroll;
+}
+
+#OGODvisual p {
+  font-family: 'Futura';
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 3rem;
+  line-height: 3rem;
+  margin-top: top;
+  margin-bottom: auto;
+}
+
+#OGODvisual p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#sight {
+  height: 100%;
+  display: none;
+  background-color: magenta;
+}
+
+#sight p {
+  font-family: 'Futura';
+  text-align: justify;
+  vertical-align: auto;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: bold;
+  font-weight: normal;
+  font-size: 3.5rem;
+  line-height: 6rem;
+  margin-top: top;
+  margin-bottom: auto;
+}
+
+#sight p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#video {
+  height: 100%;
+  display: none;
+  background-color: white;
+  overflow-y: scroll;
+}
+
+#video p {
+  font-family: 'Futura';
+  text-align: justify;
+  vertical-align: auto;
+  color: black;
+  text-transform: uppercase;
+  text-decoration: bold;
+  font-weight: normal;
+  font-size: 5rem;
+  line-height: 1rem;
+  margin-top: top;
+  margin-bottom: auto;
+}
+
+#video p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#still {
+  height: 100%;
+  display: none;
+  background-color: white;
+}
+
+#still p {
+  font-family: 'Futura';
+  text-align: justify;
+  vertical-align: auto;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: bold;
+  font-weight: normal;
+  font-size: 2.5rem;
+  line-height: 2rem;
+  margin-top: top;
+  margin-bottom: auto;
+}
+
+#still p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#info {
+  height: 100%;
+  display: none;
+  background-color: yellow;
+}
+
+#info p {
+  font-family: 'Futura';
+  text-align: justify;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: bold;
+  font-weight: normal;
+  font-size: 2rem;
+  line-height: 6rem;
+  margin-top: top;
+  margin-bottom: auto;
+}
+
+#info p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#loop {
+  height: 100%;
+  background-color: white;
+  overflow-y: scroll;
+}
+
+#loop p {
+  font-family: 'Futura';
+  text-align: justify;
+  vertical-align: auto;
+  color: black;
+  text-transform: uppercase;
+  text-decoration: bold;
+  font-weight: normal;
+  font-size: 10rem;
+  line-height: 2rem;
+  margin-top: top;
+  margin-bottom: auto;
+}
+
+#loop p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#sitemap {
+  height: 100%;
+  display: none;
+  background-color: white;
+  overflow-y: scroll;
+}
+
+#sitemap p {
+  font-family: 'Futura';
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 2.5rem;
+  line-height: 3rem;
+  margin-top: top;
+  margin-bottom: auto;
+}
+
+#sitemap p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+/*------------------------------------------------------------------
+[Footer / $footer]
+*/
+
+#footer {
+  bottom: 0px;
+  position: fixed;
+  width: 100%;
+}
+
+footer {
+  display: block;
+  position: static;
+  padding-top: 10px;
+  background-color: black;
+  color: white;
+  text-align: justify;
+  text-transform: uppercase;
+  font-family: 'Futura';
+  font-weight: normal;
+  font-size: 1.5rem;
+  height: 100%;
+  width: 100%;
+  min-height: 1px;
+}
+
+footer p:after {
+  content: '';
+  /*display: inline-block;*/
+  width: 100%;
+  /*float: clear;*/
+}
+
+#backButton {
+  color: black;
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+#backButton a {
+  line-height: 0em;
+}
+
+#audioPlayer {
+  /*float: right;*/
+}
+
+#followdropup {
+  display: none;
+  float: right;
+  /*position: absolute;*/
+  z-index: 1;
+}
+
+#dropstyle {
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+p.firstMenuItem {
+  /* padding-top: 50px;*/
+}
+
+a.lastMenuItem {
+  padding-bottom: 0px;
+}
+
+#subscribe {
+  /*  width: 100%;*/
+  text-align: justify;
+  text-transform: uppercase;
+  /*  text-decoration: underline;*/
+}
+
+#subscribe p a {
+  line-height: 0em;
+}
+
+#social-row a {
+  line-height: 0em;
+}
+
+#social-row a.social-link {
+  width: 30px;
+  height: 30px;
+}
+
+#social-row a.social-link:hover {
+  background-color: transparent;
+  /* resets the hover */
+}
+
+/* SVG Social Icons Tags */
+
+.social-icon {
+  width: 30px;
+  height: 30px;
+}
+
+i.social-icon svg {
+  width: 30px;
+  height: 30px;
+  fill: white;
+}
+
+i.social-icon svg:hover {
+  fill: white;
+}
+
+/* Mailing List */
+
+#mailing-form {
+  background-color: transparent;
+}
+
+#mailing-row #mailing-form {
+  float: right;
+}
+
+#mailing-form form input {
+  background-color: transparent;
+  border: 1px black solid;
+}
+
+input[type='submit'] {
+  background-color: transparent;
+}
+
+/* LOOP
+==================== */
+
+#o001bg {
+  background-color: red;
+}
+
+#o001 p {
+  font-family: 'Futura';
+  text-align: justify;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 3rem;
+  /*line-height: .5;*/
+}
+
+#o001 p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+/*------------------------------*/
+
+#o002bg {
+  background-color: white;
+}
+
+#o002 p {
+  text-align: justify;
+  color: black;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 1.5em;
+  /*line-height: .5;*/
+}
+
+#o002 p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+#0406152 {
+  background-color: white;
+}
+
+#o002 p {
+  text-align: justify;
+  color: black;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 1.5em;
+  /*line-height: .5;*/
+}
+
+#o002 p:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+/* Anchor Tag Styling
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+a:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: transparent;
+  background-color: white;
+  text-decoration: line-through;
+}
+
+a:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class2a:link {
+  color: cyan;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class2a:visited {
+  color: cyan;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class2a:hover {
+  color: transparent;
+  background-color: cyan;
+  text-decoration: line-through;
+}
+
+a.class2a:active {
+  color: cyan;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class3a:link {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class3a:visited {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class3a:hover {
+  color: transparent;
+  background-color: magenta;
+  text-decoration: line-through;
+}
+
+a.class3a:active {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class31a:link {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: overline;
+}
+
+a.class31a:visited {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class31a:hover {
+  color: transparent;
+  background-color: magenta;
+  text-decoration: line-through;
+}
+
+a.class31a:active {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class4a:link {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class4a:visited {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class4a:hover {
+  color: transparent;
+  background-color: yellow;
+  text-decoration: line-through;
+}
+
+a.class4a:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class41a:link {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: overline;
+}
+
+a.class41a:visited {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class41a:hover {
+  color: transparent;
+  background-color: yellow;
+  text-decoration: line-through;
+}
+
+a.class41a:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class5a:link {
+  color: white;
+  background-color: white;
+  text-decoration: line-through;
+}
+
+a.class5a:visited {
+  color: white;
+  background-color: white;
+  text-decoration: none;
+}
+
+a.class5a:hover {
+  color: transparent;
+  background-color: white;
+  text-decoration: line-through;
+}
+
+a.class5a:active {
+  color: white;
+  background-color: white;
+  text-decoration: line-through;
+}
+
+/* m e n u  */
+
+a.class1b:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class1b:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class1b:hover {
+  color: transparent;
+  background-color: white;
+  text-decoration: none;
+}
+
+a.class1b:active {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class12b:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class12b:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class12b:hover {
+  color: transparent;
+  background-color: cyan;
+  text-decoration: none;
+}
+
+a.class12b:active {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class13b:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class13b:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class13b:hover {
+  color: transparent;
+  background-color: magenta;
+  text-decoration: none;
+}
+
+a.class13b:active {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class14b:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class14b:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class14b:hover {
+  color: transparent;
+  background-color: yellow;
+  text-decoration: none;
+}
+
+a.class14b:active {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class2b:link {
+  color: cyan;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class2b:visited {
+  color: cyan;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class2b:hover {
+  color: transparent;
+  background-color: cyan;
+  text-decoration: line-through;
+}
+
+a.class2b:active {
+  color: cyan;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class3b:link {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class3b:visited {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class3b:hover {
+  color: transparent;
+  background-color: magenta;
+  text-decoration: line-through;
+}
+
+a.class3b:active {
+  color: magenta;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class4b:link {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class4b:visited {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class4b:hover {
+  color: transparent;
+  background-color: yellow;
+  text-decoration: line-through;
+}
+
+a.class4b:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+/* m u s i c  */
+
+a.class1c:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class1c:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class1c:hover {
+  color: transparent;
+  background-color: white;
+  text-decoration: line-through;
+}
+
+a.class1c:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class2c:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class2c:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class2c:hover {
+  color: transparent;
+  background-color: cyan;
+  text-decoration: line-through;
+}
+
+a.class2c:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class3c:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class3c:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class3c:hover {
+  color: transparent;
+  background-color: magenta;
+  text-decoration: line-through;
+}
+
+a.class3c:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class4c:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class4c:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class4c:hover {
+  color: transparent;
+  background-color: yellow;
+  text-decoration: line-through;
+}
+
+a.class4c:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+/* v i d e o  */
+
+a.class1d:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class1d:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class1d:hover {
+  color: transparent;
+  background-color: white;
+  text-decoration: line-through;
+}
+
+a.class1d:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class2d:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class2d:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class2d:hover {
+  color: transparent;
+  background-color: cyan;
+  text-decoration: line-through;
+}
+
+a.class2d:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class3d:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class3d:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class3d:hover {
+  color: transparent;
+  background-color: magenta;
+  text-decoration: line-through;
+}
+
+a.class3d:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class4d:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class4d:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class4d:hover {
+  color: transparent;
+  background-color: yellow;
+  text-decoration: line-through;
+}
+
+a.class4d:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class02e:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class02e:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class02e:hover {
+  color: transparent;
+  background-color: black;
+  text-decoration: line-through;
+}
+
+a.class02e:active {
+  color: black;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+/* i n f o  */
+
+a.class1e:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  font-size: 3.5rem;
+}
+
+a.class1e:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class1e:hover {
+  color: transparent;
+  background-color: white;
+  text-decoration: line-through;
+}
+
+a.class1e:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class2e:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  font-size: 3rem;
+}
+
+a.class2e:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class2e:hover {
+  color: transparent;
+  background-color: cyan;
+  text-decoration: line-through;
+}
+
+a.class2e:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class3e:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  font-size: 2.5rem;
+}
+
+a.class3e:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class3e:hover {
+  color: transparent;
+  background-color: magenta;
+  text-decoration: line-through;
+}
+
+a.class3e:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class4e:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class4e:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.class4e:hover {
+  color: transparent;
+  background-color: yellow;
+  text-decoration: line-through;
+}
+
+a.class4e:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+a.class4f:active {
+  color: black;
+  background-color: transparent;
+  text-decoration: line-through;
+}
+
+/* f o o t e r  */
+
+a.class03e:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  font-size: 3.5rem;
+}
+
+/*# sourceMappingURL=styles.css.axp */
+
+@media all and (max-width: 350px) {
+  a {
+    font-size: 0.5em;
+    line-height: 0em;
+    padding-top: 0px;
+  }
+  p.firstMenuItem {
+    padding-top: 10px;
+  }
+  p.social-row {
+    line-height: 0em;
+  }
+  a.class1e:link {
+    font-size: 2rem;
+  }
+  a.class2e:link {
+    font-size: 1.5rem;
+  }
+  a.class3e:link {
+    font-size: 1rem;
+  }
+  #info a {
+    line-height: 0rem;
+  }
+  #new p {
+    font-size: 1rem;
+    line-height: 0.5rem;
+  }
+}
+
+@media all and (max-width: 400px) {
+  p {
+    font-size: 0.5em;
+    line-height: 0em;
+    padding-top: none;
+  }
+
+  a {
+    font-size: 0.5em;
+    line-height: 0em;
+    padding-top: 0px;
+  }
+
+  p.firstMenuItem {
+    padding-top: 10px;
+  }
+
+  p.social-row {
+    line-height: 0em;
+  }
+
+  a.class1e:link {
+    font-size: 2rem;
+  }
+
+  a.class2e:link {
+    font-size: 1.5rem;
+  }
+
+  a.class3e:link {
+    font-size: 1rem;
+  }
+
+  #info a {
+    line-height: 0rem;
+  }
+
+  #followdropup {
+    display: block;
+    position: absolute;
+    z-index: 1;
+  }
+
+  #mailing-form {
+    display: none;
+  }
+
+  #social-row {
+    display: none;
+  }
+
+  #subscribe {
+    display: none;
+  }
+}
+
+@media all and (max-width: 450px) {
+  p {
+    font-size: 1em;
+    line-height: 0em;
+    padding-top: none;
+  }
+
+  a {
+    font-size: 1em;
+    line-height: 0em;
+    padding-top: 0px;
+  }
+
+  p.firstMenuItem {
+    padding-top: 10px;
+  }
+
+  p.social-row {
+    line-height: 0em;
+  }
+
+  a.class1e:link {
+    font-size: 2rem;
+  }
+
+  a.class2e:link {
+    font-size: 1.5rem;
+  }
+
+  a.class3e:link {
+    font-size: 1rem;
+  }
+
+  #info a {
+    line-height: 0rem;
+  }
+
+  #followdropup {
+    display: block;
+    position: absolute;
+    z-index: 1;
+  }
+
+  #mailing-form {
+    display: none;
+  }
+
+  #social-row {
+    display: none;
+  }
+
+  #subscribe {
+    display: none;
+  }
+
+  #new p {
+    font-size: 5rem;
+  }
+
+  #new a {
+    line-height: 1rem;
+  }
+
+  #loop p {
+    font-size: 5rem;
+  }
+
+  #loop a {
+    line-height: 10rem;
+  }
+
+  #sitemap p {
+    font-size: 1.5rem;
+  }
+}
+
+@media all and (max-width: 550px) {
+  p {
+    font-size: 1em;
+    line-height: 0em;
+    padding-top: none;
+  }
+
+  a {
+    font-size: 1em;
+    line-height: 0em;
+    padding-top: 0px;
+  }
+
+  p.firstMenuItem {
+    padding-top: 10px;
+  }
+
+  p.social-row {
+    line-height: 0em;
+  }
+
+  a.class1e:link {
+    font-size: 2rem;
+  }
+
+  a.class2e:link {
+    font-size: 1.5rem;
+  }
+
+  a.class3e:link {
+    font-size: 1rem;
+  }
+
+  #info a {
+    line-height: 0rem;
+  }
+
+  #followdropup {
+    display: block;
+    position: absolute;
+    z-index: 1;
+  }
+
+  #mailing-form {
+    display: none;
+  }
+
+  #social-row {
+    display: none;
+  }
+
+  #subscribe {
+    display: none;
+  }
+
+  #new p {
+    font-size: 5rem;
+  }
+
+  #new a {
+    line-height: 1rem;
+  }
+
+  #loop p {
+    font-size: 5rem;
+  }
+
+  #loop a {
+    line-height: 10rem;
+  }
+
+  #sitemap p {
+    font-size: 1.5rem;
+  }
+}
+
+@media all and (max-width: 700px) {
+  p {
+    font-size: 0.5em;
+    line-height: 2em;
+    padding-top: none;
+  }
+
+  a {
+    font-size: 0.5em;
+    line-height: 2em;
+    padding-top: 0px;
+  }
+
+  p.firstMenuItem {
+    padding-top: 10px;
+  }
+
+  p.social-row {
+    line-height: 0em;
+  }
+
+  a.class1e:link {
+    font-size: 2rem;
+  }
+
+  a.class2e:link {
+    font-size: 1.5rem;
+  }
+
+  a.class3e:link {
+    font-size: 1rem;
+  }
+
+  #info a {
+    line-height: 0rem;
+  }
+
+  #followdropup {
+    display: block;
+    position: absolute;
+    z-index: 1;
+  }
+
+  #mailing-form {
+    display: none;
+  }
+
+  #social-row {
+    display: none;
+  }
+
+  #subscribe {
+    display: none;
+  }
+
+  #new p {
+    font-size: 2rem;
+  }
+
+  #new a {
+    line-height: 4rem;
+  }
+
+  #loop p {
+    font-size: 4rem;
+  }
+
+  #loop a {
+    line-height: 8rem;
+  }
+}
+
+@media all and (max-width: 750px) {
+  /*  a {
+    font-size: 1em;
+    line-height: 1em;
+    padding-top: none;
+  }*/
+  a {
+    font-size: 1em;
+    line-height: 0.2em;
+    padding-top: 0px;
+  }
+
+  p.firstMenuItem {
+    padding-top: 10px;
+  }
+
+  p.social-row {
+    line-height: 0em;
+  }
+  a.class1e:link {
+    font-size: 2rem;
+  }
+
+  a.class2e:link {
+    font-size: 1.5rem;
+  }
+
+  a.class3e:link {
+    font-size: 1rem;
+  }
+
+  #info a {
+    line-height: 0rem;
+  }
+
+  #new p {
+    font-size: 0.8rem;
+  }
+
+  #new a {
+    line-height: 4rem;
+  }
+
+  #followdropup {
+    display: block;
+    position: absolute;
+    z-index: 1;
+  }
+
+  #mailing-form {
+    display: none;
+  }
+
+  #social-row {
+    display: none;
+  }
+
+  #subscribe {
+    display: none;
+  }
+}
+
+@media all and (max-width: 990px) {
+  a {
+    font-size: 1em;
+    line-height: 1em;
+    padding-top: 0px;
+  }
+
+  p.firstMenuItem {
+    padding-top: 10px;
+  }
+
+  p.social-row {
+    line-height: 0em;
+  }
+
+  a.class1e:link {
+    font-size: 2rem;
+  }
+
+  a.class2e:link {
+    font-size: 1.5rem;
+  }
+
+  a.class3e:link {
+    font-size: 1rem;
+  }
+
+  #info a {
+    line-height: 0rem;
+  }
+
+  #new p {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  #new a {
+    line-height: 2rem;
+  }
+
+  #newheader {
+    font-size: 3rem;
+  }
+}
+
+@media all and (min-height: 520px) {
+  a {
+    line-height: 3rem;
+  }
+
+  #info a {
+    line-height: 3rem;
+  }
+}
+
+@media all and (min-height: 620px) {
+  a {
+    line-height: 8.5rem;
+  }
+
+  #info a {
+    line-height: 5rem;
+  }
+}
+
+@media all and (min-height: 700px) {
+  a {
+    line-height: 9.5rem;
+  }
+
+  #info a {
+    line-height: 5rem;
+  }
+}
+
+@media all and (min-height: 800px) {
+  a {
+    line-height: 12rem;
+  }
+
+  #info a {
+    line-height: 5rem;
+  }
+}
+
+@media all and (min-height: 900px) {
+  a {
+    line-height: 16rem;
+  }
+
+  #info a {
+    line-height: 9rem;
+  }
+}
+
+@media all and (min-height: 1000px) {
+  a {
+    line-height: 15rem;
+  }
+
+  #info a {
+    line-height: 9rem;
+  }
+}

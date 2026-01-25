@@ -1,0 +1,864 @@
+{
+  "checksum": {
+    "previous": "2a575c0328be6640035ac2564ae208d33ad534ee28f4f0982a783174f0abfd18",
+    "current": "2a575c0328be6640035ac2564ae208d33ad534ee28f4f0982a783174f0abfd18"
+  },
+  "fonts": [
+    "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/font/Flaticon.ttf",
+    "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/font/Flaticon.svg",
+    "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/font/Flaticon.woff",
+    "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/font/Flaticon.eot"
+  ],
+  "glyphs": {
+    "social-icons-rounded-1-49259": {
+      "codepoint": 61696,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-1-49259.svg"
+    },
+    "social-icons-rounded-10-49268": {
+      "codepoint": 61697,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-10-49268.svg"
+    },
+    "social-icons-rounded-100-49358": {
+      "codepoint": 61698,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-100-49358.svg"
+    },
+    "social-icons-rounded-101-49359": {
+      "codepoint": 61699,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-101-49359.svg"
+    },
+    "social-icons-rounded-102-49360": {
+      "codepoint": 61700,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-102-49360.svg"
+    },
+    "social-icons-rounded-103-49361": {
+      "codepoint": 61701,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-103-49361.svg"
+    },
+    "social-icons-rounded-104-49362": {
+      "codepoint": 61702,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-104-49362.svg"
+    },
+    "social-icons-rounded-105-49363": {
+      "codepoint": 61703,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-105-49363.svg"
+    },
+    "social-icons-rounded-106-49364": {
+      "codepoint": 61704,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-106-49364.svg"
+    },
+    "social-icons-rounded-107-49365": {
+      "codepoint": 61705,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-107-49365.svg"
+    },
+    "social-icons-rounded-108-49366": {
+      "codepoint": 61706,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-108-49366.svg"
+    },
+    "social-icons-rounded-109-49367": {
+      "codepoint": 61707,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-109-49367.svg"
+    },
+    "social-icons-rounded-11-49269": {
+      "codepoint": 61708,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-11-49269.svg"
+    },
+    "social-icons-rounded-110-49368": {
+      "codepoint": 61709,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-110-49368.svg"
+    },
+    "social-icons-rounded-111-49369": {
+      "codepoint": 61710,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-111-49369.svg"
+    },
+    "social-icons-rounded-112-49370": {
+      "codepoint": 61711,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-112-49370.svg"
+    },
+    "social-icons-rounded-113-49371": {
+      "codepoint": 61712,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-113-49371.svg"
+    },
+    "social-icons-rounded-114-49372": {
+      "codepoint": 61713,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-114-49372.svg"
+    },
+    "social-icons-rounded-115-49373": {
+      "codepoint": 61714,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-115-49373.svg"
+    },
+    "social-icons-rounded-116-49374": {
+      "codepoint": 61715,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-116-49374.svg"
+    },
+    "social-icons-rounded-117-49375": {
+      "codepoint": 61716,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-117-49375.svg"
+    },
+    "social-icons-rounded-118-49376": {
+      "codepoint": 61717,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-118-49376.svg"
+    },
+    "social-icons-rounded-119-49377": {
+      "codepoint": 61718,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-119-49377.svg"
+    },
+    "social-icons-rounded-12-49270": {
+      "codepoint": 61719,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-12-49270.svg"
+    },
+    "social-icons-rounded-120-49378": {
+      "codepoint": 61720,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-120-49378.svg"
+    },
+    "social-icons-rounded-121-49379": {
+      "codepoint": 61721,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-121-49379.svg"
+    },
+    "social-icons-rounded-122-49380": {
+      "codepoint": 61722,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-122-49380.svg"
+    },
+    "social-icons-rounded-123-49381": {
+      "codepoint": 61723,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-123-49381.svg"
+    },
+    "social-icons-rounded-124-49382": {
+      "codepoint": 61724,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-124-49382.svg"
+    },
+    "social-icons-rounded-125-49383": {
+      "codepoint": 61725,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-125-49383.svg"
+    },
+    "social-icons-rounded-126-49384": {
+      "codepoint": 61726,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-126-49384.svg"
+    },
+    "social-icons-rounded-127-49385": {
+      "codepoint": 61727,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-127-49385.svg"
+    },
+    "social-icons-rounded-128-49386": {
+      "codepoint": 61728,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-128-49386.svg"
+    },
+    "social-icons-rounded-129-49387": {
+      "codepoint": 61729,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-129-49387.svg"
+    },
+    "social-icons-rounded-13-49271": {
+      "codepoint": 61730,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-13-49271.svg"
+    },
+    "social-icons-rounded-130-49388": {
+      "codepoint": 61731,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-130-49388.svg"
+    },
+    "social-icons-rounded-131-49389": {
+      "codepoint": 61732,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-131-49389.svg"
+    },
+    "social-icons-rounded-132-49390": {
+      "codepoint": 61733,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-132-49390.svg"
+    },
+    "social-icons-rounded-133-49391": {
+      "codepoint": 61734,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-133-49391.svg"
+    },
+    "social-icons-rounded-134-49392": {
+      "codepoint": 61735,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-134-49392.svg"
+    },
+    "social-icons-rounded-135-49393": {
+      "codepoint": 61736,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-135-49393.svg"
+    },
+    "social-icons-rounded-136-49394": {
+      "codepoint": 61737,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-136-49394.svg"
+    },
+    "social-icons-rounded-137-49395": {
+      "codepoint": 61738,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-137-49395.svg"
+    },
+    "social-icons-rounded-138-49396": {
+      "codepoint": 61739,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-138-49396.svg"
+    },
+    "social-icons-rounded-139-49397": {
+      "codepoint": 61740,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-139-49397.svg"
+    },
+    "social-icons-rounded-14-49272": {
+      "codepoint": 61741,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-14-49272.svg"
+    },
+    "social-icons-rounded-140-49398": {
+      "codepoint": 61742,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-140-49398.svg"
+    },
+    "social-icons-rounded-141-49399": {
+      "codepoint": 61743,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-141-49399.svg"
+    },
+    "social-icons-rounded-142-49400": {
+      "codepoint": 61744,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-142-49400.svg"
+    },
+    "social-icons-rounded-143-49401": {
+      "codepoint": 61745,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-143-49401.svg"
+    },
+    "social-icons-rounded-144-49402": {
+      "codepoint": 61746,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-144-49402.svg"
+    },
+    "social-icons-rounded-145-49403": {
+      "codepoint": 61747,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-145-49403.svg"
+    },
+    "social-icons-rounded-146-49404": {
+      "codepoint": 61748,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-146-49404.svg"
+    },
+    "social-icons-rounded-147-49405": {
+      "codepoint": 61749,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-147-49405.svg"
+    },
+    "social-icons-rounded-148-49406": {
+      "codepoint": 61750,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-148-49406.svg"
+    },
+    "social-icons-rounded-149-49407": {
+      "codepoint": 61751,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-149-49407.svg"
+    },
+    "social-icons-rounded-15-49273": {
+      "codepoint": 61752,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-15-49273.svg"
+    },
+    "social-icons-rounded-150-49408": {
+      "codepoint": 61753,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-150-49408.svg"
+    },
+    "social-icons-rounded-151-49409": {
+      "codepoint": 61754,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-151-49409.svg"
+    },
+    "social-icons-rounded-152-49410": {
+      "codepoint": 61755,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-152-49410.svg"
+    },
+    "social-icons-rounded-153-49411": {
+      "codepoint": 61756,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-153-49411.svg"
+    },
+    "social-icons-rounded-154-49412": {
+      "codepoint": 61757,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-154-49412.svg"
+    },
+    "social-icons-rounded-155-49413": {
+      "codepoint": 61758,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-155-49413.svg"
+    },
+    "social-icons-rounded-156-49415": {
+      "codepoint": 61759,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-156-49415.svg"
+    },
+    "social-icons-rounded-157-49416": {
+      "codepoint": 61760,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-157-49416.svg"
+    },
+    "social-icons-rounded-158-49417": {
+      "codepoint": 61761,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-158-49417.svg"
+    },
+    "social-icons-rounded-159-49418": {
+      "codepoint": 61762,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-159-49418.svg"
+    },
+    "social-icons-rounded-16-49274": {
+      "codepoint": 61763,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-16-49274.svg"
+    },
+    "social-icons-rounded-160-49419": {
+      "codepoint": 61764,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-160-49419.svg"
+    },
+    "social-icons-rounded-161-49420": {
+      "codepoint": 61765,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-161-49420.svg"
+    },
+    "social-icons-rounded-162-49421": {
+      "codepoint": 61766,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-162-49421.svg"
+    },
+    "social-icons-rounded-163-49422": {
+      "codepoint": 61767,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-163-49422.svg"
+    },
+    "social-icons-rounded-164-49423": {
+      "codepoint": 61768,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-164-49423.svg"
+    },
+    "social-icons-rounded-165-49424": {
+      "codepoint": 61769,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-165-49424.svg"
+    },
+    "social-icons-rounded-166-49425": {
+      "codepoint": 61770,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-166-49425.svg"
+    },
+    "social-icons-rounded-167-49426": {
+      "codepoint": 61771,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-167-49426.svg"
+    },
+    "social-icons-rounded-168-49427": {
+      "codepoint": 61772,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-168-49427.svg"
+    },
+    "social-icons-rounded-169-49428": {
+      "codepoint": 61773,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-169-49428.svg"
+    },
+    "social-icons-rounded-17-49275": {
+      "codepoint": 61774,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-17-49275.svg"
+    },
+    "social-icons-rounded-170-49429": {
+      "codepoint": 61775,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-170-49429.svg"
+    },
+    "social-icons-rounded-171-49430": {
+      "codepoint": 61776,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-171-49430.svg"
+    },
+    "social-icons-rounded-172-49431": {
+      "codepoint": 61777,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-172-49431.svg"
+    },
+    "social-icons-rounded-173-49432": {
+      "codepoint": 61778,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-173-49432.svg"
+    },
+    "social-icons-rounded-174-49433": {
+      "codepoint": 61779,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-174-49433.svg"
+    },
+    "social-icons-rounded-175-49434": {
+      "codepoint": 61780,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-175-49434.svg"
+    },
+    "social-icons-rounded-176-49435": {
+      "codepoint": 61781,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-176-49435.svg"
+    },
+    "social-icons-rounded-177-49436": {
+      "codepoint": 61782,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-177-49436.svg"
+    },
+    "social-icons-rounded-178-49437": {
+      "codepoint": 61783,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-178-49437.svg"
+    },
+    "social-icons-rounded-179-49438": {
+      "codepoint": 61784,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-179-49438.svg"
+    },
+    "social-icons-rounded-18-49276": {
+      "codepoint": 61785,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-18-49276.svg"
+    },
+    "social-icons-rounded-180-49439": {
+      "codepoint": 61786,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-180-49439.svg"
+    },
+    "social-icons-rounded-181-49440": {
+      "codepoint": 61787,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-181-49440.svg"
+    },
+    "social-icons-rounded-182-49441": {
+      "codepoint": 61788,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-182-49441.svg"
+    },
+    "social-icons-rounded-183-49442": {
+      "codepoint": 61789,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-183-49442.svg"
+    },
+    "social-icons-rounded-184-49443": {
+      "codepoint": 61790,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-184-49443.svg"
+    },
+    "social-icons-rounded-185-49444": {
+      "codepoint": 61791,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-185-49444.svg"
+    },
+    "social-icons-rounded-186-49445": {
+      "codepoint": 61792,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-186-49445.svg"
+    },
+    "social-icons-rounded-187-49446": {
+      "codepoint": 61793,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-187-49446.svg"
+    },
+    "social-icons-rounded-188-49447": {
+      "codepoint": 61794,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-188-49447.svg"
+    },
+    "social-icons-rounded-189-49448": {
+      "codepoint": 61795,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-189-49448.svg"
+    },
+    "social-icons-rounded-19-49277": {
+      "codepoint": 61796,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-19-49277.svg"
+    },
+    "social-icons-rounded-190-49449": {
+      "codepoint": 61797,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-190-49449.svg"
+    },
+    "social-icons-rounded-191-49450": {
+      "codepoint": 61798,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-191-49450.svg"
+    },
+    "social-icons-rounded-192-49451": {
+      "codepoint": 61799,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-192-49451.svg"
+    },
+    "social-icons-rounded-193-49452": {
+      "codepoint": 61800,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-193-49452.svg"
+    },
+    "social-icons-rounded-194-49453": {
+      "codepoint": 61801,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-194-49453.svg"
+    },
+    "social-icons-rounded-195-49454": {
+      "codepoint": 61802,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-195-49454.svg"
+    },
+    "social-icons-rounded-196-49455": {
+      "codepoint": 61803,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-196-49455.svg"
+    },
+    "social-icons-rounded-197-49456": {
+      "codepoint": 61804,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-197-49456.svg"
+    },
+    "social-icons-rounded-198-49457": {
+      "codepoint": 61805,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-198-49457.svg"
+    },
+    "social-icons-rounded-199-49458": {
+      "codepoint": 61806,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-199-49458.svg"
+    },
+    "social-icons-rounded-2-49260": {
+      "codepoint": 61807,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-2-49260.svg"
+    },
+    "social-icons-rounded-20-49278": {
+      "codepoint": 61808,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-20-49278.svg"
+    },
+    "social-icons-rounded-200-49459": {
+      "codepoint": 61809,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-200-49459.svg"
+    },
+    "social-icons-rounded-201-49460": {
+      "codepoint": 61810,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-201-49460.svg"
+    },
+    "social-icons-rounded-202-49461": {
+      "codepoint": 61811,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-202-49461.svg"
+    },
+    "social-icons-rounded-203-49462": {
+      "codepoint": 61812,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-203-49462.svg"
+    },
+    "social-icons-rounded-21-49279": {
+      "codepoint": 61813,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-21-49279.svg"
+    },
+    "social-icons-rounded-22-49280": {
+      "codepoint": 61814,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-22-49280.svg"
+    },
+    "social-icons-rounded-23-49281": {
+      "codepoint": 61815,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-23-49281.svg"
+    },
+    "social-icons-rounded-24-49282": {
+      "codepoint": 61816,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-24-49282.svg"
+    },
+    "social-icons-rounded-25-49283": {
+      "codepoint": 61817,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-25-49283.svg"
+    },
+    "social-icons-rounded-26-49284": {
+      "codepoint": 61818,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-26-49284.svg"
+    },
+    "social-icons-rounded-27-49285": {
+      "codepoint": 61819,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-27-49285.svg"
+    },
+    "social-icons-rounded-28-49286": {
+      "codepoint": 61820,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-28-49286.svg"
+    },
+    "social-icons-rounded-29-49287": {
+      "codepoint": 61821,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-29-49287.svg"
+    },
+    "social-icons-rounded-3-49261": {
+      "codepoint": 61822,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-3-49261.svg"
+    },
+    "social-icons-rounded-30-49288": {
+      "codepoint": 61823,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-30-49288.svg"
+    },
+    "social-icons-rounded-31-49289": {
+      "codepoint": 61824,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-31-49289.svg"
+    },
+    "social-icons-rounded-32-49290": {
+      "codepoint": 61825,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-32-49290.svg"
+    },
+    "social-icons-rounded-33-49291": {
+      "codepoint": 61826,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-33-49291.svg"
+    },
+    "social-icons-rounded-34-49292": {
+      "codepoint": 61827,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-34-49292.svg"
+    },
+    "social-icons-rounded-35-49293": {
+      "codepoint": 61828,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-35-49293.svg"
+    },
+    "social-icons-rounded-36-49294": {
+      "codepoint": 61829,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-36-49294.svg"
+    },
+    "social-icons-rounded-37-49295": {
+      "codepoint": 61830,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-37-49295.svg"
+    },
+    "social-icons-rounded-38-49296": {
+      "codepoint": 61831,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-38-49296.svg"
+    },
+    "social-icons-rounded-39-49297": {
+      "codepoint": 61832,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-39-49297.svg"
+    },
+    "social-icons-rounded-4-49262": {
+      "codepoint": 61833,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-4-49262.svg"
+    },
+    "social-icons-rounded-40-49298": {
+      "codepoint": 61834,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-40-49298.svg"
+    },
+    "social-icons-rounded-41-49299": {
+      "codepoint": 61835,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-41-49299.svg"
+    },
+    "social-icons-rounded-42-49300": {
+      "codepoint": 61836,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-42-49300.svg"
+    },
+    "social-icons-rounded-43-49301": {
+      "codepoint": 61837,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-43-49301.svg"
+    },
+    "social-icons-rounded-44-49302": {
+      "codepoint": 61838,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-44-49302.svg"
+    },
+    "social-icons-rounded-45-49303": {
+      "codepoint": 61839,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-45-49303.svg"
+    },
+    "social-icons-rounded-46-49304": {
+      "codepoint": 61840,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-46-49304.svg"
+    },
+    "social-icons-rounded-47-49305": {
+      "codepoint": 61841,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-47-49305.svg"
+    },
+    "social-icons-rounded-48-49306": {
+      "codepoint": 61842,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-48-49306.svg"
+    },
+    "social-icons-rounded-49-49307": {
+      "codepoint": 61843,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-49-49307.svg"
+    },
+    "social-icons-rounded-49258": {
+      "codepoint": 61844,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-49258.svg"
+    },
+    "social-icons-rounded-5-49263": {
+      "codepoint": 61845,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-5-49263.svg"
+    },
+    "social-icons-rounded-50-49308": {
+      "codepoint": 61846,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-50-49308.svg"
+    },
+    "social-icons-rounded-51-49309": {
+      "codepoint": 61847,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-51-49309.svg"
+    },
+    "social-icons-rounded-52-49310": {
+      "codepoint": 61848,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-52-49310.svg"
+    },
+    "social-icons-rounded-53-49311": {
+      "codepoint": 61849,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-53-49311.svg"
+    },
+    "social-icons-rounded-54-49312": {
+      "codepoint": 61850,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-54-49312.svg"
+    },
+    "social-icons-rounded-55-49313": {
+      "codepoint": 61851,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-55-49313.svg"
+    },
+    "social-icons-rounded-56-49314": {
+      "codepoint": 61852,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-56-49314.svg"
+    },
+    "social-icons-rounded-57-49315": {
+      "codepoint": 61853,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-57-49315.svg"
+    },
+    "social-icons-rounded-58-49316": {
+      "codepoint": 61854,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-58-49316.svg"
+    },
+    "social-icons-rounded-59-49317": {
+      "codepoint": 61855,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-59-49317.svg"
+    },
+    "social-icons-rounded-6-49264": {
+      "codepoint": 61856,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-6-49264.svg"
+    },
+    "social-icons-rounded-60-49318": {
+      "codepoint": 61857,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-60-49318.svg"
+    },
+    "social-icons-rounded-61-49319": {
+      "codepoint": 61858,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-61-49319.svg"
+    },
+    "social-icons-rounded-62-49320": {
+      "codepoint": 61859,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-62-49320.svg"
+    },
+    "social-icons-rounded-63-49321": {
+      "codepoint": 61860,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-63-49321.svg"
+    },
+    "social-icons-rounded-64-49322": {
+      "codepoint": 61861,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-64-49322.svg"
+    },
+    "social-icons-rounded-65-49323": {
+      "codepoint": 61862,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-65-49323.svg"
+    },
+    "social-icons-rounded-66-49324": {
+      "codepoint": 61863,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-66-49324.svg"
+    },
+    "social-icons-rounded-67-49325": {
+      "codepoint": 61864,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-67-49325.svg"
+    },
+    "social-icons-rounded-68-49326": {
+      "codepoint": 61865,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-68-49326.svg"
+    },
+    "social-icons-rounded-69-49327": {
+      "codepoint": 61866,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-69-49327.svg"
+    },
+    "social-icons-rounded-7-49265": {
+      "codepoint": 61867,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-7-49265.svg"
+    },
+    "social-icons-rounded-70-49328": {
+      "codepoint": 61868,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-70-49328.svg"
+    },
+    "social-icons-rounded-71-49329": {
+      "codepoint": 61869,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-71-49329.svg"
+    },
+    "social-icons-rounded-72-49330": {
+      "codepoint": 61870,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-72-49330.svg"
+    },
+    "social-icons-rounded-73-49331": {
+      "codepoint": 61871,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-73-49331.svg"
+    },
+    "social-icons-rounded-74-49332": {
+      "codepoint": 61872,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-74-49332.svg"
+    },
+    "social-icons-rounded-75-49333": {
+      "codepoint": 61873,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-75-49333.svg"
+    },
+    "social-icons-rounded-76-49334": {
+      "codepoint": 61874,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-76-49334.svg"
+    },
+    "social-icons-rounded-77-49335": {
+      "codepoint": 61875,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-77-49335.svg"
+    },
+    "social-icons-rounded-78-49336": {
+      "codepoint": 61876,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-78-49336.svg"
+    },
+    "social-icons-rounded-79-49337": {
+      "codepoint": 61877,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-79-49337.svg"
+    },
+    "social-icons-rounded-8-49266": {
+      "codepoint": 61878,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-8-49266.svg"
+    },
+    "social-icons-rounded-80-49338": {
+      "codepoint": 61879,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-80-49338.svg"
+    },
+    "social-icons-rounded-81-49339": {
+      "codepoint": 61880,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-81-49339.svg"
+    },
+    "social-icons-rounded-82-49340": {
+      "codepoint": 61881,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-82-49340.svg"
+    },
+    "social-icons-rounded-83-49341": {
+      "codepoint": 61882,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-83-49341.svg"
+    },
+    "social-icons-rounded-84-49342": {
+      "codepoint": 61883,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-84-49342.svg"
+    },
+    "social-icons-rounded-85-49343": {
+      "codepoint": 61884,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-85-49343.svg"
+    },
+    "social-icons-rounded-86-49344": {
+      "codepoint": 61885,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-86-49344.svg"
+    },
+    "social-icons-rounded-87-49345": {
+      "codepoint": 61886,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-87-49345.svg"
+    },
+    "social-icons-rounded-88-49346": {
+      "codepoint": 61887,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-88-49346.svg"
+    },
+    "social-icons-rounded-89-49347": {
+      "codepoint": 61888,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-89-49347.svg"
+    },
+    "social-icons-rounded-9-49267": {
+      "codepoint": 61889,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-9-49267.svg"
+    },
+    "social-icons-rounded-90-49348": {
+      "codepoint": 61890,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-90-49348.svg"
+    },
+    "social-icons-rounded-91-49349": {
+      "codepoint": 61891,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-91-49349.svg"
+    },
+    "social-icons-rounded-92-49350": {
+      "codepoint": 61892,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-92-49350.svg"
+    },
+    "social-icons-rounded-93-49351": {
+      "codepoint": 61893,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-93-49351.svg"
+    },
+    "social-icons-rounded-94-49352": {
+      "codepoint": 61894,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-94-49352.svg"
+    },
+    "social-icons-rounded-95-49353": {
+      "codepoint": 61895,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-95-49353.svg"
+    },
+    "social-icons-rounded-96-49354": {
+      "codepoint": 61896,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-96-49354.svg"
+    },
+    "social-icons-rounded-97-49355": {
+      "codepoint": 61897,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-97-49355.svg"
+    },
+    "social-icons-rounded-98-49356": {
+      "codepoint": 61898,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-98-49356.svg"
+    },
+    "social-icons-rounded-99-49357": {
+      "codepoint": 61899,
+      "source": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg/social-icons-rounded-99-49357.svg"
+    }
+  },
+  "options": {
+    "autowidth": false,
+    "config": false,
+    "css_selector": ".flaticon-{{glyph}}",
+    "debug": false,
+    "font_ascent": 448,
+    "font_descent": 64,
+    "font_design_size": 16,
+    "font_em": 512,
+    "font_name": "Flaticon",
+    "force": false,
+    "input": {
+      "templates": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg",
+      "vectors": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/svg"
+    },
+    "no_hash": true,
+    "output": {
+      "css": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/font",
+      "fonts": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/font",
+      "preview": "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/font"
+    },
+    "preprocessor_path": null,
+    "quiet": true,
+    "templates": [
+      "../../../../../gr_beta_agustin/flaticon/libraries/webfont/templates/flaticon.html",
+      "../../../../../gr_beta_agustin/flaticon/libraries/webfont/templates/_flaticon.scss",
+      "../../../../../gr_beta_agustin/flaticon/libraries/webfont/templates/flaticon.css"
+    ]
+  },
+  "templates": [
+    "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/font/flaticon.html",
+    "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/font/_flaticon.scss",
+    "/var/www/static/flaticon/zip_packs/111119-social-icons-rounded/font/flaticon.css"
+  ]
+}

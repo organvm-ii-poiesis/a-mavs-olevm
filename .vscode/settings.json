@@ -1,0 +1,90 @@
+// VSCode Settings for etceter4 project
+{
+  // Editor settings
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.wordWrap": "on",
+  
+  // File associations
+  "files.associations": {
+    "*.html": "html",
+    "*.css": "css",
+    "*.js": "javascript"
+  },
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  
+  // Language-specific settings
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on"
+  },
+  
+  // ESLint settings
+  "eslint.validate": [
+    "javascript"
+  ],
+  
+  // GitHub Copilot settings
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "plaintext": false,
+    "markdown": true,
+    "javascript": true,
+    "html": true,
+    "css": true
+  },
+  "github.copilot.editor.enableAutoCompletions": true,
+  
+  // File exclusions from search/watch
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/.DS_Store": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true
+  },
+  
+  // Emmet settings for faster HTML/CSS
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "emmet.triggerExpansionOnTab": true,
+  
+  // HTML settings
+  "html.format.wrapLineLength": 120,
+  "html.format.wrapAttributes": "auto",
+  
+  // CSS settings
+  "css.validate": true,
+  
+  // JavaScript settings
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.suggest.autoImports": true,
+  
+  // Terminal settings
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.defaultProfile.osx": "bash"
+}
