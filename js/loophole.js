@@ -31,7 +31,7 @@ const totalCount = 99;
  */
 function ChangeIt() {
   const num = Math.ceil(Math.random() * totalCount);
-  document.body.style.backgroundImage = 'url(bgimages/' + num + '.jpg)';
+  document.body.style.backgroundImage = `url(bgimages/${num}.jpg)`;
   document.body.style.backgroundRepeat = 'repeat';
 }
 
@@ -42,8 +42,8 @@ function ChangeIt() {
 function initLoophole() {
   // Attach event handlers to all loophole links
   const loopholeLinks = document.querySelectorAll('#loop a[href="#"]');
-  loopholeLinks.forEach(function (link) {
-    link.addEventListener('click', function (event) {
+  loopholeLinks.forEach(link => {
+    link.addEventListener('click', event => {
       event.preventDefault();
       randomlinks();
     });

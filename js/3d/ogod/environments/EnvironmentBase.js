@@ -2,6 +2,7 @@
  * @file EnvironmentBase.js
  * @description Abstract base class for OGOD 3D environments
  * Defines common interface and utilities for all environment types
+ * Supports audio-reactive uniforms for visual effects
  */
 
 'use strict';
@@ -16,6 +17,7 @@ class EnvironmentBase {
    * @param {Object} options - Configuration options
    * @param {SceneManager} options.sceneManager - Scene manager instance
    * @param {Array<string>} options.palette - Color palette array
+   * @param {Object} [options.audioUniforms] - Audio-reactive uniform objects from OGODSceneManager
    */
   constructor(options = {}) {
     if (this.constructor === EnvironmentBase) {
@@ -23,10 +25,15 @@ class EnvironmentBase {
     }
 
     this.sceneManager = options.sceneManager;
-    this.palette = options.palette || ['#6B4C7A', '#C45B8E', '#D98C4A', '#5A6B3D'];
+    this.palette = options.palette || [
+      '#6B4C7A',
+      '#C45B8E',
+      '#D98C4A',
+      '#5A6B3D',
+    ];
 
     // Convert palette to Three.js colors
-    this.colors = this.palette.map((hex) => new THREE.Color(hex));
+    this.colors = this.palette.map(hex => new THREE.Color(hex));
 
     // Objects created by this environment (for cleanup)
     this.objects = [];
@@ -34,8 +41,55 @@ class EnvironmentBase {
     // Animation callbacks (for cleanup)
     this.animationUnsubscribers = [];
 
+    // Audio-reactive uniforms (shared reference from OGODSceneManager)
+    this.audioUniforms = options.audioUniforms || null;
+    this.audioReactive = !!options.audioUniforms;
+
     // State
     this.isInitialized = false;
+  }
+
+  /**
+   * Get audio-reactive uniforms for use in shaders
+   * Returns default uniforms with value 0 if audio is not enabled
+   * @protected
+   * @returns {Object} Uniform objects for shaders
+   */
+  _getAudioUniforms() {
+    if (this.audioUniforms) {
+      return {
+        uBassLevel: this.audioUniforms.uBassLevel,
+        uMidLevel: this.audioUniforms.uMidLevel,
+        uTrebleLevel: this.audioUniforms.uTrebleLevel,
+        uSubBassLevel: this.audioUniforms.uSubBassLevel,
+        uKickHit: this.audioUniforms.uKickHit,
+        uSnareHit: this.audioUniforms.uSnareHit,
+        uBeatHit: this.audioUniforms.uBeatHit,
+        uEnergy: this.audioUniforms.uEnergy,
+        uBPM: this.audioUniforms.uBPM,
+      };
+    }
+
+    // Return static zero uniforms if audio not enabled
+    return {
+      uBassLevel: { value: 0 },
+      uMidLevel: { value: 0 },
+      uTrebleLevel: { value: 0 },
+      uSubBassLevel: { value: 0 },
+      uKickHit: { value: 0 },
+      uSnareHit: { value: 0 },
+      uBeatHit: { value: 0 },
+      uEnergy: { value: 0 },
+      uBPM: { value: 0 },
+    };
+  }
+
+  /**
+   * Set audio reactivity enabled/disabled
+   * @param {boolean} enabled
+   */
+  setAudioReactive(enabled) {
+    this.audioReactive = enabled;
   }
 
   /**
@@ -211,7 +265,7 @@ class EnvironmentBase {
       }
       if (object.material) {
         if (Array.isArray(object.material)) {
-          object.material.forEach((mat) => mat.dispose());
+          object.material.forEach(mat => mat.dispose());
         } else {
           object.material.dispose();
         }

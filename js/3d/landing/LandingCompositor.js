@@ -627,7 +627,9 @@ window.LandingCompositor = LandingCompositor;
 // Auto-initialize when document is ready (if enabled in config)
 document.addEventListener('DOMContentLoaded', () => {
   const config =
-    typeof ETCETER4_CONFIG !== 'undefined' ? ETCETER4_CONFIG.threeD?.landing : null;
+    typeof ETCETER4_CONFIG !== 'undefined'
+      ? ETCETER4_CONFIG.threeD?.landing
+      : null;
 
   if (config?.enabled !== false) {
     const container = document.getElementById('landingPageCanvasWrapper');

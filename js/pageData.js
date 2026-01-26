@@ -40,6 +40,7 @@ const _pID = {
   video: '#video',
   stills: '#stills',
   info: '#info',
+  ogod3d: '#ogod3d',
 };
 
 /**
@@ -137,12 +138,246 @@ pages.info = new Page({
   upLinks: [_pID.menu],
 });
 
+/**
+ * OGOD 3D experience helper function
+ * Creates and initializes the 3D scene manager and audio engine
+ * @param {Object} options - Configuration options
+ * @param {HTMLElement} options.container - DOM element for the canvas
+ * @param {number} options.trackNumber - Track number (1-29)
+ * @returns {Promise<Object>} The experience object with sceneManager and audioEngine
+ */
+async function createOGODExperience(options) {
+  const { container, trackNumber } = options;
+
+  // Create audio engine
+  const audioEngine = new OGODAudioEngine({
+    trackNumber,
+    useFallback: true,
+  });
+
+  // Create scene manager
+  const sceneManager = new OGODSceneManager({
+    container,
+    trackNumber,
+    audioEngine,
+  });
+
+  // Initialize
+  await audioEngine.initialize();
+  await sceneManager.initialize();
+
+  return {
+    sceneManager,
+    audioEngine,
+    dispose() {
+      sceneManager.dispose();
+      audioEngine.dispose();
+    },
+  };
+}
+
+// Make available globally
+window.createOGODExperience = createOGODExperience;
+
+/**
+ * OGOD 3D page configuration
+ * Tier 4 - Immersive 3D audio-visual experience
+ */
+pages.ogod3d = new Page({
+  id: _pID.ogod3d,
+  tier: 4,
+  upLinks: [_pID.vision],
+  initialize() {
+    // Initialize OGOD 3D experience on first visit
+    const container = document.getElementById('ogod3d-container');
+    const loadingScreen = document.getElementById('ogod3d-loading');
+    const loadingBar = document.getElementById('ogod3d-loading-bar');
+    const loadingText = document.getElementById('ogod3d-loading-text');
+
+    if (!container) {
+      console.warn('OGOD 3D: Container not found');
+      return;
+    }
+
+    // Track state
+    window.ogod3dState = window.ogod3dState || {
+      currentTrack: 1,
+      experience: null,
+      audioStarted: false,
+      isTransitioning: false,
+    };
+
+    const state = window.ogod3dState;
+
+    // Update loading UI
+    const updateLoading = (progress, text) => {
+      if (loadingBar) {
+        loadingBar.style.width = `${progress}%`;
+      }
+      if (loadingText) {
+        loadingText.textContent = text;
+      }
+    };
+
+    // Load a track
+    const loadTrack = async trackNum => {
+      if (state.isTransitioning) {
+        return;
+      }
+
+      const isInitialLoad = !state.experience;
+
+      // Show transition if switching tracks
+      if (!isInitialLoad) {
+        state.isTransitioning = true;
+        state.experience.dispose();
+        state.experience = null;
+      }
+
+      // Show loading
+      if (loadingScreen) {
+        loadingScreen.classList.remove('hidden');
+      }
+      updateLoading(10, 'Loading environment...');
+
+      state.currentTrack = trackNum;
+
+      // Update track buttons
+      document.querySelectorAll('.ogod3d-track-btn').forEach(btn => {
+        btn.classList.toggle(
+          'active',
+          parseInt(btn.dataset.track) === trackNum
+        );
+      });
+
+      try {
+        updateLoading(30, 'Creating 3D scene...');
+        container.innerHTML = '';
+
+        state.experience = await createOGODExperience({
+          container,
+          trackNumber: trackNum,
+        });
+
+        updateLoading(70, 'Starting visuals...');
+        state.experience.sceneManager.start();
+
+        updateLoading(100, 'Ready!');
+
+        // Hide loading
+        setTimeout(() => {
+          if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+          }
+          state.isTransitioning = false;
+        }, 300);
+
+        // Start audio if already enabled
+        if (state.audioStarted && state.experience.audioEngine) {
+          state.experience.audioEngine.start();
+        }
+      } catch (error) {
+        console.error('OGOD 3D: Failed to load track:', error);
+        updateLoading(100, 'Error loading track');
+        state.isTransitioning = false;
+      }
+    };
+
+    // Create track selector buttons
+    const trackSelector = document.getElementById('ogod3d-track-selector');
+    if (trackSelector && !trackSelector.dataset.initialized) {
+      trackSelector.dataset.initialized = 'true';
+      const tracks = ETCETER4_CONFIG.ogodTracks;
+
+      Object.keys(tracks).forEach(num => {
+        const btn = document.createElement('button');
+        btn.className =
+          `ogod3d-track-btn${ 
+          parseInt(num) === state.currentTrack ? ' active' : ''}`;
+        btn.dataset.track = num;
+        btn.textContent = [
+          '',
+          'I',
+          'II',
+          'III',
+          'IV',
+          'V',
+          'VI',
+          'VII',
+          'VIII',
+          'IX',
+          'X',
+          'XI',
+          'XII',
+          'XIII',
+          'XIV',
+          'XV',
+          'XVI',
+          'XVII',
+          'XVIII',
+          'XIX',
+          'XX',
+          'XXI',
+          'XXII',
+          'XXIII',
+          'XXIV',
+          'XXV',
+          'XXVI',
+          'XXVII',
+          'XXVIII',
+          'XXIX',
+        ][num];
+        btn.title = tracks[num].game;
+        btn.onclick = () => loadTrack(parseInt(num));
+        trackSelector.appendChild(btn);
+      });
+    }
+
+    // Audio button handler
+    const audioBtn = document.getElementById('ogod3d-audio-btn');
+    if (audioBtn && !audioBtn.dataset.initialized) {
+      audioBtn.dataset.initialized = 'true';
+      audioBtn.onclick = async () => {
+        if (!state.audioStarted && typeof Tone !== 'undefined') {
+          await Tone.start();
+          state.audioStarted = true;
+          audioBtn.textContent = 'Audio Playing';
+          audioBtn.classList.add('playing');
+
+          if (state.experience?.audioEngine) {
+            state.experience.audioEngine.start();
+          }
+        }
+      };
+    }
+
+    // Back button handler
+    const backBtn = document.getElementById('ogod3d-back-btn');
+    if (backBtn && !backBtn.dataset.initialized) {
+      backBtn.dataset.initialized = 'true';
+      backBtn.onclick = e => {
+        e.preventDefault();
+        // Stop and dispose experience when leaving
+        if (state.experience) {
+          state.experience.dispose();
+          state.experience = null;
+        }
+        showNewSection(_pID.vision);
+      };
+    }
+
+    // Load initial track
+    loadTrack(state.currentTrack);
+  },
+});
+
 pages = [
   pages.menu,
   pages.sound,
   pages.stills,
   pages.diary,
   pages.info,
+  pages.ogod3d,
   new Page({
     id: _pID.landing,
     tier: 1,
@@ -152,6 +387,7 @@ pages = [
     id: _pID.vision,
     tier: 3,
     upLinks: [_pID.menu],
+    downLinks: [_pID.ogod3d],
   }),
   new Page({
     id: _pID.words,

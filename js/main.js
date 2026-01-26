@@ -81,6 +81,42 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+/**
+ * Manage LandingCompositor lifecycle during page navigation
+ * Pauses compositor when leaving #landing, resumes when returning
+ */
+function manageLandingCompositor() {
+  // Check if compositor exists
+  if (!window.landingCompositor) {
+    return;
+  }
+
+  const isOnLanding = currentPage && currentPage.id === '#landing';
+
+  if (isOnLanding && !window.landingCompositor.isRunning) {
+    // Resume compositor when returning to landing
+    window.landingCompositor.start();
+  } else if (!isOnLanding && window.landingCompositor.isRunning) {
+    // Pause compositor when leaving landing
+    window.landingCompositor.stop();
+  }
+}
+
+// Extend showNewSection to manage 3D compositor lifecycle
+const _originalShowNewSection =
+  typeof showNewSection !== 'undefined' ? showNewSection : null;
+
+if (_originalShowNewSection) {
+  // Override showNewSection to handle compositor lifecycle
+  window.showNewSection = function (pageId) {
+    // Call original navigation
+    _originalShowNewSection(pageId);
+
+    // Manage compositor after navigation (with slight delay for page transition)
+    setTimeout(manageLandingCompositor, 100);
+  };
+}
+
 $(document).ready(() => {
   const hash = window.location.hash;
   // Goes to the section in the URL
@@ -94,6 +130,9 @@ $(document).ready(() => {
       }
       currentPage = Page.findPage(hash);
       currentPage.initPage();
+
+      // Manage compositor on initial load
+      manageLandingCompositor();
     } catch (error) {
       // Fallback to landing page if hash is invalid
       console.warn(`Invalid hash on load: ${hash}, defaulting to landing`);
@@ -106,35 +145,3 @@ $(document).ready(() => {
     currentPage = Page.findPage('#landing');
   }
 });
-
-/**
- * Array.some() polyfill
- * Production steps of ECMA-262, Edition 5, 15.4.4.17
- * Reference: http://es5.github.io/#x15.4.4.17
- */
-
-if (!Array.prototype.some) {
-  Array.prototype.some = function (fun /*, thisArg*/) {
-    'use strict';
-
-    if (this === null || this === undefined) {
-      throw new TypeError('Array.prototype.some called on null or undefined');
-    }
-
-    if (typeof fun !== 'function') {
-      throw new TypeError();
-    }
-
-    const t = Object(this);
-    const len = t.length >>> 0;
-
-    const thisArg = arguments.length >= 2 ? arguments[1] : void 0;
-    for (let i = 0; i < len; i++) {
-      if (i in t && fun.call(thisArg, t[i], i, t)) {
-        return true;
-      }
-    }
-
-    return false;
-  };
-}

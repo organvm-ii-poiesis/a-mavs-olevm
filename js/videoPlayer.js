@@ -108,7 +108,9 @@ class VideoPlayer {
   }
 
   loadVideo(index) {
-    if (index < 0 || index >= this.videos.length) return;
+    if (index < 0 || index >= this.videos.length) {
+      return;
+    }
 
     this.currentVideoIndex = index;
     const video = this.videos[index];

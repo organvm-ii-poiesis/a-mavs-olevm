@@ -6,6 +6,7 @@
 'use strict';
 
 // Import dependencies if in Node.js environment
+/* eslint-disable no-var */
 if (typeof module !== 'undefined' && typeof require !== 'undefined') {
   var namingModule = require('./namingStrategies.js');
   var NamingConventions = namingModule.NamingConventions;
@@ -14,10 +15,12 @@ if (typeof module !== 'undefined' && typeof require !== 'undefined') {
   var NamingQuality = namingModule.NamingQuality;
   var NamingStrategy = namingModule.NamingStrategy;
 }
+/* eslint-enable no-var */
 
 /**
  * User preference profiles for personalized naming
  */
+// eslint-disable-next-line no-var
 var UserPreferences = {
   DEFAULT: {
     casePreference: 'camelCase',
@@ -63,12 +66,13 @@ var UserPreferences = {
 /**
  * Dynamic context detection based on existing codebase patterns
  */
+// eslint-disable-next-line no-var
 var ContextDetector = {
   /**
    * Analyze existing code to detect naming patterns and contexts
    */
-  analyzeExistingCode: function () {
-    var analysis = {
+  analyzeExistingCode() {
+    const analysis = {
       detectedPatterns: {},
       commonPrefixes: {},
       commonSuffixes: {},
@@ -92,30 +96,36 @@ var ContextDetector = {
   /**
    * Detect the most appropriate context for a given input
    */
-  detectContext: function (input, existingCodeAnalysis) {
-    if (!input) return NamingContexts.VARIABLE;
+  detectContext(input, existingCodeAnalysis) {
+    if (!input) {
+      return NamingContexts.VARIABLE;
+    }
 
-    var inputLower = input.toLowerCase();
-    var contextScores = {};
+    const inputLower = input.toLowerCase();
+    const contextScores = {};
 
     // Check against ET CETER4 domain patterns
-    Object.keys(ETCETERNamingPatterns).forEach(function (patternKey) {
-      var pattern = ETCETERNamingPatterns[patternKey];
-      var score = 0;
+    Object.keys(ETCETERNamingPatterns).forEach(patternKey => {
+      const pattern = ETCETERNamingPatterns[patternKey];
+      let score = 0;
 
-      pattern.prefixes.forEach(function (prefix) {
-        if (inputLower.includes(prefix)) score += 10;
+      pattern.prefixes.forEach(prefix => {
+        if (inputLower.includes(prefix)) {
+          score += 10;
+        }
       });
 
-      pattern.suffixes.forEach(function (suffix) {
-        if (inputLower.includes(suffix.toLowerCase())) score += 10;
+      pattern.suffixes.forEach(suffix => {
+        if (inputLower.includes(suffix.toLowerCase())) {
+          score += 10;
+        }
       });
 
       contextScores[patternKey] = score;
     });
 
     // Find highest scoring pattern
-    var bestPattern = Object.keys(contextScores).reduce(function (a, b) {
+    const bestPattern = Object.keys(contextScores).reduce((a, b) => {
       return contextScores[a] > contextScores[b] ? a : b;
     });
 
@@ -141,10 +151,10 @@ var ContextDetector = {
     return NamingContexts.VARIABLE;
   },
 
-  _analyzeGlobalScope: function (analysis) {
+  _analyzeGlobalScope(analysis) {
     // This would analyze window object in browser environment
     // For now, we'll simulate with known ET CETER4 patterns
-    var knownPatterns = [
+    const knownPatterns = [
       'showNewSection',
       'fadeInPage',
       'replacePlaceholders',
@@ -161,27 +171,33 @@ var ContextDetector = {
     }, this);
   },
 
-  _analyzeDOMElements: function (analysis) {
-    if (!document.querySelectorAll) return;
+  _analyzeDOMElements(analysis) {
+    if (!document.querySelectorAll) {
+      return;
+    }
 
     // Analyze IDs
-    var elements = document.querySelectorAll('[id]');
+    const elements = document.querySelectorAll('[id]');
     elements.forEach(function (element) {
       this._categorizePattern(element.id, analysis);
     }, this);
 
     // Analyze classes
-    var classElements = document.querySelectorAll('[class]');
+    const classElements = document.querySelectorAll('[class]');
     classElements.forEach(function (element) {
-      var classes = element.className.split(' ');
+      const classes = element.className.split(' ');
       classes.forEach(function (className) {
-        if (className) this._categorizePattern(className, analysis);
+        if (className) {
+          this._categorizePattern(className, analysis);
+        }
       }, this);
     }, this);
   },
 
-  _categorizePattern: function (pattern, analysis) {
-    if (!pattern) return;
+  _categorizePattern(pattern, analysis) {
+    if (!pattern) {
+      return;
+    }
 
     // Detect case style
     if (/^[a-z][a-zA-Z0-9]*$/.test(pattern)) {
@@ -193,16 +209,16 @@ var ContextDetector = {
     } else if (/^[a-z][a-z0-9_]*$/.test(pattern)) {
       analysis.caseDistribution.snake_case =
         (analysis.caseDistribution.snake_case || 0) + 1;
-    } else if (/^[a-z][a-z0-9\-]*$/.test(pattern)) {
+    } else if (/^[a-z][a-z0-9-]*$/.test(pattern)) {
       analysis.caseDistribution['kebab-case'] =
         (analysis.caseDistribution['kebab-case'] || 0) + 1;
     }
 
     // Extract prefixes and suffixes
-    var words = pattern.split(/(?=[A-Z])|[\-_]/);
+    const words = pattern.split(/(?=[A-Z])|[-_]/);
     if (words.length > 1) {
-      var prefix = words[0].toLowerCase();
-      var suffix = words[words.length - 1].toLowerCase();
+      const prefix = words[0].toLowerCase();
+      const suffix = words[words.length - 1].toLowerCase();
 
       analysis.commonPrefixes[prefix] =
         (analysis.commonPrefixes[prefix] || 0) + 1;
@@ -215,23 +231,24 @@ var ContextDetector = {
 /**
  * Fuzzy string matching for name suggestions
  */
+// eslint-disable-next-line no-var
 var FuzzyMatcher = {
   /**
    * Calculate Levenshtein distance between two strings
    */
-  levenshteinDistance: function (str1, str2) {
-    var matrix = [];
+  levenshteinDistance(str1, str2) {
+    const matrix = [];
 
-    for (var i = 0; i <= str2.length; i++) {
+    for (let i = 0; i <= str2.length; i++) {
       matrix[i] = [i];
     }
 
-    for (var j = 0; j <= str1.length; j++) {
+    for (let j = 0; j <= str1.length; j++) {
       matrix[0][j] = j;
     }
 
-    for (i = 1; i <= str2.length; i++) {
-      for (j = 1; j <= str1.length; j++) {
+    for (let i = 1; i <= str2.length; i++) {
+      for (let j = 1; j <= str1.length; j++) {
         if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
           matrix[i][j] = matrix[i - 1][j - 1];
         } else {
@@ -250,32 +267,34 @@ var FuzzyMatcher = {
   /**
    * Calculate similarity score (0-100)
    */
-  similarity: function (str1, str2) {
-    var maxLength = Math.max(str1.length, str2.length);
-    if (maxLength === 0) return 100;
+  similarity(str1, str2) {
+    const maxLength = Math.max(str1.length, str2.length);
+    if (maxLength === 0) {
+      return 100;
+    }
 
-    var distance = this.levenshteinDistance(str1, str2);
+    const distance = this.levenshteinDistance(str1, str2);
     return Math.round(((maxLength - distance) / maxLength) * 100);
   },
 
   /**
    * Find similar existing names
    */
-  findSimilar: function (input, existingNames, threshold) {
+  findSimilar(input, existingNames, threshold) {
     threshold = threshold || 70;
-    var results = [];
+    const results = [];
 
     existingNames.forEach(function (name) {
-      var score = this.similarity(input.toLowerCase(), name.toLowerCase());
+      const score = this.similarity(input.toLowerCase(), name.toLowerCase());
       if (score >= threshold) {
         results.push({
-          name: name,
+          name,
           similarity: score,
         });
       }
     }, this);
 
-    return results.sort(function (a, b) {
+    return results.sort((a, b) => {
       return b.similarity - a.similarity;
     });
   },
@@ -284,6 +303,7 @@ var FuzzyMatcher = {
 /**
  * Main name search engine
  */
+// eslint-disable-next-line no-var
 var NameSearchEngine = {
   userPreferences: UserPreferences.DEFAULT,
   codeAnalysis: null,
@@ -291,7 +311,7 @@ var NameSearchEngine = {
   /**
    * Initialize the search engine with user preferences
    */
-  initialize: function (preferences) {
+  initialize(preferences) {
     this.userPreferences = Object.assign(
       {},
       UserPreferences.DEFAULT,
@@ -304,7 +324,7 @@ var NameSearchEngine = {
   /**
    * Set user preference profile
    */
-  setUserProfile: function (profileName) {
+  setUserProfile(profileName) {
     if (UserPreferences[profileName]) {
       this.userPreferences = Object.assign({}, UserPreferences[profileName]);
     }
@@ -314,7 +334,7 @@ var NameSearchEngine = {
   /**
    * Update specific preferences
    */
-  updatePreferences: function (preferences) {
+  updatePreferences(preferences) {
     this.userPreferences = Object.assign(this.userPreferences, preferences);
     return this;
   },
@@ -322,7 +342,7 @@ var NameSearchEngine = {
   /**
    * Search for name suggestions based on input and context
    */
-  search: function (input, options) {
+  search(input, options) {
     options = options || {};
 
     if (!input || typeof input !== 'string') {
@@ -330,7 +350,7 @@ var NameSearchEngine = {
     }
 
     // Detect or use provided context
-    var context =
+    let context =
       options.context ||
       ContextDetector.detectContext(input, this.codeAnalysis);
 
@@ -338,7 +358,7 @@ var NameSearchEngine = {
     context = this._applyUserPreferences(context);
 
     // Generate suggestions using naming strategy
-    var suggestions = NamingStrategy.generateSuggestions(input, context, {
+    let suggestions = NamingStrategy.generateSuggestions(input, context, {
       maxResults: options.maxResults || 10,
       includeCombined: this.userPreferences.creativityLevel !== 'conservative',
     });
@@ -347,15 +367,15 @@ var NameSearchEngine = {
     suggestions = this._applyPreferenceFiltering(suggestions, input);
 
     // Find similar existing names if provided
-    var similar = [];
+    let similar = [];
     if (options.existingNames && options.existingNames.length > 0) {
       similar = FuzzyMatcher.findSimilar(input, options.existingNames, 60);
     }
 
     return {
-      suggestions: suggestions,
-      similar: similar,
-      context: context,
+      suggestions,
+      similar,
+      context,
       userPreferences: this.userPreferences,
       analysis: this.codeAnalysis,
     };
@@ -364,18 +384,18 @@ var NameSearchEngine = {
   /**
    * Validate and score existing name
    */
-  validateName: function (name, expectedMeaning, context) {
+  validateName(name, expectedMeaning, context) {
     context =
       context ||
       ContextDetector.detectContext(expectedMeaning, this.codeAnalysis);
-    var score = NamingStrategy.validateName(name, context, expectedMeaning);
+    let score = NamingStrategy.validateName(name, context, expectedMeaning);
 
     // Apply preference-based adjustments
     score = this._adjustScoreForPreferences(score, name);
 
     return {
-      score: score,
-      context: context,
+      score,
+      context,
       recommendations: this._generateRecommendations(name, score, context),
     };
   },
@@ -383,14 +403,14 @@ var NameSearchEngine = {
   /**
    * Get recommendations for improving an existing name
    */
-  getImprovementSuggestions: function (currentName, expectedMeaning) {
-    var validation = this.validateName(currentName, expectedMeaning);
+  getImprovementSuggestions(currentName, expectedMeaning) {
+    const validation = this.validateName(currentName, expectedMeaning);
 
     if (validation.score.overall >= 80) {
       return { message: 'Name is already well-formed', suggestions: [] };
     }
 
-    var suggestions = this.search(expectedMeaning, {
+    const suggestions = this.search(expectedMeaning, {
       context: validation.context,
       maxResults: 5,
     });
@@ -405,8 +425,8 @@ var NameSearchEngine = {
   /**
    * Apply user preferences to naming context
    */
-  _applyUserPreferences: function (context) {
-    var customContext = Object.assign({}, context);
+  _applyUserPreferences(context) {
+    const customContext = Object.assign({}, context);
 
     // Apply case preference
     switch (this.userPreferences.casePreference) {
@@ -438,12 +458,12 @@ var NameSearchEngine = {
   /**
    * Filter and score suggestions based on user preferences
    */
-  _applyPreferenceFiltering: function (suggestions, originalInput) {
-    var self = this;
+  _applyPreferenceFiltering(suggestions, originalInput) {
+    const self = this;
 
     return suggestions
-      .map(function (suggestion) {
-        var adjustedScore = self._adjustScoreForPreferences(
+      .map(suggestion => {
+        const adjustedScore = self._adjustScoreForPreferences(
           suggestion.score,
           suggestion.name
         );
@@ -455,14 +475,14 @@ var NameSearchEngine = {
           explanation: self._generateExplanation(suggestion, originalInput),
         };
       })
-      .filter(function (suggestion) {
+      .filter(suggestion => {
         // Filter out suggestions that don't meet abbreviation tolerance
         if (self.userPreferences.abbreviationTolerance === 'none') {
           return suggestion.name.length >= originalInput.length * 0.7;
         }
         return true;
       })
-      .sort(function (a, b) {
+      .sort((a, b) => {
         return b.score.overall - a.score.overall;
       });
   },
@@ -470,12 +490,12 @@ var NameSearchEngine = {
   /**
    * Adjust score based on user preferences
    */
-  _adjustScoreForPreferences: function (score, name) {
-    var adjustedScore = Object.assign({}, score);
+  _adjustScoreForPreferences(score, name) {
+    const adjustedScore = Object.assign({}, score);
 
     // Adjust for case preference match
-    var expectedCase = this.userPreferences.casePreference;
-    var actualCase = this._detectCase(name);
+    const expectedCase = this.userPreferences.casePreference;
+    const actualCase = this._detectCase(name);
     if (expectedCase === actualCase) {
       adjustedScore.overall += 10;
     } else {
@@ -483,7 +503,7 @@ var NameSearchEngine = {
     }
 
     // Adjust for abbreviation tolerance
-    var hasAbbreviations = /[a-z][A-Z]/.test(name);
+    const hasAbbreviations = /[a-z][A-Z]/.test(name);
     if (
       hasAbbreviations &&
       this.userPreferences.abbreviationTolerance === 'none'
@@ -500,23 +520,32 @@ var NameSearchEngine = {
   /**
    * Detect case style of a name
    */
-  _detectCase: function (name) {
-    if (NamingConventions.CAMEL_CASE.pattern.test(name)) return 'camelCase';
-    if (NamingConventions.PASCAL_CASE.pattern.test(name)) return 'PascalCase';
-    if (NamingConventions.SNAKE_CASE.pattern.test(name)) return 'snake_case';
-    if (NamingConventions.KEBAB_CASE.pattern.test(name)) return 'kebab-case';
-    if (NamingConventions.CONSTANT_CASE.pattern.test(name))
+  _detectCase(name) {
+    if (NamingConventions.CAMEL_CASE.pattern.test(name)) {
+      return 'camelCase';
+    }
+    if (NamingConventions.PASCAL_CASE.pattern.test(name)) {
+      return 'PascalCase';
+    }
+    if (NamingConventions.SNAKE_CASE.pattern.test(name)) {
+      return 'snake_case';
+    }
+    if (NamingConventions.KEBAB_CASE.pattern.test(name)) {
+      return 'kebab-case';
+    }
+    if (NamingConventions.CONSTANT_CASE.pattern.test(name)) {
       return 'CONSTANT_CASE';
+    }
     return 'mixed';
   },
 
   /**
    * Generate explanation for why a suggestion was made
    */
-  _generateExplanation: function (suggestion, originalInput) {
-    var explanation = [];
+  _generateExplanation(suggestion, originalInput) {
+    const explanation = [];
 
-    explanation.push('Generated ' + suggestion.type + ' variant');
+    explanation.push(`Generated ${suggestion.type} variant`);
 
     if (suggestion.score.semantic > 80) {
       explanation.push('Strong semantic match with input');
@@ -536,12 +565,12 @@ var NameSearchEngine = {
   /**
    * Generate recommendations for improving a name
    */
-  _generateRecommendations: function (name, score, context) {
-    var recommendations = [];
+  _generateRecommendations(name, score, context) {
+    const recommendations = [];
 
     if (score.context < 70) {
       recommendations.push(
-        'Consider following ' + context.convention.name + ' convention'
+        `Consider following ${context.convention.name} convention`
       );
     }
 
@@ -559,22 +588,12 @@ var NameSearchEngine = {
   },
 };
 
-// Import dependencies if in Node.js environment
-if (typeof module !== 'undefined' && typeof require !== 'undefined') {
-  var namingModule = require('./namingStrategies.js');
-  var NamingConventions = namingModule.NamingConventions;
-  var NamingContexts = namingModule.NamingContexts;
-  var ETCETERNamingPatterns = namingModule.ETCETERNamingPatterns;
-  var NamingQuality = namingModule.NamingQuality;
-  var NamingStrategy = namingModule.NamingStrategy;
-}
-
 // Export for testing and external use
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    UserPreferences: UserPreferences,
-    ContextDetector: ContextDetector,
-    FuzzyMatcher: FuzzyMatcher,
-    NameSearchEngine: NameSearchEngine,
+    UserPreferences,
+    ContextDetector,
+    FuzzyMatcher,
+    NameSearchEngine,
   };
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
@@ -6,10 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
     <title>OGOD 3D || ET CETER4</title>
-    <meta
-      name="description"
-      content="OGOD - One Game One Day - Immersive 3D Audio-Visual Experience by ET CETER4"
-    />
+    <meta name="description" content="OGOD - One Game One Day - Immersive 3D Audio-Visual Experience by ET CETER4" />
     <meta name="author" content="ET CETER4" />
 
     <link rel="icon" type="image/png" href="img/favicon.ico" />
@@ -21,7 +18,41 @@
         box-sizing: border-box;
       }
 
-      html, body {
+      /* Screen reader only - visually hidden but accessible */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* Skip link for keyboard navigation */
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #000;
+        color: #00ffff;
+        padding: 12px 20px;
+        z-index: 10000;
+        text-decoration: none;
+        border: 2px solid #00ffff;
+        border-radius: 0 0 8px 0;
+        transition: top 0.2s;
+      }
+
+      .skip-link:focus {
+        top: 0;
+        outline: none;
+      }
+
+      html,
+      body {
         width: 100%;
         height: 100%;
         overflow: hidden;
@@ -223,6 +254,39 @@
         color: #ff00ff;
       }
 
+      #settings-btn {
+        position: fixed;
+        top: 20px;
+        right: 280px;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        cursor: pointer;
+        border-radius: 4px;
+        z-index: 100;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #settings-btn:hover {
+        background: rgba(0, 255, 255, 0.2);
+        border-color: #00ffff;
+        color: #00ffff;
+      }
+
+      #settings-btn svg {
+        transition: transform 0.3s ease;
+      }
+
+      #settings-btn:hover svg {
+        transform: rotate(45deg);
+      }
+
       .stem-meters {
         margin-top: 15px;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -274,6 +338,11 @@
         pointer-events: auto;
       }
 
+      /* ========================================
+         RESPONSIVE UI SCALING - Mobile Polish (Stream I)
+         ======================================== */
+
+      /* Tablet - 768px and below */
       @media (max-width: 768px) {
         .loading-title {
           font-size: 2rem;
@@ -285,81 +354,1045 @@
         }
 
         #track-selector {
-          bottom: 10px;
+          bottom: max(70px, calc(60px + env(safe-area-inset-bottom, 0px)));
+          padding: 0 10px;
         }
 
         .track-btn {
-          padding: 6px 12px;
-          font-size: 0.7rem;
+          padding: 10px 14px; /* Minimum 44px touch target */
+          min-height: 44px;
+          min-width: 44px;
+          font-size: 0.75rem;
+        }
+
+        #back-btn {
+          padding: 12px 16px;
+          min-height: 44px;
+          min-width: 44px;
+          top: max(10px, env(safe-area-inset-top, 10px));
+          left: max(10px, env(safe-area-inset-left, 10px));
+        }
+
+        #audio-btn {
+          padding: 14px 18px;
+          min-height: 44px;
+          min-width: 44px;
+          bottom: max(140px, calc(120px + env(safe-area-inset-bottom, 0px)));
+          right: max(10px, env(safe-area-inset-right, 10px));
+        }
+      }
+
+      /* Small phones - 480px and below */
+      @media (max-width: 480px) {
+        .loading-title {
+          font-size: 1.5rem;
+          letter-spacing: 0.3rem;
+        }
+
+        .loading-bar-container {
+          width: 200px;
+        }
+
+        #track-selector {
+          bottom: max(60px, calc(50px + env(safe-area-inset-bottom, 0px)));
+          max-width: 100%;
+          gap: 6px;
+        }
+
+        .track-btn {
+          padding: 8px 10px;
+          font-size: 0.65rem;
+        }
+
+        #audio-btn {
+          bottom: max(120px, calc(100px + env(safe-area-inset-bottom, 0px)));
+          font-size: 0.75rem;
+        }
+      }
+
+      /* Very small phones - 360px and below */
+      @media (max-width: 360px) {
+        .loading-title {
+          font-size: 1.25rem;
+          letter-spacing: 0.2rem;
+        }
+
+        #track-selector {
+          gap: 4px;
+        }
+
+        .track-btn {
+          padding: 6px 8px;
+          font-size: 0.6rem;
+          min-height: 40px;
+          min-width: 40px;
+        }
+      }
+
+      /* Landscape mode on mobile */
+      @media (max-height: 500px) and (orientation: landscape) {
+        #track-selector {
+          bottom: max(10px, env(safe-area-inset-bottom, 10px));
+          left: max(150px, calc(140px + env(safe-area-inset-left, 0px)));
+          right: max(150px, calc(140px + env(safe-area-inset-right, 0px)));
+        }
+
+        .track-btn {
+          padding: 6px 10px;
+          font-size: 0.65rem;
+        }
+
+        #back-btn {
+          top: max(5px, env(safe-area-inset-top, 5px));
+          padding: 10px 14px;
+        }
+
+        #audio-btn {
+          bottom: max(10px, env(safe-area-inset-bottom, 10px));
+          right: max(100px, calc(90px + env(safe-area-inset-right, 0px)));
+          padding: 10px 14px;
+        }
+
+        .loading-title {
+          font-size: 1.5rem;
+        }
+      }
+
+      /* Reduced motion preference */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+
+        #transition-overlay {
+          transition: none;
+        }
+
+        #loading-screen {
+          transition: none;
+        }
+
+        .loading-bar {
+          transition: none;
+        }
+      }
+
+      /* High contrast mode */
+      @media (prefers-contrast: high) {
+        .track-btn {
+          border-width: 2px;
+        }
+
+        #back-btn,
+        #audio-btn {
+          border-width: 2px;
+        }
+      }
+
+      /* ========================================
+         Settings Panel Styles
+         ======================================== */
+      .settings-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 900;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.3s ease,
+          visibility 0.3s ease;
+      }
+
+      .settings-overlay.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .settings-panel {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        width: 380px;
+        max-width: 90vw;
+        height: 100%;
+        background: rgba(20, 20, 25, 0.95);
+        border-left: 1px solid rgba(0, 255, 255, 0.3);
+        z-index: 950;
+        display: flex;
+        flex-direction: column;
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+      }
+
+      .settings-panel.visible {
+        right: 0;
+      }
+
+      .settings-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .settings-title {
+        color: #00ffff;
+        font-size: 1.2rem;
+        letter-spacing: 0.2rem;
+        margin: 0;
+      }
+
+      .settings-close-btn {
+        width: 44px;
+        height: 44px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .settings-close-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #00ffff;
+        color: #00ffff;
+      }
+
+      .settings-tabs {
+        display: flex;
+        padding: 0 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        overflow-x: auto;
+      }
+
+      .settings-tab {
+        flex: 1;
+        padding: 12px 8px;
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: rgba(255, 255, 255, 0.6);
+        font-family: inherit;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        min-height: 44px;
+      }
+
+      .settings-tab:hover {
+        color: #fff;
+      }
+
+      .settings-tab.active {
+        color: #00ffff;
+        border-bottom-color: #00ffff;
+      }
+
+      .settings-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+
+      .settings-section {
+        display: none;
+      }
+
+      .settings-section.active {
+        display: block;
+      }
+
+      .setting-group {
+        margin-bottom: 20px;
+      }
+
+      .setting-label {
+        display: block;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+      }
+
+      .setting-select {
+        width: 100%;
+        padding: 10px 12px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        color: #fff;
+        font-family: inherit;
+        font-size: 0.9rem;
+        cursor: pointer;
+        min-height: 44px;
+      }
+
+      .setting-select:focus {
+        outline: none;
+        border-color: #00ffff;
+      }
+
+      .setting-checkbox-label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 8px 0;
+        min-height: 44px;
+        color: #fff;
+        font-size: 0.9rem;
+      }
+
+      .setting-checkbox {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .setting-checkbox-custom {
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+        margin-right: 12px;
+        position: relative;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+      }
+
+      .setting-checkbox:checked + .setting-checkbox-custom {
+        background: #00ffff;
+        border-color: #00ffff;
+      }
+
+      .setting-checkbox:checked + .setting-checkbox-custom::after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid #000;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      .setting-checkbox:focus + .setting-checkbox-custom {
+        border-color: #00ffff;
+        box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.3);
+      }
+
+      .setting-slider-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .setting-slider {
+        flex: 1;
+        height: 6px;
+        -webkit-appearance: none;
+        appearance: none;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+        outline: none;
+      }
+
+      .setting-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #00ffff;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .setting-slider::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+      }
+
+      .setting-slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        background: #00ffff;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .setting-slider-value {
+        color: #00ffff;
+        font-size: 0.85rem;
+        min-width: 40px;
+        text-align: right;
+      }
+
+      .setting-description {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.75rem;
+        margin-top: 4px;
+        padding-left: 32px;
+      }
+
+      .settings-footer {
+        display: flex;
+        gap: 10px;
+        padding: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .settings-btn {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-height: 44px;
+      }
+
+      .settings-btn-primary {
+        background: #00ffff;
+        border: none;
+        color: #000;
+      }
+
+      .settings-btn-primary:hover {
+        background: #00cccc;
+      }
+
+      .settings-btn-secondary {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+      }
+
+      .settings-btn-secondary:hover {
+        border-color: #ff00ff;
+        color: #ff00ff;
+      }
+
+      /* ========================================
+         Stem Mixer Styles
+         ======================================== */
+      .stem-mixer {
+        position: fixed;
+        bottom: 80px;
+        left: 20px;
+        background: rgba(20, 20, 25, 0.95);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        border-radius: 8px;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        max-width: 320px;
+      }
+
+      .stem-mixer.collapsed {
+        width: auto;
+      }
+
+      .stem-mixer-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 12px 16px;
+        background: transparent;
+        border: none;
+        color: #00ffff;
+        font-family: inherit;
+        font-size: 0.9rem;
+        cursor: pointer;
+        min-height: 44px;
+        transition: all 0.2s ease;
+      }
+
+      .stem-mixer-toggle:hover {
+        background: rgba(0, 255, 255, 0.1);
+      }
+
+      .stem-mixer-toggle-icon {
+        width: 20px;
+        height: 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .stem-mixer-toggle-icon::before,
+      .stem-mixer-toggle-icon::after {
+        content: '';
+        height: 2px;
+        background: currentColor;
+        border-radius: 1px;
+      }
+
+      .stem-mixer-toggle-icon::before {
+        width: 100%;
+      }
+
+      .stem-mixer-toggle-icon::after {
+        width: 60%;
+      }
+
+      .stem-mixer-content {
+        padding: 0 16px 16px;
+      }
+
+      .stem-mixer-master {
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .stem-mixer-master-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .stem-mixer-master-label {
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: bold;
+      }
+
+      .stem-mixer-master-value {
+        color: #00ffff;
+        font-size: 0.8rem;
+      }
+
+      .stem-mixer-master-slider .stem-slider {
+        width: 100%;
+      }
+
+      .stem-channels {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .stem-channel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 50px;
+      }
+
+      .stem-channel-header {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 8px;
+      }
+
+      .stem-label {
+        display: block;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.7rem;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .stem-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+      }
+
+      .stem-btn {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.65rem;
+        font-family: inherit;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .stem-btn:hover {
+        border-color: rgba(255, 255, 255, 0.5);
+        color: #fff;
+      }
+
+      .stem-mute-btn.active {
+        background: #ff4444;
+        border-color: #ff4444;
+        color: #fff;
+      }
+
+      .stem-solo-btn.active {
+        background: #ffff00;
+        border-color: #ffff00;
+        color: #000;
+      }
+
+      .stem-meter-container {
+        width: 100%;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        padding: 4px 0;
+      }
+
+      .stem-meter-track {
+        width: 8px;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .stem-meter-fill {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 0%;
+        border-radius: 4px;
+        transition: height 0.1s ease;
+      }
+
+      .stem-volume-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .stem-volume-slider {
+        writing-mode: vertical-lr;
+        direction: rtl;
+        width: 6px;
+        height: 60px;
+        -webkit-appearance: slider-vertical;
+        appearance: auto;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+      }
+
+      .stem-volume-value {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.65rem;
+      }
+
+      .stem-mixer-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .stem-action-btn {
+        flex: 1;
+        padding: 8px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        color: rgba(255, 255, 255, 0.7);
+        font-family: inherit;
+        font-size: 0.7rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-height: 36px;
+      }
+
+      .stem-action-btn:hover {
+        border-color: #00ffff;
+        color: #00ffff;
+      }
+
+      .stem-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+        outline: none;
+      }
+
+      .stem-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        background: #00ffff;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .stem-slider::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        background: #00ffff;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .stem-slider-master::-webkit-slider-thumb {
+        width: 20px;
+        height: 20px;
+      }
+
+      .stem-slider-master::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* ========================================
+         Preset Selector Styles
+         ======================================== */
+      .preset-selector {
+        position: fixed;
+        top: 70px;
+        left: 20px;
+        z-index: 100;
+      }
+
+      .preset-selector-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        background: rgba(20, 20, 25, 0.95);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        border-radius: 4px;
+        color: #fff;
+        font-family: inherit;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-height: 44px;
+        backdrop-filter: blur(10px);
+      }
+
+      .preset-selector-toggle:hover {
+        border-color: #00ffff;
+        background: rgba(0, 255, 255, 0.1);
+      }
+
+      .preset-selector.open .preset-selector-toggle {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-color: transparent;
+      }
+
+      .preset-selector-icon {
+        font-size: 1.2rem;
+      }
+
+      .preset-selector-label {
+        flex: 1;
+      }
+
+      .preset-selector-arrow {
+        font-size: 0.7rem;
+        opacity: 0.6;
+        transition: transform 0.2s ease;
+      }
+
+      .preset-selector.open .preset-selector-arrow {
+        transform: rotate(180deg);
+      }
+
+      .preset-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 280px;
+        background: rgba(20, 20, 25, 0.95);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+      }
+
+      .preset-recommended {
+        padding: 10px 16px;
+        background: rgba(0, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .preset-recommended-label {
+        display: block;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.7rem;
+        margin-bottom: 4px;
+      }
+
+      .preset-recommended-name {
+        color: #00ffff;
+        font-size: 0.85rem;
+      }
+
+      .preset-options {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .preset-option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 16px;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        color: #fff;
+        font-family: inherit;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-align: left;
+        min-height: 56px;
+      }
+
+      .preset-option:last-child {
+        border-bottom: none;
+      }
+
+      .preset-option:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .preset-option.selected {
+        background: rgba(0, 255, 255, 0.1);
+      }
+
+      .preset-option.recommended::after {
+        content: 'Recommended';
+        position: absolute;
+        right: 16px;
+        font-size: 0.65rem;
+        color: #00ffff;
+        opacity: 0.7;
+      }
+
+      .preset-option-icon {
+        font-size: 1.4rem;
+        width: 30px;
+        text-align: center;
+      }
+
+      .preset-option-info {
+        flex: 1;
+      }
+
+      .preset-option-name {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 2px;
+      }
+
+      .preset-option-desc {
+        display: block;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.75rem;
+      }
+
+      .preset-option-check {
+        color: #00ffff;
+        font-size: 1rem;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .preset-option.selected .preset-option-check {
+        opacity: 1;
+      }
+
+      /* ========================================
+         Accessibility Styles
+         ======================================== */
+      body.reduce-motion * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      body.high-contrast {
+        --contrast-bg: #000;
+        --contrast-fg: #fff;
+      }
+
+      body.high-contrast .settings-panel,
+      body.high-contrast .stem-mixer,
+      body.high-contrast .preset-selector-toggle,
+      body.high-contrast .preset-list {
+        background: #000;
+        border-color: #fff;
+      }
+
+      body.large-text {
+        font-size: 1.2rem;
+      }
+
+      body.large-text .settings-panel,
+      body.large-text .stem-mixer,
+      body.large-text .preset-selector {
+        font-size: 1.1rem;
+      }
+
+      /* Focus visible styles */
+      *:focus-visible {
+        outline: 2px solid #00ffff;
+        outline-offset: 2px;
+      }
+
+      /* ========================================
+         Mobile Responsive Styles
+         ======================================== */
+      @media (max-width: 768px) {
+        .settings-panel {
+          width: 100%;
+          max-width: 100%;
+          right: -100%;
+        }
+
+        .settings-panel.visible {
+          right: 0;
+        }
+
+        .stem-mixer {
+          left: 10px;
+          bottom: 70px;
+          max-width: calc(100% - 20px);
+        }
+
+        .stem-channels {
+          flex-wrap: wrap;
+        }
+
+        .stem-channel {
+          min-width: 45px;
+        }
+
+        .stem-meter-container {
+          height: 60px;
+        }
+
+        .stem-volume-slider {
+          height: 50px;
+        }
+
+        .preset-selector {
+          left: 10px;
+          top: 60px;
+        }
+
+        .preset-list {
+          width: calc(100vw - 20px);
+          max-width: 320px;
         }
       }
     </style>
   </head>
 
   <body>
-    <div id="container">
+    <!-- Skip Link for Keyboard Navigation -->
+    <a href="#canvas-container" class="skip-link" id="skip-link">Skip to 3D Experience</a>
+
+    <!-- Screen Reader Announcer (ARIA Live Region) -->
+    <div id="ogod-sr-announcer" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+    <div id="container" role="main" aria-label="OGOD 3D immersive audio-visual experience">
       <!-- Loading Screen -->
-      <div id="loading-screen">
-        <img id="loading-artwork" src="" alt="Track artwork" />
+      <div id="loading-screen" role="alert" aria-busy="true" aria-label="Loading experience">
+        <img id="loading-artwork" src="" alt="" aria-hidden="true" />
         <div id="loading-overlay">
-          <h1 class="loading-title">OGOD</h1>
-          <div class="loading-bar-container">
+          <h1 class="loading-title" aria-label="O G O D">OGOD</h1>
+          <div class="loading-bar-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Loading progress">
             <div class="loading-bar" id="loading-bar"></div>
           </div>
-          <p class="loading-text" id="loading-text">Initializing...</p>
+          <p class="loading-text" id="loading-text" aria-live="polite">Initializing...</p>
         </div>
       </div>
 
       <!-- Transition Overlay -->
-      <div id="transition-overlay"></div>
+      <div id="transition-overlay" aria-hidden="true"></div>
 
       <!-- 3D Canvas Container -->
-      <div id="canvas-container"></div>
+      <div id="canvas-container" role="application" aria-label="3D environment - use WASD or arrow keys to move, mouse to look around" tabindex="0"></div>
 
       <!-- Back Button -->
-      <a href="index.html" id="back-btn">&larr; Back</a>
+      <a href="index.html" id="back-btn" aria-label="Go back to main site">&larr; Back</a>
 
       <!-- Info Panel -->
-      <div id="info-panel">
+      <aside id="info-panel" aria-label="Track information">
         <h3 id="track-title">Track I</h3>
         <p id="track-game">Animal Crossing</p>
         <p id="track-archetype">Gradient Fog</p>
 
-        <div class="stem-meters" id="stem-meters">
-          <div class="stem-meter">
-            <label>Drums</label>
+        <div class="stem-meters" id="stem-meters" role="group" aria-label="Audio stem levels">
+          <div class="stem-meter" role="meter" aria-label="Drums level" aria-valuemin="0" aria-valuemax="100">
+            <label id="label-drums">Drums</label>
             <div class="stem-meter-bar">
-              <div class="stem-meter-fill" id="meter-drums"></div>
+              <div class="stem-meter-fill" id="meter-drums" aria-labelledby="label-drums"></div>
             </div>
           </div>
-          <div class="stem-meter">
-            <label>Bass</label>
+          <div class="stem-meter" role="meter" aria-label="Bass level" aria-valuemin="0" aria-valuemax="100">
+            <label id="label-bass">Bass</label>
             <div class="stem-meter-bar">
-              <div class="stem-meter-fill" id="meter-bass"></div>
+              <div class="stem-meter-fill" id="meter-bass" aria-labelledby="label-bass"></div>
             </div>
           </div>
-          <div class="stem-meter">
-            <label>Vocals</label>
+          <div class="stem-meter" role="meter" aria-label="Vocals level" aria-valuemin="0" aria-valuemax="100">
+            <label id="label-vocals">Vocals</label>
             <div class="stem-meter-bar">
-              <div class="stem-meter-fill" id="meter-vocals"></div>
+              <div class="stem-meter-fill" id="meter-vocals" aria-labelledby="label-vocals"></div>
             </div>
           </div>
-          <div class="stem-meter">
-            <label>Other</label>
+          <div class="stem-meter" role="meter" aria-label="Other instruments level" aria-valuemin="0" aria-valuemax="100">
+            <label id="label-other">Other</label>
             <div class="stem-meter-bar">
-              <div class="stem-meter-fill" id="meter-other"></div>
+              <div class="stem-meter-fill" id="meter-other" aria-labelledby="label-other"></div>
             </div>
           </div>
         </div>
-      </div>
+      </aside>
 
       <!-- Audio Control -->
-      <button id="audio-btn">Click to Start Audio</button>
+      <button id="audio-btn" aria-label="Start audio playback" aria-pressed="false">Click to Start Audio</button>
+
+      <!-- Settings Button -->
+      <button id="settings-btn" aria-label="Open settings panel" aria-haspopup="dialog" aria-expanded="false" title="Settings (ESC)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path
+            d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"
+          ></path>
+        </svg>
+      </button>
 
       <!-- Track Selector -->
-      <div id="track-selector">
+      <nav id="track-selector" role="navigation" aria-label="Track selection">
         <!-- Populated by JavaScript -->
-      </div>
+      </nav>
     </div>
 
     <!-- Three.js -->
@@ -368,7 +1401,7 @@
     <!-- Three.js Post-processing (inline implementations) -->
     <script>
       // Minimal EffectComposer implementation for bloom
-      (function() {
+      (function () {
         // Simple render pass that renders a scene
         THREE.RenderPass = class RenderPass {
           constructor(scene, camera) {
@@ -398,7 +1431,7 @@
             const params = {
               minFilter: THREE.LinearFilter,
               magFilter: THREE.LinearFilter,
-              format: THREE.RGBAFormat
+              format: THREE.RGBAFormat,
             };
 
             this.renderTargetBright = new THREE.WebGLRenderTarget(resolution.x, resolution.y, params);
@@ -427,7 +1460,7 @@
                   float brightness = max(0.0, luma - luminosityThreshold);
                   gl_FragColor = texel * brightness * 2.0;
                 }
-              `
+              `,
             });
 
             // Blur material
@@ -466,7 +1499,7 @@
                   }
                   gl_FragColor = result;
                 }
-              `
+              `,
             });
 
             // Composite material
@@ -493,14 +1526,11 @@
                   vec4 bloom = texture2D(tBloom, vUv);
                   gl_FragColor = base + bloom * bloomStrength;
                 }
-              `
+              `,
             });
 
             // Fullscreen quad
-            this.fsQuad = new THREE.Mesh(
-              new THREE.PlaneGeometry(2, 2),
-              this.brightMaterial
-            );
+            this.fsQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.brightMaterial);
             this.fsScene = new THREE.Scene();
             this.fsScene.add(this.fsQuad);
             this.fsCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -554,7 +1584,7 @@
             const params = {
               minFilter: THREE.LinearFilter,
               magFilter: THREE.LinearFilter,
-              format: THREE.RGBAFormat
+              format: THREE.RGBAFormat,
             };
 
             this.renderTarget1 = new THREE.WebGLRenderTarget(size.x, size.y, params);
@@ -604,9 +1634,17 @@
     <!-- Config -->
     <script src="js/config.js"></script>
 
-    <!-- 3D Core -->
+    <!-- 3D Core - Performance Systems -->
+    <script src="js/3d/core/QualityConfig.js"></script>
     <script src="js/3d/core/SceneManager.js"></script>
+    <script src="js/3d/core/LODManager.js"></script>
+    <script src="js/3d/core/InstancedHelper.js"></script>
     <script src="js/3d/core/EnvironmentData.js"></script>
+
+    <!-- Post-Processing Effects -->
+    <script src="js/3d/effects/DOFPass.js"></script>
+    <script src="js/3d/effects/MotionBlurPass.js"></script>
+    <script src="js/3d/effects/SSAOPass.js"></script>
 
     <!-- OGOD System -->
     <script src="js/3d/ogod/controls/FirstPersonController.js"></script>
@@ -619,6 +1657,15 @@
     <script src="js/3d/ogod/environments/GlitchDigitalEnv.js"></script>
     <script src="js/3d/ogod/OGODSceneManager.js"></script>
     <script src="js/3d/ogod/OGODAudioEngine.js"></script>
+
+    <!-- VR Support -->
+    <script src="js/3d/vr/VRController.js"></script>
+
+    <!-- UI Components -->
+    <script src="js/3d/ui/SettingsPanel.js"></script>
+    <script src="js/3d/ui/StemMixer.js"></script>
+    <script src="js/3d/ui/PresetSelector.js"></script>
+    <script src="js/3d/ui/SessionManager.js"></script>
 
     <script>
       // Track metadata - all 29 OGOD tracks
@@ -660,6 +1707,12 @@
       let audioStarted = false;
       let isTransitioning = false;
 
+      // UI Components
+      let settingsPanel = null;
+      let stemMixer = null;
+      let presetSelector = null;
+      let sessionManager = null;
+
       // DOM elements
       const loadingScreen = document.getElementById('loading-screen');
       const loadingBar = document.getElementById('loading-bar');
@@ -672,6 +1725,7 @@
       const trackSelector = document.getElementById('track-selector');
       const audioBtn = document.getElementById('audio-btn');
       const transitionOverlay = document.getElementById('transition-overlay');
+      const settingsBtn = document.getElementById('settings-btn');
 
       // Artwork paths from config
       const artworkPaths = {
@@ -706,14 +1760,30 @@
         29: 'img/photos/artwork/ogod/ogod29.jpg',
       };
 
-      // Create track selector buttons
+      // VR Controller (initialized when experience loads)
+      let vrController = null;
+
+      // Accessibility: Announce to screen readers
+      function announceToScreenReader(message) {
+        const announcer = document.getElementById('ogod-sr-announcer');
+        if (announcer) {
+          announcer.textContent = '';
+          setTimeout(() => {
+            announcer.textContent = message;
+          }, 100);
+        }
+      }
+
+      // Create track selector buttons with proper accessibility
       function createTrackButtons() {
-        Object.keys(tracks).forEach((num) => {
+        Object.keys(tracks).forEach(num => {
           const track = tracks[num];
           const btn = document.createElement('button');
           btn.className = 'track-btn' + (parseInt(num) === currentTrack ? ' active' : '');
           btn.textContent = track.title;
           btn.title = track.game;
+          btn.setAttribute('aria-label', `Track ${track.title}: ${track.game}`);
+          btn.setAttribute('aria-pressed', parseInt(num) === currentTrack ? 'true' : 'false');
           btn.onclick = () => loadTrack(parseInt(num));
           trackSelector.appendChild(btn);
         });
@@ -727,10 +1797,15 @@
         trackArchetype.textContent = track.archetype;
       }
 
-      // Update loading progress
+      // Update loading progress with ARIA
       function updateLoading(progress, text) {
         loadingBar.style.width = `${progress}%`;
         loadingText.textContent = text;
+        // Update ARIA attributes on progress bar container
+        const progressContainer = loadingBar.parentElement;
+        if (progressContainer) {
+          progressContainer.setAttribute('aria-valuenow', progress);
+        }
       }
 
       // Helper function for async delay
@@ -775,11 +1850,19 @@
         currentTrack = trackNum;
         updateInfoPanel(trackNum);
 
-        // Update button states
+        // Update button states with ARIA
         document.querySelectorAll('.track-btn').forEach((btn, i) => {
           const btnTrack = Object.keys(tracks)[i];
-          btn.classList.toggle('active', parseInt(btnTrack) === trackNum);
+          const isActive = parseInt(btnTrack) === trackNum;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
+
+        // Announce track change to screen readers
+        const trackInfo = tracks[trackNum];
+        if (trackInfo) {
+          announceToScreenReader(`Loading Track ${trackInfo.title}: ${trackInfo.game}`);
+        }
 
         try {
           updateLoading(30, 'Creating 3D scene...');
@@ -797,6 +1880,31 @@
 
           // Start scene (audio will be started on user interaction)
           currentExperience.sceneManager.start();
+
+          updateLoading(85, 'Initializing input systems...');
+
+          // Initialize VR controller if not already done
+          // Note: OGODSceneManager wraps a SceneManager, so access the inner sceneManager
+          const innerSceneManager = currentExperience.sceneManager?.sceneManager;
+          if (!vrController && innerSceneManager) {
+            vrController = new VRController({
+              renderer: innerSceneManager.renderer,
+              scene: innerSceneManager.scene,
+              camera: innerSceneManager.camera,
+              onSessionStart: () => {
+                announceToScreenReader('VR session started. Use triggers to teleport.');
+              },
+              onSessionEnd: () => {
+                announceToScreenReader('VR session ended.');
+              },
+              onTeleport: (position) => {
+                console.log('Teleported to:', position);
+              },
+            });
+
+            // Show VR button if supported
+            vrController.showVRButton();
+          }
 
           updateLoading(100, 'Ready!');
 
@@ -820,6 +1928,26 @@
             currentExperience.audioEngine.start();
           }
 
+          // Update UI components with new experience
+          if (settingsPanel) {
+            settingsPanel.setSceneManager(currentExperience.sceneManager);
+            settingsPanel.setAudioEngine(currentExperience.audioEngine);
+          }
+          if (stemMixer) {
+            stemMixer.setAudioEngine(currentExperience.audioEngine);
+          }
+          if (presetSelector) {
+            presetSelector.setSceneManager(currentExperience.sceneManager);
+            presetSelector.setTrack(trackNum);
+          }
+          if (sessionManager) {
+            sessionManager.setComponents({
+              sceneManager: currentExperience.sceneManager,
+              audioEngine: currentExperience.audioEngine,
+            });
+            // Save track state
+            sessionManager.save();
+          }
         } catch (error) {
           console.error('Failed to load track:', error);
           updateLoading(100, 'Error loading track');
@@ -840,10 +1968,21 @@
           audioStarted = true;
           audioBtn.textContent = 'Audio Playing';
           audioBtn.classList.add('playing');
+          audioBtn.setAttribute('aria-pressed', 'true');
+          audioBtn.setAttribute('aria-label', 'Audio is now playing');
 
           if (currentExperience?.audioEngine) {
             currentExperience.audioEngine.start();
           }
+
+          announceToScreenReader('Audio playback started');
+        }
+      };
+
+      // Open settings panel on button click
+      settingsBtn.onclick = () => {
+        if (settingsPanel) {
+          settingsPanel.open();
         }
       };
 
@@ -851,7 +1990,7 @@
       function updateStemMeters() {
         if (currentExperience?.audioEngine) {
           const volumes = currentExperience.audioEngine.getStemVolumes();
-          Object.keys(volumes).forEach((stem) => {
+          Object.keys(volumes).forEach(stem => {
             const meter = document.getElementById(`meter-${stem}`);
             if (meter) {
               meter.style.width = `${volumes[stem] * 100}%`;
@@ -861,6 +2000,67 @@
         requestAnimationFrame(updateStemMeters);
       }
 
+      // Initialize UI components
+      function initUIComponents() {
+        // Initialize session manager first to load saved state
+        sessionManager = new SessionManager({
+          storageKey: 'ogod-session',
+          autoSaveInterval: 5000,
+          debounceDelay: 500,
+        });
+        const savedState = sessionManager.initialize();
+
+        // Initialize settings panel
+        settingsPanel = new SettingsPanel({
+          onSettingsChange: (path, value, settings) => {
+            // Auto-save when settings change
+            if (sessionManager) {
+              sessionManager.saveSettings(settings);
+            }
+          },
+        });
+
+        // Initialize stem mixer
+        stemMixer = new StemMixer({
+          collapsed: true,
+          onVolumeChange: (stem, volume) => {
+            // Auto-save when mixer changes
+            if (sessionManager) {
+              sessionManager.saveMixerState(stemMixer.getState());
+            }
+          },
+        });
+
+        // Initialize preset selector
+        presetSelector = new PresetSelector({
+          currentTrack: currentTrack,
+          onPresetChange: (archetypeId, archetype) => {
+            console.log('Environment preset changed to:', archetype.name);
+            // Note: Full environment switching would require scene reload
+            // For now, just save the preference
+            if (sessionManager) {
+              sessionManager.savePresetState(presetSelector.getState());
+            }
+          },
+        });
+
+        // Connect session manager to UI components
+        sessionManager.setComponents({
+          settingsPanel,
+          stemMixer,
+          presetSelector,
+        });
+
+        // Apply saved state if available
+        if (savedState) {
+          sessionManager.applyState(savedState);
+          // If we have a saved track, use it (unless URL hash overrides)
+          if (savedState.trackNumber && !window.location.hash) {
+            currentTrack = savedState.trackNumber;
+          }
+        }
+      }
+
       // Initialize
       async function init() {
         // Get track from URL hash
@@ -868,6 +2068,9 @@
         if (hash && tracks[hash]) {
           currentTrack = parseInt(hash);
         }
+
+        // Initialize UI components
+        initUIComponents();
 
         createTrackButtons();
         updateStemMeters();

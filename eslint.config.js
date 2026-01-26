@@ -56,6 +56,10 @@ export default [
         GlitchDigitalEnvironment: 'writable',
         NoiseShaders: 'writable',
         createOGODExperience: 'writable',
+        SettingsPanel: 'writable',
+        StemMixer: 'writable',
+        PresetSelector: 'writable',
+        SessionManager: 'writable',
       },
     },
     rules: {

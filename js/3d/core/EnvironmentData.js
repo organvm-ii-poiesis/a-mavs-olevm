@@ -20,7 +20,9 @@ class EnvironmentData {
    */
   constructor(options = {}) {
     const config =
-      typeof ETCETER4_CONFIG !== 'undefined' ? ETCETER4_CONFIG.threeD || {} : {};
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG.threeD || {}
+        : {};
 
     this.weatherApiKey = options.weatherApiKey || config.weatherApiKey || '';
     this.astronomyApiId = options.astronomyApiId || config.astronomyApiId || '';
@@ -38,6 +40,9 @@ class EnvironmentData {
         humidity: 50,
         cloudCover: 0,
         windSpeed: 0,
+        windDirection: 0, // Wind direction in degrees (0 = North, 90 = East)
+        visibility: 10000, // Visibility in meters
+        precipitation: 0, // Precipitation intensity 0-1
         available: false,
       },
       astronomy: {
@@ -46,6 +51,24 @@ class EnvironmentData {
         sunAltitude: 45,
         available: false,
       },
+    };
+
+    // API response cache
+    this._cache = {
+      weather: { data: null, timestamp: 0 },
+      astronomy: { data: null, timestamp: 0 },
+      location: { data: null, timestamp: 0 },
+    };
+
+    // Cache TTLs from config
+    const cacheConfig =
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG.threeD?.cache || {}
+        : {};
+    this._cacheTTL = {
+      weather: cacheConfig.weatherTTL || 300000, // 5 minutes
+      astronomy: cacheConfig.astronomyTTL || 3600000, // 1 hour
+      location: cacheConfig.locationTTL || 86400000, // 24 hours
     };
 
     // Callbacks for data updates
@@ -152,7 +175,7 @@ class EnvironmentData {
    * @returns {Promise<void>}
    */
   async _fetchLocation() {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (!navigator.geolocation) {
         console.warn('EnvironmentData: Geolocation not available');
         resolve();
@@ -160,7 +183,7 @@ class EnvironmentData {
       }
 
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        position => {
           this.data.location = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
@@ -168,7 +191,7 @@ class EnvironmentData {
           };
           resolve();
         },
-        (error) => {
+        error => {
           console.warn('EnvironmentData: Geolocation error', error.message);
           // Use default location (NYC) as fallback
           this.data.location = {
@@ -188,13 +211,65 @@ class EnvironmentData {
   }
 
   /**
+   * Check if cached data is still valid
+   * @private
+   * @param {string} type - Cache type ('weather', 'astronomy', 'location')
+   * @returns {boolean}
+   */
+  _isCacheValid(type) {
+    const cache = this._cache[type];
+    if (!cache || !cache.data) {
+      return false;
+    }
+    return Date.now() - cache.timestamp < this._cacheTTL[type];
+  }
+
+  /**
+   * Get cached data if valid
+   * @private
+   * @param {string} type - Cache type
+   * @returns {Object|null}
+   */
+  _getCachedData(type) {
+    if (this._isCacheValid(type)) {
+      return this._cache[type].data;
+    }
+    return null;
+  }
+
+  /**
+   * Store data in cache
+   * @private
+   * @param {string} type - Cache type
+   * @param {Object} data - Data to cache
+   */
+  _setCacheData(type, data) {
+    this._cache[type] = {
+      data,
+      timestamp: Date.now(),
+    };
+  }
+
+  /**
    * Fetch weather data from OpenWeatherMap
    * @private
    * @returns {Promise<void>}
    */
   async _fetchWeather() {
+    // Check cache first
+    const cachedWeather = this._getCachedData('weather');
+    if (cachedWeather) {
+      this.data.weather = cachedWeather;
+      return;
+    }
+
     if (!this.weatherApiKey) {
       console.warn('EnvironmentData: No weather API key configured');
+      // Use defaults with calculated precipitation
+      this.data.weather = {
+        ...this.data.weather,
+        available: false,
+      };
       return;
     }
 
@@ -214,7 +289,7 @@ class EnvironmentData {
         Clear: 'clear',
         Clouds: 'cloudy',
         Rain: 'rain',
-        Drizzle: 'rain',
+        Drizzle: 'drizzle',
         Thunderstorm: 'storm',
         Snow: 'snow',
         Mist: 'fog',
@@ -225,16 +300,38 @@ class EnvironmentData {
       const mainCondition = data.weather?.[0]?.main || 'Clear';
       const condition = conditionMap[mainCondition] || 'clear';
 
+      // Calculate precipitation intensity
+      let precipitation = 0;
+      if (data.rain?.['1h']) {
+        precipitation = Math.min(data.rain['1h'] / 10, 1); // Normalize to 0-1
+      } else if (data.snow?.['1h']) {
+        precipitation = Math.min(data.snow['1h'] / 5, 1); // Snow is denser
+      } else if (condition === 'storm') {
+        precipitation = 1.0;
+      } else if (condition === 'rain') {
+        precipitation = 0.6;
+      } else if (condition === 'drizzle') {
+        precipitation = 0.3;
+      }
+
       this.data.weather = {
         condition,
-        temperature: data.main?.temp || 20,
-        humidity: data.main?.humidity || 50,
-        cloudCover: data.clouds?.all || 0,
-        windSpeed: data.wind?.speed || 0,
+        temperature: data.main?.temp ?? 20,
+        humidity: data.main?.humidity ?? 50,
+        cloudCover: data.clouds?.all ?? 0,
+        windSpeed: data.wind?.speed ?? 0,
+        windDirection: data.wind?.deg ?? 0, // Degrees from North
+        visibility: data.visibility ?? 10000,
+        precipitation,
         available: true,
       };
+
+      // Cache the result
+      this._setCacheData('weather', this.data.weather);
     } catch (error) {
       console.warn('EnvironmentData: Weather fetch failed', error);
+      // Keep current values but mark as unavailable
+      this.data.weather.available = false;
     }
   }
 
@@ -244,13 +341,26 @@ class EnvironmentData {
    * @returns {Promise<void>}
    */
   async _fetchAstronomy() {
+    // Check cache first
+    const cachedAstronomy = this._getCachedData('astronomy');
+    if (cachedAstronomy) {
+      this.data.astronomy = {
+        ...cachedAstronomy,
+        sunAltitude: this.data.time.sunPosition * 90, // Update sun altitude with current time
+      };
+      return;
+    }
+
     // If no astronomy API configured, use calculated moon phase
     if (!this.astronomyApiId || !this.astronomyApiSecret) {
+      const calculatedMoon = this._calculateMoonPhase();
       this.data.astronomy = {
-        ...this._calculateMoonPhase(),
+        ...calculatedMoon,
         sunAltitude: this.data.time.sunPosition * 90,
         available: true,
       };
+      // Cache calculated moon phase
+      this._setCacheData('astronomy', calculatedMoon);
       return;
     }
 
@@ -259,7 +369,9 @@ class EnvironmentData {
     const dateStr = now.toISOString().split('T')[0];
 
     // Create authorization header
-    const authString = btoa(`${this.astronomyApiId}:${this.astronomyApiSecret}`);
+    const authString = btoa(
+      `${this.astronomyApiId}:${this.astronomyApiSecret}`
+    );
 
     const url = `https://api.astronomyapi.com/api/v2/bodies/positions/moon`;
     const body = {
@@ -289,21 +401,31 @@ class EnvironmentData {
       const moonData = data.data?.table?.rows?.[0]?.cells?.[0];
 
       if (moonData) {
-        this.data.astronomy = {
-          moonPhase: moonData.extraInfo?.phase?.fraction || 0.5,
-          moonIllumination: (moonData.extraInfo?.phase?.fraction || 0.5) * 100,
-          sunAltitude: this.data.time.sunPosition * 90,
+        const astronomyData = {
+          moonPhase: moonData.extraInfo?.phase?.fraction ?? 0.5,
+          moonIllumination: (moonData.extraInfo?.phase?.fraction ?? 0.5) * 100,
           available: true,
         };
+
+        this.data.astronomy = {
+          ...astronomyData,
+          sunAltitude: this.data.time.sunPosition * 90,
+        };
+
+        // Cache the result
+        this._setCacheData('astronomy', astronomyData);
       }
     } catch (error) {
       console.warn('EnvironmentData: Astronomy fetch failed', error);
       // Fallback to calculated moon phase
+      const calculatedMoon = this._calculateMoonPhase();
       this.data.astronomy = {
-        ...this._calculateMoonPhase(),
+        ...calculatedMoon,
         sunAltitude: this.data.time.sunPosition * 90,
         available: true,
       };
+      // Cache fallback
+      this._setCacheData('astronomy', calculatedMoon);
     }
   }
 
@@ -395,16 +517,25 @@ class EnvironmentData {
     }
 
     // Color temperature to RGB shift
-    const kelvinToRGB = (kelvin) => {
+    const kelvinToRGB = kelvin => {
       const temp = kelvin / 100;
       let r, g, b;
 
       if (temp <= 66) {
         r = 255;
-        g = Math.min(255, Math.max(0, 99.4708025861 * Math.log(temp) - 161.1195681661));
+        g = Math.min(
+          255,
+          Math.max(0, 99.4708025861 * Math.log(temp) - 161.1195681661)
+        );
       } else {
-        r = Math.min(255, Math.max(0, 329.698727446 * Math.pow(temp - 60, -0.1332047592)));
-        g = Math.min(255, Math.max(0, 288.1221695283 * Math.pow(temp - 60, -0.0755148492)));
+        r = Math.min(
+          255,
+          Math.max(0, 329.698727446 * Math.pow(temp - 60, -0.1332047592))
+        );
+        g = Math.min(
+          255,
+          Math.max(0, 288.1221695283 * Math.pow(temp - 60, -0.0755148492))
+        );
       }
 
       if (temp >= 66) {
@@ -412,7 +543,10 @@ class EnvironmentData {
       } else if (temp <= 19) {
         b = 0;
       } else {
-        b = Math.min(255, Math.max(0, 138.5177312231 * Math.log(temp - 10) - 305.0447927307));
+        b = Math.min(
+          255,
+          Math.max(0, 138.5177312231 * Math.log(temp - 10) - 305.0447927307)
+        );
       }
 
       return { r: r / 255, g: g / 255, b: b / 255 };
@@ -436,6 +570,15 @@ class EnvironmentData {
     // Reduce intensity based on cloud cover
     ambientIntensity *= 1 - weather.cloudCover / 200;
 
+    // Calculate wind direction in radians (for use in shaders)
+    const windDirectionRad = ((weather.windDirection || 0) * Math.PI) / 180;
+
+    // Is it currently night time?
+    const isNight = time.period === 'night';
+
+    // Full moon detection (illumination > 85%)
+    const isFullMoon = astronomy.moonIllumination > 85;
+
     return {
       particleDensity,
       blurAmount,
@@ -443,11 +586,21 @@ class EnvironmentData {
       colorTempRGB,
       moonGlow,
       moonPhase: astronomy.moonPhase,
+      moonIllumination: astronomy.moonIllumination,
+      isFullMoon,
       ambientIntensity,
       windSpeed: weather.windSpeed,
+      windDirection: weather.windDirection,
+      windDirectionRad,
+      visibility: weather.visibility,
+      precipitation: weather.precipitation,
       timeOfDay: time.timeOfDay,
       period: time.period,
       sunPosition: time.sunPosition,
+      isNight,
+      temperature: weather.temperature,
+      humidity: weather.humidity,
+      condition: weather.condition,
     };
   }
 

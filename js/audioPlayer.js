@@ -128,7 +128,9 @@ class AudioPlayer {
   }
 
   loadTrack(index) {
-    if (index < 0 || index >= this.tracks.length) return;
+    if (index < 0 || index >= this.tracks.length) {
+      return;
+    }
 
     // Stop current track if playing
     if (this.howl) {
@@ -276,7 +278,7 @@ class AudioPlayer {
 
         if (duration > 0) {
           const percentage = (seek / duration) * 100;
-          $(`#${self.id}-progress-fill`).css('width', percentage + '%');
+          $(`#${self.id}-progress-fill`).css('width', `${percentage}%`);
           $(`#${self.id}-current-time`).text(self.formatTime(seek));
         }
       }

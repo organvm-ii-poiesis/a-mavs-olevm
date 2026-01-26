@@ -3,16 +3,23 @@
  * @description Layered colors environment for OGOD tracks
  * Creates stacked transparent planes at varying depths with depth fog
  * Used for: Castlevania (2), Metroid (18)
+ * Supports audio-reactive visual effects
  */
 
 'use strict';
 
 /**
- * LayeredColorsEnvironment - Stacked color plane world
+ * LayeredColorsEnvironment - Stacked color plane world with audio reactivity
  * @class
  * @extends EnvironmentBase
  */
 class LayeredColorsEnvironment extends EnvironmentBase {
+  /**
+   * @param {Object} options - Configuration options
+   * @param {SceneManager} options.sceneManager - Scene manager instance
+   * @param {Array<string>} options.palette - Color palette array
+   * @param {Object} [options.audioUniforms] - Audio-reactive uniform objects
+   */
   constructor(options = {}) {
     super(options);
     this.layerCount = 15;
@@ -43,6 +50,8 @@ class LayeredColorsEnvironment extends EnvironmentBase {
   }
 
   _createColorLayers() {
+    const audioUniforms = this._getAudioUniforms();
+
     for (let i = 0; i < this.layerCount; i++) {
       const colorIndex = i % this.colors.length;
       const color = this.colors[colorIndex];
@@ -54,19 +63,32 @@ class LayeredColorsEnvironment extends EnvironmentBase {
           uColor: { value: color },
           uTime: { value: 0 },
           uDepth: { value: i / this.layerCount },
+          // Audio-reactive uniforms
+          uBassLevel: audioUniforms.uBassLevel,
+          uMidLevel: audioUniforms.uMidLevel,
+          uKickHit: audioUniforms.uKickHit,
+          uEnergy: audioUniforms.uEnergy,
         },
         vertexShader: `
           varying vec2 vUv;
           varying vec3 vPosition;
           uniform float uTime;
+          uniform float uBassLevel;
+          uniform float uKickHit;
 
           void main() {
             vUv = uv;
             vPosition = position;
 
             vec3 pos = position;
-            pos.x += sin(position.y * 0.05 + uTime * 0.2) * 2.0;
-            pos.y += cos(position.x * 0.05 + uTime * 0.15) * 2.0;
+
+            // Wave animation - amplitude influenced by bass
+            float waveAmp = 2.0 + uBassLevel * 3.0;
+            pos.x += sin(position.y * 0.05 + uTime * 0.2) * waveAmp;
+            pos.y += cos(position.x * 0.05 + uTime * 0.15) * waveAmp;
+
+            // Kick pushes layers back momentarily
+            pos.z -= uKickHit * 2.0;
 
             gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
           }
@@ -75,6 +97,10 @@ class LayeredColorsEnvironment extends EnvironmentBase {
           uniform vec3 uColor;
           uniform float uTime;
           uniform float uDepth;
+          uniform float uMidLevel;
+          uniform float uKickHit;
+          uniform float uEnergy;
+
           varying vec2 vUv;
           varying vec3 vPosition;
 
@@ -86,11 +112,18 @@ class LayeredColorsEnvironment extends EnvironmentBase {
             // Depth-based opacity
             float depthFade = 1.0 - uDepth * 0.5;
 
-            // Animated opacity
-            float pulse = 0.5 + 0.5 * sin(uTime * 0.5 + uDepth * 3.14);
+            // Animated opacity - enhanced by audio
+            float audioSpeed = 0.5 + uEnergy * 0.3;
+            float pulse = 0.5 + 0.5 * sin(uTime * audioSpeed + uDepth * 3.14);
+            pulse += uMidLevel * 0.2;
 
-            float alpha = fade * depthFade * (0.15 + 0.1 * pulse);
-            gl_FragColor = vec4(uColor, alpha);
+            float alpha = fade * depthFade * (0.15 + 0.1 * pulse + uEnergy * 0.1);
+
+            // Audio-reactive color
+            vec3 finalColor = uColor * (1.0 + uMidLevel * 0.3);
+            finalColor += uKickHit * 0.2;
+
+            gl_FragColor = vec4(finalColor, alpha);
           }
         `,
         transparent: true,
@@ -140,7 +173,8 @@ class LayeredColorsEnvironment extends EnvironmentBase {
 
       this._onAnimate((delta, elapsed) => {
         orb.position.y += Math.sin(elapsed * floatSpeed + floatOffset) * 0.01;
-        orb.position.x += Math.cos(elapsed * floatSpeed * 0.7 + floatOffset) * 0.005;
+        orb.position.x +=
+          Math.cos(elapsed * floatSpeed * 0.7 + floatOffset) * 0.005;
       });
     }
   }
@@ -156,7 +190,8 @@ class LayeredColorsEnvironment extends EnvironmentBase {
       const i3 = i * 3;
       positions[i3] = (Math.random() - 0.5) * 80;
       positions[i3 + 1] = (Math.random() - 0.5) * 40;
-      positions[i3 + 2] = -Math.random() * this.layerCount * this.layerSpacing - 5;
+      positions[i3 + 2] =
+        -Math.random() * this.layerCount * this.layerSpacing - 5;
 
       const color = this.colors[Math.floor(Math.random() * this.colors.length)];
       colors[i3] = color.r;

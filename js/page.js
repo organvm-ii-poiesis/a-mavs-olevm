@@ -339,6 +339,10 @@ $('#toBlogPage').on('click', () => {
 $('#toLoopPage').on('click', () => {
   showNewSection('#loop');
 });
+$('#toOGOD3D').on('click', e => {
+  e.preventDefault();
+  showNewSection('#ogod3d');
+});
 
 $('#SoundBackButton').on('click', () => {
   showNewSection('#menu');
@@ -499,6 +503,7 @@ function announcePageTransition(pageId) {
     '#stills': 'Stills gallery',
     '#diary': 'Diary gallery',
     '#blog': 'Blog section',
+    '#ogod3d': 'OGOD 3D immersive experience',
   };
 
   const pageName = pageNames[pageId] || `${pageId.replace('#', '')} page`;

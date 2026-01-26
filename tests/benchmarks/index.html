@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OGOD 3D Performance Benchmarks</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: #1a1a2e;
+      color: #eee;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #00ffff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #ff00ff;
+      margin: 20px 0 10px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 5px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .metric-card {
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 8px;
+      padding: 15px;
+    }
+
+    .metric-card h3 {
+      color: #00ffff;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .metric-unit {
+      font-size: 0.9rem;
+      color: #888;
+      margin-left: 5px;
+    }
+
+    .metric-status {
+      font-size: 0.8rem;
+      margin-top: 5px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .status-good {
+      background: #2ecc71;
+      color: #000;
+    }
+
+    .status-warning {
+      background: #f39c12;
+      color: #000;
+    }
+
+    .status-bad {
+      background: #e74c3c;
+      color: #fff;
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #0f3460;
+      border: 1px solid #00ffff;
+      color: #00ffff;
+      cursor: pointer;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #00ffff;
+      color: #0f3460;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .canvas-container {
+      width: 100%;
+      height: 400px;
+      background: #000;
+      border: 1px solid #333;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .log {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 15px;
+      max-height: 300px;
+      overflow-y: auto;
+      font-size: 0.85rem;
+    }
+
+    .log-entry {
+      padding: 5px 0;
+      border-bottom: 1px solid #222;
+    }
+
+    .log-entry:last-child {
+      border-bottom: none;
+    }
+
+    .log-time {
+      color: #888;
+      margin-right: 10px;
+    }
+
+    .log-info {
+      color: #00ffff;
+    }
+
+    .log-warning {
+      color: #f39c12;
+    }
+
+    .log-error {
+      color: #e74c3c;
+    }
+
+    .log-success {
+      color: #2ecc71;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00ffff, #ff00ff);
+      transition: width 0.3s;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>OGOD 3D Performance Benchmarks</h1>
+
+    <div class="controls">
+      <button id="run-benchmark">Run Full Benchmark (30s)</button>
+      <button id="run-quick">Quick Test (10s)</button>
+      <button id="run-stress">Stress Test (60s)</button>
+      <button id="stop-benchmark" disabled>Stop</button>
+      <button id="clear-log">Clear Log</button>
+    </div>
+
+    <div class="progress-bar" style="display: none;" id="progress-container">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+
+    <h2>Live Metrics</h2>
+    <div class="metrics-grid" id="metrics-grid">
+      <div class="metric-card">
+        <h3>FPS</h3>
+        <span class="metric-value" id="metric-fps">--</span>
+        <span class="metric-unit">fps</span>
+        <div class="metric-status" id="status-fps">Waiting...</div>
+      </div>
+      <div class="metric-card">
+        <h3>Frame Time</h3>
+        <span class="metric-value" id="metric-frametime">--</span>
+        <span class="metric-unit">ms</span>
+        <div class="metric-status" id="status-frametime">Waiting...</div>
+      </div>
+      <div class="metric-card">
+        <h3>P99 Frame Time</h3>
+        <span class="metric-value" id="metric-p99">--</span>
+        <span class="metric-unit">ms</span>
+        <div class="metric-status" id="status-p99">Waiting...</div>
+      </div>
+      <div class="metric-card">
+        <h3>Memory Usage</h3>
+        <span class="metric-value" id="metric-memory">--</span>
+        <span class="metric-unit">MB</span>
+        <div class="metric-status" id="status-memory">Waiting...</div>
+      </div>
+      <div class="metric-card">
+        <h3>Memory Growth</h3>
+        <span class="metric-value" id="metric-memory-growth">--</span>
+        <span class="metric-unit">MB/s</span>
+        <div class="metric-status" id="status-memory-growth">Waiting...</div>
+      </div>
+      <div class="metric-card">
+        <h3>Draw Calls</h3>
+        <span class="metric-value" id="metric-drawcalls">--</span>
+        <span class="metric-unit">calls</span>
+        <div class="metric-status" id="status-drawcalls">Waiting...</div>
+      </div>
+    </div>
+
+    <h2>3D Scene</h2>
+    <div class="canvas-container" id="canvas-container">
+      <iframe src="../../ogod-3d.html" id="scene-iframe"></iframe>
+    </div>
+
+    <h2>Benchmark Log</h2>
+    <div class="log" id="log">
+      <div class="log-entry">
+        <span class="log-time">--:--:--</span>
+        <span class="log-info">Ready to run benchmarks. Click "Run Full Benchmark" to start.</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="performance.js"></script>
+  <script>
+    // DOM elements
+    const runBenchmarkBtn = document.getElementById('run-benchmark');
+    const runQuickBtn = document.getElementById('run-quick');
+    const runStressBtn = document.getElementById('run-stress');
+    const stopBtn = document.getElementById('stop-benchmark');
+    const clearLogBtn = document.getElementById('clear-log');
+    const progressContainer = document.getElementById('progress-container');
+    const progressFill = document.getElementById('progress-fill');
+    const logElement = document.getElementById('log');
+    const iframe = document.getElementById('scene-iframe');
+
+    // Metric elements
+    const metricFps = document.getElementById('metric-fps');
+    const metricFrametime = document.getElementById('metric-frametime');
+    const metricP99 = document.getElementById('metric-p99');
+    const metricMemory = document.getElementById('metric-memory');
+    const metricMemoryGrowth = document.getElementById('metric-memory-growth');
+    const metricDrawcalls = document.getElementById('metric-drawcalls');
+    const statusFps = document.getElementById('status-fps');
+    const statusFrametime = document.getElementById('status-frametime');
+    const statusP99 = document.getElementById('status-p99');
+    const statusMemory = document.getElementById('status-memory');
+    const statusMemoryGrowth = document.getElementById('status-memory-growth');
+    const statusDrawcalls = document.getElementById('status-drawcalls');
+
+    // State
+    let monitor = null;
+    let benchmarkTimeout = null;
+    let startTime = 0;
+    let duration = 0;
+
+    // Thresholds
+    const thresholds = {
+      fps: { good: 55, warning: 30 },
+      frametime: { good: 18, warning: 33 },
+      p99: { good: 25, warning: 50 },
+      memory: { good: 200, warning: 500 },
+      memoryGrowth: { good: 0.1, warning: 0.5 },
+      drawcalls: { good: 100, warning: 500 },
+    };
+
+    // Log function
+    function log(message, type = 'info') {
+      const now = new Date();
+      const timeStr = now.toTimeString().split(' ')[0];
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.innerHTML = `
+        <span class="log-time">${timeStr}</span>
+        <span class="log-${type}">${message}</span>
+      `;
+      logElement.appendChild(entry);
+      logElement.scrollTop = logElement.scrollHeight;
+    }
+
+    // Update status class
+    function getStatusClass(value, metric) {
+      const t = thresholds[metric];
+      if (!t) return 'status-good';
+
+      // Invert logic for metrics where lower is better
+      if (metric === 'frametime' || metric === 'p99' || metric === 'memoryGrowth') {
+        if (value <= t.good) return 'status-good';
+        if (value <= t.warning) return 'status-warning';
+        return 'status-bad';
+      }
+
+      // Memory has different logic
+      if (metric === 'memory') {
+        if (value <= t.good) return 'status-good';
+        if (value <= t.warning) return 'status-warning';
+        return 'status-bad';
+      }
+
+      // Draw calls
+      if (metric === 'drawcalls') {
+        if (value <= t.good) return 'status-good';
+        if (value <= t.warning) return 'status-warning';
+        return 'status-bad';
+      }
+
+      // FPS - higher is better
+      if (value >= t.good) return 'status-good';
+      if (value >= t.warning) return 'status-warning';
+      return 'status-bad';
+    }
+
+    // Update metrics display
+    function updateMetrics(metrics) {
+      metricFps.textContent = metrics.fps || '--';
+      metricFrametime.textContent = metrics.avgFrameTime || '--';
+      metricP99.textContent = metrics.p99FrameTime || '--';
+      metricMemory.textContent = metrics.memoryMB || '--';
+      metricMemoryGrowth.textContent = metrics.memoryGrowthRateMBps?.toFixed(3) || '--';
+      metricDrawcalls.textContent = metrics.drawCalls || '--';
+
+      // Update status badges
+      statusFps.textContent = metrics.fps >= 55 ? 'Good' : metrics.fps >= 30 ? 'Acceptable' : 'Poor';
+      statusFps.className = 'metric-status ' + getStatusClass(metrics.fps, 'fps');
+
+      statusFrametime.textContent = metrics.avgFrameTime <= 18 ? 'Good' : metrics.avgFrameTime <= 33 ? 'Acceptable' : 'Poor';
+      statusFrametime.className = 'metric-status ' + getStatusClass(metrics.avgFrameTime, 'frametime');
+
+      statusP99.textContent = metrics.p99FrameTime <= 25 ? 'Good' : metrics.p99FrameTime <= 50 ? 'Acceptable' : 'Spiky';
+      statusP99.className = 'metric-status ' + getStatusClass(metrics.p99FrameTime, 'p99');
+
+      statusMemory.textContent = metrics.memoryMB <= 200 ? 'Good' : metrics.memoryMB <= 500 ? 'High' : 'Very High';
+      statusMemory.className = 'metric-status ' + getStatusClass(metrics.memoryMB, 'memory');
+
+      const growth = metrics.memoryGrowthRateMBps || 0;
+      statusMemoryGrowth.textContent = growth <= 0.1 ? 'Stable' : growth <= 0.5 ? 'Growing' : 'Leak?';
+      statusMemoryGrowth.className = 'metric-status ' + getStatusClass(growth, 'memoryGrowth');
+
+      statusDrawcalls.textContent = metrics.drawCalls <= 100 ? 'Good' : metrics.drawCalls <= 500 ? 'High' : 'Very High';
+      statusDrawcalls.className = 'metric-status ' + getStatusClass(metrics.drawCalls, 'drawcalls');
+
+      // Update progress
+      if (duration > 0) {
+        const elapsed = performance.now() - startTime;
+        const progress = Math.min(100, (elapsed / duration) * 100);
+        progressFill.style.width = progress + '%';
+      }
+    }
+
+    // Run benchmark
+    function runBenchmark(durationMs) {
+      if (monitor) {
+        monitor.stop();
+      }
+
+      duration = durationMs;
+      startTime = performance.now();
+
+      progressContainer.style.display = 'block';
+      progressFill.style.width = '0%';
+
+      runBenchmarkBtn.disabled = true;
+      runQuickBtn.disabled = true;
+      runStressBtn.disabled = true;
+      stopBtn.disabled = false;
+
+      log(`Starting ${durationMs / 1000}s benchmark...`, 'info');
+
+      monitor = new PerformanceMonitor({
+        onUpdate: updateMetrics,
+        logToConsole: false,
+      });
+
+      monitor.start();
+
+      benchmarkTimeout = setTimeout(() => {
+        stopBenchmark(true);
+      }, durationMs);
+    }
+
+    // Stop benchmark
+    function stopBenchmark(completed = false) {
+      if (benchmarkTimeout) {
+        clearTimeout(benchmarkTimeout);
+        benchmarkTimeout = null;
+      }
+
+      if (monitor) {
+        monitor.stop();
+        const report = monitor.generateReport();
+
+        if (completed) {
+          log('Benchmark completed!', 'success');
+          log(`Final FPS: ${report.metrics.fps}`, report.metrics.fps >= 55 ? 'success' : 'warning');
+          log(`Avg Frame Time: ${report.metrics.avgFrameTime}ms`, report.metrics.avgFrameTime <= 18 ? 'success' : 'warning');
+          log(`P99 Frame Time: ${report.metrics.p99FrameTime}ms`, report.metrics.p99FrameTime <= 25 ? 'success' : 'warning');
+          log(`Memory: ${report.metrics.memoryMB}MB`, report.metrics.memoryMB <= 200 ? 'success' : 'warning');
+          log(`Memory Growth: ${report.metrics.memoryGrowthRateMBps?.toFixed(3)}MB/s`, (report.metrics.memoryGrowthRateMBps || 0) <= 0.1 ? 'success' : 'warning');
+
+          if (report.issues.length > 0) {
+            log('Issues detected:', 'error');
+            report.issues.forEach(issue => log('  - ' + issue, 'error'));
+          } else {
+            log('All performance targets met!', 'success');
+          }
+        } else {
+          log('Benchmark stopped by user', 'warning');
+        }
+      }
+
+      progressContainer.style.display = 'none';
+      runBenchmarkBtn.disabled = false;
+      runQuickBtn.disabled = false;
+      runStressBtn.disabled = false;
+      stopBtn.disabled = true;
+    }
+
+    // Event listeners
+    runBenchmarkBtn.addEventListener('click', () => runBenchmark(30000));
+    runQuickBtn.addEventListener('click', () => runBenchmark(10000));
+    runStressBtn.addEventListener('click', () => runBenchmark(60000));
+    stopBtn.addEventListener('click', () => stopBenchmark(false));
+    clearLogBtn.addEventListener('click', () => {
+      logElement.innerHTML = '<div class="log-entry"><span class="log-time">--:--:--</span><span class="log-info">Log cleared.</span></div>';
+    });
+
+    // Wait for iframe to load
+    iframe.addEventListener('load', () => {
+      log('3D scene loaded successfully', 'success');
+    });
+  </script>
+</body>
+</html>

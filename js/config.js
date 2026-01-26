@@ -2,6 +2,38 @@
  * @file config.js
  * @description Centralized configuration for ETCETER4 site
  * Extracts magic numbers and configurable values for easier maintenance
+ *
+ * API Key Configuration:
+ * ----------------------
+ * To enable weather and astronomy features, you need to provide API keys.
+ * There are several ways to configure these:
+ *
+ * 1. Direct Configuration (not recommended for production):
+ *    Edit the threeD.weatherApiKey, astronomyApiId, and astronomyApiSecret values below.
+ *
+ * 2. Environment-based (recommended):
+ *    Create a js/config.local.js file (gitignored) with:
+ *    ```
+ *    if (typeof ETCETER4_CONFIG !== 'undefined') {
+ *      ETCETER4_CONFIG.threeD.weatherApiKey = 'your-openweathermap-api-key';
+ *      ETCETER4_CONFIG.threeD.astronomyApiId = 'your-astronomy-api-id';
+ *      ETCETER4_CONFIG.threeD.astronomyApiSecret = 'your-astronomy-api-secret';
+ *    }
+ *    ```
+ *    Then include this file after config.js in your HTML.
+ *
+ * 3. URL Parameters (for testing):
+ *    Add ?weatherApiKey=xxx to the URL for temporary testing.
+ *
+ * API Sources:
+ * - Weather: https://openweathermap.org/api (free tier available)
+ * - Astronomy: https://astronomyapi.com/ (free tier available)
+ *
+ * Fallback Behavior:
+ * When APIs are unavailable or fail, the system uses intelligent defaults:
+ * - Weather: Clear sky, 20°C, 50% humidity, no wind
+ * - Moon phase: Calculated algorithmically (accurate to ~1 day)
+ * - Time-of-day: Based on device clock
  */
 
 'use strict';
@@ -55,7 +87,7 @@ const ETCETER4_CONFIG = {
    */
   threeD: {
     // API keys (replace with actual keys in production)
-    // These should be set via environment variables or a separate secrets file
+    // See file header for configuration instructions
     weatherApiKey: '', // OpenWeatherMap API key
     astronomyApiId: '', // Astronomy API application ID
     astronomyApiSecret: '', // Astronomy API secret
@@ -128,10 +160,122 @@ const ETCETER4_CONFIG = {
       },
     },
 
+    // Weather effects configuration
+    weatherEffects: {
+      enabled: true,
+      // Rain particle settings
+      rain: {
+        maxParticles: 5000, // Maximum rain particles (reduced on mobile)
+        mobileParticles: 1500, // Particle count for mobile devices
+        particleSize: 0.1, // Base particle size
+        fallSpeed: 15, // Base fall speed
+        spread: 100, // Horizontal spread area
+        height: 50, // Rain spawn height
+        opacity: 0.6, // Base opacity
+        color: '#a0a0ff', // Rain color (slight blue tint)
+      },
+      // Snow particle settings
+      snow: {
+        maxParticles: 3000, // Maximum snow particles (reduced on mobile)
+        mobileParticles: 1000, // Particle count for mobile devices
+        particleSize: 0.2, // Base particle size
+        fallSpeed: 2, // Base fall speed (slower than rain)
+        spread: 100, // Horizontal spread area
+        height: 50, // Snow spawn height
+        opacity: 0.8, // Base opacity
+        color: '#ffffff', // Snow color
+        wobbleAmount: 0.5, // Horizontal drift amount
+      },
+      // Fog settings
+      fog: {
+        minDensity: 0.005, // Minimum fog density
+        maxDensity: 0.05, // Maximum fog density (high humidity)
+        transitionSpeed: 0.5, // How fast fog transitions
+      },
+      // Wind influence on particles
+      wind: {
+        maxInfluence: 10, // Maximum horizontal velocity from wind
+        turbulence: 0.3, // Random turbulence factor
+      },
+    },
+
+    // Time-of-day lighting configuration
+    lighting: {
+      enabled: true,
+      // Sun simulation parameters
+      sun: {
+        // Intensity multipliers for different times of day
+        intensity: {
+          night: 0.1,
+          dawn: 0.5,
+          morning: 0.8,
+          afternoon: 1.0,
+          dusk: 0.5,
+        },
+        // Sun position calculation parameters
+        elevation: {
+          night: -30, // Below horizon
+          dawn: 5, // Just above horizon
+          morning: 30, // Rising
+          afternoon: 60, // High
+          dusk: 5, // Setting
+        },
+      },
+      // Ambient light configuration
+      ambient: {
+        // Base intensities by time of day
+        intensity: {
+          night: 0.15,
+          dawn: 0.4,
+          morning: 0.6,
+          afternoon: 0.7,
+          dusk: 0.4,
+        },
+        // Color temperatures (Kelvin) by time of day
+        colorTemperature: {
+          night: 8000, // Cool blue
+          dawn: 3000, // Warm orange
+          morning: 5500, // Neutral daylight
+          afternoon: 6000, // Slightly cool
+          dusk: 2500, // Very warm
+        },
+      },
+      // Smooth transition settings
+      transition: {
+        duration: 2.0, // Seconds for color/intensity transitions
+        easing: 'easeInOutQuad', // Easing function name
+      },
+    },
+
+    // Moon phase configuration
+    moon: {
+      enabled: true,
+      // Glow intensity multiplier based on illumination
+      glowMultiplier: 1.5,
+      // Color tinting during night scenes
+      nightTint: {
+        color: '#4466aa', // Slight blue tint
+        intensity: 0.2, // How strong the tint is
+      },
+      // Full moon special effects
+      fullMoon: {
+        threshold: 0.85, // Illumination percentage to trigger effects
+        bloomBoost: 0.3, // Additional bloom strength
+        highlightBoost: 1.2, // Multiply highlight brightness
+      },
+    },
+
     // Environment data update intervals (in milliseconds)
     updateIntervals: {
       weather: 300000, // 5 minutes
       astronomy: 3600000, // 1 hour
+    },
+
+    // Response caching configuration
+    cache: {
+      weatherTTL: 300000, // 5 minutes
+      astronomyTTL: 3600000, // 1 hour
+      locationTTL: 86400000, // 24 hours
     },
   },
 

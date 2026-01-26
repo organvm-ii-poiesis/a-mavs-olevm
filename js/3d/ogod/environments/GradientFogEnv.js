@@ -3,12 +3,13 @@
  * @description Gradient fog environment for OGOD tracks
  * Creates volumetric color zones with soft particles and flowing fog
  * Used for: Animal Crossing (1), Goldeneye (10), Luigi's Mansion (14), Wind Waker (28)
+ * Supports audio-reactive visual effects
  */
 
 'use strict';
 
 /**
- * GradientFogEnvironment - Soft gradient fog world
+ * GradientFogEnvironment - Soft gradient fog world with audio reactivity
  * @class
  * @extends EnvironmentBase
  */
@@ -17,6 +18,7 @@ class GradientFogEnvironment extends EnvironmentBase {
    * @param {Object} options - Configuration options
    * @param {SceneManager} options.sceneManager - Scene manager instance
    * @param {Array<string>} options.palette - Color palette array
+   * @param {Object} [options.audioUniforms] - Audio-reactive uniform objects
    */
   constructor(options = {}) {
     super(options);
@@ -60,11 +62,13 @@ class GradientFogEnvironment extends EnvironmentBase {
   }
 
   /**
-   * Create gradient sky dome
+   * Create gradient sky dome with audio reactivity
    * @private
    */
   _createSkyDome() {
     const geometry = new THREE.SphereGeometry(100, 32, 32);
+    const audioUniforms = this._getAudioUniforms();
+
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uTopColor: { value: this.colors[0] },
@@ -73,6 +77,12 @@ class GradientFogEnvironment extends EnvironmentBase {
         uOffset: { value: 0.5 },
         uExponent: { value: 0.6 },
         uTime: { value: 0 },
+        // Audio-reactive uniforms
+        uBassLevel: audioUniforms.uBassLevel,
+        uMidLevel: audioUniforms.uMidLevel,
+        uTrebleLevel: audioUniforms.uTrebleLevel,
+        uKickHit: audioUniforms.uKickHit,
+        uEnergy: audioUniforms.uEnergy,
       },
       vertexShader: `
         varying vec3 vWorldPosition;
@@ -89,6 +99,13 @@ class GradientFogEnvironment extends EnvironmentBase {
         uniform float uOffset;
         uniform float uExponent;
         uniform float uTime;
+
+        // Audio-reactive uniforms
+        uniform float uBassLevel;
+        uniform float uMidLevel;
+        uniform float uTrebleLevel;
+        uniform float uKickHit;
+        uniform float uEnergy;
 
         varying vec3 vWorldPosition;
 
@@ -108,6 +125,19 @@ class GradientFogEnvironment extends EnvironmentBase {
           // Add subtle time-based variation
           float wave = sin(vWorldPosition.x * 0.02 + uTime * 0.1) * 0.02;
           color += wave;
+
+          // Audio-reactive color shift
+          // Bass boosts warm colors (bottom), treble boosts cool colors (top)
+          color += uBassLevel * 0.15 * uBottomColor;
+          color += uTrebleLevel * 0.1 * uTopColor;
+
+          // Kick causes brief brightness pulse
+          color *= 1.0 + uKickHit * 0.2;
+
+          // Energy affects overall saturation
+          float saturationBoost = 1.0 + uEnergy * 0.2;
+          vec3 gray = vec3(dot(color, vec3(0.299, 0.587, 0.114)));
+          color = mix(gray, color, saturationBoost);
 
           gl_FragColor = vec4(color, 1.0);
         }
@@ -180,34 +210,71 @@ class GradientFogEnvironment extends EnvironmentBase {
       const offset = index * Math.PI * 0.5;
 
       this._onAnimate((delta, elapsed) => {
-        sphere.position.y = position.y + 5 + Math.sin(elapsed * speed + offset) * 2;
-        sphere.scale.setScalar(1 + Math.sin(elapsed * speed * 0.5 + offset) * 0.1);
+        sphere.position.y =
+          position.y + 5 + Math.sin(elapsed * speed + offset) * 2;
+        sphere.scale.setScalar(
+          1 + Math.sin(elapsed * speed * 0.5 + offset) * 0.1
+        );
       });
     }
 
-    // Add glowing core
+    // Add glowing core with audio reactivity
     const coreGeometry = new THREE.SphereGeometry(3, 16, 16);
+    const audioUniforms = this._getAudioUniforms();
+
     const coreMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uColor: { value: color },
         uTime: { value: 0 },
+        // Audio-reactive uniforms
+        uBassLevel: audioUniforms.uBassLevel,
+        uKickHit: audioUniforms.uKickHit,
+        uBeatHit: audioUniforms.uBeatHit,
+        uEnergy: audioUniforms.uEnergy,
       },
       vertexShader: `
+        uniform float uBassLevel;
+        uniform float uKickHit;
+
         varying vec3 vNormal;
+
         void main() {
           vNormal = normalize(normalMatrix * normal);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+
+          // Audio-reactive scale - bass and kick expand the core
+          float audioScale = 1.0 + uBassLevel * 0.3 + uKickHit * 0.5;
+          vec3 scaledPosition = position * audioScale;
+
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(scaledPosition, 1.0);
         }
       `,
       fragmentShader: `
         uniform vec3 uColor;
         uniform float uTime;
+        uniform float uBassLevel;
+        uniform float uKickHit;
+        uniform float uBeatHit;
+        uniform float uEnergy;
+
         varying vec3 vNormal;
 
         void main() {
           float intensity = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.0);
           float pulse = 0.5 + 0.5 * sin(uTime * 2.0);
-          gl_FragColor = vec4(uColor, intensity * (0.3 + 0.2 * pulse));
+
+          // Audio-reactive brightness
+          float audioBrightness = 1.0 + uBassLevel * 0.4 + uKickHit * 0.6;
+
+          // Beat hit causes flash
+          float beatFlash = uBeatHit * 0.5;
+
+          // Energy affects glow intensity
+          float energyGlow = 0.3 + 0.2 * pulse + uEnergy * 0.3;
+
+          vec3 finalColor = uColor * audioBrightness;
+          finalColor += beatFlash;
+
+          gl_FragColor = vec4(finalColor, intensity * energyGlow);
         }
       `,
       transparent: true,
@@ -227,7 +294,7 @@ class GradientFogEnvironment extends EnvironmentBase {
   }
 
   /**
-   * Create atmospheric particles
+   * Create atmospheric particles with audio reactivity
    * @private
    */
   _createAtmosphericParticles() {
@@ -262,10 +329,19 @@ class GradientFogEnvironment extends EnvironmentBase {
     geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
     geometry.setAttribute('aRandom', new THREE.BufferAttribute(randomness, 1));
 
+    const audioUniforms = this._getAudioUniforms();
+
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+        // Audio-reactive uniforms
+        uBassLevel: audioUniforms.uBassLevel,
+        uMidLevel: audioUniforms.uMidLevel,
+        uTrebleLevel: audioUniforms.uTrebleLevel,
+        uKickHit: audioUniforms.uKickHit,
+        uSnareHit: audioUniforms.uSnareHit,
+        uEnergy: audioUniforms.uEnergy,
       },
       vertexShader: `
         attribute float size;
@@ -274,38 +350,76 @@ class GradientFogEnvironment extends EnvironmentBase {
         uniform float uTime;
         uniform float uPixelRatio;
 
+        // Audio-reactive uniforms
+        uniform float uBassLevel;
+        uniform float uMidLevel;
+        uniform float uTrebleLevel;
+        uniform float uKickHit;
+        uniform float uSnareHit;
+        uniform float uEnergy;
+
         varying vec3 vColor;
         varying float vAlpha;
+        varying float vAudioBrightness;
 
         void main() {
           vColor = color;  // 'color' is injected by Three.js from buffer attribute
 
           vec3 pos = position;
 
-          // Floating animation
-          float floatSpeed = 0.2 + aRandom * 0.3;
+          // Floating animation - speed influenced by energy
+          float floatSpeed = (0.2 + aRandom * 0.3) * (1.0 + uEnergy * 0.5);
           pos.y += sin(uTime * floatSpeed + aRandom * 10.0) * 2.0;
           pos.x += cos(uTime * floatSpeed * 0.5 + aRandom * 5.0) * 1.0;
 
+          // Audio-reactive displacement
+          // Bass causes vertical bounce, treble causes horizontal spread
+          pos.y += uBassLevel * 3.0 * sin(aRandom * 6.28);
+          pos.x += uTrebleLevel * 2.0 * cos(aRandom * 6.28 + uTime);
+
+          // Kick hit causes outward explosion
+          float kickDisplace = uKickHit * 5.0;
+          pos += normalize(position) * kickDisplace * aRandom;
+
           vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
           gl_Position = projectionMatrix * mvPosition;
-          gl_PointSize = size * uPixelRatio * (200.0 / -mvPosition.z);
+
+          // Size reacts to audio - bass makes particles larger
+          float audioSize = size * (1.0 + uBassLevel * 0.5 + uKickHit * 0.8);
+          gl_PointSize = audioSize * uPixelRatio * (200.0 / -mvPosition.z);
 
           // Fade based on distance and animation
           float distanceFade = smoothstep(50.0, 10.0, -mvPosition.z);
           vAlpha = distanceFade * (0.5 + 0.5 * sin(uTime * 0.5 + aRandom * 6.28));
+
+          // Pass audio brightness to fragment shader
+          vAudioBrightness = 1.0 + uMidLevel * 0.3 + uSnareHit * 0.5;
         }
       `,
       fragmentShader: `
+        uniform float uKickHit;
+        uniform float uEnergy;
+
         varying vec3 vColor;
         varying float vAlpha;
+        varying float vAudioBrightness;
 
         void main() {
           float d = length(gl_PointCoord - vec2(0.5));
           if (d > 0.5) discard;
 
           float alpha = smoothstep(0.5, 0.0, d) * vAlpha;
-          gl_FragColor = vec4(vColor, alpha);
+
+          // Apply audio brightness
+          vec3 brightColor = vColor * vAudioBrightness;
+
+          // Energy increases opacity
+          alpha *= (1.0 + uEnergy * 0.3);
+
+          // Kick creates flash effect
+          brightColor += uKickHit * 0.3;
+
+          gl_FragColor = vec4(brightColor, alpha);
         }
       `,
       transparent: true,
@@ -325,31 +439,47 @@ class GradientFogEnvironment extends EnvironmentBase {
   }
 
   /**
-   * Create gradient ground plane
+   * Create gradient ground plane with audio reactivity
    * @private
    */
   _createGradientGround() {
     const geometry = new THREE.PlaneGeometry(200, 200, 64, 64);
+    const audioUniforms = this._getAudioUniforms();
+
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uColor1: { value: this.colors[0] },
         uColor2: { value: this.colors[1] },
         uTime: { value: 0 },
+        // Audio-reactive uniforms
+        uBassLevel: audioUniforms.uBassLevel,
+        uMidLevel: audioUniforms.uMidLevel,
+        uKickHit: audioUniforms.uKickHit,
+        uEnergy: audioUniforms.uEnergy,
       },
       vertexShader: `
         varying vec2 vUv;
         varying vec3 vPosition;
 
         uniform float uTime;
+        uniform float uBassLevel;
+        uniform float uKickHit;
 
         void main() {
           vUv = uv;
           vPosition = position;
 
           vec3 pos = position;
-          // Subtle wave animation
-          pos.z = sin(position.x * 0.05 + uTime * 0.2) * 0.5 +
-                  cos(position.y * 0.05 + uTime * 0.15) * 0.5;
+
+          // Subtle wave animation - amplitude influenced by bass
+          float waveAmplitude = 0.5 + uBassLevel * 2.0;
+          pos.z = sin(position.x * 0.05 + uTime * 0.2) * waveAmplitude +
+                  cos(position.y * 0.05 + uTime * 0.15) * waveAmplitude;
+
+          // Kick creates ripple from center
+          float distFromCenter = length(position.xy);
+          float kickRipple = uKickHit * sin(distFromCenter * 0.1 - uTime * 5.0) * 2.0;
+          pos.z += kickRipple * smoothstep(50.0, 0.0, distFromCenter);
 
           gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
         }
@@ -358,6 +488,10 @@ class GradientFogEnvironment extends EnvironmentBase {
         uniform vec3 uColor1;
         uniform vec3 uColor2;
         uniform float uTime;
+        uniform float uBassLevel;
+        uniform float uMidLevel;
+        uniform float uKickHit;
+        uniform float uEnergy;
 
         varying vec2 vUv;
         varying vec3 vPosition;
@@ -368,13 +502,21 @@ class GradientFogEnvironment extends EnvironmentBase {
 
           vec3 color = mix(uColor1, uColor2, dist);
 
-          // Add subtle pattern
-          float pattern = sin(vPosition.x * 0.1 + uTime * 0.1) *
-                         cos(vPosition.y * 0.1 + uTime * 0.15) * 0.5 + 0.5;
+          // Add subtle pattern - speed influenced by energy
+          float patternSpeed = 0.1 + uEnergy * 0.2;
+          float pattern = sin(vPosition.x * 0.1 + uTime * patternSpeed) *
+                         cos(vPosition.y * 0.1 + uTime * patternSpeed * 0.75) * 0.5 + 0.5;
           color = mix(color, uColor1, pattern * 0.1);
 
+          // Audio-reactive color shift
+          color += uBassLevel * 0.1 * uColor2;
+          color += uMidLevel * 0.05 * uColor1;
+
+          // Kick creates brightness pulse
+          color *= 1.0 + uKickHit * 0.3;
+
           // Fade at edges
-          float alpha = smoothstep(1.0, 0.5, dist) * 0.5;
+          float alpha = smoothstep(1.0, 0.5, dist) * (0.5 + uEnergy * 0.2);
 
           gl_FragColor = vec4(color, alpha);
         }
