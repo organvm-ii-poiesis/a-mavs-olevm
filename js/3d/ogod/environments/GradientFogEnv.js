@@ -270,7 +270,6 @@ class GradientFogEnvironment extends EnvironmentBase {
       vertexShader: `
         attribute float size;
         attribute float aRandom;
-        attribute vec3 color;
 
         uniform float uTime;
         uniform float uPixelRatio;
@@ -279,7 +278,7 @@ class GradientFogEnvironment extends EnvironmentBase {
         varying float vAlpha;
 
         void main() {
-          vColor = color;
+          vColor = color;  // 'color' is injected by Three.js from buffer attribute
 
           vec3 pos = position;
 

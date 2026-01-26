@@ -371,15 +371,13 @@ class LandingCompositor {
         uOpacity: { value: this.config.layers.menuMask.opacity * 0.3 },
       },
       vertexShader: `
-        attribute vec3 color;
-
         uniform float uTime;
 
         varying vec3 vColor;
         varying float vAlpha;
 
         void main() {
-          vColor = color;
+          vColor = color;  // 'color' injected by Three.js from buffer attribute
 
           vec3 pos = position;
           pos.y += sin(uTime * 0.5 + position.x * 0.1) * 1.0;
