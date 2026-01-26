@@ -529,7 +529,10 @@ class GradientFogEnvironment extends EnvironmentBase {
     const ground = new THREE.Mesh(geometry, material);
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = -2;
-    ground.name = 'gradientGround';
+    ground.name = 'teleportFloor';
+
+    // Store reference for VR teleport
+    this.floorMesh = ground;
 
     this._addObject(ground);
 

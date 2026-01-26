@@ -7,25 +7,53 @@
 import { vi } from 'vitest';
 
 // Mock THREE.js namespace
-const mockVector3 = vi.fn().mockImplementation((x = 0, y = 0, z = 0) => ({
-  x,
-  y,
-  z,
-  clone: vi.fn().mockReturnThis(),
-  add: vi.fn().mockReturnThis(),
-  sub: vi.fn().mockReturnThis(),
-  multiplyScalar: vi.fn().mockReturnThis(),
-  normalize: vi.fn().mockReturnThis(),
-  crossVectors: vi.fn().mockReturnThis(),
-  lengthSq: vi.fn().mockReturnValue(0),
-  set: vi.fn().mockReturnThis(),
-}));
+const createMockVector3 = (x = 0, y = 0, z = 0) => {
+  const vec = { x, y, z };
+  vec.clone = vi.fn().mockImplementation(() => createMockVector3(vec.x, vec.y, vec.z));
+  vec.copy = vi.fn().mockImplementation(other => {
+    vec.x = other.x;
+    vec.y = other.y;
+    vec.z = other.z;
+    return vec;
+  });
+  vec.add = vi.fn().mockImplementation(other => {
+    vec.x += other?.x || 0;
+    vec.y += other?.y || 0;
+    vec.z += other?.z || 0;
+    return vec;
+  });
+  vec.sub = vi.fn().mockReturnValue(vec);
+  vec.multiplyScalar = vi.fn().mockImplementation(scalar => {
+    vec.x *= scalar;
+    vec.y *= scalar;
+    vec.z *= scalar;
+    return vec;
+  });
+  vec.normalize = vi.fn().mockReturnValue(vec);
+  vec.crossVectors = vi.fn().mockReturnValue(vec);
+  vec.lerp = vi.fn().mockReturnValue(vec);
+  vec.length = vi.fn().mockReturnValue(0);
+  vec.lengthSq = vi.fn().mockReturnValue(0);
+  vec.set = vi.fn().mockImplementation((newX, newY, newZ) => {
+    vec.x = newX;
+    vec.y = newY;
+    vec.z = newZ;
+    return vec;
+  });
+  return vec;
+};
+const mockVector3 = vi.fn().mockImplementation((x, y, z) => createMockVector3(x, y, z));
 
-const mockVector2 = vi.fn().mockImplementation((x = 0, y = 0) => ({
-  x,
-  y,
-  set: vi.fn().mockReturnThis(),
-}));
+const mockVector2 = vi.fn().mockImplementation((x = 0, y = 0) => {
+  const vec = { x, y };
+  vec.set = vi.fn().mockImplementation((newX, newY) => {
+    vec.x = newX;
+    vec.y = newY;
+    return vec;
+  });
+  vec.clone = vi.fn().mockReturnValue({ x: vec.x, y: vec.y });
+  return vec;
+});
 
 const mockColor = vi.fn().mockImplementation(hex => ({
   r: 1,
@@ -124,6 +152,14 @@ const mockMaterial = {
   color: { r: 1, g: 1, b: 1 },
 };
 
+const mockMatrix4 = vi.fn().mockImplementation(() => ({
+  copy: vi.fn().mockReturnThis(),
+  multiply: vi.fn().mockReturnThis(),
+  makeRotationFromQuaternion: vi.fn().mockReturnThis(),
+  makeTranslation: vi.fn().mockReturnThis(),
+  elements: new Float32Array(16),
+}));
+
 // Create THREE mock namespace
 global.THREE = {
   Vector3: mockVector3,
@@ -131,6 +167,7 @@ global.THREE = {
   Color: mockColor,
   Euler: mockEuler,
   Quaternion: mockQuaternion,
+  Matrix4: mockMatrix4,
   Clock: mockClock,
   WebGLRenderer: mockWebGLRenderer,
   Scene: mockScene,
@@ -146,7 +183,10 @@ global.THREE = {
   MeshBasicMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
   MeshStandardMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
   PointsMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
-  ShaderMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
+  ShaderMaterial: vi.fn().mockImplementation(options => ({
+    ...mockMaterial,
+    uniforms: options?.uniforms || {},
+  })),
   AmbientLight: vi.fn().mockImplementation(() => ({})),
   DirectionalLight: vi
     .fn()
@@ -163,6 +203,8 @@ global.THREE = {
   })),
   LinearFilter: 1,
   RGBAFormat: 1,
+  FloatType: 1015,
+  UnsignedByteType: 1009,
   SRGBColorSpace: 'srgb',
   ACESFilmicToneMapping: 4,
   AdditiveBlending: 2,
@@ -221,13 +263,25 @@ const mockToneFeedbackDelay = vi.fn().mockImplementation(() => ({
   dispose: vi.fn(),
 }));
 
+const mockToneAnalyser = vi.fn().mockImplementation(() => ({
+  getValue: vi.fn().mockReturnValue(new Float32Array(1024)),
+  dispose: vi.fn(),
+  disconnect: vi.fn(),
+  connect: vi.fn().mockReturnThis(),
+  smoothing: 0.8,
+}));
+
 global.Tone = {
   Player: mockTonePlayer,
   Gain: mockToneGain,
   Reverb: mockToneReverb,
   FeedbackDelay: mockToneFeedbackDelay,
+  Analyser: mockToneAnalyser,
   start: vi.fn().mockResolvedValue(undefined),
   now: vi.fn().mockReturnValue(0),
+  context: {
+    sampleRate: 44100,
+  },
 };
 
 // Mock global configuration
@@ -329,4 +383,5 @@ export {
   mockPerspectiveCamera,
   mockTonePlayer,
   mockToneGain,
+  mockToneAnalyser,
 };

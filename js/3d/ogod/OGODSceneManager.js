@@ -228,9 +228,47 @@ class OGODSceneManager {
    * @private
    */
   _setupPostProcessing() {
-    const bloomConfig = this.config.postProcessing?.bloom;
-    if (bloomConfig?.enabled && this.sceneManager.enableBloom) {
-      this.sceneManager.enableBloom({
+    const sceneManager = this.sceneManager;
+    const config = this.config.postProcessing || {};
+
+    // SSAO (order 0) - Screen-space ambient occlusion
+    if (config.ssao?.enabled && typeof SSAOPass !== 'undefined') {
+      const ssaoPass = new SSAOPass({
+        resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+        scene: sceneManager.scene,
+        camera: sceneManager.camera,
+        quality: config.ssao.quality || 'medium',
+      });
+      sceneManager.addEffect('ssao', ssaoPass, { order: 0, enabled: true });
+    }
+
+    // DOF (order 10) - Depth of field
+    if (config.depthOfField?.enabled && typeof DOFPass !== 'undefined') {
+      const dofPass = new DOFPass({
+        resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+        scene: sceneManager.scene,
+        camera: sceneManager.camera,
+        focusDistance: config.depthOfField.focusDistance || 10,
+        aperture: config.depthOfField.aperture || 0.025,
+        maxBlur: config.depthOfField.maxBlur || 1.0,
+      });
+      sceneManager.addEffect('dof', dofPass, { order: 10, enabled: true });
+    }
+
+    // Motion Blur (order 20)
+    if (config.motionBlur?.enabled && typeof MotionBlurPass !== 'undefined') {
+      const motionBlurPass = new MotionBlurPass({
+        resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+        camera: sceneManager.camera,
+        intensity: config.motionBlur.intensity || 1.0,
+      });
+      sceneManager.addEffect('motionBlur', motionBlurPass, { order: 20, enabled: true });
+    }
+
+    // Bloom (order 30) - existing implementation
+    const bloomConfig = config.bloom;
+    if (bloomConfig?.enabled && sceneManager.enableBloom) {
+      sceneManager.enableBloom({
         strength: bloomConfig.strength || 0.5,
         threshold: bloomConfig.threshold || 0.8,
         radius: bloomConfig.radius || 0.5,
@@ -948,6 +986,26 @@ class OGODSceneManager {
     if (this.audioEngine && this.audioEngine.setReverbConfig) {
       this.audioEngine.setReverbConfig(config);
     }
+  }
+
+  /**
+   * Get current environment instance
+   * @returns {EnvironmentBase|null}
+   */
+  getEnvironment() {
+    return this.environment;
+  }
+
+  /**
+   * Get floor objects for VR teleport raycast
+   * @returns {THREE.Object3D[]}
+   */
+  getFloorObjects() {
+    const floors = [];
+    if (this.environment?.floorMesh) {
+      floors.push(this.environment.floorMesh);
+    }
+    return floors;
   }
 }
 

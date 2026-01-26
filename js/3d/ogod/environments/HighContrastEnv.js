@@ -89,6 +89,10 @@ class HighContrastEnvironment extends EnvironmentBase {
     // Moon glow orb (visible in the sky, intensity based on moon phase)
     this._createMoonGlow();
 
+    // Invisible floor for VR teleport
+    const floor = this._createGround({ opacity: 0 });
+    this._addObject(floor);
+
     this.isInitialized = true;
   }
 

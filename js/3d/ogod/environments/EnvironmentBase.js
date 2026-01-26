@@ -45,6 +45,9 @@ class EnvironmentBase {
     this.audioUniforms = options.audioUniforms || null;
     this.audioReactive = !!options.audioUniforms;
 
+    // Floor mesh for VR teleport raycast
+    this.floorMesh = null;
+
     // State
     this.isInitialized = false;
   }
@@ -202,7 +205,7 @@ class EnvironmentBase {
   }
 
   /**
-   * Create a ground plane
+   * Create a ground plane for VR teleport
    * @protected
    * @param {Object} options
    * @returns {THREE.Mesh}
@@ -221,8 +224,20 @@ class EnvironmentBase {
     const ground = new THREE.Mesh(geometry, material);
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = -0.5;
+    ground.name = 'teleportFloor';
+
+    // Store reference for VR teleport
+    this.floorMesh = ground;
 
     return ground;
+  }
+
+  /**
+   * Get the floor mesh for VR teleport raycast
+   * @returns {THREE.Mesh|null}
+   */
+  getFloorMesh() {
+    return this.floorMesh;
   }
 
   /**

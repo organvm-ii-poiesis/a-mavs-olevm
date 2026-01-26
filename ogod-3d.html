@@ -1658,6 +1658,10 @@
     <script src="js/3d/ogod/OGODSceneManager.js"></script>
     <script src="js/3d/ogod/OGODAudioEngine.js"></script>
 
+    <!-- Audio Analysis -->
+    <script src="js/3d/audio/AudioAnalyzer.js"></script>
+    <script src="js/3d/audio/BeatDetector.js"></script>
+
     <!-- VR Support -->
     <script src="js/3d/vr/VRController.js"></script>
 
@@ -1904,6 +1908,14 @@
 
             // Show VR button if supported
             vrController.showVRButton();
+
+            // Add VR teleport update to animation loop
+            innerSceneManager.onAnimate(() => {
+              if (vrController?.isVRActive?.()) {
+                const floors = currentExperience?.sceneManager?.getFloorObjects?.() || [];
+                vrController.updateTeleport(floors);
+              }
+            });
           }
 
           updateLoading(100, 'Ready!');

@@ -75,6 +75,10 @@ class BokehGridEnvironment extends EnvironmentBase {
     const ambient = this._createAmbientLight(0.3);
     this._addObject(ambient);
 
+    // Invisible floor for VR teleport
+    const floor = this._createGround({ opacity: 0 });
+    this._addObject(floor);
+
     this.isInitialized = true;
   }
 

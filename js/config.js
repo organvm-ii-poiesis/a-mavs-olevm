@@ -151,11 +151,19 @@ const ETCETER4_CONFIG = {
           threshold: 0.8,
           radius: 0.5,
         },
+        ssao: {
+          enabled: false,
+          quality: 'medium',
+        },
         depthOfField: {
-          enabled: true,
+          enabled: false,
           focusDistance: 10,
           aperture: 0.025,
-          maxBlur: 0.01,
+          maxBlur: 1.0,
+        },
+        motionBlur: {
+          enabled: false,
+          intensity: 1.0,
         },
       },
     },

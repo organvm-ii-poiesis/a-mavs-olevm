@@ -31,6 +31,7 @@ class SettingsPanel {
         bloom: true,
         depthOfField: false,
         motionBlur: false,
+        ssao: false,
       },
       audio: {
         masterVolume: 0.8,
@@ -139,6 +140,14 @@ class SettingsPanel {
               <input type="checkbox" id="motion-blur-toggle" class="setting-checkbox" data-setting="graphics.motionBlur">
               <span class="setting-checkbox-custom" aria-hidden="true"></span>
               <span>Motion Blur</span>
+            </label>
+          </div>
+
+          <div class="setting-group">
+            <label class="setting-checkbox-label">
+              <input type="checkbox" id="ssao-toggle" class="setting-checkbox" data-setting="graphics.ssao">
+              <span class="setting-checkbox-custom" aria-hidden="true"></span>
+              <span>Ambient Occlusion</span>
             </label>
           </div>
         </section>
@@ -447,6 +456,33 @@ class SettingsPanel {
           }
         }
         break;
+      case 'graphics.depthOfField':
+        if (sceneManager) {
+          if (value) {
+            sceneManager.enableEffect?.('dof');
+          } else {
+            sceneManager.disableEffect?.('dof');
+          }
+        }
+        break;
+      case 'graphics.motionBlur':
+        if (sceneManager) {
+          if (value) {
+            sceneManager.enableEffect?.('motionBlur');
+          } else {
+            sceneManager.disableEffect?.('motionBlur');
+          }
+        }
+        break;
+      case 'graphics.ssao':
+        if (sceneManager) {
+          if (value) {
+            sceneManager.enableEffect?.('ssao');
+          } else {
+            sceneManager.disableEffect?.('ssao');
+          }
+        }
+        break;
       case 'audio.masterVolume':
         if (audioEngine) {
           audioEngine.setMasterVolume(value / 100);
@@ -525,6 +561,7 @@ class SettingsPanel {
         bloom: true,
         depthOfField: false,
         motionBlur: false,
+        ssao: false,
       },
       audio: {
         masterVolume: 80,
