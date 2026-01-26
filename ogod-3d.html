@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+    <title>OGOD 3D || ET CETER4</title>
+    <meta
+      name="description"
+      content="OGOD - One Game One Day - Immersive 3D Audio-Visual Experience by ET CETER4"
+    />
+    <meta name="author" content="ET CETER4" />
+
+    <link rel="icon" type="image/png" href="img/favicon.ico" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+        font-family: 'Courier New', monospace;
+      }
+
+      #container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+
+      #canvas-container {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition: opacity 0.5s ease;
+      }
+
+      #loading-screen.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .loading-title {
+        color: #00ffff;
+        font-size: 3rem;
+        letter-spacing: 1rem;
+        margin-bottom: 2rem;
+        text-shadow: 0 0 10px #00ffff;
+      }
+
+      .loading-bar-container {
+        width: 300px;
+        height: 4px;
+        background: #333;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .loading-bar {
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, #00ffff, #ff00ff);
+        transition: width 0.3s ease;
+      }
+
+      .loading-text {
+        color: #fff;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        opacity: 0.7;
+      }
+
+      #track-selector {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 90%;
+      }
+
+      .track-btn {
+        padding: 8px 16px;
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        font-family: inherit;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-radius: 4px;
+      }
+
+      .track-btn:hover {
+        background: rgba(0, 255, 255, 0.2);
+        border-color: #00ffff;
+      }
+
+      .track-btn.active {
+        background: rgba(0, 255, 255, 0.3);
+        border-color: #00ffff;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      }
+
+      #info-panel {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 0.9rem;
+        z-index: 100;
+        max-width: 250px;
+      }
+
+      #info-panel h3 {
+        margin: 0 0 10px;
+        color: #00ffff;
+        font-size: 1rem;
+      }
+
+      #info-panel p {
+        margin: 5px 0;
+        opacity: 0.8;
+      }
+
+      #back-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 20px;
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        font-family: inherit;
+        cursor: pointer;
+        text-decoration: none;
+        border-radius: 4px;
+        z-index: 100;
+        transition: all 0.2s ease;
+      }
+
+      #back-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+      }
+
+      #audio-btn {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        padding: 12px 20px;
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(0, 255, 255, 0.5);
+        color: #00ffff;
+        font-family: inherit;
+        cursor: pointer;
+        border-radius: 4px;
+        z-index: 100;
+        transition: all 0.2s ease;
+      }
+
+      #audio-btn:hover {
+        background: rgba(0, 255, 255, 0.2);
+      }
+
+      #audio-btn.playing {
+        border-color: #ff00ff;
+        color: #ff00ff;
+      }
+
+      .stem-meters {
+        margin-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 10px;
+      }
+
+      .stem-meter {
+        display: flex;
+        align-items: center;
+        margin: 5px 0;
+        font-size: 0.8rem;
+      }
+
+      .stem-meter label {
+        width: 60px;
+        opacity: 0.6;
+      }
+
+      .stem-meter-bar {
+        flex: 1;
+        height: 4px;
+        background: #333;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .stem-meter-fill {
+        height: 100%;
+        background: #00ffff;
+        width: 0%;
+        transition: width 0.1s ease;
+      }
+
+      @media (max-width: 768px) {
+        .loading-title {
+          font-size: 2rem;
+          letter-spacing: 0.5rem;
+        }
+
+        #info-panel {
+          display: none;
+        }
+
+        #track-selector {
+          bottom: 10px;
+        }
+
+        .track-btn {
+          padding: 6px 12px;
+          font-size: 0.7rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <!-- Loading Screen -->
+      <div id="loading-screen">
+        <h1 class="loading-title">OGOD</h1>
+        <div class="loading-bar-container">
+          <div class="loading-bar" id="loading-bar"></div>
+        </div>
+        <p class="loading-text" id="loading-text">Initializing...</p>
+      </div>
+
+      <!-- 3D Canvas Container -->
+      <div id="canvas-container"></div>
+
+      <!-- Back Button -->
+      <a href="index.html" id="back-btn">&larr; Back</a>
+
+      <!-- Info Panel -->
+      <div id="info-panel">
+        <h3 id="track-title">Track I</h3>
+        <p id="track-game">Animal Crossing</p>
+        <p id="track-archetype">Gradient Fog</p>
+
+        <div class="stem-meters" id="stem-meters">
+          <div class="stem-meter">
+            <label>Drums</label>
+            <div class="stem-meter-bar">
+              <div class="stem-meter-fill" id="meter-drums"></div>
+            </div>
+          </div>
+          <div class="stem-meter">
+            <label>Bass</label>
+            <div class="stem-meter-bar">
+              <div class="stem-meter-fill" id="meter-bass"></div>
+            </div>
+          </div>
+          <div class="stem-meter">
+            <label>Vocals</label>
+            <div class="stem-meter-bar">
+              <div class="stem-meter-fill" id="meter-vocals"></div>
+            </div>
+          </div>
+          <div class="stem-meter">
+            <label>Other</label>
+            <div class="stem-meter-bar">
+              <div class="stem-meter-fill" id="meter-other"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audio Control -->
+      <button id="audio-btn">Click to Start Audio</button>
+
+      <!-- Track Selector -->
+      <div id="track-selector">
+        <!-- Populated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Three.js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"
+      integrity="sha512-x6FRJakCj5sCpQhqU7w/FE7JIXYyqlyYLIhzLyqcW7f0aNWnw88HrK73M0eCgE+E1EB6ZVDAHKOz4WcFzFKEKQ=="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Tone.js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"
+      integrity="sha512-KZiKY8SidCO3H7EeIB5yXH3j+d9F3E3Z1C6kUYmpMzHsN3v0eDL3nVK8sLQbCYF0CfnG2aQVQvJ8xjwN5B1IKg=="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Config -->
+    <script src="js/config.js"></script>
+
+    <!-- 3D Core -->
+    <script src="js/3d/core/SceneManager.js"></script>
+    <script src="js/3d/core/EnvironmentData.js"></script>
+
+    <!-- OGOD System -->
+    <script src="js/3d/ogod/controls/FirstPersonController.js"></script>
+    <script src="js/3d/ogod/environments/EnvironmentBase.js"></script>
+    <script src="js/3d/ogod/environments/GradientFogEnv.js"></script>
+    <script src="js/3d/ogod/environments/StripeBarEnv.js"></script>
+    <script src="js/3d/ogod/environments/BokehGridEnv.js"></script>
+    <script src="js/3d/ogod/environments/HighContrastEnv.js"></script>
+    <script src="js/3d/ogod/environments/LayeredColorsEnv.js"></script>
+    <script src="js/3d/ogod/environments/GlitchDigitalEnv.js"></script>
+    <script src="js/3d/ogod/OGODSceneManager.js"></script>
+    <script src="js/3d/ogod/OGODAudioEngine.js"></script>
+
+    <script>
+      // Track metadata - all 29 OGOD tracks
+      const tracks = {
+        1: { title: 'I', game: 'Animal Crossing', archetype: 'Gradient Fog' },
+        2: { title: 'II', game: 'Castlevania', archetype: 'Layered Colors' },
+        3: { title: 'III', game: 'Chrono Trigger', archetype: 'Glitch Digital' },
+        4: { title: 'IV', game: 'Disco Train', archetype: 'Stripe Bar' },
+        5: { title: 'V', game: 'DKC2 Stickerbush', archetype: 'High Contrast' },
+        6: { title: 'VI', game: 'Earthworm Jim', archetype: 'Gradient Fog' },
+        7: { title: 'VII', game: 'Final Fantasy', archetype: 'Gradient Fog' },
+        8: { title: 'VIII', game: 'FFIV', archetype: 'Bokeh Grid' },
+        9: { title: 'IX', game: 'Golden Sun', archetype: 'Gradient Fog' },
+        10: { title: 'X', game: 'Goldeneye 007', archetype: 'Gradient Fog' },
+        11: { title: 'XI', game: 'Harvest Moon', archetype: 'Stripe Bar' },
+        12: { title: 'XII', game: 'Kid Icarus', archetype: 'Bokeh Grid' },
+        13: { title: 'XIII', game: 'Link to the Past', archetype: 'Bokeh Grid' },
+        14: { title: 'XIV', game: "Luigi's Mansion", archetype: 'Gradient Fog' },
+        15: { title: 'XV', game: 'Mario 64', archetype: 'Gradient Fog' },
+        16: { title: 'XVI', game: 'Megaman 8', archetype: 'Glitch Digital' },
+        17: { title: 'XVII', game: 'Metroid Prime', archetype: 'Gradient Fog' },
+        18: { title: 'XVIII', game: 'Metroid', archetype: 'Stripe Bar' },
+        19: { title: 'XIX', game: 'Okami', archetype: 'High Contrast' },
+        20: { title: 'XX', game: 'Pikmin', archetype: 'Stripe Bar' },
+        21: { title: 'XXI', game: 'Resident Evil 4', archetype: 'Glitch Digital' },
+        22: { title: 'XXII', game: 'Star Fox', archetype: 'Gradient Fog' },
+        23: { title: 'XXIII', game: 'Street Fighter', archetype: 'Bokeh Grid' },
+        24: { title: 'XXIV', game: 'Mario RPG', archetype: 'Gradient Fog' },
+        25: { title: 'XXV', game: 'Mario Sunshine', archetype: 'Gradient Fog' },
+        26: { title: 'XXVI', game: 'Melee', archetype: 'Bokeh Grid' },
+        27: { title: 'XXVII', game: 'Twilight Princess', archetype: 'Layered Colors' },
+        28: { title: 'XXVIII', game: 'Wind Waker', archetype: 'Gradient Fog' },
+        29: { title: 'XXIX', game: "Yoshi's Island", archetype: 'Bokeh Grid' },
+      };
+
+      // State
+      let currentExperience = null;
+      let currentTrack = 1;
+      let audioStarted = false;
+
+      // DOM elements
+      const loadingScreen = document.getElementById('loading-screen');
+      const loadingBar = document.getElementById('loading-bar');
+      const loadingText = document.getElementById('loading-text');
+      const container = document.getElementById('canvas-container');
+      const trackTitle = document.getElementById('track-title');
+      const trackGame = document.getElementById('track-game');
+      const trackArchetype = document.getElementById('track-archetype');
+      const trackSelector = document.getElementById('track-selector');
+      const audioBtn = document.getElementById('audio-btn');
+
+      // Create track selector buttons
+      function createTrackButtons() {
+        Object.keys(tracks).forEach((num) => {
+          const track = tracks[num];
+          const btn = document.createElement('button');
+          btn.className = 'track-btn' + (parseInt(num) === currentTrack ? ' active' : '');
+          btn.textContent = track.title;
+          btn.title = track.game;
+          btn.onclick = () => loadTrack(parseInt(num));
+          trackSelector.appendChild(btn);
+        });
+      }
+
+      // Update info panel
+      function updateInfoPanel(trackNum) {
+        const track = tracks[trackNum] || { title: `Track ${trackNum}`, game: 'Unknown', archetype: 'Gradient Fog' };
+        trackTitle.textContent = `Track ${track.title}`;
+        trackGame.textContent = track.game;
+        trackArchetype.textContent = track.archetype;
+      }
+
+      // Update loading progress
+      function updateLoading(progress, text) {
+        loadingBar.style.width = `${progress}%`;
+        loadingText.textContent = text;
+      }
+
+      // Load a track
+      async function loadTrack(trackNum) {
+        if (currentExperience) {
+          currentExperience.dispose();
+          currentExperience = null;
+        }
+
+        // Show loading
+        loadingScreen.classList.remove('hidden');
+        updateLoading(10, 'Loading environment...');
+
+        currentTrack = trackNum;
+        updateInfoPanel(trackNum);
+
+        // Update button states
+        document.querySelectorAll('.track-btn').forEach((btn, i) => {
+          const btnTrack = Object.keys(tracks)[i];
+          btn.classList.toggle('active', parseInt(btnTrack) === trackNum);
+        });
+
+        try {
+          updateLoading(30, 'Creating 3D scene...');
+
+          // Clear container
+          container.innerHTML = '';
+
+          // Create new experience
+          currentExperience = await createOGODExperience({
+            container,
+            trackNumber: trackNum,
+          });
+
+          updateLoading(70, 'Starting visuals...');
+
+          // Start scene (audio will be started on user interaction)
+          currentExperience.sceneManager.start();
+
+          updateLoading(100, 'Ready!');
+
+          // Hide loading screen
+          setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+          }, 500);
+
+          // Update audio button
+          audioBtn.textContent = audioStarted ? 'Audio Playing' : 'Click to Start Audio';
+          audioBtn.classList.toggle('playing', audioStarted);
+
+          // If audio was already started, start new track audio
+          if (audioStarted && currentExperience.audioEngine) {
+            currentExperience.audioEngine.start();
+          }
+
+        } catch (error) {
+          console.error('Failed to load track:', error);
+          updateLoading(100, 'Error loading track');
+          loadingText.style.color = '#ff0000';
+        }
+      }
+
+      // Start audio on user interaction
+      audioBtn.onclick = async () => {
+        if (!audioStarted) {
+          await Tone.start();
+          audioStarted = true;
+          audioBtn.textContent = 'Audio Playing';
+          audioBtn.classList.add('playing');
+
+          if (currentExperience?.audioEngine) {
+            currentExperience.audioEngine.start();
+          }
+        }
+      };
+
+      // Update stem meters
+      function updateStemMeters() {
+        if (currentExperience?.audioEngine) {
+          const volumes = currentExperience.audioEngine.getStemVolumes();
+          Object.keys(volumes).forEach((stem) => {
+            const meter = document.getElementById(`meter-${stem}`);
+            if (meter) {
+              meter.style.width = `${volumes[stem] * 100}%`;
+            }
+          });
+        }
+        requestAnimationFrame(updateStemMeters);
+      }
+
+      // Initialize
+      async function init() {
+        // Get track from URL hash
+        const hash = window.location.hash.slice(1);
+        if (hash && tracks[hash]) {
+          currentTrack = parseInt(hash);
+        }
+
+        createTrackButtons();
+        updateStemMeters();
+        await loadTrack(currentTrack);
+      }
+
+      // Handle URL hash changes
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.slice(1);
+        if (hash && tracks[hash] && parseInt(hash) !== currentTrack) {
+          loadTrack(parseInt(hash));
+        }
+      });
+
+      // Start when DOM ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    </script>
+  </body>
+</html>
