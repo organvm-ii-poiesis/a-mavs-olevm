@@ -62,12 +62,83 @@ class SceneManager {
     );
     this.camera.position.z = 5;
 
+    // Post-processing
+    this.composer = null;
+    this.bloomPass = null;
+    this.usePostProcessing = false;
+
     // Bind methods
     this._animate = this._animate.bind(this);
     this._onResize = this._onResize.bind(this);
 
     // Set up resize listener
     window.addEventListener('resize', this._onResize);
+  }
+
+  /**
+   * Enable post-processing with bloom effect
+   * @param {Object} options - Bloom options
+   * @param {number} [options.strength=0.5] - Bloom strength
+   * @param {number} [options.threshold=0.8] - Brightness threshold
+   * @param {number} [options.radius=0.5] - Bloom radius
+   */
+  enableBloom(options = {}) {
+    if (!THREE.EffectComposer || !THREE.RenderPass || !THREE.UnrealBloomPass) {
+      console.warn('SceneManager: Post-processing classes not available');
+      return;
+    }
+
+    const {
+      strength = 0.5,
+      threshold = 0.8,
+      radius = 0.5,
+    } = options;
+
+    // Create composer
+    this.composer = new THREE.EffectComposer(this.renderer);
+
+    // Add render pass
+    const renderPass = new THREE.RenderPass(this.scene, this.camera);
+    this.composer.addPass(renderPass);
+
+    // Add bloom pass
+    const resolution = new THREE.Vector2(this.width, this.height);
+    this.bloomPass = new THREE.UnrealBloomPass(resolution, strength, radius, threshold);
+    this.composer.addPass(this.bloomPass);
+
+    this.usePostProcessing = true;
+  }
+
+  /**
+   * Disable post-processing
+   */
+  disableBloom() {
+    if (this.composer) {
+      this.composer.dispose();
+      this.composer = null;
+      this.bloomPass = null;
+    }
+    this.usePostProcessing = false;
+  }
+
+  /**
+   * Set bloom parameters
+   * @param {Object} params
+   */
+  setBloomParams(params = {}) {
+    if (!this.bloomPass) {
+      return;
+    }
+
+    if (params.strength !== undefined) {
+      this.bloomPass.strength = params.strength;
+    }
+    if (params.threshold !== undefined) {
+      this.bloomPass.threshold = params.threshold;
+    }
+    if (params.radius !== undefined) {
+      this.bloomPass.radius = params.radius;
+    }
   }
 
   /**
@@ -160,8 +231,12 @@ class SceneManager {
       callback(deltaTime, elapsedTime);
     }
 
-    // Render the scene
-    this.renderer.render(this.scene, this.camera);
+    // Render the scene (with or without post-processing)
+    if (this.usePostProcessing && this.composer) {
+      this.composer.render();
+    } else {
+      this.renderer.render(this.scene, this.camera);
+    }
   }
 
   /**
@@ -176,6 +251,11 @@ class SceneManager {
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(this.width, this.height);
+
+    // Resize composer if using post-processing
+    if (this.composer) {
+      this.composer.setSize(this.width, this.height);
+    }
   }
 
   /**
@@ -184,6 +264,13 @@ class SceneManager {
   dispose() {
     this.stop();
     window.removeEventListener('resize', this._onResize);
+
+    // Dispose post-processing
+    if (this.composer) {
+      this.composer.dispose();
+      this.composer = null;
+      this.bloomPass = null;
+    }
 
     // Dispose of scene objects
     this.scene.traverse((object) => {

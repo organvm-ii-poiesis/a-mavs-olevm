@@ -130,7 +130,25 @@ class OGODSceneManager {
     // Set up color zones for audio
     this._setupColorZones();
 
+    // Enable post-processing if configured
+    this._setupPostProcessing();
+
     this.isInitialized = true;
+  }
+
+  /**
+   * Set up post-processing effects
+   * @private
+   */
+  _setupPostProcessing() {
+    const bloomConfig = this.config.postProcessing?.bloom;
+    if (bloomConfig?.enabled && this.sceneManager.enableBloom) {
+      this.sceneManager.enableBloom({
+        strength: bloomConfig.strength || 0.5,
+        threshold: bloomConfig.threshold || 0.8,
+        radius: bloomConfig.radius || 0.5,
+      });
+    }
   }
 
   /**

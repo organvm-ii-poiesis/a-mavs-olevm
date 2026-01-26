@@ -63,6 +63,30 @@
         pointer-events: none;
       }
 
+      #loading-artwork {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        filter: blur(2px);
+      }
+
+      #loading-artwork.visible {
+        opacity: 0.5;
+      }
+
+      #loading-overlay {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
       .loading-title {
         color: #00ffff;
         font-size: 3rem;
@@ -232,6 +256,24 @@
         transition: width 0.1s ease;
       }
 
+      #transition-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 500;
+        transition: opacity 0.3s ease;
+      }
+
+      #transition-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
       @media (max-width: 768px) {
         .loading-title {
           font-size: 2rem;
@@ -258,12 +300,18 @@
     <div id="container">
       <!-- Loading Screen -->
       <div id="loading-screen">
-        <h1 class="loading-title">OGOD</h1>
-        <div class="loading-bar-container">
-          <div class="loading-bar" id="loading-bar"></div>
+        <img id="loading-artwork" src="" alt="Track artwork" />
+        <div id="loading-overlay">
+          <h1 class="loading-title">OGOD</h1>
+          <div class="loading-bar-container">
+            <div class="loading-bar" id="loading-bar"></div>
+          </div>
+          <p class="loading-text" id="loading-text">Initializing...</p>
         </div>
-        <p class="loading-text" id="loading-text">Initializing...</p>
       </div>
+
+      <!-- Transition Overlay -->
+      <div id="transition-overlay"></div>
 
       <!-- 3D Canvas Container -->
       <div id="canvas-container"></div>
@@ -316,6 +364,239 @@
 
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js" crossorigin="anonymous"></script>
+
+    <!-- Three.js Post-processing (inline implementations) -->
+    <script>
+      // Minimal EffectComposer implementation for bloom
+      (function() {
+        // Simple render pass that renders a scene
+        THREE.RenderPass = class RenderPass {
+          constructor(scene, camera) {
+            this.scene = scene;
+            this.camera = camera;
+            this.enabled = true;
+            this.clear = true;
+            this.needsSwap = false;
+          }
+          render(renderer, writeBuffer, readBuffer) {
+            renderer.setRenderTarget(this.clear ? null : readBuffer);
+            renderer.render(this.scene, this.camera);
+          }
+        };
+
+        // Simple bloom pass using additive blending
+        THREE.UnrealBloomPass = class UnrealBloomPass {
+          constructor(resolution, strength, radius, threshold) {
+            this.resolution = resolution;
+            this.strength = strength;
+            this.radius = radius;
+            this.threshold = threshold;
+            this.enabled = true;
+            this.needsSwap = true;
+
+            // Create render targets for bloom
+            const params = {
+              minFilter: THREE.LinearFilter,
+              magFilter: THREE.LinearFilter,
+              format: THREE.RGBAFormat
+            };
+
+            this.renderTargetBright = new THREE.WebGLRenderTarget(resolution.x, resolution.y, params);
+            this.renderTargetBlur = new THREE.WebGLRenderTarget(resolution.x / 2, resolution.y / 2, params);
+
+            // Brightness threshold material
+            this.brightMaterial = new THREE.ShaderMaterial({
+              uniforms: {
+                tDiffuse: { value: null },
+                luminosityThreshold: { value: threshold },
+              },
+              vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                  vUv = uv;
+                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+              `,
+              fragmentShader: `
+                uniform sampler2D tDiffuse;
+                uniform float luminosityThreshold;
+                varying vec2 vUv;
+                void main() {
+                  vec4 texel = texture2D(tDiffuse, vUv);
+                  float luma = dot(texel.rgb, vec3(0.299, 0.587, 0.114));
+                  float brightness = max(0.0, luma - luminosityThreshold);
+                  gl_FragColor = texel * brightness * 2.0;
+                }
+              `
+            });
+
+            // Blur material
+            this.blurMaterial = new THREE.ShaderMaterial({
+              uniforms: {
+                tDiffuse: { value: null },
+                direction: { value: new THREE.Vector2(1, 0) },
+                resolution: { value: new THREE.Vector2(resolution.x, resolution.y) },
+              },
+              vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                  vUv = uv;
+                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+              `,
+              fragmentShader: `
+                uniform sampler2D tDiffuse;
+                uniform vec2 direction;
+                uniform vec2 resolution;
+                varying vec2 vUv;
+                void main() {
+                  vec2 texelSize = 1.0 / resolution;
+                  vec4 result = vec4(0.0);
+                  float weights[5];
+                  weights[0] = 0.227027;
+                  weights[1] = 0.1945946;
+                  weights[2] = 0.1216216;
+                  weights[3] = 0.054054;
+                  weights[4] = 0.016216;
+                  result += texture2D(tDiffuse, vUv) * weights[0];
+                  for (int i = 1; i < 5; i++) {
+                    vec2 offset = direction * texelSize * float(i) * 2.0;
+                    result += texture2D(tDiffuse, vUv + offset) * weights[i];
+                    result += texture2D(tDiffuse, vUv - offset) * weights[i];
+                  }
+                  gl_FragColor = result;
+                }
+              `
+            });
+
+            // Composite material
+            this.compositeMaterial = new THREE.ShaderMaterial({
+              uniforms: {
+                tDiffuse: { value: null },
+                tBloom: { value: null },
+                bloomStrength: { value: strength },
+              },
+              vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                  vUv = uv;
+                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+              `,
+              fragmentShader: `
+                uniform sampler2D tDiffuse;
+                uniform sampler2D tBloom;
+                uniform float bloomStrength;
+                varying vec2 vUv;
+                void main() {
+                  vec4 base = texture2D(tDiffuse, vUv);
+                  vec4 bloom = texture2D(tBloom, vUv);
+                  gl_FragColor = base + bloom * bloomStrength;
+                }
+              `
+            });
+
+            // Fullscreen quad
+            this.fsQuad = new THREE.Mesh(
+              new THREE.PlaneGeometry(2, 2),
+              this.brightMaterial
+            );
+            this.fsScene = new THREE.Scene();
+            this.fsScene.add(this.fsQuad);
+            this.fsCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+          }
+
+          render(renderer, writeBuffer, readBuffer) {
+            // Render bright areas
+            this.brightMaterial.uniforms.tDiffuse.value = readBuffer.texture;
+            this.fsQuad.material = this.brightMaterial;
+            renderer.setRenderTarget(this.renderTargetBright);
+            renderer.render(this.fsScene, this.fsCamera);
+
+            // Blur horizontally
+            this.blurMaterial.uniforms.tDiffuse.value = this.renderTargetBright.texture;
+            this.blurMaterial.uniforms.direction.value.set(1, 0);
+            this.fsQuad.material = this.blurMaterial;
+            renderer.setRenderTarget(this.renderTargetBlur);
+            renderer.render(this.fsScene, this.fsCamera);
+
+            // Blur vertically
+            this.blurMaterial.uniforms.tDiffuse.value = this.renderTargetBlur.texture;
+            this.blurMaterial.uniforms.direction.value.set(0, 1);
+            renderer.setRenderTarget(this.renderTargetBright);
+            renderer.render(this.fsScene, this.fsCamera);
+
+            // Composite
+            this.compositeMaterial.uniforms.tDiffuse.value = readBuffer.texture;
+            this.compositeMaterial.uniforms.tBloom.value = this.renderTargetBright.texture;
+            this.compositeMaterial.uniforms.bloomStrength.value = this.strength;
+            this.fsQuad.material = this.compositeMaterial;
+            renderer.setRenderTarget(writeBuffer);
+            renderer.render(this.fsScene, this.fsCamera);
+          }
+
+          dispose() {
+            this.renderTargetBright.dispose();
+            this.renderTargetBlur.dispose();
+            this.brightMaterial.dispose();
+            this.blurMaterial.dispose();
+            this.compositeMaterial.dispose();
+          }
+        };
+
+        // Effect composer
+        THREE.EffectComposer = class EffectComposer {
+          constructor(renderer) {
+            this.renderer = renderer;
+            this.passes = [];
+
+            const size = renderer.getSize(new THREE.Vector2());
+            const params = {
+              minFilter: THREE.LinearFilter,
+              magFilter: THREE.LinearFilter,
+              format: THREE.RGBAFormat
+            };
+
+            this.renderTarget1 = new THREE.WebGLRenderTarget(size.x, size.y, params);
+            this.renderTarget2 = new THREE.WebGLRenderTarget(size.x, size.y, params);
+            this.writeBuffer = this.renderTarget1;
+            this.readBuffer = this.renderTarget2;
+          }
+
+          addPass(pass) {
+            this.passes.push(pass);
+          }
+
+          render() {
+            for (let i = 0; i < this.passes.length; i++) {
+              const pass = this.passes[i];
+              if (!pass.enabled) continue;
+
+              pass.render(this.renderer, this.writeBuffer, this.readBuffer);
+
+              if (pass.needsSwap) {
+                const tmp = this.readBuffer;
+                this.readBuffer = this.writeBuffer;
+                this.writeBuffer = tmp;
+              }
+            }
+
+            // Final render to screen
+            this.renderer.setRenderTarget(null);
+          }
+
+          setSize(width, height) {
+            this.renderTarget1.setSize(width, height);
+            this.renderTarget2.setSize(width, height);
+          }
+
+          dispose() {
+            this.renderTarget1.dispose();
+            this.renderTarget2.dispose();
+          }
+        };
+      })();
+    </script>
 
     <!-- Tone.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js" crossorigin="anonymous"></script>
@@ -377,17 +658,53 @@
       let currentExperience = null;
       let currentTrack = 1;
       let audioStarted = false;
+      let isTransitioning = false;
 
       // DOM elements
       const loadingScreen = document.getElementById('loading-screen');
       const loadingBar = document.getElementById('loading-bar');
       const loadingText = document.getElementById('loading-text');
+      const loadingArtwork = document.getElementById('loading-artwork');
       const container = document.getElementById('canvas-container');
       const trackTitle = document.getElementById('track-title');
       const trackGame = document.getElementById('track-game');
       const trackArchetype = document.getElementById('track-archetype');
       const trackSelector = document.getElementById('track-selector');
       const audioBtn = document.getElementById('audio-btn');
+      const transitionOverlay = document.getElementById('transition-overlay');
+
+      // Artwork paths from config
+      const artworkPaths = {
+        1: 'img/photos/artwork/ogod/ogod1.jpg',
+        2: 'img/photos/artwork/ogod/ogod2.jpg',
+        3: 'img/photos/artwork/ogod/ogod3.jpg',
+        4: 'img/photos/artwork/ogod/ogod4.jpg',
+        5: 'img/photos/artwork/ogod/ogod5.png',
+        6: 'img/photos/artwork/ogod/ogod6.jpg',
+        7: 'img/photos/artwork/ogod/ogod7.jpg',
+        8: 'img/photos/artwork/ogod/ogod8.jpg',
+        9: 'img/photos/artwork/ogod/ogod9.jpg',
+        10: 'img/photos/artwork/ogod/ogod10.jpg',
+        11: 'img/photos/artwork/ogod/ogod11.jpg',
+        12: 'img/photos/artwork/ogod/ogod12.jpg',
+        13: 'img/photos/artwork/ogod/ogod13.jpg',
+        14: 'img/photos/artwork/ogod/ogod14.jpg',
+        15: 'img/photos/artwork/ogod/ogod15.png',
+        16: 'img/photos/artwork/ogod/ogod16.jpg',
+        17: null, // Missing
+        18: 'img/photos/artwork/ogod/ogod18.png',
+        19: 'img/photos/artwork/ogod/ogod19.jpg',
+        20: 'img/photos/artwork/ogod/ogod20.jpg',
+        21: 'img/photos/artwork/ogod/ogod21.jpg',
+        22: 'img/photos/artwork/ogod/ogod22.jpg',
+        23: 'img/photos/artwork/ogod/ogod23.jpg',
+        24: 'img/photos/artwork/ogod/ogod24.jpg',
+        25: 'img/photos/artwork/ogod/ogod25.jpg',
+        26: 'img/photos/artwork/ogod/ogod26.jpg',
+        27: 'img/photos/artwork/ogod/ogod27.jpg',
+        28: 'img/photos/artwork/ogod/ogod28.png',
+        29: 'img/photos/artwork/ogod/ogod29.jpg',
+      };
 
       // Create track selector buttons
       function createTrackButtons() {
@@ -416,15 +733,43 @@
         loadingText.textContent = text;
       }
 
-      // Load a track
+      // Helper function for async delay
+      function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
+      // Load a track with smooth transition
       async function loadTrack(trackNum) {
-        if (currentExperience) {
+        if (isTransitioning) return;
+
+        const isInitialLoad = !currentExperience;
+
+        // If switching tracks, use smooth transition overlay
+        if (!isInitialLoad) {
+          isTransitioning = true;
+          transitionOverlay.classList.add('active');
+          await delay(300); // Wait for fade out
+
+          // Dispose old experience
           currentExperience.dispose();
           currentExperience = null;
         }
 
-        // Show loading
+        // Show loading with artwork background
         loadingScreen.classList.remove('hidden');
+        updateLoading(5, 'Loading artwork...');
+
+        // Show artwork as loading background
+        const artworkPath = artworkPaths[trackNum];
+        if (artworkPath) {
+          loadingArtwork.src = artworkPath;
+          loadingArtwork.onload = () => {
+            loadingArtwork.classList.add('visible');
+          };
+        } else {
+          loadingArtwork.classList.remove('visible');
+        }
+
         updateLoading(10, 'Loading environment...');
 
         currentTrack = trackNum;
@@ -455,10 +800,16 @@
 
           updateLoading(100, 'Ready!');
 
-          // Hide loading screen
-          setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-          }, 500);
+          // Hide loading screen with fade
+          await delay(300);
+          loadingArtwork.classList.remove('visible');
+          loadingScreen.classList.add('hidden');
+
+          // Remove transition overlay
+          if (!isInitialLoad) {
+            transitionOverlay.classList.remove('active');
+            isTransitioning = false;
+          }
 
           // Update audio button
           audioBtn.textContent = audioStarted ? 'Audio Playing' : 'Click to Start Audio';
@@ -473,6 +824,12 @@
           console.error('Failed to load track:', error);
           updateLoading(100, 'Error loading track');
           loadingText.style.color = '#ff0000';
+
+          // Reset transition state on error
+          if (!isInitialLoad) {
+            transitionOverlay.classList.remove('active');
+            isTransitioning = false;
+          }
         }
       }
 

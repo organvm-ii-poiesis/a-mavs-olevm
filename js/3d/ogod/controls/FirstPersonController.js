@@ -55,6 +55,13 @@ class FirstPersonController {
     this.direction = new THREE.Vector3();
     this.dampingFactor = 0.1;
 
+    // Gyroscope/device orientation state
+    this.useGyroscope = false;
+    this.gyroscopeEnabled = false;
+    this.deviceOrientation = { alpha: 0, beta: 0, gamma: 0 };
+    this.initialOrientation = null;
+    this.gyroscopeSensitivity = 0.5;
+
     // Mobile joystick state
     this.joystickActive = false;
     this.joystickDirection = new THREE.Vector2();
@@ -164,6 +171,40 @@ class FirstPersonController {
       this.joystickDirection.set(0, 0);
       this.joystickKnob.style.transform = 'translate(0, 0)';
     });
+
+    // Create gyroscope toggle button
+    this.gyroButton = document.createElement('button');
+    this.gyroButton.className = 'ogod-gyro-button';
+    this.gyroButton.innerHTML = '&#x1F3AE;'; // Gamepad emoji as icon
+    this.gyroButton.setAttribute('aria-label', 'Toggle gyroscope controls');
+    this.gyroButton.style.cssText = `
+      position: fixed;
+      right: 30px;
+      bottom: 100px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    `;
+
+    this.gyroButton.addEventListener('click', async () => {
+      const enabled = await this.toggleGyroscope();
+      this.gyroButton.style.background = enabled
+        ? 'rgba(0, 255, 255, 0.4)'
+        : 'rgba(255, 255, 255, 0.2)';
+      this.gyroButton.style.borderColor = enabled
+        ? 'rgba(0, 255, 255, 0.8)'
+        : 'rgba(255, 255, 255, 0.4)';
+    });
   }
 
   /**
@@ -201,6 +242,9 @@ class FirstPersonController {
       if (this.joystickContainer) {
         document.body.appendChild(this.joystickContainer);
       }
+      if (this.gyroButton) {
+        document.body.appendChild(this.gyroButton);
+      }
     }
 
     // Show instructions
@@ -225,6 +269,9 @@ class FirstPersonController {
 
     if (this.joystickContainer?.parentElement) {
       this.joystickContainer.parentElement.removeChild(this.joystickContainer);
+    }
+    if (this.gyroButton?.parentElement) {
+      this.gyroButton.parentElement.removeChild(this.gyroButton);
     }
 
     this._hideInstructions();
@@ -262,7 +309,8 @@ class FirstPersonController {
     if (this._isTouchDevice()) {
       this.instructionsElement.innerHTML = `
         <p style="margin: 0 0 5px;">Drag to look around</p>
-        <p style="margin: 0;">Use joystick to move</p>
+        <p style="margin: 0 0 5px;">Use joystick to move</p>
+        <p style="margin: 0; opacity: 0.7;">Tap 🎮 for gyroscope</p>
       `;
     } else {
       this.instructionsElement.innerHTML = `
@@ -467,13 +515,105 @@ class FirstPersonController {
   }
 
   /**
-   * Handle device orientation
+   * Handle device orientation (gyroscope)
    * @private
    * @param {DeviceOrientationEvent} event
    */
   _onDeviceOrientation(event) {
-    // Optional: Use device orientation for looking around
-    // This can be enabled for a more immersive mobile experience
+    if (!this.gyroscopeEnabled || !this.useGyroscope) {
+      return;
+    }
+
+    const { alpha, beta, gamma } = event;
+
+    // Ignore if no data
+    if (alpha === null || beta === null || gamma === null) {
+      return;
+    }
+
+    // Store initial orientation on first reading
+    if (!this.initialOrientation) {
+      this.initialOrientation = { alpha, beta, gamma };
+      return;
+    }
+
+    // Calculate relative orientation from initial position
+    const deltaAlpha = alpha - this.initialOrientation.alpha;
+    const deltaBeta = beta - this.initialOrientation.beta;
+    // Note: deltaGamma could be used for roll/tilt in landscape orientation
+
+    // Convert to radians and apply sensitivity
+    const yaw = THREE.MathUtils.degToRad(deltaAlpha) * this.gyroscopeSensitivity;
+    const pitch = THREE.MathUtils.degToRad(deltaBeta - 90) * this.gyroscopeSensitivity;
+
+    // Apply rotation - blend with current euler
+    this.euler.setFromQuaternion(this.camera.quaternion);
+
+    // Apply yaw (horizontal rotation) - use gamma for landscape orientation
+    this.euler.y = -yaw;
+
+    // Apply pitch (vertical rotation) with clamping
+    this.euler.x = THREE.MathUtils.clamp(
+      -pitch,
+      this.minPolarAngle,
+      this.maxPolarAngle
+    );
+
+    this.camera.quaternion.setFromEuler(this.euler);
+  }
+
+  /**
+   * Enable gyroscope controls (requires user gesture)
+   * @returns {Promise<boolean>} - Whether gyroscope was enabled
+   */
+  async enableGyroscope() {
+    if (!this._isTouchDevice()) {
+      return false;
+    }
+
+    // Check if DeviceOrientationEvent requires permission (iOS 13+)
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      try {
+        const permission = await DeviceOrientationEvent.requestPermission();
+        if (permission === 'granted') {
+          this.gyroscopeEnabled = true;
+          this.useGyroscope = true;
+          this.initialOrientation = null; // Reset initial orientation
+          return true;
+        }
+        return false;
+      } catch (error) {
+        console.warn('Gyroscope permission denied:', error);
+        return false;
+      }
+    } else {
+      // Android and older iOS don't require permission
+      this.gyroscopeEnabled = true;
+      this.useGyroscope = true;
+      this.initialOrientation = null;
+      return true;
+    }
+  }
+
+  /**
+   * Disable gyroscope controls
+   */
+  disableGyroscope() {
+    this.useGyroscope = false;
+    this.initialOrientation = null;
+  }
+
+  /**
+   * Toggle gyroscope controls
+   * @returns {Promise<boolean>} - Whether gyroscope is now enabled
+   */
+  async toggleGyroscope() {
+    if (this.useGyroscope) {
+      this.disableGyroscope();
+      return false;
+    } else {
+      return await this.enableGyroscope();
+    }
   }
 
   /**
