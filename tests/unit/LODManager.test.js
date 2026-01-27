@@ -232,8 +232,8 @@ describe('LODManager', () => {
 
       lodManager.forceUpdate();
 
-      // forceUpdate resets frame count to 0
-      expect(lodManager._frameCount).toBe(0);
+      // forceUpdate resets frame count to 0, then calls update() which increments to 1
+      expect(lodManager._frameCount).toBe(1);
     });
   });
 

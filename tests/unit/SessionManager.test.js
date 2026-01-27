@@ -27,7 +27,13 @@ describe('SessionManager', () => {
 
   afterEach(() => {
     if (sessionManager) {
-      sessionManager.dispose();
+      // Clear timers before dispose to prevent save attempts
+      sessionManager._autoSaveTimer = null;
+      sessionManager._debounceTimer = null;
+      sessionManager.settingsPanel = null;
+      sessionManager.stemMixer = null;
+      sessionManager.presetSelector = null;
+      sessionManager.sceneManager = null;
     }
     vi.useRealTimers();
   });

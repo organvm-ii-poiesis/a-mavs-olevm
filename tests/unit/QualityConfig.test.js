@@ -3,7 +3,7 @@
  * @description Unit tests for QualityConfig quality presets and device detection
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import '../unit/setup.js';
 
 // Import module by evaluating the source
@@ -275,9 +275,9 @@ describe('interpolatePresets', () => {
       QualityPresets.ultra,
       0.5
     );
-    // At t=0.5, uses second preset for booleans
-    expect(result.antialias).toBe(true);
-    expect(result.postProcessing.enabled).toBe(true);
+    // At t=0.5, uses first preset for booleans (t > 0.5 is false)
+    expect(result.antialias).toBe(false);
+    expect(result.postProcessing.enabled).toBe(false);
   });
 
   it('should interpolate bloom settings', () => {

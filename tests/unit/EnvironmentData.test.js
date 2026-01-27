@@ -124,8 +124,10 @@ class EnvironmentData {
 }
 `;
 
-// Execute the class definition
-eval(EnvironmentDataCode);
+// Execute the class definition - use indirect eval for global scope
+// The class is assigned to globalThis to make it accessible
+(0, eval)('globalThis.EnvironmentData = ' + EnvironmentDataCode.trim().replace(/^class EnvironmentData/, '(class EnvironmentData') + ')');
+const EnvironmentData = globalThis.EnvironmentData;
 
 describe('EnvironmentData', () => {
   let envData;

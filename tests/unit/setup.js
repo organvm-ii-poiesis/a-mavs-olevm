@@ -32,13 +32,23 @@ const createMockVector3 = (x = 0, y = 0, z = 0) => {
   vec.normalize = vi.fn().mockReturnValue(vec);
   vec.crossVectors = vi.fn().mockReturnValue(vec);
   vec.lerp = vi.fn().mockReturnValue(vec);
-  vec.length = vi.fn().mockReturnValue(0);
-  vec.lengthSq = vi.fn().mockReturnValue(0);
+  vec.length = vi.fn().mockImplementation(() => {
+    return Math.sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+  });
+  vec.lengthSq = vi.fn().mockImplementation(() => {
+    return vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;
+  });
   vec.set = vi.fn().mockImplementation((newX, newY, newZ) => {
     vec.x = newX;
     vec.y = newY;
     vec.z = newZ;
     return vec;
+  });
+  vec.distanceTo = vi.fn().mockImplementation(other => {
+    const dx = vec.x - (other?.x || 0);
+    const dy = vec.y - (other?.y || 0);
+    const dz = vec.z - (other?.z || 0);
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
   });
   return vec;
 };
@@ -55,12 +65,39 @@ const mockVector2 = vi.fn().mockImplementation((x = 0, y = 0) => {
   return vec;
 });
 
-const mockColor = vi.fn().mockImplementation(hex => ({
-  r: 1,
-  g: 1,
-  b: 1,
-  setHex: vi.fn().mockReturnThis(),
-}));
+const mockColor = vi.fn().mockImplementation(function (colorInput) {
+  let r = 1,
+    g = 1,
+    b = 1;
+
+  // Check for 3 numeric args first (r, g, b)
+  if (arguments.length === 3) {
+    r = arguments[0];
+    g = arguments[1];
+    b = arguments[2];
+  } else if (typeof colorInput === 'string' && colorInput.startsWith('#')) {
+    // Parse hex string
+    const hex = parseInt(colorInput.slice(1), 16);
+    r = ((hex >> 16) & 255) / 255;
+    g = ((hex >> 8) & 255) / 255;
+    b = (hex & 255) / 255;
+  } else if (typeof colorInput === 'number') {
+    // Parse hex number
+    r = ((colorInput >> 16) & 255) / 255;
+    g = ((colorInput >> 8) & 255) / 255;
+    b = (colorInput & 255) / 255;
+  }
+
+  const color = { r, g, b };
+  color.setHex = vi.fn().mockImplementation(hex => {
+    color.r = ((hex >> 16) & 255) / 255;
+    color.g = ((hex >> 8) & 255) / 255;
+    color.b = (hex & 255) / 255;
+    return color;
+  });
+  color.clone = vi.fn().mockImplementation(() => mockColor(color.r, color.g, color.b));
+  return color;
+});
 
 const mockEuler = vi
   .fn()
@@ -104,25 +141,27 @@ const mockScene = vi.fn().mockImplementation(() => ({
   fog: null,
 }));
 
-const mockPerspectiveCamera = vi
-  .fn()
-  .mockImplementation((fov, aspect, near, far) => ({
+const mockPerspectiveCamera = vi.fn().mockImplementation((fov, aspect, near, far) => {
+  const position = createMockVector3(0, 0, 5);
+  return {
     fov,
     aspect,
     near,
     far,
-    position: {
-      x: 0,
-      y: 0,
-      z: 5,
-      set: vi.fn(),
-      add: vi.fn(),
-      clone: vi.fn().mockReturnThis(),
-    },
+    position,
     quaternion: { setFromEuler: vi.fn() },
     updateProjectionMatrix: vi.fn(),
     getWorldDirection: vi.fn().mockImplementation(target => target),
-  }));
+    getWorldPosition: vi.fn().mockImplementation(target => {
+      if (target) {
+        target.x = position.x;
+        target.y = position.y;
+        target.z = position.z;
+      }
+      return target;
+    }),
+  };
+});
 
 const mockBufferGeometry = vi.fn().mockImplementation(() => ({
   setAttribute: vi.fn(),
@@ -181,9 +220,11 @@ const mockCylinderGeometry = vi.fn().mockImplementation(() => ({
 }));
 
 const mockPoints = vi.fn().mockImplementation((geometry, material) => ({
-  geometry,
-  material,
+  geometry: geometry || { dispose: vi.fn(), setAttribute: vi.fn() },
+  material: material || { dispose: vi.fn(), uniforms: {} },
   position: { x: 0, y: 0, z: 0, set: vi.fn() },
+  visible: true,
+  name: '',
 }));
 
 const mockMaterial = {
@@ -245,10 +286,21 @@ global.THREE = {
   MeshBasicMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
   MeshStandardMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
   PointsMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
-  ShaderMaterial: vi.fn().mockImplementation(options => ({
-    ...mockMaterial,
-    uniforms: options?.uniforms || {},
-  })),
+  ShaderMaterial: vi.fn().mockImplementation(options => {
+    // Deep copy uniforms with proper value structure
+    const uniforms = {};
+    if (options?.uniforms) {
+      for (const [key, val] of Object.entries(options.uniforms)) {
+        uniforms[key] = { value: val?.value ?? 0 };
+      }
+    }
+    return {
+      dispose: vi.fn(),
+      uniforms,
+      vertexShader: options?.vertexShader || '',
+      fragmentShader: options?.fragmentShader || '',
+    };
+  }),
   AmbientLight: vi.fn().mockImplementation(() => ({})),
   DirectionalLight: vi
     .fn()
@@ -394,6 +446,14 @@ const localStorageMock = {
   clear: vi.fn(),
 };
 global.localStorage = localStorageMock;
+
+// Mock window.devicePixelRatio
+global.window = global.window || {};
+Object.defineProperty(global.window, 'devicePixelRatio', {
+  value: 1,
+  writable: true,
+  configurable: true,
+});
 
 // Mock requestAnimationFrame
 global.requestAnimationFrame = vi.fn(cb => setTimeout(cb, 16));
