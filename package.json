@@ -28,7 +28,7 @@
     "jsdom": "^24.0.0",
     "lint-staged": "^15.0.0",
     "prettier": "^3.3.3",
-    "vitest": "^2.0.0"
+    "vitest": "^4.0.18"
   },
   "scripts": {
     "dev": "browser-sync start --server --files '*.html, css/*.css, js/*.js' --port 3000",
