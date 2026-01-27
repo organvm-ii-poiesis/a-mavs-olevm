@@ -139,6 +139,45 @@ const mockMesh = vi.fn().mockImplementation((geometry, material) => ({
   material,
   position: { x: 0, y: 0, z: 0, set: vi.fn() },
   rotation: { x: 0, y: 0, z: 0 },
+  visible: true,
+  name: '',
+  userData: {},
+  add: vi.fn(),
+}));
+
+const mockGroup = vi.fn().mockImplementation(() => ({
+  add: vi.fn(),
+  remove: vi.fn(),
+  position: { x: 0, y: 0, z: 0, set: vi.fn(), copy: vi.fn() },
+  rotation: { x: 0, y: 0, z: 0 },
+  scale: { x: 1, y: 1, z: 1, set: vi.fn() },
+  visible: true,
+  name: '',
+  userData: {},
+  getWorldPosition: vi.fn().mockImplementation(target => target),
+}));
+
+const mockLine = vi.fn().mockImplementation((geometry, material) => ({
+  geometry,
+  material,
+  position: { x: 0, y: 0, z: 0, set: vi.fn() },
+  scale: { x: 1, y: 1, z: 1, z: 1 },
+  visible: true,
+  userData: {},
+}));
+
+const mockRingGeometry = vi.fn().mockImplementation(() => ({
+  dispose: vi.fn(),
+  rotateX: vi.fn().mockReturnThis(),
+}));
+
+const mockCircleGeometry = vi.fn().mockImplementation(() => ({
+  dispose: vi.fn(),
+  rotateX: vi.fn().mockReturnThis(),
+}));
+
+const mockCylinderGeometry = vi.fn().mockImplementation(() => ({
+  dispose: vi.fn(),
 }));
 
 const mockPoints = vi.fn().mockImplementation((geometry, material) => ({
@@ -176,10 +215,33 @@ global.THREE = {
   BufferGeometry: mockBufferGeometry,
   BufferAttribute: mockBufferAttribute,
   Mesh: mockMesh,
+  Group: mockGroup,
+  Line: mockLine,
   Points: mockPoints,
   SphereGeometry: vi.fn().mockImplementation(() => ({ dispose: vi.fn() })),
   PlaneGeometry: vi.fn().mockImplementation(() => ({ dispose: vi.fn() })),
   BoxGeometry: vi.fn().mockImplementation(() => ({ dispose: vi.fn() })),
+  RingGeometry: mockRingGeometry,
+  CircleGeometry: mockCircleGeometry,
+  CylinderGeometry: mockCylinderGeometry,
+  IcosahedronGeometry: vi.fn().mockImplementation(() => ({ dispose: vi.fn() })),
+  Float32BufferAttribute: vi.fn().mockImplementation((array, itemSize) => ({
+    array,
+    itemSize,
+    setXYZ: vi.fn(),
+    needsUpdate: false,
+  })),
+  LineBasicMaterial: vi.fn().mockImplementation(() => ({
+    ...mockMaterial,
+    vertexColors: true,
+  })),
+  Raycaster: vi.fn().mockImplementation(() => ({
+    ray: {
+      origin: { setFromMatrixPosition: vi.fn() },
+      direction: { set: vi.fn().mockReturnThis(), applyMatrix4: vi.fn() },
+    },
+    intersectObjects: vi.fn().mockReturnValue([]),
+  })),
   MeshBasicMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
   MeshStandardMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
   PointsMaterial: vi.fn().mockImplementation(() => ({ ...mockMaterial })),
@@ -347,6 +409,17 @@ global.navigator = {
   },
   maxTouchPoints: 0,
   vibrate: vi.fn(),
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/91.0.4472.124',
+  deviceMemory: 8,
+  xr: {
+    isSessionSupported: vi.fn().mockResolvedValue(true),
+    requestSession: vi.fn().mockResolvedValue({
+      requestReferenceSpace: vi.fn().mockResolvedValue({}),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      end: vi.fn().mockResolvedValue(undefined),
+    }),
+  },
 };
 
 // Mock fetch
