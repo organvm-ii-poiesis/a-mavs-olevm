@@ -8,10 +8,29 @@
 import { test, expect } from '@playwright/test';
 
 /**
+ * Check if WebGL is available and working
+ * @param {import('@playwright/test').Page} page
+ * @returns {Promise<boolean>}
+ */
+async function isWebGLAvailable(page) {
+  return page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('webgl2');
+    return gl !== null;
+  });
+}
+
+/**
  * Helper to wait for the 3D scene to be ready
  * @param {import('@playwright/test').Page} page
  */
 async function waitForSceneReady(page) {
+  // First check if WebGL is available
+  const hasWebGL = await isWebGLAvailable(page);
+  if (!hasWebGL) {
+    throw new Error('WebGL not available in this browser environment');
+  }
+
   // Wait for loading screen to disappear
   await page
     .waitForSelector('#loading-screen.hidden', { timeout: 15000 })
@@ -62,6 +81,21 @@ function filterCriticalErrors(errors) {
 }
 
 test.describe('OGOD 3D Experience', () => {
+  // Skip 3D tests in CI - requires GPU and proper audio context
+  // These tests run locally where WebGL and Tone.js work properly
+  test.skip(
+    !!process.env.CI,
+    'WebGL/audio tests skipped in CI - requires GPU and audio context'
+  );
+
+  test.beforeEach(async ({ page }) => {
+    const hasWebGL = await page.evaluate(() => {
+      const canvas = document.createElement('canvas');
+      return !!(canvas.getContext('webgl') || canvas.getContext('webgl2'));
+    });
+    test.skip(!hasWebGL, 'WebGL not available in this browser environment');
+  });
+
   test.describe('Scene Loading', () => {
     test('loads without critical JavaScript errors', async ({ page }) => {
       const errors = setupErrorCollection(page);
@@ -414,10 +448,24 @@ test.describe('OGOD 3D Experience', () => {
 });
 
 test.describe('OGOD 3D Mobile', () => {
+  // Skip 3D tests in CI - requires GPU and proper audio context
+  test.skip(
+    !!process.env.CI,
+    'WebGL/audio tests skipped in CI - requires GPU and audio context'
+  );
+
   test.use({
     viewport: { width: 375, height: 667 },
     isMobile: true,
     hasTouch: true,
+  });
+
+  test.beforeEach(async ({ page }) => {
+    const hasWebGL = await page.evaluate(() => {
+      const canvas = document.createElement('canvas');
+      return !!(canvas.getContext('webgl') || canvas.getContext('webgl2'));
+    });
+    test.skip(!hasWebGL, 'WebGL not available in this browser environment');
   });
 
   test('loads on mobile viewport', async ({ page }) => {
@@ -489,6 +537,20 @@ test.describe('OGOD 3D Mobile', () => {
 });
 
 test.describe('OGOD 3D Settings Panel', () => {
+  // Skip 3D tests in CI - requires GPU and proper audio context
+  test.skip(
+    !!process.env.CI,
+    'WebGL/audio tests skipped in CI - requires GPU and audio context'
+  );
+
+  test.beforeEach(async ({ page }) => {
+    const hasWebGL = await page.evaluate(() => {
+      const canvas = document.createElement('canvas');
+      return !!(canvas.getContext('webgl') || canvas.getContext('webgl2'));
+    });
+    test.skip(!hasWebGL, 'WebGL not available in this browser environment');
+  });
+
   // Skip these tests if settings panel doesn't exist yet
   test.skip('settings panel opens on button click', async ({ page }) => {
     await page.goto('http://localhost:3000/ogod-3d.html');
