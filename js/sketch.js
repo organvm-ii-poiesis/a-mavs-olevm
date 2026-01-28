@@ -6,8 +6,15 @@ let isSketchTransitioning = false;
 const footerHeight = $('footer').css('height').replace('px', '');
 
 /**
+ * Flag to track if current sketch uses WebGL mode
+ * @type {boolean}
+ */
+let isWebGLSketch = false;
+
+/**
  * Safely removes the current p5 instance
  * Uses a flag to prevent race conditions during canvas transitions
+ * Handles WebGL context cleanup for proper resource release
  * @returns {Promise<void>}
  */
 function safeRemoveP5() {
@@ -15,11 +22,21 @@ function safeRemoveP5() {
     if (myp5 && !isSketchTransitioning) {
       isSketchTransitioning = true;
       try {
+        // Force WebGL context loss for clean handoff
+        // This prevents memory leaks and context limit issues
+        if (isWebGLSketch && myp5._renderer && myp5._renderer.GL) {
+          const gl = myp5._renderer.GL;
+          const ext = gl.getExtension('WEBGL_lose_context');
+          if (ext) {
+            ext.loseContext();
+          }
+        }
         myp5.remove();
       } catch (err) {
         console.warn('P5.js removal warning:', err.message);
       }
       myp5 = undefined;
+      isWebGLSketch = false;
       // Small delay to ensure DOM cleanup completes
       setTimeout(() => {
         isSketchTransitioning = false;
@@ -35,8 +52,9 @@ function safeRemoveP5() {
  * Switches to a new p5 canvas with safe cleanup
  * @param {Function} canvasFunc - The p5 sketch function
  * @param {string} canvasId - Identifier for the canvas type
+ * @param {boolean} [useWebGL=false] - Whether the sketch uses WebGL mode
  */
-function switchCanvas(canvasFunc, canvasId) {
+function switchCanvas(canvasFunc, canvasId, useWebGL = false) {
   if (isSketchTransitioning) {
     return;
   }
@@ -49,6 +67,7 @@ function switchCanvas(canvasFunc, canvasId) {
     try {
       myp5 = new p5(canvasFunc, 'menuPageCanvasWrapper');
       myp5.id = canvasId;
+      isWebGLSketch = useWebGL;
     } catch (err) {
       console.error('P5.js canvas creation error:', err.message);
     }
@@ -57,6 +76,7 @@ function switchCanvas(canvasFunc, canvasId) {
       try {
         myp5 = new p5(canvasFunc, 'menuPageCanvasWrapper');
         myp5.id = canvasId;
+        isWebGLSketch = useWebGL;
       } catch (err) {
         console.error('P5.js canvas creation error:', err.message);
       }
@@ -66,15 +86,25 @@ function switchCanvas(canvasFunc, canvasId) {
 
 /**
  * Cleanup all p5 resources - call on page exit
+ * Properly releases WebGL context if applicable
  */
 function cleanupSketch() {
   if (myp5) {
     try {
+      // Force WebGL context loss for clean resource release
+      if (isWebGLSketch && myp5._renderer && myp5._renderer.GL) {
+        const gl = myp5._renderer.GL;
+        const ext = gl.getExtension('WEBGL_lose_context');
+        if (ext) {
+          ext.loseContext();
+        }
+      }
       myp5.remove();
     } catch (err) {
       console.warn('P5.js cleanup warning:', err.message);
     }
     myp5 = undefined;
+    isWebGLSketch = false;
   }
   isSketchTransitioning = false;
 }
@@ -85,21 +115,53 @@ function cleanupSketch() {
  *
  */
 
+/**
+ * Play hover sound for menu items
+ * @private
+ */
+function playMenuHoverSound() {
+  if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
+    UISounds.hover(0.3);
+  }
+}
+
+/**
+ * Play click sound for menu items
+ * @private
+ */
+function playMenuClickSound() {
+  if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
+    UISounds.click(0.5);
+  }
+}
+
 $('#menu #toWordsPage').mouseenter(() => {
+  playMenuHoverSound();
   switchCanvas(wordsCanvas, 'words');
 });
 
 $('#menu #toSoundPage').mouseenter(() => {
-  switchCanvas(soundCanvas, 'sound');
+  playMenuHoverSound();
+  // Use WebGL audio-reactive shader if available, otherwise fall back to soundCanvas
+  if (typeof audioReactiveShaderSketch !== 'undefined') {
+    switchCanvas(audioReactiveShaderSketch, 'audioReactive', true);
+  } else {
+    switchCanvas(soundCanvas, 'sound');
+  }
 });
 
 $('#menu #toVisionPage').mouseenter(() => {
+  playMenuHoverSound();
   switchCanvas(visionCanvas, 'vision');
 });
 
 $('#menu #toInfoPage').mouseenter(() => {
+  playMenuHoverSound();
   switchCanvas(infoCanvas, 'words');
 });
+
+// Add click sounds to menu items
+$('#menu a').on('click', playMenuClickSound);
 
 // // for vision canvas
 // $(document).ready(function () {

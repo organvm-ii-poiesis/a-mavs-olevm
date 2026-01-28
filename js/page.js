@@ -134,6 +134,11 @@ function showNewSection(_loadingSection) {
     // Set state to transitioning
     transitionState = TransitionState.TRANSITIONING;
 
+    // Play page exit sound
+    if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
+      UISounds.pageExit(0.5);
+    }
+
     // Update URL hash for browser history (set flag to prevent double navigation)
     if (typeof isNavigating !== 'undefined') {
       isNavigating = true;
@@ -149,6 +154,11 @@ function showNewSection(_loadingSection) {
 
     fadeOutPage(currentPage, () => {
       fadeInPage(loadingSection, () => {
+        // Play page enter sound
+        if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
+          UISounds.pageEnter(0.5);
+        }
+
         // Set state to ready when transition completes
         transitionState = TransitionState.READY;
         setTimeout(() => {

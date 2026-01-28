@@ -194,6 +194,54 @@ const player = new AudioPlayer({
 });
 ```
 
+## UI Sound Sprites
+
+The site uses SoundJS audio sprites for UI feedback sounds. These are subtle sounds that play during:
+
+- Page transitions (enter/exit)
+- Hover events
+- Click events
+
+### Creating the UI Sound Sprite
+
+The UI sounds should be combined into a single audio file (`ui-sounds.ogg`) with the following layout:
+
+| Sound | Start Time (ms) | Duration (ms) |
+| ---------- | --------------- | ------------- |
+| click | 0 | 100 |
+| hover | 150 | 80 |
+| pageEnter | 300 | 300 |
+| pageExit | 700 | 400 |
+| transition | 1200 | 500 |
+
+**To create the sprite file:**
+
+```bash
+# Using ffmpeg to combine individual sounds with silence padding
+ffmpeg -i click.wav -i hover.wav -i pageEnter.wav -i pageExit.wav -i transition.wav \
+       -filter_complex "[0]adelay=0|0[a];[1]adelay=150|150[b];[2]adelay=300|300[c];[3]adelay=700|700[d];[4]adelay=1200|1200[e];[a][b][c][d][e]amix=inputs=5:normalize=0" \
+       -c:a libvorbis ui-sounds.ogg
+```
+
+**Or use Audacity:**
+
+1. Create a new project
+2. Import each sound effect
+3. Position each sound at the start time specified above
+4. Export as OGG Vorbis format
+
+Place the resulting file at `audio/ui-sounds.ogg`.
+
+### Disabling UI Sounds
+
+UI sounds can be disabled in the browser:
+
+```javascript
+UISounds.disable();
+// or
+UISounds.toggle();
+```
+
 ## Roadmap
 
 ### Phase 1: Basic Playback (✅ Complete)
@@ -207,6 +255,7 @@ const player = new AudioPlayer({
 - Upload audio files
 - Set up R2 storage
 - Add visualizations
+- UI sound sprites
 
 ### Phase 3: Advanced Features
 
