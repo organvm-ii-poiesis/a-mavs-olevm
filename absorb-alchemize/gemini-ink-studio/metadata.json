@@ -1,0 +1,7 @@
+{
+  "name": "Gemini Ink Studio",
+  "description": "A drawing tool that simulates fluid physics, generative sketch guides, and a conversational AI assistant that manages your creative environment.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>NEON HORIZON: Cyberpunk Space Shooter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-purple: #bc13fe;
+        }
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #050011;
+            font-family: 'Orbitron', sans-serif;
+            touch-action: none; /* Prevent mobile scrolling */
+            user-select: none;
+        }
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none; /* Let clicks pass through to controls */
+        }
+        /* HUD */
+        #score-board {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--neon-cyan);
+            font-size: 24px;
+            text-shadow: 0 0 10px var(--neon-cyan);
+            font-weight: 700;
+        }
+        .label { font-size: 14px; color: var(--neon-purple); }
+        
+        /* Game Over Screen */
+        #game-over {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 20px var(--neon-pink), inset 0 0 20px var(--neon-pink);
+            backdrop-filter: blur(5px);
+        }
+        h1 {
+            color: var(--neon-pink);
+            font-size: 48px;
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px var(--neon-pink);
+        }
+        button {
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 15px 40px;
+            font-size: 24px;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px var(--neon-cyan);
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 30px var(--neon-cyan);
+        }
+        
+        /* Mobile Controls */
+        #mobile-controls {
+            display: none; /* Shown via JS detection */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: auto;
+        }
+        #joystick-zone {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            width: 150px;
+            height: 150px;
+            border: 2px dashed rgba(0, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+        #joystick-knob {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px var(--neon-cyan);
+            pointer-events: none;
+        }
+        #fire-zone {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+        }
+        #fire-hint {
+            position: absolute;
+            bottom: 80px;
+            right: 60px;
+            color: rgba(255, 0, 255, 0.5);
+            border: 2px solid rgba(255, 0, 255, 0.5);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Instructions Overlay */
+        #instructions {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            pointer-events: none;
+        }
+    </style>
+    
+    <!-- Import Map for Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer">
+        <div id="score-board">
+            <div class="label">SCORE</div>
+            <div id="score-val">0</div>
+        </div>
+        
+        <div id="game-over">
+            <h1>SYSTEM FAILURE</h1>
+            <p style="color:white; margin-bottom: 20px;">FINAL SCORE: <span id="final-score">0</span></p>
+            <button id="restart-btn">REBOOT SYSTEM</button>
+        </div>
+
+        <div id="instructions">WASD / ARROWS to Move &nbsp;|&nbsp; SPACE to Shoot</div>
+    </div>
+
+    <div id="mobile-controls">
+        <div id="joystick-zone">
+            <div id="joystick-knob"></div>
+        </div>
+        <div id="fire-zone">
+            <div id="fire-hint">FIRE</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+        // --- GAME CONFIGURATION ---
+        const CONFIG = {
+            speed: 60, // World move speed
+            shipSpeed: 0.8, // Lateral movement speed
+            shipBoundX: 18,
+            shipBoundY: 10,
+            fireRate: 0.15, // Seconds between shots
+            colors: {
+                bg: 0x050011,
+                grid: 0xbc13fe, // Purple
+                sun: 0xffaa00,
+                ship: 0x00ffff, // Cyan
+                enemy: 0xff00ff, // Pink
+                laser: 0x00ffff
+            }
+        };
+
+        // --- STATE ---
+        let state = {
+            score: 0,
+            isRunning: true,
+            isPaused: false,
+            lastTime: 0,
+            lastShot: 0,
+            input: { x: 0, y: 0, shoot: false }
+        };
+        
+        window.addEventListener('message', (e) => {
+             if (e.data && e.data.type === 'PAUSE_GAME') {
+                 state.isPaused = e.data.payload;
+                 if (!state.isPaused) clock.getDelta();
+             }
+        });
+
+        // --- SETUP SCENE ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(CONFIG.colors.bg);
+        scene.fog = new THREE.FogExp2(CONFIG.colors.bg, 0.015);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
+        camera.position.set(0, 3, 12);
+        camera.lookAt(0, 0, -20);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: "high-performance" });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Cap pixel ratio for performance
+        container.appendChild(renderer.domElement);
+
+        // --- POST PROCESSING ---
+        const renderScene = new RenderPass(scene, camera);
+        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        bloomPass.threshold = 0.1;
+        bloomPass.strength = 2.0; // Intense glow
+        bloomPass.radius = 0.5;
+
+        const composer = new EffectComposer(renderer);
+        composer.addPass(renderScene);
+        composer.addPass(bloomPass);
+
+        // --- ASSETS & GENERATION ---
+
+        // 1. The Retro Sun (Procedural Shader)
+        const sunGeo = new THREE.CircleGeometry(30, 64);
+        const sunMat = new THREE.ShaderMaterial({
+            uniforms: {
+                uTime: { value: 0 },
+                uColor1: { value: new THREE.Color(0xffd700) }, // Gold
+                uColor2: { value: new THREE.Color(0xff00ff) }  // Pink
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                varying vec2 vUv;
+                uniform float uTime;
+                uniform vec3 uColor1;
+                uniform vec3 uColor2;
+                
+                void main() {
+                    // Gradient
+                    vec3 color = mix(uColor2, uColor1, vUv.y);
+                    
+                    // Stripes
+                    float stripes = 1.0;
+                    float y = vUv.y;
+                    float stripeFreq = 20.0; // Number of stripes
+                    
+                    // Calculate moving stripes
+                    float stripeVal = sin(y * stripeFreq - uTime * 2.0);
+                    float thickness = 0.1 + (y * 0.8); // Stripes get thinner near bottom
+                    
+                    if (stripeVal > 0.9 - (y * 0.5)) { // Cutout logic
+                        discard;
+                    }
+                    
+                    gl_FragColor = vec4(color, 1.0);
+                    // Bloom boost
+                    if(vUv.y > 0.1) gl_FragColor.rgb *= 1.5; 
+                }
+            `,
+            transparent: true
+        });
+        const sun = new THREE.Mesh(sunGeo, sunMat);
+        sun.position.set(0, 10, -80);
+        scene.add(sun);
+
+        // 2. Moving Grid
+        const gridHelper = new THREE.GridHelper(200, 100, CONFIG.colors.grid, CONFIG.colors.grid);
+        gridHelper.position.y = -5;
+        scene.add(gridHelper);
+
+        // 3. Stars (Custom Geometry)
+        const starGeo = new THREE.BufferGeometry();
+        const starCount = 1000;
+        const starPos = new Float32Array(starCount * 3);
+        for(let i=0; i<starCount*3; i++) {
+            starPos[i] = (Math.random() - 0.5) * 300;
+        }
+        starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+        const starMat = new THREE.PointsMaterial({color: 0xffffff, size: 0.5});
+        const starField = new THREE.Points(starGeo, starMat);
+        scene.add(starField);
+
+        // --- PLAYER SHIP ---
+        const playerGroup = new THREE.Group();
+        scene.add(playerGroup);
+
+        // Build Ship Mesh (Code only)
+        const shipMat = new THREE.MeshStandardMaterial({ 
+            color: 0x222222, 
+            roughness: 0.4,
+            metalness: 0.8
+        });
+        const glowMat = new THREE.MeshBasicMaterial({ color: CONFIG.colors.ship });
+        const engineMat = new THREE.MeshBasicMaterial({ color: 0xff0055 });
+
+        // Body
+        const bodyGeo = new THREE.ConeGeometry(0.5, 2, 4);
+        bodyGeo.rotateX(Math.PI / 2);
+        const body = new THREE.Mesh(bodyGeo, shipMat);
+        playerGroup.add(body);
+
+        // Wings
+        const wingGeo = new THREE.BufferGeometry();
+        const wingVertices = new Float32Array([
+            0, 0, 0.5,  1.5, 0, 1.5,  0, 0, -0.5,
+            0, 0, 0.5,  -1.5, 0, 1.5, 0, 0, -0.5
+        ]);
+        wingGeo.setAttribute('position', new THREE.BufferAttribute(wingVertices, 3));
+        wingGeo.computeVertexNormals();
+        const wings = new THREE.Mesh(wingGeo, shipMat);
+        playerGroup.add(wings);
+
+        // Glow Lines (Edges)
+        const edges = new THREE.EdgesGeometry(bodyGeo);
+        const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: CONFIG.colors.ship }));
+        playerGroup.add(line);
+        
+        // Engine Light
+        const engineLight = new THREE.PointLight(CONFIG.colors.ship, 2, 10);
+        engineLight.position.set(0, 0, 1);
+        playerGroup.add(engineLight);
+
+        // Thruster particles
+        const thrusterGeo = new THREE.ConeGeometry(0.2, 1, 8);
+        thrusterGeo.rotateX(Math.PI / 2);
+        const thruster = new THREE.Mesh(thrusterGeo, engineMat);
+        thruster.position.z = 1.2;
+        playerGroup.add(thruster);
+
+
+        // --- OBJECT POOLING ---
+        class Pool {
+            constructor(createFn, count) {
+                this.createFn = createFn;
+                this.pool = [];
+                this.active = [];
+                for (let i = 0; i < count; i++) {
+                    const obj = createFn();
+                    obj.visible = false;
+                    scene.add(obj);
+                    this.pool.push(obj);
+                }
+            }
+
+            get() {
+                if (this.pool.length === 0) return null;
+                const obj = this.pool.pop();
+                obj.visible = true;
+                this.active.push(obj);
+                return obj;
+            }
+
+            release(obj) {
+                const index = this.active.indexOf(obj);
+                if (index > -1) {
+                    this.active.splice(index, 1);
+                    obj.visible = false;
+                    this.pool.push(obj);
+                }
+            }
+            
+            reset() {
+                // Copy array to avoid modification issues during loop
+                [...this.active].forEach(obj => this.release(obj));
+            }
+        }
+
+        // Laser Pool
+        const laserPool = new Pool(() => {
+            const geo = new THREE.BoxGeometry(0.1, 0.1, 2);
+            const mat = new THREE.MeshBasicMaterial({ color: CONFIG.colors.laser });
+            return new THREE.Mesh(geo, mat);
+        }, 30);
+
+        // Enemy Pool
+        const enemyPool = new Pool(() => {
+            // Complex shape for enemy
+            const group = new THREE.Group();
+            const geo = new THREE.IcosahedronGeometry(1, 0);
+            const mat = new THREE.MeshStandardMaterial({ 
+                color: 0x222222, 
+                emissive: CONFIG.colors.enemy,
+                emissiveIntensity: 0.8,
+                roughness: 0.2,
+                metalness: 0.8,
+                flatShading: true
+            });
+            const mesh = new THREE.Mesh(geo, mat);
+            
+            // Wireframe overlay
+            const wireGeo = new THREE.WireframeGeometry(geo);
+            const wireMat = new THREE.LineBasicMaterial({ color: 0xffffff });
+            const wire = new THREE.LineSegments(wireGeo, wireMat);
+            
+            group.add(mesh);
+            group.add(wire);
+            
+            // Physics data wrapper
+            group.userData = { velocity: new THREE.Vector3(), rotateSpeed: new THREE.Vector3() };
+            return group;
+        }, 20);
+
+        // Explosion Particle Pool
+        const particlePool = new Pool(() => {
+            const geo = new THREE.TetrahedronGeometry(0.3);
+            const mat = new THREE.MeshBasicMaterial({ color: CONFIG.colors.enemy });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.userData = { velocity: new THREE.Vector3(), life: 0 };
+            return mesh;
+        }, 200);
+
+
+        // --- INPUT HANDLING ---
+        
+        // Desktop
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'ArrowUp' || e.code === 'KeyW') state.input.y = 1;
+            if (e.code === 'ArrowDown' || e.code === 'KeyS') state.input.y = -1;
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') state.input.x = -1;
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') state.input.x = 1;
+            if (e.code === 'Space') state.input.shoot = true;
+        });
+        
+        window.addEventListener('keyup', (e) => {
+            if (['ArrowUp', 'KeyW', 'ArrowDown', 'KeyS'].includes(e.code)) state.input.y = 0;
+            if (['ArrowLeft', 'KeyA', 'ArrowRight', 'KeyD'].includes(e.code)) state.input.x = 0;
+            if (e.code === 'Space') state.input.shoot = false;
+        });
+
+        // Mobile / Touch
+        const isMobile = 'ontouchstart' in window;
+        if (isMobile) {
+            document.getElementById('mobile-controls').style.display = 'block';
+            document.getElementById('instructions').style.display = 'none';
+            
+            const joystickZone = document.getElementById('joystick-zone');
+            const knob = document.getElementById('joystick-knob');
+            let stickId = null;
+            let stickStart = {x:0, y:0};
+
+            // Touch handlers
+            document.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    const t = e.changedTouches[i];
+                    
+                    // Left side: Joystick
+                    if (t.clientX < window.innerWidth / 2) {
+                        if (stickId === null) {
+                            stickId = t.identifier;
+                            stickStart = { x: t.clientX, y: t.clientY };
+                            
+                            // Visually move joystick to touch
+                            joystickZone.style.left = (t.clientX - 75) + 'px';
+                            joystickZone.style.bottom = (window.innerHeight - t.clientY - 75) + 'px';
+                            joystickZone.style.opacity = 1;
+                        }
+                    } 
+                    // Right side: Shoot
+                    else {
+                        state.input.shoot = true;
+                    }
+                }
+            }, {passive: false});
+
+            document.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    const t = e.changedTouches[i];
+                    if (t.identifier === stickId) {
+                        const maxDist = 50;
+                        let dx = t.clientX - stickStart.x;
+                        let dy = t.clientY - stickStart.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        
+                        // Clamp visual
+                        if (dist > maxDist) {
+                            const ratio = maxDist / dist;
+                            dx *= ratio;
+                            dy *= ratio;
+                        }
+                        
+                        knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+
+                        // Normalize input -1 to 1
+                        state.input.x = dx / maxDist;
+                        state.input.y = -(dy / maxDist); // Invert Y for screen coords
+                    }
+                }
+            }, {passive: false});
+
+            document.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    const t = e.changedTouches[i];
+                    if (t.identifier === stickId) {
+                        stickId = null;
+                        state.input.x = 0;
+                        state.input.y = 0;
+                        knob.style.transform = `translate(-50%, -50%)`;
+                        joystickZone.style.left = '40px'; // Reset position
+                        joystickZone.style.bottom = '40px';
+                    } else {
+                        // Assume other touches lifting are shooting touches
+                        state.input.shoot = false;
+                    }
+                }
+            });
+        }
+
+        // --- GAME FUNCTIONS ---
+
+        function spawnEnemy() {
+            const enemy = enemyPool.get();
+            if (!enemy) return;
+
+            // Random spawn pos in distance
+            const x = (Math.random() - 0.5) * 30;
+            const y = (Math.random() - 0.5) * 15;
+            enemy.position.set(x, y, -100);
+            
+            // Set rotation speed
+            enemy.userData.rotateSpeed.set(
+                Math.random() * 2,
+                Math.random() * 2,
+                Math.random() * 2
+            );
+        }
+
+        function createExplosion(pos) {
+            for(let i=0; i<15; i++) {
+                const p = particlePool.get();
+                if(p) {
+                    p.position.copy(pos);
+                    // Explosion spread
+                    p.userData.velocity.set(
+                        (Math.random() - 0.5) * 10,
+                        (Math.random() - 0.5) * 10,
+                        (Math.random() - 0.5) * 10
+                    );
+                    p.userData.life = 1.0;
+                    p.scale.setScalar(1);
+                }
+            }
+        }
+
+        function updateScore(points) {
+            state.score += points;
+            document.getElementById('score-val').innerText = state.score;
+        }
+
+        function gameOver() {
+            state.isRunning = false;
+            document.getElementById('final-score').innerText = state.score;
+            document.getElementById('game-over').style.display = 'block';
+        }
+
+        function restartGame() {
+            // Reset State
+            state.score = 0;
+            state.isRunning = true;
+            state.input.x = 0; state.input.y = 0; state.input.shoot = false;
+            updateScore(0);
+            document.getElementById('game-over').style.display = 'none';
+
+            // Reset Objects
+            playerGroup.position.set(0, 0, 0);
+            laserPool.reset();
+            enemyPool.reset();
+            particlePool.reset();
+        }
+        
+        document.getElementById('restart-btn').addEventListener('click', restartGame);
+
+        // --- MAIN LOOP ---
+        const clock = new THREE.Clock();
+        
+        // Helper for collision
+        const box1 = new THREE.Box3();
+        const box2 = new THREE.Box3();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            if (state.isPaused) return;
+
+            const delta = clock.getDelta();
+            const now = clock.getElapsedTime();
+
+            // Update Shader Uniforms
+            sun.material.uniforms.uTime.value = now;
+
+            if (state.isRunning) {
+                // 1. Grid Movement (Infinite scrolling illusion)
+                gridHelper.position.z = (now * CONFIG.speed) % 10; // Cell size 10?
+                // Adjust grid to actually move the texture feel
+                gridHelper.position.z = (now * 20) % 20;
+
+                // 2. Starfield movement
+                const positions = starField.geometry.attributes.position.array;
+                for(let i=2; i<positions.length; i+=3) {
+                    positions[i] += CONFIG.speed * 2 * delta;
+                    if(positions[i] > 50) positions[i] = -250;
+                }
+                starField.geometry.attributes.position.needsUpdate = true;
+
+                // 3. Player Movement
+                // Use lerp for smooth floaty feel
+                const targetX = state.input.x * CONFIG.shipSpeed * 30 * delta;
+                const targetY = state.input.y * CONFIG.shipSpeed * 30 * delta;
+                
+                playerGroup.position.x += targetX;
+                playerGroup.position.y += targetY;
+
+                // Clamp
+                playerGroup.position.x = THREE.MathUtils.clamp(playerGroup.position.x, -CONFIG.shipBoundX, CONFIG.shipBoundX);
+                playerGroup.position.y = THREE.MathUtils.clamp(playerGroup.position.y, -CONFIG.shipBoundY, CONFIG.shipBoundY);
+
+                // Banking/Rotation effect
+                playerGroup.rotation.z = THREE.MathUtils.lerp(playerGroup.rotation.z, -state.input.x * 0.8, 0.1);
+                playerGroup.rotation.x = THREE.MathUtils.lerp(playerGroup.rotation.x, state.input.y * 0.5, 0.1);
+                
+                // Engine pulsing
+                thruster.scale.y = 1 + Math.sin(now * 20) * 0.2;
+
+                // 4. Shooting
+                if (state.input.shoot && now - state.lastShot > CONFIG.fireRate) {
+                    const laser = laserPool.get();
+                    if (laser) {
+                        laser.position.copy(playerGroup.position);
+                        laser.position.z -= 1.5; // Spawn in front
+                        state.lastShot = now;
+                    }
+                }
+
+                // 5. Update Lasers
+                for (let i = laserPool.active.length - 1; i >= 0; i--) {
+                    const laser = laserPool.active[i];
+                    laser.position.z -= 100 * delta;
+                    if (laser.position.z < -150) {
+                        laserPool.release(laser);
+                    }
+                }
+
+                // 6. Spawn Enemies
+                if (Math.random() < 0.05) { // 5% chance per frame, roughly 3/sec at 60fps
+                    spawnEnemy();
+                }
+
+                // 7. Update Enemies & Collision
+                // Player Bounding Sphere (Simulated)
+                const playerRadius = 1.0;
+                
+                for (let i = enemyPool.active.length - 1; i >= 0; i--) {
+                    const enemy = enemyPool.active[i];
+                    
+                    // Move
+                    enemy.position.z += CONFIG.speed * delta;
+                    
+                    // Rotate
+                    enemy.rotation.x += enemy.userData.rotateSpeed.x * delta;
+                    enemy.rotation.y += enemy.userData.rotateSpeed.y * delta;
+
+                    // Cleanup if passed
+                    if (enemy.position.z > 20) {
+                        enemyPool.release(enemy);
+                        continue;
+                    }
+
+                    // Collision: Enemy vs Player
+                    const distToPlayer = enemy.position.distanceTo(playerGroup.position);
+                    if (distToPlayer < (1.5 + playerRadius)) { // 1.5 is enemy radius approx
+                        createExplosion(playerGroup.position);
+                        gameOver();
+                    }
+
+                    // Collision: Enemy vs Laser
+                    box1.setFromObject(enemy);
+                    for (let j = laserPool.active.length - 1; j >= 0; j--) {
+                        const laser = laserPool.active[j];
+                        box2.setFromObject(laser);
+                        
+                        if (box1.intersectsBox(box2)) {
+                            // Hit!
+                            createExplosion(enemy.position);
+                            enemyPool.release(enemy);
+                            laserPool.release(laser);
+                            updateScore(100);
+                            break; // Laser used up
+                        }
+                    }
+                }
+
+                // 8. Update Particles
+                for (let i = particlePool.active.length - 1; i >= 0; i--) {
+                    const p = particlePool.active[i];
+                    p.userData.life -= delta * 2; // fade speed
+                    
+                    if (p.userData.life <= 0) {
+                        particlePool.release(p);
+                    } else {
+                        p.position.addScaledVector(p.userData.velocity, delta);
+                        p.scale.setScalar(p.userData.life);
+                        p.rotation.x += 10 * delta;
+                    }
+                }
+            }
+
+            // Render
+            composer.render();
+        }
+
+        // --- RESIZE HANDLER ---
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Start
+        animate();
+
+    </script>
+</body>
+</html>
