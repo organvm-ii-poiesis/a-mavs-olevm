@@ -42,6 +42,13 @@
   "eslint.validate": [
     "javascript"
   ],
+  "eslint.options": {
+    "overrideConfigFile": ".config/eslint.config.js"
+  },
+
+  // Prettier settings
+  "prettier.configPath": ".config/prettierrc.json",
+  "prettier.ignorePath": ".config/prettierignore",
   
   // GitHub Copilot settings
   "github.copilot.enable": {

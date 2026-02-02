@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- ISC LICENSE file in repository root
+- `.config/` directory for centralized tooling configuration
+- SUPPORT.md for community support guidance
+- GitHub Project board for roadmap tracking
+- Unit tests for core SPA navigation (Page class, pageData configuration)
+- Accessibility testing with @axe-core/playwright (WCAG 2.1 AA)
+- HTML validation with html-validate
+- Mermaid.js navigation architecture diagram in README
+- Quick-start one-liner in README
+- CI badge dashboard in README
 - Memory leak fixes for intervals and event handlers in ogod.js, sketch.js, images.js, diary.js
 - Error boundaries and try/catch blocks in animation callbacks and p5.js sketches
 - Accessibility improvements:
@@ -29,6 +39,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added GitHub issue templates and PR template
   - Added validate script to package.json
   - Enhanced .gitignore with IDE and build directories
+
+### Changed
+
+- Relocated tooling configs (ESLint, Prettier, Vitest, Playwright, etc.) from root to `.config/`
+- Updated package.json scripts to reference `.config/` paths
+- Updated VS Code settings for new config locations
+- Updated CI workflow for relocated config files
+- Split CI workflow into unit tests, E2E tests, and accessibility tests
+- Added accessibility testing job to CI pipeline
 - Security headers:
   - Content Security Policy (CSP) headers
   - Strict-Transport-Security (HSTS) enabled

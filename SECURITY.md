@@ -49,6 +49,58 @@ Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains
 - Weekly security audits in CI/CD pipeline
 - CDN resources use Subresource Integrity (SRI) hashes
 
+## Dependency Audit Process
+
+### Routine Audits
+
+Run security audits regularly (recommended: weekly or before releases):
+
+```bash
+# Check for vulnerabilities
+npm audit
+
+# Fix automatically fixable vulnerabilities
+npm audit fix
+
+# Review what would change (dry run)
+npm audit fix --dry-run
+
+# Force fix breaking changes (use with caution)
+npm audit fix --force
+```
+
+### Responding to Vulnerabilities
+
+1. **Critical/High Severity**: Address immediately
+   - Update the affected package
+   - If no fix available, consider removing or replacing the dependency
+   - Create a GitHub issue to track resolution
+
+2. **Medium Severity**: Address within 1 week
+   - Schedule update in next sprint
+   - Document any workarounds in use
+
+3. **Low Severity**: Address within 1 month
+   - Include in regular dependency updates
+   - Monitor for severity escalation
+
+### CI/CD Security Integration
+
+The CI pipeline runs `npm audit` on every push and pull request:
+
+- Build fails if critical vulnerabilities are detected
+- Security scan results are uploaded as artifacts
+- Dependabot creates automatic PRs for vulnerable dependencies
+
+### Manual Review Checklist
+
+Before updating dependencies:
+
+1. Review the changelog for breaking changes
+2. Check the package's security history on npm/GitHub
+3. Verify the package is actively maintained
+4. Test thoroughly in development before merging
+
 ## Known Issues & Recommendations
 
 ### Medium Priority
@@ -133,4 +185,4 @@ Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains
 
 ---
 
-_Last Updated: October 2024_
+_Last Updated: February 2026_

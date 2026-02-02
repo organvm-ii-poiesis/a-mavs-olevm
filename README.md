@@ -1,6 +1,13 @@
 # ETCETER4 - THE PANTHEON
 
+[![CI/CD Pipeline](https://github.com/ivviiviivvi/a-mavs-olevm/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/ivviiviivvi/a-mavs-olevm/actions/workflows/ci-cd.yml)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
 **A Living Temple of Art, Sound, and Words**
+
+> _"The temple breathes"_ - An experimental digital sanctuary where art, sound, and code converge.
 
 This is the website for etceter4.com - a multi-dimensional artistic platform built on classical architectural principles. ET CETER4 is a composer of sounds/words/images, operating across four professional facets: **Academic**, **Professor**, **Designer**, and **Artist**.
 
@@ -48,19 +55,69 @@ The site is structured as a complete **PANTHEON** - a sacred temple complex with
 
 Inspired by Radiohead's Kid A & Hail to the Thief era websites, the Pantheon is a **living, breathing organism** - constantly shifting, morphing, and evolving. The temple breathes with subtle animations, generative elements, and hidden discoveries, creating an experience that is never quite the same twice.
 
+### Navigation Architecture
+
+```mermaid
+graph TD
+    subgraph "Tier 1"
+        L[#landing<br/>Temple Entrance]
+    end
+
+    subgraph "Tier 2"
+        M[#menu<br/>Navigation Hub]
+    end
+
+    subgraph "Tier 3"
+        S[#sound<br/>Choral Chamber]
+        V[#vision<br/>Visual Gallery]
+        W[#words<br/>Written Works]
+    end
+
+    subgraph "Tier 4"
+        ST[#stills<br/>Photography]
+        D[#diary<br/>Labyrinth Entries]
+        VD[#video<br/>Moving Images]
+    end
+
+    L --> M
+    M --> S
+    M --> V
+    M --> W
+    V --> ST
+    V --> D
+    V --> VD
+
+    style L fill:#2d1b69,color:#fff
+    style M fill:#1a1a2e,color:#fff
+    style S fill:#16213e,color:#fff
+    style V fill:#16213e,color:#fff
+    style W fill:#16213e,color:#fff
+    style ST fill:#0f3460,color:#fff
+    style D fill:#0f3460,color:#fff
+    style VD fill:#0f3460,color:#fff
+```
+
 ## 🚀 Quick Start
+
+**Get running in 30 seconds:**
+
+```bash
+git clone https://github.com/ivviiviivvi/a-mavs-olevm.git && cd a-mavs-olevm && npm install && npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Prerequisites
 
 - **Node.js** 18+ and **npm** 9+
 - **Git** for version control
 
-### Development Setup
+### Development Setup (Step by Step)
 
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/ivi374forivi/a-mavs-olevm.git
+   git clone https://github.com/ivviiviivvi/a-mavs-olevm.git
    cd a-mavs-olevm
    ```
 

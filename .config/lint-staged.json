@@ -1,0 +1,8 @@
+{
+  "js/*.js": ["eslint --config .config/eslint.config.js --fix", "prettier --config .config/prettierrc.json --write"],
+  "js/3d/**/*.js": ["eslint --config .config/eslint.config.js --fix", "prettier --config .config/prettierrc.json --write"],
+  "*.{css,html,md}": "prettier --config .config/prettierrc.json --write",
+  "tests/**/*.js": "prettier --config .config/prettierrc.json --write",
+  ".config/*.js": "prettier --config .config/prettierrc.json --write",
+  "*.config.js": "prettier --config .config/prettierrc.json --write"
+}
