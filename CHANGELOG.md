@@ -13,9 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.config/` directory for centralized tooling configuration
 - SUPPORT.md for community support guidance
 - GitHub Project board for roadmap tracking
-- Unit tests for core SPA navigation (Page class, pageData configuration)
+- Unit tests for core SPA navigation (Page class, pageData configuration, main.js initialization)
 - Accessibility testing with @axe-core/playwright (WCAG 2.1 AA)
-- HTML validation with html-validate
+- HTML validation with html-validate in CI
+- Link checker (linkinator) in CI pipeline
+- Stale issue detection workflow
+- FUNDING.yml for sponsorship
+- SECURITY.md with dependency audit process
 - Mermaid.js navigation architecture diagram in README
 - Quick-start one-liner in README
 - CI badge dashboard in README
