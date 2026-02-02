@@ -151,6 +151,10 @@ class MockGlobalGlitchSystem {
     if (this.isRunning || !this.config.enabled) {
       return this;
     }
+    // Check for prefers-reduced-motion
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      return this;
+    }
     this.isRunning = true;
     this.checkIntervalId = setInterval(
       () => this.triggerGlitch?.(),
@@ -174,6 +178,10 @@ class MockGlobalGlitchSystem {
   }
 
   triggerGlitch(type) {
+    // Check if all elements are excluded (simulating no valid targets)
+    if (this.config.excludeSelectors.includes('*')) {
+      return false;
+    }
     this.activeGlitches.add(Math.random());
     return true;
   }
@@ -314,14 +322,14 @@ class MockAnimatedContentSystem {
     this.config = {
       enabled: options.enabled !== false,
       breathing: {
-        enabled: true,
-        scale: 1.02,
-        duration: 4000,
+        enabled: options.breathing?.enabled !== false,
+        scale: options.breathing?.scale ?? 1.02,
+        duration: options.breathing?.duration ?? 4000,
       },
       drift: {
-        enabled: true,
-        distance: 2,
-        duration: 8000,
+        enabled: options.drift?.enabled !== false,
+        distance: options.drift?.distance ?? 2,
+        duration: options.drift?.duration ?? 8000,
       },
     };
     this.isRunning = false;
@@ -1027,7 +1035,9 @@ describe('LivingPantheonCore', () => {
       core.start();
 
       expect(listener).toHaveBeenCalled();
-      expect(listener.mock.calls[0][0].status.isRunning).toBe(true);
+      // First call is from initialize() where isRunning=false
+      // Second call is from start() where isRunning=true
+      expect(listener.mock.calls[1][0].status.isRunning).toBe(true);
     });
 
     it('should unregister listener', () => {
@@ -1035,12 +1045,11 @@ describe('LivingPantheonCore', () => {
       const listener = vi.fn();
 
       core.on(listener);
+      core.initialize(); // Listener called once here
       core.off(listener);
-      core.initialize();
-      core.start();
+      core.start(); // Listener NOT called (was removed)
 
-      // Listener should have been called during initialization but not for start
-      // since it was removed
+      // Listener should have been called only during initialization
       expect(listener).toHaveBeenCalledTimes(1);
     });
   });
@@ -1783,8 +1792,23 @@ describe('Accessibility - Prefers Reduced Motion', () => {
 });
 
 describe('Integration - Full Lifecycle', () => {
-  it('should handle complete lifecycle from init to disposal', () => {
+  beforeEach(() => {
     delete window.livingPantheonCoreInstance;
+    vi.clearAllMocks();
+    // Reset matchMedia to default (no reduced motion)
+    vi.mocked(window.matchMedia).mockImplementation(query => ({
+      matches: false,
+      media: query,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+      onchange: null,
+    }));
+  });
+
+  it('should handle complete lifecycle from init to disposal', () => {
     const core = MockLivingPantheonCore.getInstance();
 
     // Initialize
