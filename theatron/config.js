@@ -5,7 +5,7 @@
  * Dramatic, theatrical styling with purple primary color and velvet red secondary
  */
 
-'use strict';
+"use strict";
 
 /**
  * @global {Object} THEATRON_CONFIG - Theatron chamber configuration
@@ -16,15 +16,16 @@ const THEATRON_CONFIG = {
    * Chamber identification and display
    */
   chamber: {
-    id: 'theatron',
-    name: 'THEATRON',
-    subtitle: 'Performance recordings, rehearsals, stage',
-    description: 'The dramatic stage chamber of performance documentation, rehearsal processes, and theatrical presentation',
-    color: '#800080',
-    secondaryColor: '#C71585',
-    darkColor: '#4B0082',
-    lightColor: '#DDA0DD',
-    velvetRed: '#8B0000',
+    id: "theatron",
+    name: "THEATRON",
+    subtitle: "Performance recordings, rehearsals, stage",
+    description:
+      "The dramatic stage chamber of performance documentation, rehearsal processes, and theatrical presentation",
+    color: "#800080",
+    secondaryColor: "#C71585",
+    darkColor: "#4B0082",
+    lightColor: "#DDA0DD",
+    velvetRed: "#8B0000",
   },
 
   /**
@@ -33,40 +34,154 @@ const THEATRON_CONFIG = {
    */
   sections: {
     performances: {
-      id: 'performances',
-      name: 'PERFORMANCES',
-      icon: '🎭',
-      description: 'Complete performance recordings and documentation',
-      color: '#800080',
+      id: "performances",
+      name: "PERFORMANCES",
+      icon: "🎭",
+      description: "Complete performance recordings and documentation",
+      color: "#800080",
       entryCount: 0,
-      sortOrder: 'desc',
-      dateFormat: 'MMDDYY',
-      storageKey: 'theatron-performances',
+      sortOrder: "desc",
+      dateFormat: "MMDDYY",
+      storageKey: "theatron-performances",
     },
     rehearsals: {
-      id: 'rehearsals',
-      name: 'REHEARSALS',
-      icon: '🎬',
-      description: 'Rehearsal processes and creative development',
-      color: '#C71585',
+      id: "rehearsals",
+      name: "REHEARSALS",
+      icon: "🎬",
+      description: "Rehearsal processes and creative development",
+      color: "#C71585",
       entryCount: 0,
-      sortOrder: 'desc',
-      dateFormat: 'MMDDYY',
-      storageKey: 'theatron-rehearsals',
+      sortOrder: "desc",
+      dateFormat: "MMDDYY",
+      storageKey: "theatron-rehearsals",
     },
   },
+
+  /**
+   * Performance video entries
+   * Each entry contains metadata for video playback
+   */
+  performances: [
+    {
+      id: "electronica-2015",
+      title: "Live at Electronica 1.3",
+      venue: "Detroit Electronic Music Festival",
+      year: 2015,
+      duration: "45:00",
+      description:
+        "Full audiovisual performance with live synthesis and video manipulation. Features material from OGOD album with real-time glitch processing.",
+      thumbnail: "/video/performances/electronica-2015/thumb.jpg",
+      category: "live",
+      chapters: [
+        { time: 0, title: "Opening / Ambient Intro" },
+        { time: 180, title: "Animal Crossing (OGOD 01)" },
+        { time: 480, title: "Castlevania (OGOD 02)" },
+        { time: 780, title: "Chrono Trigger (OGOD 03)" },
+        { time: 1080, title: "Visual Interlude" },
+        { time: 1380, title: "Golden Sun (OGOD 09)" },
+        { time: 1680, title: "Wind Waker (OGOD 28)" },
+        { time: 1980, title: "Finale / Applause" },
+      ],
+      subtitles: [],
+      tags: ["live", "audiovisual", "ogod", "2015"],
+    },
+    {
+      id: "ogod-release-show",
+      title: "OGOD Album Release Show",
+      venue: "The Loft",
+      year: 2015,
+      duration: "62:00",
+      description:
+        "Album release performance celebrating OGOD. Full album performance with expanded visual arrangements and guest appearances.",
+      thumbnail: "/video/performances/ogod-release-show/thumb.jpg",
+      category: "live",
+      chapters: [
+        { time: 0, title: "Introduction" },
+        { time: 120, title: "Side A: 1-10" },
+        { time: 1800, title: "Intermission" },
+        { time: 1920, title: "Side B: 11-20" },
+        { time: 3300, title: "Side C: 21-29" },
+        { time: 3600, title: "Encore" },
+      ],
+      subtitles: [],
+      tags: ["album release", "live", "ogod", "2015"],
+    },
+    {
+      id: "modular-session-01",
+      title: "Modular Synthesis Session #1",
+      venue: "Studio",
+      year: 2018,
+      duration: "28:00",
+      description:
+        "Experimental session with Eurorack modular synthesizer. Exploring generative patches and audio-reactive visuals.",
+      thumbnail: "/video/performances/modular-session-01/thumb.jpg",
+      category: "studio",
+      chapters: [
+        { time: 0, title: "Patch Overview" },
+        { time: 300, title: "Generative Sequence" },
+        { time: 900, title: "Audio-Reactive Visuals" },
+        { time: 1400, title: "Improvisation" },
+      ],
+      subtitles: [],
+      tags: ["modular", "experimental", "studio", "2018"],
+    },
+  ],
+
+  /**
+   * Rehearsal video entries
+   */
+  rehearsals: [
+    {
+      id: "electronica-prep-01",
+      title: "Electronica 1.3 Rehearsal",
+      venue: "Studio",
+      year: 2015,
+      duration: "35:00",
+      description:
+        "Preparation session for the Electronica 1.3 performance. Testing visual sync, audio routing, and performance flow.",
+      thumbnail: "/video/rehearsals/electronica-prep-01/thumb.jpg",
+      category: "rehearsal",
+      chapters: [
+        { time: 0, title: "Setup & Sound Check" },
+        { time: 600, title: "Set Run-Through" },
+        { time: 1500, title: "Visual Sync Testing" },
+      ],
+      subtitles: [],
+      tags: ["rehearsal", "electronica", "2015"],
+    },
+    {
+      id: "visual-dev-session",
+      title: "Visual Development Session",
+      venue: "Studio",
+      year: 2016,
+      duration: "42:00",
+      description:
+        "Development session for new live visual system. Exploring shader programming and real-time audio analysis integration.",
+      thumbnail: "/video/rehearsals/visual-dev-session/thumb.jpg",
+      category: "development",
+      chapters: [
+        { time: 0, title: "Shader Setup" },
+        { time: 720, title: "Audio Analysis Integration" },
+        { time: 1440, title: "Testing with Tracks" },
+        { time: 2100, title: "Notes & Next Steps" },
+      ],
+      subtitles: [],
+      tags: ["development", "visuals", "shaders", "2016"],
+    },
+  ],
 
   /**
    * Video player configuration
    * Settings for EnhancedVideoPlayer integration
    */
   videoPlayer: {
-    enabled: false, // Future integration ready
-    defaultQuality: 'auto',
+    enabled: true,
+    defaultQuality: "auto",
+    defaultVolume: 0.8,
     allowFullscreen: true,
     showControls: true,
     autoPlay: false,
-    preload: 'metadata',
+    preload: "metadata",
     responsive: true,
     playbackRates: [0.75, 1, 1.25, 1.5],
   },
@@ -82,9 +197,9 @@ const THEATRON_CONFIG = {
     // Whether to show timestamps
     showTimestamp: true,
     // Date display format (MMDDYY or YYYY-MM-DD)
-    dateDisplay: 'MMDDYY',
+    dateDisplay: "MMDDYY",
     // Truncation indicator
-    truncationMarker: '…',
+    truncationMarker: "…",
     // Show entry count per section
     showCounts: true,
     // Enable entry search
@@ -102,7 +217,7 @@ const THEATRON_CONFIG = {
     enabled: true,
     // Sync to server endpoint (optional)
     syncEnabled: false,
-    syncEndpoint: '/api/chambers/theatron/entries',
+    syncEndpoint: "/api/chambers/theatron/entries",
     // Backup frequency in milliseconds (24 hours)
     backupInterval: 86400000,
     // Maximum stored entries per section
@@ -119,7 +234,7 @@ const THEATRON_CONFIG = {
     // Transition between sections (ms)
     transitionDuration: 400,
     // Show/hide animation easing
-    easing: 'easeInOutQuad',
+    easing: "easeInOutQuad",
     // Card hover effects
     hoverEffects: true,
     // Glow intensity on hover
@@ -161,8 +276,8 @@ const THEATRON_CONFIG = {
         volume: 0.03,
         tracks: [
           {
-            name: 'theatron-ambient',
-            path: '/audio/ambient/theatron-ambient.mp3',
+            name: "theatron-ambient",
+            path: "/audio/ambient/theatron-ambient.mp3",
             loop: true,
           },
         ],
@@ -184,28 +299,21 @@ const THEATRON_CONFIG = {
    */
   entryTemplate: {
     performances: {
-      prompt: 'Document this performance',
-      placeholder: 'Performance title, date, duration, notes...',
+      prompt: "Document this performance",
+      placeholder: "Performance title, date, duration, notes...",
       fields: [
-        'title',
-        'date',
-        'duration',
-        'venue',
-        'description',
-        'technicalNotes',
+        "title",
+        "date",
+        "duration",
+        "venue",
+        "description",
+        "technicalNotes",
       ],
     },
     rehearsals: {
-      prompt: 'Record this rehearsal session',
-      placeholder: 'Rehearsal focus, objectives, notes...',
-      fields: [
-        'date',
-        'duration',
-        'focus',
-        'objectives',
-        'notes',
-        'nextSteps',
-      ],
+      prompt: "Record this rehearsal session",
+      placeholder: "Rehearsal focus, objectives, notes...",
+      fields: ["date", "duration", "focus", "objectives", "notes", "nextSteps"],
     },
   },
 
@@ -214,16 +322,18 @@ const THEATRON_CONFIG = {
    */
   metadata: {
     og: {
-      title: 'THEATRON | ET CETER4',
-      description: 'Performance recordings, rehearsals, and stage documentation',
-      image: '/img/og/theatron-og.jpg',
-      type: 'website',
+      title: "THEATRON | ET CETER4",
+      description:
+        "Performance recordings, rehearsals, and stage documentation",
+      image: "/img/og/theatron-og.jpg",
+      type: "website",
     },
     twitter: {
-      card: 'summary_large_image',
-      title: 'THEATRON | ET CETER4',
-      description: 'Performance chamber: recordings, rehearsals, and theatrical documentation',
-      image: '/img/og/theatron-og.jpg',
+      card: "summary_large_image",
+      title: "THEATRON | ET CETER4",
+      description:
+        "Performance chamber: recordings, rehearsals, and theatrical documentation",
+      image: "/img/og/theatron-og.jpg",
     },
   },
 
@@ -231,13 +341,13 @@ const THEATRON_CONFIG = {
    * Navigation configuration
    */
   navigation: {
-    backLink: '../index.html#menu',
-    backText: 'Back to Naos',
+    backLink: "../index.html#menu",
+    backText: "Back to Naos",
     sectionNav: true,
     footerLinks: [
-      { text: 'ETCETER4', href: '../index.html#landing' },
-      { text: 'NAOS', href: '../index.html#menu' },
-      { text: 'SITE MAP', href: '../sitemap.html' },
+      { text: "ETCETER4", href: "../index.html#landing" },
+      { text: "NAOS", href: "../index.html#menu" },
+      { text: "SITE MAP", href: "../sitemap.html" },
     ],
   },
 
@@ -245,11 +355,11 @@ const THEATRON_CONFIG = {
    * Accessibility settings
    */
   accessibility: {
-    storageKey: 'etceter4-theatron-prefs',
+    storageKey: "etceter4-theatron-prefs",
     ariaLabels: {
-      performances: 'Performances section',
-      rehearsals: 'Rehearsals section',
-      videoPlayer: 'Performance video player',
+      performances: "Performances section",
+      rehearsals: "Rehearsals section",
+      videoPlayer: "Performance video player",
     },
   },
 
@@ -258,8 +368,8 @@ const THEATRON_CONFIG = {
    * THEATRON is part of the South Wing (performance/presentation)
    */
   wing: {
-    id: 'south',
-    name: 'South Wing',
-    description: 'Performance and presentation chambers',
+    id: "south",
+    name: "South Wing",
+    description: "Performance and presentation chambers",
   },
 };

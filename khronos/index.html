@@ -137,10 +137,12 @@
       document.addEventListener('DOMContentLoaded', function () {
         // Initialize Living Pantheon if available
         if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
-          LivingPantheonCore.initialize({
-            chamber: 'khronos',
-            color: '#4169E1',
-          });
+          LivingPantheonCore.getInstance()
+            .initialize({
+              chamberId: 'khronos',
+              chamberColor: '#4169E1',
+            })
+            .start();
         }
 
         // Initialize Khronos timeline

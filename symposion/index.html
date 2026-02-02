@@ -144,10 +144,12 @@
       document.addEventListener('DOMContentLoaded', function () {
         // Initialize Living Pantheon if available
         if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
-          LivingPantheonCore.initialize({
-            chamber: 'symposion',
-            color: '#722F37',
-          });
+          LivingPantheonCore.getInstance()
+            .initialize({
+              chamberId: 'symposion',
+              chamberColor: '#722F37',
+            })
+            .start();
         }
 
         // Initialize Symposion chamber

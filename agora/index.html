@@ -254,10 +254,12 @@
       document.addEventListener('DOMContentLoaded', function () {
         // Initialize Living Pantheon if available
         if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
-          LivingPantheonCore.initialize({
-            chamber: 'agora',
-            color: '#DC143C',
-          });
+          LivingPantheonCore.getInstance()
+            .initialize({
+              chamberId: 'agora',
+              chamberColor: '#DC143C',
+            })
+            .start();
         }
         // Initialize Agora functionality
         if (typeof AgoraUI !== 'undefined') {

@@ -326,10 +326,12 @@
       184 │         // Initialize Living Pantheon if available
       185 │         if (typeof LivingPantheonCore !== 'undefined' && typeof akademiaConfig !== 'undefined') {
       186 │           if (akademiaConfig.livingPantheon && akademiaConfig.livingPantheon.enabled) {
-      187 │             LivingPantheonCore.initialize({
-      188 │               chamber: 'akademia',
-      189 │               color: '#00FFFF'
-      190 │             });
+      187 │             LivingPantheonCore.getInstance()
+              .initialize({
+      188 │               chamberId: 'akademia',
+      189 │               chamberColor: '#00FFFF',
+      190 │              })
+              .start();
       191 │           }
       192 │         }
       193 │
@@ -347,7 +349,8 @@
       205 │             const sections = document.querySelectorAll('.akademia-content-section');
       206 │             sections.forEach(section => {
       207 │               section.classList.add('dn');
-      208 │             });
+      208 │              })
+              .start();
       209 │
       210 │             const targetSection = document.getElementById(sectionId + '-content');
       211 │             if (targetSection) {

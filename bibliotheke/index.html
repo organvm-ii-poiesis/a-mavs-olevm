@@ -195,13 +195,13 @@
         }
 
         // Initialize Living Pantheon if available
-        if (typeof LivingPantheonCore !== 'undefined' && bibliothekeConfig?.livingPantheon?.enabled) {
-          const core = LivingPantheonCore.getInstance();
-          core.initialize({
-            chamber: 'bibliotheke',
-            color: '#8B4513',
-          });
-          core.start();
+        if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
+          LivingPantheonCore.getInstance()
+            .initialize({
+              chamberId: 'bibliotheke',
+              chamberColor: '#8B4513',
+            })
+            .start();
         }
       });
     </script>

@@ -202,10 +202,12 @@
       115 │
       116 │         // Initialize Living Pantheon if available
       117 │         if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
-      118 │           LivingPantheonCore.initialize({
-      119 │             chamber: 'oikos',
-      120 │             color: '#FF8C00'
-      121 │           });
+      118 │           LivingPantheonCore.getInstance()
+            .initialize({
+      119 │             chamberId: 'oikos',
+      120 │             chamberColor: '#FF8C00',
+      121 │            })
+            .start();
       122 │         }
       123 │       });
       124 │

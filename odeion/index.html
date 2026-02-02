@@ -186,10 +186,12 @@
 
         // Initialize Living Pantheon if available
         if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
-          LivingPantheonCore.initialize({
-            chamber: 'odeion',
-            color: '#FFD700',
-          });
+          LivingPantheonCore.getInstance()
+            .initialize({
+              chamberId: 'odeion',
+              chamberColor: '#FFD700',
+            })
+            .start();
         }
       });
     </script>

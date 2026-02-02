@@ -271,10 +271,12 @@
       document.addEventListener('DOMContentLoaded', function () {
         // Initialize Living Pantheon if available
         if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
-          LivingPantheonCore.initialize({
-            chamber: 'ergasterion',
-            color: '#00FF00',
-          });
+          LivingPantheonCore.getInstance()
+            .initialize({
+              chamberId: 'ergasterion',
+              chamberColor: '#00FF00',
+            })
+            .start();
         }
 
         // Section navigation functionality

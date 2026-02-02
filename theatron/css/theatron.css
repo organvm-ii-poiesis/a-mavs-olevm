@@ -506,3 +506,125 @@ button:focus {
 .gap-4 {
   gap: 1.5rem;
 }
+
+/* ========================================
+   PERFORMANCE CARDS
+   ======================================== */
+
+.performance-card {
+  width: 280px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.performance-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 30px rgba(128, 0, 128, 0.3),
+    0 0 20px rgba(128, 0, 128, 0.2);
+}
+
+.performance-card:focus {
+  outline: 2px solid #dda0dd;
+  outline-offset: 4px;
+}
+
+.performance-thumbnail {
+  background: rgba(128, 0, 128, 0.1);
+}
+
+.performance-thumbnail img {
+  transition: transform 0.4s ease;
+}
+
+.performance-card:hover .performance-thumbnail img {
+  transform: scale(1.05);
+}
+
+.play-overlay {
+  transition: opacity 0.3s ease;
+}
+
+.performance-card:hover .play-overlay {
+  opacity: 1 !important;
+}
+
+.duration {
+  font-family: monospace;
+}
+
+/* ========================================
+   VIDEO PLAYER SECTION
+   ======================================== */
+
+.theatron-video-player-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+#theatron-video-container {
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border: 2px solid rgba(128, 0, 128, 0.4);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  box-shadow:
+    0 0 40px rgba(128, 0, 128, 0.2),
+    inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#theatron-video-container .et-video-player {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#video-info {
+  border: 1px solid rgba(128, 0, 128, 0.2);
+}
+
+#video-title {
+  text-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
+}
+
+.chapter-item {
+  border-bottom: 1px solid rgba(128, 0, 128, 0.1);
+  transition: all 0.2s ease;
+}
+
+.chapter-item:last-child {
+  border-bottom: none;
+}
+
+.chapter-item:hover {
+  background: rgba(128, 0, 128, 0.1);
+  padding-left: 0.5rem;
+}
+
+.chapter-item:focus {
+  outline: 1px solid #dda0dd;
+  outline-offset: 2px;
+}
+
+#quality-select {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#quality-select:hover {
+  background: rgba(128, 0, 128, 0.3);
+}
+
+#quality-select:focus {
+  outline: 2px solid #dda0dd;
+  outline-offset: 2px;
+}
+
+/* ========================================
+   TRANSITION UTILITIES
+   ======================================== */
+
+.transition-opacity {
+  transition: opacity 0.3s ease;
+}

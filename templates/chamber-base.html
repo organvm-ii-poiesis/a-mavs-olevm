@@ -101,10 +101,12 @@
       document.addEventListener('DOMContentLoaded', function () {
         // Initialize Living Pantheon if available
         if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
-          LivingPantheonCore.initialize({
-            chamber: '{{CHAMBER_ID}}',
-            color: '{{CHAMBER_COLOR}}',
-          });
+          LivingPantheonCore.getInstance()
+            .initialize({
+              chamberId: '{{CHAMBER_ID}}',
+              chamberColor: '{{CHAMBER_COLOR}}',
+            })
+            .start();
         }
       });
     </script>
