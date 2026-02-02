@@ -439,6 +439,17 @@
   padding-top: 10vh;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
+  pointer-events: none; /* Prevent intercepting clicks when hidden */
+}
+
+/* Enable pointer events when modal is shown (display: block from Tachyons .db) */
+.search-modal.db {
+  pointer-events: auto;
+}
+
+/* Ensure hidden modal never intercepts (display: none from Tachyons .dn) */
+.search-modal.dn {
+  pointer-events: none;
 }
 
 .search-modal-content {
@@ -449,6 +460,7 @@
   border-radius: var(--discovery-radius);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  pointer-events: auto; /* Content is always clickable when visible */
 }
 
 #globalSearchInput {

@@ -39,6 +39,9 @@ export default defineConfig({
       name: 'Mobile Chrome',
       use: {
         ...devices['Pixel 5'],
+        // Increase timeouts for slower mobile rendering
+        actionTimeout: 15000,
+        navigationTimeout: 15000,
         launchOptions: {
           args: [
             '--enable-webgl',
