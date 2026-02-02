@@ -309,13 +309,35 @@ const OdeionChamber = (function() {
 
     // If EnhancedAudioPlayer is available, use it
     if (audioPlayer) {
+      // Resolve audio URL using MediaURLResolver if available
+      let audioUrl;
+      let coverArtUrl = ODEION_CONFIG.getCoverArt(track, 'large');
+
+      if (typeof MediaURLResolver !== 'undefined') {
+        // Use R2-resolved URLs
+        if (track.type === 'album' && track.trackCount > 0) {
+          // For album play, start with track 1
+          audioUrl = MediaURLResolver.resolveAlbumTrack(track.id, 1, 'mp3');
+        } else {
+          // For singles/demos/experimental, use direct path
+          audioUrl = MediaURLResolver.resolve(`${track.category}/${track.id}/track.mp3`, 'audio');
+        }
+        // Resolve cover art from R2
+        if (track.id) {
+          coverArtUrl = MediaURLResolver.resolveCoverArt(track.id, 'large');
+        }
+      } else {
+        // Fallback to local paths
+        audioUrl = `audio/${track.category}/${track.id}/track.mp3`;
+      }
+
       const trackData = {
         title: track.title,
         artist: track.artist,
-        album: track.title, // Use track title as album for individual items
+        album: track.title,
         duration: parseFloat(track.duration) || 0,
-        coverArt: ODEION_CONFIG.getCoverArt(track, 'large'),
-        url: `audio/${track.category}/${track.id}/track.mp3`, // Example path
+        coverArt: coverArtUrl,
+        url: audioUrl,
       };
       audioPlayer.load(trackData);
       audioPlayer.play();

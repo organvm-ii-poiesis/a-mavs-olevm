@@ -44,6 +44,9 @@
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/discovery.css" />
 
+    <!-- Video.js CSS -->
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/favicon.ico" />
 
@@ -1235,6 +1238,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js" crossorigin="anonymous"></script>
     <!-- Tone.js for stem-based audio -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js" crossorigin="anonymous"></script>
+    <!-- Video.js for enhanced video player -->
+    <script src="https://vjs.zencdn.net/8.6.1/video.min.js" crossorigin="anonymous"></script>
+    <!-- HLS.js for adaptive streaming -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.12/dist/hls.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/config.js" defer></script>
     <script type="text/javascript" src="js/audioAnalyzerBridge.js" defer></script>
     <script type="text/javascript" src="js/uiSounds.js" defer></script>
@@ -1267,8 +1274,11 @@
     <script type="text/javascript" src="js/living-pantheon/AnimatedContentSystem.js" defer></script>
     <script type="text/javascript" src="js/living-pantheon/MorphingImageSystem.js" defer></script>
     <!-- Enhanced Media Systems -->
+    <script type="text/javascript" src="js/media/MediaURLResolver.js" defer></script>
     <script type="text/javascript" src="js/media/audio/EnhancedAudioPlayer.js" defer></script>
     <script type="text/javascript" src="js/media/audio/WaveformVisualizer.js" defer></script>
+    <script type="text/javascript" src="js/media/video/HLSLoader.js" defer></script>
+    <script type="text/javascript" src="js/media/video/EnhancedVideoPlayer.js" defer></script>
     <!-- MiniSearch for Discovery System -->
     <script src="https://cdn.jsdelivr.net/npm/minisearch@6/dist/umd/index.min.js" defer></script>
     <!-- Chamber Configurations (needed for ContentRegistry) -->

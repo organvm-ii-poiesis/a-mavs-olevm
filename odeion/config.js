@@ -239,9 +239,55 @@ const ODEION_CONFIG = {
 
   /**
    * Get cover art URL
+   * Uses MediaURLResolver if available, otherwise falls back to local paths
    */
   getCoverArt: function(item, size = 'medium') {
-    if (!item || !item.coverArt) return null;
+    if (!item) return null;
+
+    // Use MediaURLResolver if available for R2 URLs
+    if (typeof MediaURLResolver !== 'undefined' && item.id) {
+      return MediaURLResolver.resolveCoverArt(item.id, size);
+    }
+
+    // Fallback to local cover art paths
+    if (!item.coverArt) return null;
     return item.coverArt[size] || item.coverArt.medium || null;
+  },
+
+  /**
+   * Get audio URL for a track
+   * Uses MediaURLResolver if available for R2 URLs
+   */
+  getAudioUrl: function(albumId, trackNumber, format = 'mp3') {
+    if (typeof MediaURLResolver !== 'undefined') {
+      return MediaURLResolver.resolveAlbumTrack(albumId, trackNumber, format);
+    }
+    // Fallback to local path
+    const paddedTrack = String(trackNumber).padStart(2, '0');
+    return `../audio/albums/${albumId}/${paddedTrack}.${format}`;
+  },
+
+  /**
+   * Get waveform URL for a track
+   */
+  getWaveformUrl: function(albumId, trackNumber) {
+    if (typeof MediaURLResolver !== 'undefined') {
+      return MediaURLResolver.resolveWaveform(albumId, trackNumber);
+    }
+    // Fallback to local path
+    const paddedTrack = String(trackNumber).padStart(2, '0');
+    return `../audio/albums/${albumId}/${paddedTrack}-waveform.json`;
+  },
+
+  /**
+   * Get lyrics URL for a track
+   */
+  getLyricsUrl: function(albumId, trackNumber) {
+    if (typeof MediaURLResolver !== 'undefined') {
+      return MediaURLResolver.resolveLyrics(albumId, trackNumber);
+    }
+    // Fallback to local path
+    const paddedTrack = String(trackNumber).padStart(2, '0');
+    return `../audio/albums/${albumId}/${paddedTrack}.lrc`;
   },
 };

@@ -473,8 +473,25 @@ const ETCETER4_CONFIG = {
    * Workstream B: Replace Bandcamp embeds with self-hosted audio/video
    */
   media: {
-    // Cloudflare R2 storage base URL (to be configured)
+    // Cloudflare R2 storage base URL
     r2BaseUrl: 'https://media.etceter4.com',
+
+    /**
+     * Get the appropriate base URL for the current environment
+     * @returns {string} Base URL for media assets
+     */
+    baseUrl() {
+      if (typeof window !== 'undefined') {
+        const hostname = window.location?.hostname || '';
+
+        // Local development - use local fallback
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+          return '/media';
+        }
+      }
+      // Production and preview deployments use R2
+      return this.r2BaseUrl;
+    },
 
     // Audio player settings
     audio: {
@@ -510,6 +527,14 @@ const ETCETER4_CONFIG = {
       thumbnailInterval: 10,
       // Buffer ahead duration (seconds)
       bufferAhead: 30,
+      // HLS.js configuration
+      hlsConfig: {
+        maxBufferLength: 30,
+        maxMaxBufferLength: 60,
+        startLevel: -1, // Auto quality selection
+        enableWorker: true,
+        lowLatencyMode: false,
+      },
     },
 
     // Album metadata
