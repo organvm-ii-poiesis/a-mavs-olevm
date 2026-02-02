@@ -21,18 +21,6 @@ function resizeOgodBackground() {
   $('#bgi').height($(window).height() * gridSize);
 }
 
-/**
- * Cleanup OGOD resources - clears interval and removes resize handler
- * Should be called when navigating away from OGOD pages
- */
-function cleanupOgod() {
-  if (ogodIntervalId !== null) {
-    clearInterval(ogodIntervalId);
-    ogodIntervalId = null;
-  }
-  $(window).off('resize.ogod');
-}
-
 $('#bgi').on('load', () => {
   const config =
     typeof ETCETER4_CONFIG !== 'undefined'

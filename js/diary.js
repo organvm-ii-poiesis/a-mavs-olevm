@@ -140,17 +140,5 @@ function initDiaryHandlers() {
   diaryHandlersBound = true;
 }
 
-/**
- * Cleanup diary gallery resources
- * Call when navigating away from diary page
- */
-function cleanupDiary() {
-  if (diaryHandlersBound) {
-    $('#diary').off('carousel:slide');
-    diaryHandlersBound = false;
-  }
-  diaryCarousel.destroy();
-}
-
 // Initialize handlers on load
 initDiaryHandlers();

@@ -1,7 +1,6 @@
 'use strict';
 
 let myp5;
-let visionImage;
 let isSketchTransitioning = false;
 const footerHeight = $('footer').css('height').replace('px', '');
 
@@ -84,31 +83,6 @@ function switchCanvas(canvasFunc, canvasId, useWebGL = false) {
   }
 }
 
-/**
- * Cleanup all p5 resources - call on page exit
- * Properly releases WebGL context if applicable
- */
-function cleanupSketch() {
-  if (myp5) {
-    try {
-      // Force WebGL context loss for clean resource release
-      if (isWebGLSketch && myp5._renderer && myp5._renderer.GL) {
-        const gl = myp5._renderer.GL;
-        const ext = gl.getExtension('WEBGL_lose_context');
-        if (ext) {
-          ext.loseContext();
-        }
-      }
-      myp5.remove();
-    } catch (err) {
-      console.warn('P5.js cleanup warning:', err.message);
-    }
-    myp5 = undefined;
-    isWebGLSketch = false;
-  }
-  isSketchTransitioning = false;
-}
-
 /*
  *
  * The listeners for the canvas change
@@ -182,7 +156,6 @@ $('#menu a').on('click', playMenuClickSound);
 
 const soundCanvas = function (p) {
   const fr = 14;
-  const bounds = p.createVector(0, p.windowWidth);
   const leftMargin = 10;
   const charSize = p.createVector(20, 20);
   let noisesWidth = p.windowWidth / charSize.x;
@@ -569,7 +542,7 @@ const wordsCanvas = function (p) {
           }
         }
       }
-    } catch (err) {
+    } catch (_err) {
       // Accessing document.fonts can throw in some environments – fall back to defaults.
     }
 
@@ -652,8 +625,6 @@ const visionCanvas = function (p) {
   const sliceHeightBigRatio = heightOfCanvas * (70 / 100);
   const sliceHeightSmallRatio = heightOfCanvas * (0.2 / 1);
   const topSpeed = 5;
-  let pg;
-  let img;
 
   function ImageSlice(heightWeight) {
     let height;
@@ -810,10 +781,7 @@ const visionCanvas = function (p) {
  */
 
 const infoCanvas = function (p) {
-  const forces = {};
   const lines = [];
-  const maxLines = 50;
-  const lineLengthBounds = p.createVector(0, 0);
 
   function Line() {
     this.location = p.createVector(
@@ -926,32 +894,8 @@ const infoCanvas = function (p) {
  *
  */
 
-// Linear Random Value Generator
-function randomMonteCarlo(max, exponent) {
-  while (true) {
-    const r1 = Math.random();
-    const probability = Math.pow(r1, exponent);
-    const r2 = Math.random();
-
-    if (r2 < probability) {
-      return r1 * max;
-    }
-  }
-}
-
 function removeCanvas() {
   $('#menuPageCanvasWrapper canvas').remove();
-}
-
-function _2DRandomWalk(vector) {
-  const _nx = p.noise(vector.time.x);
-  const _ny = p.noise(vector.time.y);
-  vector.time.x += rate;
-  vector.time.y += rate;
-
-  const _x = p.map(_nx, 0, 1, 0, bounds.x);
-  const _y = p.map(_ny, 0, 1, 0, bounds.y);
-  vector.location.set(_x, _y);
 }
 
 function getBezierPoint(t) {
@@ -983,20 +927,4 @@ function getBezierPoint(t) {
   const D = curve.u3 * Math.pow(t, 3);
 
   return B + C + D; // + A
-}
-
-function getRandomColor() {
-  const r = Math.floor(p.randomGaussian(127, 40)) % 255;
-  const g = Math.floor(p.randomGaussian(127, 40)) % 255;
-  const b = Math.floor(p.randomGaussian(127, 40)) % 255;
-  return p.color(r, g, b);
-}
-
-function curveInAndOut(x) {
-  const z = 4,
-    h = 0.5,
-    j = 2,
-    k = 1;
-
-  return -z * Math.pow(x - h, j) + k;
 }

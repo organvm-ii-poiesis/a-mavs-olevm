@@ -140,7 +140,7 @@ function getMetadataFromResponse(response) {
   try {
     const metadata = response.headers.get('x-cache-metadata');
     return metadata ? JSON.parse(metadata) : null;
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 }
@@ -244,13 +244,7 @@ async function networkFirstStrategy(request, cacheName) {
     // Network error, fall back to cache
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
-      const metadata = getMetadataFromResponse(cachedResponse);
-
       // Serve stale cache even if expired (offline mode)
-      if (metadata) {
-        console.log('[MediaSW] Serving stale cache:', request.url);
-      }
-
       return cachedResponse;
     }
 
@@ -279,7 +273,6 @@ async function cacheFirstStrategy(request, cacheName) {
       }
 
       // Cache expired, try fresh version
-      console.log('[MediaSW] Cache expired, fetching fresh:', request.url);
     }
 
     // No cache or expired, fetch from network
@@ -293,7 +286,6 @@ async function cacheFirstStrategy(request, cacheName) {
 
     // Network failed but have stale cache, serve it
     if (cachedResponse) {
-      console.log('[MediaSW] Serving stale cache (network failed):', request.url);
       return cachedResponse;
     }
 
@@ -304,7 +296,6 @@ async function cacheFirstStrategy(request, cacheName) {
     // Network error, try cache
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
-      console.log('[MediaSW] Serving stale cache (offline):', request.url);
       return cachedResponse;
     }
 
@@ -316,27 +307,11 @@ async function cacheFirstStrategy(request, cacheName) {
   }
 }
 
-/**
- * Stream-only strategy: never cache, always stream fresh
- */
-async function streamOnlyStrategy(request) {
-  try {
-    return await fetch(request);
-  } catch (error) {
-    console.warn('[MediaSW] Stream failed', request.url, error);
-    return new Response('Failed to stream content', {
-      status: 503,
-      statusText: 'Service Unavailable',
-      headers: { 'Content-Type': 'text/plain' },
-    });
-  }
-}
 
 /**
  * Install event: pre-cache essential assets
  */
 self.addEventListener('install', (event) => {
-  console.log('[MediaSW] Installing...');
   event.waitUntil(self.skipWaiting());
 });
 
@@ -344,14 +319,11 @@ self.addEventListener('install', (event) => {
  * Activate event: clean up old caches
  */
 self.addEventListener('activate', (event) => {
-  console.log('[MediaSW] Activating...');
-
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (!ALL_CACHES.includes(cacheName)) {
-            console.log('[MediaSW] Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })

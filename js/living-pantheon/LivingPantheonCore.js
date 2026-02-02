@@ -105,13 +105,11 @@ class LivingPantheonCore {
 
     // Check if system is globally disabled
     if (this.config.enabled === false) {
-      console.info('LivingPantheonCore: Disabled in config');
       return this;
     }
 
     // Check for prefers-reduced-motion
     if (this._prefersReducedMotion()) {
-      console.info('LivingPantheonCore: Disabled due to prefers-reduced-motion');
       return this;
     }
 
@@ -124,7 +122,6 @@ class LivingPantheonCore {
     document.addEventListener('visibilitychange', this._onVisibilityChange);
 
     this.isInitialized = true;
-    this._emitStatusChange();
 
     return this;
   }
@@ -146,7 +143,6 @@ class LivingPantheonCore {
 
     // Check user preference
     if (!this.userEnabledInStorage) {
-      console.info('LivingPantheonCore: User has disabled via localStorage');
       return this;
     }
 
