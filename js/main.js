@@ -66,17 +66,40 @@ function handleHashChange() {
 window.addEventListener('hashchange', handleHashChange);
 
 /**
- * Register Service Worker for PWA support
+ * Register Service Workers for PWA support and media caching
  */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
+    // Register main PWA service worker
     navigator.serviceWorker
       .register('/sw.js')
       .then(registration => {
         console.log('SW registered:', registration.scope);
+        // Check for updates periodically
+        setInterval(() => {
+          registration.update().catch(error => {
+            console.warn('SW update check failed:', error);
+          });
+        }, 60000); // Check every 60 seconds
       })
       .catch(error => {
         console.warn('SW registration failed:', error);
+      });
+
+    // Register MediaServiceWorker for offline media caching
+    navigator.serviceWorker
+      .register('/js/media/cache/MediaServiceWorker.js')
+      .then(registration => {
+        console.log('MediaServiceWorker registered:', registration.scope);
+        // Check for updates periodically
+        setInterval(() => {
+          registration.update().catch(error => {
+            console.warn('MediaServiceWorker update check failed:', error);
+          });
+        }, 60000); // Check every 60 seconds
+      })
+      .catch(error => {
+        console.warn('MediaServiceWorker registration failed:', error);
       });
   });
 }
@@ -133,15 +156,51 @@ $(document).ready(() => {
 
       // Manage compositor on initial load
       manageLandingCompositor();
+
+      // Initialize Living Pantheon system on first page load
+      if (typeof initializeLivingPantheon === 'function') {
+        try {
+          initializeLivingPantheon(hash);
+        } catch (pantheError) {
+          console.warn(
+            'Living Pantheon initialization error:',
+            pantheError.message
+          );
+        }
+      }
     } catch (error) {
       // Fallback to landing page if hash is invalid
       console.warn(`Invalid hash on load: ${hash}, defaulting to landing`);
       $('#landing').removeClass('dn');
       currentPage = Page.findPage('#landing');
       window.location.hash = '#landing';
+
+      // Initialize Living Pantheon with landing page
+      if (typeof initializeLivingPantheon === 'function') {
+        try {
+          initializeLivingPantheon('#landing');
+        } catch (pantheError) {
+          console.warn(
+            'Living Pantheon initialization error:',
+            pantheError.message
+          );
+        }
+      }
     }
   } else {
     $('#landing').removeClass('dn');
     currentPage = Page.findPage('#landing');
+
+    // Initialize Living Pantheon with landing page (default)
+    if (typeof initializeLivingPantheon === 'function') {
+      try {
+        initializeLivingPantheon('#landing');
+      } catch (pantheError) {
+        console.warn(
+          'Living Pantheon initialization error:',
+          pantheError.message
+        );
+      }
+    }
   }
 });

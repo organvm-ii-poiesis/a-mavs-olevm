@@ -2,6 +2,7 @@
  * @file tests/unit/OGODAudioEngine.test.js
  * @description Unit tests for OGODAudioEngine class
  * Tests audio stem loading, playback, volume mixing, and effects
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';

@@ -2,6 +2,7 @@
  * @file tests/unit/SSAOPass.test.js
  * @description Unit tests for SSAOPass (Screen-Space Ambient Occlusion) post-processing effect
  * Tests ambient occlusion for enhanced depth perception
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -21,7 +22,9 @@ describe('SSAOPass', () => {
     // Define SSAOPass class for testing
     SSAOPass = class {
       constructor(options = {}) {
-        this.resolution = options.resolution || new THREE.Vector2(window.innerWidth, window.innerHeight);
+        this.resolution =
+          options.resolution ||
+          new THREE.Vector2(window.innerWidth, window.innerHeight);
         this.scene = options.scene;
         this.camera = options.camera;
 
@@ -110,8 +113,10 @@ describe('SSAOPass', () => {
             cameraNear: { value: this.camera?.near || 0.1 },
             cameraFar: { value: this.camera?.far || 1000 },
           },
-          vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-          fragmentShader: 'uniform sampler2D tNormal; varying vec2 vUv; void main() { gl_FragColor = texture2D(tNormal, vUv); }',
+          vertexShader:
+            'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+          fragmentShader:
+            'uniform sampler2D tNormal; varying vec2 vUv; void main() { gl_FragColor = texture2D(tNormal, vUv); }',
         });
 
         // Create blur material
@@ -120,8 +125,10 @@ describe('SSAOPass', () => {
             tDiffuse: { value: null },
             resolution: { value: this.resolution },
           },
-          vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-          fragmentShader: 'uniform sampler2D tDiffuse; varying vec2 vUv; void main() { gl_FragColor = texture2D(tDiffuse, vUv); }',
+          vertexShader:
+            'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+          fragmentShader:
+            'uniform sampler2D tDiffuse; varying vec2 vUv; void main() { gl_FragColor = texture2D(tDiffuse, vUv); }',
         });
 
         // Create composite material
@@ -130,8 +137,10 @@ describe('SSAOPass', () => {
             tDiffuse: { value: null },
             tSSAO: { value: null },
           },
-          vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-          fragmentShader: 'uniform sampler2D tDiffuse; uniform sampler2D tSSAO; varying vec2 vUv; void main() { gl_FragColor = texture2D(tDiffuse, vUv) * texture2D(tSSAO, vUv); }',
+          vertexShader:
+            'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+          fragmentShader:
+            'uniform sampler2D tDiffuse; uniform sampler2D tSSAO; varying vec2 vUv; void main() { gl_FragColor = texture2D(tDiffuse, vUv) * texture2D(tSSAO, vUv); }',
         });
 
         // Create fullscreen quad
@@ -182,7 +191,8 @@ describe('SSAOPass', () => {
         renderer.render(this.scene, this.camera);
 
         // Update SSAO uniforms
-        this.ssaoMaterial.uniforms.tNormal.value = this.normalRenderTarget.texture;
+        this.ssaoMaterial.uniforms.tNormal.value =
+          this.normalRenderTarget.texture;
         this.ssaoMaterial.uniforms.radius.value = this.radius;
         this.ssaoMaterial.uniforms.intensity.value = this.intensity;
         this.ssaoMaterial.uniforms.bias.value = this.bias;
@@ -194,13 +204,15 @@ describe('SSAOPass', () => {
 
         // Render blur pass
         renderer.setRenderTarget(this.blurRenderTarget);
-        this.blurMaterial.uniforms.tDiffuse.value = this.ssaoRenderTarget.texture;
+        this.blurMaterial.uniforms.tDiffuse.value =
+          this.ssaoRenderTarget.texture;
         this.fullscreenQuad.material = this.blurMaterial;
         renderer.render(this.fullscreenQuad, this.camera);
 
         // Composite with original scene
         this.compositeMaterial.uniforms.tDiffuse.value = readBuffer.texture;
-        this.compositeMaterial.uniforms.tSSAO.value = this.blurRenderTarget.texture;
+        this.compositeMaterial.uniforms.tSSAO.value =
+          this.blurRenderTarget.texture;
         this.fullscreenQuad.material = this.compositeMaterial;
         renderer.setRenderTarget(this.needsSwap ? writeBuffer : null);
         renderer.render(this.fullscreenQuad, this.camera);
@@ -254,7 +266,10 @@ describe('SSAOPass', () => {
           this.blurRenderTarget.setSize(width, height);
         }
         if (this.ssaoMaterial) {
-          this.ssaoMaterial.uniforms.noiseScale.value.set(width / 4, height / 4);
+          this.ssaoMaterial.uniforms.noiseScale.value.set(
+            width / 4,
+            height / 4
+          );
         }
         if (this.blurMaterial) {
           this.blurMaterial.uniforms.resolution.value.set(width, height);
@@ -334,18 +349,30 @@ describe('SSAOPass', () => {
     });
 
     it('should accept custom quality', () => {
-      pass = new SSAOPass({ scene: mockScene, camera: mockCamera, quality: 'high' });
+      pass = new SSAOPass({
+        scene: mockScene,
+        camera: mockCamera,
+        quality: 'high',
+      });
       expect(pass.quality).toBe('high');
       expect(pass.kernelSize).toBe(32);
     });
 
     it('should accept custom radius', () => {
-      pass = new SSAOPass({ scene: mockScene, camera: mockCamera, radius: 1.0 });
+      pass = new SSAOPass({
+        scene: mockScene,
+        camera: mockCamera,
+        radius: 1.0,
+      });
       expect(pass.radius).toBe(1.0);
     });
 
     it('should accept custom intensity', () => {
-      pass = new SSAOPass({ scene: mockScene, camera: mockCamera, intensity: 2.0 });
+      pass = new SSAOPass({
+        scene: mockScene,
+        camera: mockCamera,
+        intensity: 2.0,
+      });
       expect(pass.intensity).toBe(2.0);
     });
 
@@ -366,7 +393,11 @@ describe('SSAOPass', () => {
 
   describe('quality settings', () => {
     it('should set kernel size based on quality', () => {
-      pass = new SSAOPass({ scene: mockScene, camera: mockCamera, quality: 'low' });
+      pass = new SSAOPass({
+        scene: mockScene,
+        camera: mockCamera,
+        quality: 'low',
+      });
       expect(pass.kernelSize).toBe(8);
 
       pass.setQuality('medium');
@@ -380,7 +411,11 @@ describe('SSAOPass', () => {
     });
 
     it('should ignore invalid quality', () => {
-      pass = new SSAOPass({ scene: mockScene, camera: mockCamera, quality: 'medium' });
+      pass = new SSAOPass({
+        scene: mockScene,
+        camera: mockCamera,
+        quality: 'medium',
+      });
       pass.setQuality('invalid');
       expect(pass.quality).toBe('medium');
     });
@@ -481,12 +516,20 @@ describe('SSAOPass', () => {
 
   describe('getters', () => {
     it('should return radius', () => {
-      pass = new SSAOPass({ scene: mockScene, camera: mockCamera, radius: 1.0 });
+      pass = new SSAOPass({
+        scene: mockScene,
+        camera: mockCamera,
+        radius: 1.0,
+      });
       expect(pass.getRadius()).toBe(1.0);
     });
 
     it('should return intensity', () => {
-      pass = new SSAOPass({ scene: mockScene, camera: mockCamera, intensity: 2.0 });
+      pass = new SSAOPass({
+        scene: mockScene,
+        camera: mockCamera,
+        intensity: 2.0,
+      });
       expect(pass.getIntensity()).toBe(2.0);
     });
 
@@ -496,7 +539,11 @@ describe('SSAOPass', () => {
     });
 
     it('should return quality', () => {
-      pass = new SSAOPass({ scene: mockScene, camera: mockCamera, quality: 'high' });
+      pass = new SSAOPass({
+        scene: mockScene,
+        camera: mockCamera,
+        quality: 'high',
+      });
       expect(pass.getQuality()).toBe('high');
     });
   });

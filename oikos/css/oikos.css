@@ -1,0 +1,435 @@
+/* ========================================
+   OIKOS CHAMBER STYLES
+   Reflections, dreams, confessions
+   Primary: #FF8C00 (orange)
+   Secondary: #FFB6C1 (pink)
+   ======================================== */
+
+:root {
+  --oikos-primary: #ff8c00;
+  --oikos-secondary: #ffb6c1;
+  --oikos-dark: #cc7000;
+  --oikos-light: #ffd9b3;
+}
+
+/* ========================================
+   CHAMBER BODY AND LAYOUT
+   ======================================== */
+
+body.oikos-chamber {
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.05) 0%, rgba(255, 182, 193, 0.05) 100%);
+}
+
+body.oikos-chamber::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(255, 140, 0, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 182, 193, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ========================================
+   CHAMBER HERO SECTION
+   ======================================== */
+
+.chamber-hero.oikos {
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.2), rgba(255, 182, 193, 0.05)) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.chamber-hero.oikos::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 182, 193, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ========================================
+   SECTION BUTTONS
+   ======================================== */
+
+.oikos-section-btn {
+  border: 2px solid var(--oikos-primary);
+  background: transparent;
+  color: var(--oikos-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Futura', sans-serif;
+  letter-spacing: 0.15em;
+  position: relative;
+  overflow: hidden;
+  font-weight: 300;
+}
+
+.oikos-section-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.oikos-section-btn:hover::before {
+  left: 100%;
+}
+
+.oikos-section-btn:hover {
+  background: rgba(255, 140, 0, 0.1);
+  box-shadow:
+    0 0 15px rgba(255, 140, 0, 0.3),
+    inset 0 0 10px rgba(255, 140, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.oikos-section-btn:active {
+  transform: translateY(0);
+}
+
+/* Section-specific button colors */
+
+.oikos-section-btn--reflections {
+  border-color: var(--oikos-primary);
+  color: var(--oikos-primary);
+}
+
+.oikos-section-btn--reflections:hover {
+  background: rgba(255, 140, 0, 0.15);
+  box-shadow: 0 0 20px rgba(255, 140, 0, 0.4);
+}
+
+.oikos-section-btn--dreams {
+  border-color: var(--oikos-secondary);
+  color: var(--oikos-secondary);
+}
+
+.oikos-section-btn--dreams:hover {
+  background: rgba(255, 182, 193, 0.15);
+  box-shadow: 0 0 20px rgba(255, 182, 193, 0.4);
+}
+
+.oikos-section-btn--confessions {
+  border-color: var(--oikos-light);
+  color: var(--oikos-light);
+}
+
+.oikos-section-btn--confessions:hover {
+  background: rgba(255, 217, 179, 0.15);
+  box-shadow: 0 0 20px rgba(255, 217, 179, 0.4);
+}
+
+.oikos-section-btn.active {
+  background: rgba(255, 140, 0, 0.2);
+  box-shadow:
+    0 0 20px rgba(255, 140, 0, 0.5),
+    inset 0 0 15px rgba(255, 140, 0, 0.2);
+}
+
+/* ========================================
+   ENTRY CARD STYLES
+   ======================================== */
+
+.oikos-entry-card {
+  border: 1px solid;
+  border-color: rgba(255, 140, 0, 0.3);
+  background: rgba(255, 140, 0, 0.02);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  max-width: 700px;
+  width: 100%;
+}
+
+.oikos-entry-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.4s ease;
+  z-index: 0;
+}
+
+.oikos-entry-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.oikos-entry-card:hover {
+  border-color: rgba(255, 140, 0, 0.6);
+  background: rgba(255, 140, 0, 0.08);
+  box-shadow:
+    0 4px 15px rgba(255, 140, 0, 0.2),
+    inset 0 0 10px rgba(255, 182, 193, 0.05);
+  transform: translateY(-2px);
+}
+
+.oikos-entry-card:hover::before {
+  left: 100%;
+}
+
+/* Section-specific card styling */
+
+.oikos-entry-card.reflection {
+  border-left: 4px solid var(--oikos-primary);
+}
+
+.oikos-entry-card.reflection:hover {
+  border-left-color: var(--oikos-dark);
+  background: rgba(255, 140, 0, 0.1);
+}
+
+.oikos-entry-card.dream {
+  border-left: 4px solid var(--oikos-secondary);
+}
+
+.oikos-entry-card.dream:hover {
+  border-left-color: #ff69b4;
+  background: rgba(255, 182, 193, 0.1);
+}
+
+.oikos-entry-card.confession {
+  border-left: 4px solid var(--oikos-light);
+}
+
+.oikos-entry-card.confession:hover {
+  border-left-color: #ffa500;
+  background: rgba(255, 217, 179, 0.1);
+}
+
+/* ========================================
+   ENTRY CONTENT
+   ======================================== */
+
+.oikos-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 140, 0, 0.2);
+}
+
+.oikos-entry-date {
+  font-family: 'Futura', monospace;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 140, 0, 0.7);
+  font-weight: 300;
+}
+
+.oikos-entry-icon {
+  font-size: 1.25rem;
+  color: var(--oikos-primary);
+  opacity: 0.6;
+}
+
+.oikos-entry-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  word-break: break-word;
+}
+
+.oikos-entry-text.preview {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.oikos-entry-text .truncation-marker {
+  color: rgba(255, 140, 0, 0.6);
+  font-style: italic;
+}
+
+/* ========================================
+   SECTION GRID LAYOUT
+   ======================================== */
+
+#chamber-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Empty state */
+
+.oikos-empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: rgba(255, 140, 0, 0.6);
+}
+
+.oikos-empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.oikos-empty-state-text {
+  font-size: 1.125rem;
+  letter-spacing: 0.05em;
+}
+
+/* ========================================
+   ENTRY SECTION DIVIDERS
+   ======================================== */
+
+.oikos-section-divider {
+  width: 100%;
+  text-align: center;
+  margin: 2rem 0 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 140, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 140, 0, 0.2);
+}
+
+.oikos-section-divider-text {
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  color: rgba(255, 140, 0, 0.5);
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes oikos-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes oikos-glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+  }
+}
+
+.oikos-entry-card.entering {
+  animation: oikos-fade-in 0.5s ease-out;
+}
+
+.oikos-entry-card.glow {
+  animation: oikos-glow-pulse 2s ease-in-out infinite;
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+
+@media screen and (max-width: 768px) {
+  .oikos-section-btn {
+    font-size: 0.75rem;
+    padding: 0.75rem 1rem !important;
+  }
+
+  .oikos-entry-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .oikos-entry-text {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .chamber-section-nav {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .oikos-section-btn {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .oikos-entry-card {
+    padding: 0.875rem;
+  }
+
+  .oikos-entry-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .oikos-entry-text {
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   DARK MODE ADJUSTMENTS
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .oikos-entry-card {
+    background: rgba(255, 140, 0, 0.03);
+  }
+
+  .oikos-entry-card:hover {
+    background: rgba(255, 140, 0, 0.12);
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .oikos-section-btn,
+  .oikos-entry-card,
+  .oikos-section-btn::before,
+  .oikos-entry-card::before {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .oikos-section-btn:hover {
+    transform: none;
+  }
+
+  .oikos-entry-card:hover {
+    transform: none;
+  }
+}
+
+/* Focus states for keyboard navigation */
+
+.oikos-section-btn:focus-visible {
+  outline: 2px solid var(--oikos-primary);
+  outline-offset: 2px;
+}
+
+.oikos-entry-card:focus-visible {
+  outline: 2px solid var(--oikos-primary);
+  outline-offset: 2px;
+}

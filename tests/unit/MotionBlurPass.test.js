@@ -2,6 +2,7 @@
  * @file tests/unit/MotionBlurPass.test.js
  * @description Unit tests for MotionBlurPass post-processing effect
  * Tests camera motion blur for cinematic movement effects
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -19,7 +20,9 @@ describe('MotionBlurPass', () => {
     // Define MotionBlurPass class for testing
     MotionBlurPass = class {
       constructor(options = {}) {
-        this.resolution = options.resolution || new THREE.Vector2(window.innerWidth, window.innerHeight);
+        this.resolution =
+          options.resolution ||
+          new THREE.Vector2(window.innerWidth, window.innerHeight);
         this.camera = options.camera;
 
         this.intensity = options.intensity || 1.0;
@@ -60,7 +63,8 @@ describe('MotionBlurPass', () => {
             previousProjectionMatrix: { value: this._previousProjectionMatrix },
             previousViewMatrix: { value: this._previousViewMatrix },
           },
-          vertexShader: 'void main() { gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+          vertexShader:
+            'void main() { gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
           fragmentShader: 'void main() { gl_FragColor = vec4(0.0); }',
         });
 
@@ -73,8 +77,10 @@ describe('MotionBlurPass', () => {
             samples: { value: this.samples },
             resolution: { value: this.resolution },
           },
-          vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-          fragmentShader: 'uniform sampler2D tDiffuse; varying vec2 vUv; void main() { gl_FragColor = texture2D(tDiffuse, vUv); }',
+          vertexShader:
+            'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+          fragmentShader:
+            'uniform sampler2D tDiffuse; varying vec2 vUv; void main() { gl_FragColor = texture2D(tDiffuse, vUv); }',
         });
 
         // Create fullscreen quad
@@ -104,7 +110,8 @@ describe('MotionBlurPass', () => {
 
         // Update motion blur uniforms
         this.motionBlurMaterial.uniforms.tDiffuse.value = readBuffer.texture;
-        this.motionBlurMaterial.uniforms.tVelocity.value = this.velocityRenderTarget.texture;
+        this.motionBlurMaterial.uniforms.tVelocity.value =
+          this.velocityRenderTarget.texture;
         this.motionBlurMaterial.uniforms.intensity.value = this.intensity;
         this.motionBlurMaterial.uniforms.samples.value = this.samples;
 
@@ -290,7 +297,10 @@ describe('MotionBlurPass', () => {
     it('should resize render target', () => {
       pass = new MotionBlurPass({ camera: mockCamera });
       pass.setSize(1920, 1080);
-      expect(pass.velocityRenderTarget.setSize).toHaveBeenCalledWith(1920, 1080);
+      expect(pass.velocityRenderTarget.setSize).toHaveBeenCalledWith(
+        1920,
+        1080
+      );
     });
 
     it('should update material uniform', () => {

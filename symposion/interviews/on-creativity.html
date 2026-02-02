@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Interview meta -->
+    <title>On Creativity: A Dialogue | SYMPOSION | ET CETER4</title>
+    <meta
+      name="description"
+      content="A conversation between ET CETER4 and artist Mara Okon about creativity, artistic process, and digital art."
+    />
+    <meta name="author" content="ET CETER4" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="On Creativity: A Dialogue | SYMPOSION" />
+    <meta
+      property="og:description"
+      content="A conversation about artistic practice and the nature of digital creation."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="ET CETER4" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="../../css/chamber-colors.css" />
+    <link rel="stylesheet" href="../css/symposion.css" />
+    <style>
+      /* Interview-specific styles */
+      .interview-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem 8rem 1.5rem;
+        line-height: 1.8;
+      }
+
+      .interview-header {
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid var(--symposion-primary);
+      }
+
+      .interview-title {
+        font-family: 'Bodoni Moda', Georgia, serif;
+        font-size: 2rem;
+        color: var(--symposion-primary);
+        margin: 0 0 0.75rem 0;
+        font-weight: 600;
+        line-height: 1.4;
+      }
+
+      .interview-meta {
+        font-family: 'IBM Plex Mono', Monaco, monospace;
+        font-size: 0.85rem;
+        color: var(--symposion-light);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
+      }
+
+      .interview-participants {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+      }
+
+      .interview-participant {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .participant-label {
+        font-family: 'IBM Plex Mono', Monaco, monospace;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--symposion-light);
+        margin-bottom: 0.5rem;
+      }
+
+      .participant-name {
+        font-family: 'Bodoni Moda', Georgia, serif;
+        font-size: 1.25rem;
+        color: var(--symposion-primary);
+        font-weight: 500;
+      }
+
+      .interview-content {
+        margin-top: 2rem;
+      }
+
+      .dialogue-block {
+        margin-bottom: 2rem;
+      }
+
+      .speaker-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(114, 47, 55, 0.2);
+      }
+
+      .speaker-name {
+        font-family: 'IBM Plex Mono', Monaco, monospace;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.8rem;
+        margin-right: 1rem;
+      }
+
+      .speaker-1 .speaker-name {
+        color: var(--symposion-primary);
+      }
+
+      .speaker-2 .speaker-name {
+        color: var(--symposion-light);
+      }
+
+      .speaker-badge-inline {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.2rem 0.5rem;
+        border: 1px solid currentColor;
+        border-radius: 1rem;
+        font-family: 'IBM Plex Mono', Monaco, monospace;
+        font-size: 0.65rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .speaker-1 .speaker-badge-inline {
+        color: var(--symposion-primary);
+        background-color: rgba(114, 47, 55, 0.08);
+      }
+
+      .speaker-2 .speaker-badge-inline {
+        color: var(--symposion-light);
+        background-color: rgba(160, 82, 45, 0.08);
+      }
+
+      .dialogue-text {
+        font-family: 'Bodoni Moda', Georgia, serif;
+        font-size: 1rem;
+        color: var(--symposion-primary);
+        margin: 0;
+        padding-left: 1.5rem;
+        opacity: 0.95;
+        line-height: 1.8;
+      }
+
+      .dialogue-block.speaker-1 .dialogue-text {
+        color: var(--symposion-primary);
+      }
+
+      .dialogue-block.speaker-2 .dialogue-text {
+        color: var(--symposion-primary);
+      }
+
+      .emphasis {
+        font-style: italic;
+        opacity: 0.9;
+      }
+
+      .thoughtful-pause {
+        height: 1.5rem;
+        margin: 1.5rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.5;
+        font-size: 0.8rem;
+        color: var(--symposion-light);
+      }
+
+      .interview-closing {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 2px solid var(--symposion-primary);
+        font-family: 'IBM Plex Mono', Monaco, monospace;
+        font-size: 0.8rem;
+        color: var(--symposion-light);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .back-to-symposion {
+        display: inline-block;
+        margin-top: 2rem;
+        padding: 0.75rem 1.5rem;
+        border: 2px solid var(--symposion-primary);
+        color: var(--symposion-primary);
+        text-decoration: none;
+        font-family: 'Futura', 'Century Gothic', sans-serif;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s ease;
+      }
+
+      .back-to-symposion:hover {
+        background-color: var(--symposion-primary);
+        color: var(--symposion-secondary);
+        box-shadow: 0 0 15px rgba(114, 47, 55, 0.3);
+      }
+
+      @media (max-width: 48em) {
+        .interview-container {
+          padding: 2rem 1rem 8rem 1rem;
+        }
+
+        .interview-title {
+          font-size: 1.5rem;
+        }
+
+        .interview-participants {
+          gap: 1rem;
+        }
+
+        .dialogue-text {
+          font-size: 0.95rem;
+        }
+      }
+
+      @media print {
+        .chamber-header,
+        .chamber-footer,
+        .back-to-symposion {
+          display: none;
+        }
+
+        .interview-container {
+          padding: 0;
+        }
+
+        .interview-title {
+          page-break-after: avoid;
+        }
+
+        .dialogue-block {
+          page-break-inside: avoid;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .back-to-symposion {
+          transition: none;
+        }
+      }
+    </style>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../img/favicon.ico" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="../../manifest.json" />
+    <meta name="theme-color" content="#722F37" />
+  </head>
+
+  <body class="min-vh-100 w-100 futura fw1 symposion-chamber">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#interview-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
+
+    <!-- Chamber Header -->
+    <header class="chamber-header fixed top-0 left-0 w-100 z-5 pa3" style="background: rgba(0, 0, 0, 0.8)">
+      <nav class="flex justify-between items-center mw9 center" aria-label="Interview navigation">
+        <a href="../index.html" class="chamber-back-btn white f6 link flex items-center">
+          <span class="mr2">&larr;</span>
+          <span>Back to Symposion</span>
+        </a>
+        <h1 class="ma0 f4 tracked-mega symposion-text">ON CREATIVITY</h1>
+        <div class="chamber-nav-spacer w4"></div>
+      </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="interview-content" class="pt5 pb5 min-vh-100" role="main" aria-label="Interview content">
+      <div class="interview-container">
+        <!-- Interview Header -->
+        <header class="interview-header">
+          <h1 class="interview-title">On Creativity: A Dialogue</h1>
+          <div class="interview-meta">
+            A conversation about artistic process, inspiration, and the role of technology in creative work
+          </div>
+
+          <div class="interview-participants">
+            <div class="interview-participant">
+              <div class="participant-label">Speaker One</div>
+              <div class="participant-name">ET CETER4</div>
+              <div
+                style="
+                  font-family: 'Bodoni Moda', Georgia, serif;
+                  font-size: 0.9rem;
+                  color: var(--symposion-primary);
+                  opacity: 0.8;
+                  margin-top: 0.25rem;
+                "
+              >
+                Digital artist and generative systems explorer
+              </div>
+            </div>
+            <div class="interview-participant">
+              <div class="participant-label">Speaker Two</div>
+              <div class="participant-name">Mara Okon</div>
+              <div
+                style="
+                  font-family: 'Bodoni Moda', Georgia, serif;
+                  font-size: 0.9rem;
+                  color: var(--symposion-primary);
+                  opacity: 0.8;
+                  margin-top: 0.25rem;
+                "
+              >
+                Contemporary mixed-media artist and philosopher of art
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Interview Content -->
+        <article class="interview-content">
+          <div class="dialogue-block speaker-1">
+            <div class="speaker-header">
+              <span class="speaker-name">ET CETER4</span>
+              <span class="speaker-badge-inline">Digital</span>
+            </div>
+            <p class="dialogue-text">
+              I find myself endlessly fascinated by the moment when an idea takes shape. There's something electric
+              about it—the initial spark that feels almost outside yourself, and then the technical translation of that
+              sensation into form. With digital work, there's a unique paradox: you're working with pure logic, and yet
+              something deeply intuitive emerges.
+            </p>
+          </div>
+
+          <div class="dialogue-block speaker-2">
+            <div class="speaker-header">
+              <span class="speaker-name">Mara Okon</span>
+              <span class="speaker-badge-inline">Studio</span>
+            </div>
+            <p class="dialogue-text">
+              That paradox is the work itself, though, isn't it? I've spent decades with clay and paint, completely
+              analog materials, and I've noticed the same thing. You're simultaneously fighting against the medium and
+              allowing it to guide you. The difference with digital is that the medium is language, in some sense. It
+              speaks back to you in very different ways.
+            </p>
+          </div>
+
+          <div class="dialogue-block speaker-1">
+            <div class="speaker-header">
+              <span class="speaker-name">ET CETER4</span>
+              <span class="speaker-badge-inline">Digital</span>
+            </div>
+            <p class="dialogue-text">
+              Yes, exactly. With code, I get feedback instantly. A parameter changes, and I see the result immediately.
+              But that's also a trap—you can get caught in endless optimization, losing the original intuition beneath
+              layers of refinement. The most interesting work happens when I resist the urge to perfect every detail and
+              instead allow <span class="emphasis">controlled chaos</span> into the system.
+            </p>
+          </div>
+
+          <div class="thoughtful-pause">· · ·</div>
+
+          <div class="dialogue-block speaker-2">
+            <div class="speaker-header">
+              <span class="speaker-name">Mara Okon</span>
+              <span class="speaker-badge-inline">Studio</span>
+            </div>
+            <p class="dialogue-text">
+              That's the vocabulary I'd use too, actually. In my ceramic pieces, I build structure, but then I introduce
+              randomness—unplanned glaze interactions, kiln accidents that become features. Most artists I know talk
+              about this dance between intention and surrender. We create frameworks and then allow the material—and
+              chance—to complete the work.
+            </p>
+          </div>
+
+          <div class="dialogue-block speaker-1">
+            <div class="speaker-header">
+              <span class="speaker-name">ET CETER4</span>
+              <span class="speaker-badge-inline">Digital</span>
+            </div>
+            <p class="dialogue-text">
+              I think that's the crucial insight. Everyone assumes digital creation is purely deterministic, but the
+              most generative work incorporates stochasticity, noise, evolutionary algorithms that surprise you. The
+              tools get out of the way, and something emergent happens. That's where the real creativity lies.
+            </p>
+          </div>
+
+          <div class="dialogue-block speaker-2">
+            <div class="speaker-header">
+              <span class="speaker-name">Mara Okon</span>
+              <span class="speaker-badge-inline">Studio</span>
+            </div>
+            <p class="dialogue-text">
+              What interests me is the permission structure around failure. In traditional media, you're allowed to fail
+              visibly. A stroke of the brush can't be undone; it becomes part of the conversation. Digital tools offer
+              unlimited undo, which is wonderful, but it can also prevent the kind of bold, irreversible choices that
+              force you into interesting creative problem-solving. Have you found ways to work around that?
+            </p>
+          </div>
+
+          <div class="thoughtful-pause">· · ·</div>
+
+          <div class="dialogue-block speaker-1">
+            <div class="speaker-header">
+              <span class="speaker-name">ET CETER4</span>
+              <span class="speaker-badge-inline">Digital</span>
+            </div>
+            <p class="dialogue-text">
+              I deliberately delete previous iterations. I export to a format I can't easily edit back. It forces
+              commitment. There's something psychologically important about
+              <span class="emphasis">burning bridges</span>
+              with your earlier work. It changes your relationship to the act of creation. You can't tinker forever. You
+              have to live with what you've made.
+            </p>
+          </div>
+
+          <div class="dialogue-block speaker-2">
+            <div class="speaker-header">
+              <span class="speaker-name">Mara Okon</span>
+              <span class="speaker-badge-inline">Studio</span>
+            </div>
+            <p class="dialogue-text">
+              That's interesting—self-imposed constraints. They're almost more valuable than the limitations the medium
+              itself imposes, because you have to believe in them consciously. I think that's where artistry emerges.
+              Not in the tools or the technique, but in the decisions you make about how to use them. The philosophy of
+              your practice.
+            </p>
+          </div>
+
+          <div class="dialogue-block speaker-1">
+            <div class="speaker-header">
+              <span class="speaker-name">ET CETER4</span>
+              <span class="speaker-badge-inline">Digital</span>
+            </div>
+            <p class="dialogue-text">
+              And that philosophy is something that only develops through making. You can't theorize your way into it.
+              You have to build, experiment, fail, and fail again. Every project teaches you something about what you
+              actually care about—not what you think you should care about, but what genuinely drives your decisions
+              when the pressure is on.
+            </p>
+          </div>
+
+          <div class="dialogue-block speaker-2">
+            <div class="speaker-header">
+              <span class="speaker-name">Mara Okon</span>
+              <span class="speaker-badge-inline">Studio</span>
+            </div>
+            <p class="dialogue-text">
+              That's the thing nobody tells young artists. They expect creativity to be some innate talent you either
+              have or don't. But it's a practice, a conversation between you and your medium over years. The technology
+              or material is almost irrelevant. What matters is showing up, over and over, willing to be surprised and
+              willing to change your mind about what's possible.
+            </p>
+          </div>
+
+          <div class="thoughtful-pause">· · ·</div>
+
+          <div class="dialogue-block speaker-1">
+            <div class="speaker-header">
+              <span class="speaker-name">ET CETER4</span>
+              <span class="speaker-badge-inline">Digital</span>
+            </div>
+            <p class="dialogue-text">
+              That's where I'd like to leave this: creativity isn't a destination or a talent. It's a process of
+              continuous discovery. It's about building the structures that allow for surprise—in code, in clay, in
+              whatever medium calls to you. And then having the courage to follow where it leads, even if it contradicts
+              your original intention.
+            </p>
+          </div>
+
+          <div class="dialogue-block speaker-2">
+            <div class="speaker-header">
+              <span class="speaker-name">Mara Okon</span>
+              <span class="speaker-badge-inline">Studio</span>
+            </div>
+            <p class="dialogue-text">
+              Beautifully put. And that conversation between intention and emergence, between control and
+              surrender—that's where the real work lives. That's the dance that never gets old, no matter how many years
+              you've been making.
+            </p>
+          </div>
+        </article>
+
+        <!-- Closing -->
+        <footer class="interview-closing">
+          <div style="margin-bottom: 1rem">Interview conducted October 2025</div>
+          <a href="../index.html" class="back-to-symposion">← Return to Symposion</a>
+        </footer>
+      </div>
+    </main>
+
+    <!-- Chamber Footer -->
+    <footer class="chamber-footer fixed bottom-0 w-100 pa3 bg-black-90" role="contentinfo">
+      <nav class="flex justify-center items-center" aria-label="Footer navigation">
+        <a href="../../index.html#landing" class="white-70 f7 link mh3">ETCETER4</a>
+        <span class="white-30">//</span>
+        <a href="../../index.html#menu" class="white-70 f7 link mh3">NAOS</a>
+        <span class="white-30">//</span>
+        <a href="../../sitemap.html" class="white-70 f7 link mh3">SITE MAP</a>
+      </nav>
+    </footer>
+
+    <!-- Scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
+      integrity="sha512-+ZPnKPFqf/PjXPKJLBykOgAOnUmCp0ufqCYWsuvMV5FhlYCf/DlTdB3PQJuXzA3otXm1FiooUNrBncLRLbYaxA=="
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="../../js/config.js"></script>
+    <script type="text/javascript" src="../../js/living-pantheon/LivingPantheonCore.js"></script>
+  </body>
+</html>

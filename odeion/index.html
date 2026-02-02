@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Chamber-specific meta -->
+    <title>ODEION | ET CETER4</title>
+    <meta name="description" content="Albums, singles, demos, experimental music from ET CETER4" />
+    <meta name="author" content="ET CETER4" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="ODEION | ET CETER4" />
+    <meta property="og:description" content="Albums, singles, demos, experimental music from ET CETER4" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ET CETER4" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/chamber-colors.css" />
+    <link rel="stylesheet" href="css/odeion.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../img/favicon.ico" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#FFD700" />
+  </head>
+
+  <body class="min-vh-100 w-100 futura fw1 odeion-chamber">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#chamber-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
+
+    <!-- Chamber Header -->
+    <header class="chamber-header fixed top-0 left-0 w-100 z-5 pa3" style="background: rgba(0, 0, 0, 0.8)">
+      <nav class="flex justify-between items-center mw9 center" aria-label="Chamber navigation">
+        <a href="../index.html#menu" class="chamber-back-btn white f6 link flex items-center">
+          <span class="mr2">&larr;</span>
+          <span>Back to Naos</span>
+        </a>
+        <h1 class="ma0 f4 tracked-mega" style="color: #ffd700">ODEION</h1>
+        <div class="chamber-nav-spacer w4"></div>
+      </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="chamber-content" class="pt5 pb5 min-vh-100" role="main" aria-label="ODEION music content">
+      <!-- Chamber Hero Section -->
+      <section
+        class="chamber-hero odeion vh-50 flex flex-column justify-center items-center tc"
+        style="background: linear-gradient(180deg, rgba(255, 215, 0, 0.2) 0%, transparent 100%)"
+      >
+        <h2 class="f-headline-ns f1 tracked-mega ma0 mb3 odeion-text">ODEION</h2>
+        <p class="bodoni f4 o-80 mw6 ph4">Albums, singles, demos, experimental</p>
+      </section>
+
+      <!-- Content Grid -->
+      <section id="chamber-grid" class="mw9 center ph4 pv5">
+        <!-- Section navigation buttons -->
+        <div class="chamber-section-nav flex flex-wrap justify-center mb5 gap-3">
+          <button class="section-nav-btn active" data-section="all" style="border-color: #ffd700">
+            <span>All</span>
+          </button>
+          <button class="section-nav-btn" data-section="albums" style="border-color: #ffd700">
+            <span>Albums</span>
+          </button>
+          <button class="section-nav-btn" data-section="singles" style="border-color: #ffd700">
+            <span>Singles</span>
+          </button>
+          <button class="section-nav-btn" data-section="demos" style="border-color: #ffd700">
+            <span>Demos</span>
+          </button>
+          <button class="section-nav-btn" data-section="experimental" style="border-color: #ffd700">
+            <span>Experimental</span>
+          </button>
+        </div>
+
+        <!-- Audio Player Container -->
+        <div class="odeion-player-container mb5 pa4 ba b--odeion bg-odeion--o-10">
+          <div class="flex flex-column items-center">
+            <!-- Album Cover -->
+            <div
+              class="odeion-cover-art mb4"
+              style="width: 200px; height: 200px; background: #222; border: 2px solid #ffd700; position: relative"
+            >
+              <img
+                id="current-album-cover"
+                src=""
+                alt="Album cover"
+                class="w-100 h-100"
+                style="object-fit: cover; display: none"
+              />
+              <div
+                class="placeholder-text white tc absolute top-50 left-50"
+                style="transform: translate(-50%, -50%); width: 100%"
+              >
+                <p class="f6 o-60">Cover Art</p>
+              </div>
+            </div>
+
+            <!-- Now Playing Info -->
+            <div class="now-playing-info tc mb4">
+              <h3 id="now-playing-track" class="f4 odeion-text ma0 mb2">Select a track</h3>
+              <p id="now-playing-album" class="f6 white-70 ma0">Album: --</p>
+            </div>
+
+            <!-- Waveform Container -->
+            <div
+              class="waveform-container w-100 mb4"
+              style="height: 80px; background: #1a1a1a; border: 1px solid #ffd700; border-radius: 4px; overflow: hidden"
+            >
+              <canvas id="waveform-canvas" class="w-100 h-100"></canvas>
+            </div>
+
+            <!-- Playback Controls -->
+            <div class="playback-controls flex justify-center items-center gap-4 mb4">
+              <button id="play-btn" class="odeion-btn" aria-label="Play">
+                <span class="f5">▶</span>
+              </button>
+              <button id="pause-btn" class="odeion-btn" aria-label="Pause">
+                <span class="f5">⏸</span>
+              </button>
+              <button id="stop-btn" class="odeion-btn" aria-label="Stop">
+                <span class="f5">⏹</span>
+              </button>
+            </div>
+
+            <!-- Time Display -->
+            <div class="time-display white-70 f6 tc">
+              <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+            </div>
+
+            <!-- Volume Control -->
+            <div class="volume-control flex items-center gap-3 mt4">
+              <label for="volume-slider" class="white-70 f7">Volume:</label>
+              <input type="range" id="volume-slider" min="0" max="100" value="80" class="odeion-slider" />
+              <span id="volume-percent" class="white-70 f7">80%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Items Grid -->
+        <div id="chamber-items" class="flex flex-wrap justify-center gap-4">
+          <!-- Content items loaded here via JavaScript -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Chamber Footer -->
+    <footer class="chamber-footer fixed bottom-0 w-100 pa3 bg-black-90" role="contentinfo">
+      <nav class="flex justify-center items-center" aria-label="Footer navigation">
+        <a href="../index.html#landing" class="white-70 f7 link mh3">ETCETER4</a>
+        <span class="white-30">//</span>
+        <a href="../index.html#menu" class="white-70 f7 link mh3">NAOS</a>
+        <span class="white-30">//</span>
+        <a href="../sitemap.html" class="white-70 f7 link mh3">SITE MAP</a>
+      </nav>
+    </footer>
+
+    <!-- Scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
+      integrity="sha512-+ZPnKPFqf/PjXPKJLBykOgAOnUmCp0ufqCYWsuvMV5FhlYCf/DlTdB3PQJuXzA3otXm1FiooUNrBncLRLbYaxA=="
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="../js/config.js"></script>
+    <script type="text/javascript" src="../js/living-pantheon/LivingPantheonCore.js"></script>
+    <script type="text/javascript" src="../js/media/audio/EnhancedAudioPlayer.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script type="text/javascript" src="odeion.js"></script>
+    <script>
+      // Chamber initialization
+      document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Odeion chamber
+        if (typeof OdeionChamber !== 'undefined') {
+          OdeionChamber.initialize();
+        }
+
+        // Initialize Living Pantheon if available
+        if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
+          LivingPantheonCore.initialize({
+            chamber: 'odeion',
+            color: '#FFD700',
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -6,6 +6,8 @@
  * - manageLandingCompositor() function for 3D compositor lifecycle
  * - showNewSection override for compositor integration
  * - Document ready handler with hash-based routing
+ *
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';

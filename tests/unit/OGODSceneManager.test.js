@@ -2,6 +2,7 @@
  * @file tests/unit/OGODSceneManager.test.js
  * @description Unit tests for OGODSceneManager class
  * Tests scene initialization, environment loading, controller integration, and audio mapping
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';

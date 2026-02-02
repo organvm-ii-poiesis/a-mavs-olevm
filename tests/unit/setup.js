@@ -9,7 +9,9 @@ import { vi } from 'vitest';
 // Mock THREE.js namespace
 const createMockVector3 = (x = 0, y = 0, z = 0) => {
   const vec = { x, y, z };
-  vec.clone = vi.fn().mockImplementation(() => createMockVector3(vec.x, vec.y, vec.z));
+  vec.clone = vi
+    .fn()
+    .mockImplementation(() => createMockVector3(vec.x, vec.y, vec.z));
   vec.copy = vi.fn().mockImplementation(other => {
     vec.x = other.x;
     vec.y = other.y;
@@ -52,7 +54,9 @@ const createMockVector3 = (x = 0, y = 0, z = 0) => {
   });
   return vec;
 };
-const mockVector3 = vi.fn().mockImplementation((x, y, z) => createMockVector3(x, y, z));
+const mockVector3 = vi
+  .fn()
+  .mockImplementation((x, y, z) => createMockVector3(x, y, z));
 
 const mockVector2 = vi.fn().mockImplementation((x = 0, y = 0) => {
   const vec = { x, y };
@@ -95,7 +99,9 @@ const mockColor = vi.fn().mockImplementation(function (colorInput) {
     color.b = (hex & 255) / 255;
     return color;
   });
-  color.clone = vi.fn().mockImplementation(() => mockColor(color.r, color.g, color.b));
+  color.clone = vi
+    .fn()
+    .mockImplementation(() => mockColor(color.r, color.g, color.b));
   return color;
 });
 
@@ -141,27 +147,29 @@ const mockScene = vi.fn().mockImplementation(() => ({
   fog: null,
 }));
 
-const mockPerspectiveCamera = vi.fn().mockImplementation((fov, aspect, near, far) => {
-  const position = createMockVector3(0, 0, 5);
-  return {
-    fov,
-    aspect,
-    near,
-    far,
-    position,
-    quaternion: { setFromEuler: vi.fn() },
-    updateProjectionMatrix: vi.fn(),
-    getWorldDirection: vi.fn().mockImplementation(target => target),
-    getWorldPosition: vi.fn().mockImplementation(target => {
-      if (target) {
-        target.x = position.x;
-        target.y = position.y;
-        target.z = position.z;
-      }
-      return target;
-    }),
-  };
-});
+const mockPerspectiveCamera = vi
+  .fn()
+  .mockImplementation((fov, aspect, near, far) => {
+    const position = createMockVector3(0, 0, 5);
+    return {
+      fov,
+      aspect,
+      near,
+      far,
+      position,
+      quaternion: { setFromEuler: vi.fn() },
+      updateProjectionMatrix: vi.fn(),
+      getWorldDirection: vi.fn().mockImplementation(target => target),
+      getWorldPosition: vi.fn().mockImplementation(target => {
+        if (target) {
+          target.x = position.x;
+          target.y = position.y;
+          target.z = position.z;
+        }
+        return target;
+      }),
+    };
+  });
 
 const mockBufferGeometry = vi.fn().mockImplementation(() => ({
   setAttribute: vi.fn(),
@@ -487,6 +495,137 @@ global.fetch = vi.fn().mockResolvedValue({
   ok: true,
   json: vi.fn().mockResolvedValue({}),
 });
+
+// Mock Howler.js
+const createMockHowl = vi.fn().mockImplementation((options = {}) => {
+  let isPlaying = false;
+  let currentVolume = options.volume ?? 1;
+  let currentSeek = 0;
+  const duration = options._duration ?? 180; // 3 minutes default
+  const callbacks = {};
+
+  return {
+    play: vi.fn().mockImplementation(() => {
+      isPlaying = true;
+      if (callbacks.play) callbacks.play.forEach(cb => cb());
+      return 1; // sound id
+    }),
+    pause: vi.fn().mockImplementation(() => {
+      isPlaying = false;
+      if (callbacks.pause) callbacks.pause.forEach(cb => cb());
+    }),
+    stop: vi.fn().mockImplementation(() => {
+      isPlaying = false;
+      currentSeek = 0;
+      if (callbacks.stop) callbacks.stop.forEach(cb => cb());
+    }),
+    seek: vi.fn().mockImplementation(time => {
+      if (time !== undefined) {
+        currentSeek = time;
+        if (callbacks.seek) callbacks.seek.forEach(cb => cb());
+        return time;
+      }
+      return currentSeek;
+    }),
+    volume: vi.fn().mockImplementation(vol => {
+      if (vol !== undefined) {
+        currentVolume = vol;
+        return vol;
+      }
+      return currentVolume;
+    }),
+    fade: vi.fn(),
+    rate: vi.fn().mockReturnValue(1),
+    duration: vi.fn().mockReturnValue(duration),
+    playing: vi.fn().mockImplementation(() => isPlaying),
+    state: vi.fn().mockReturnValue('loaded'),
+    unload: vi.fn(),
+    load: vi.fn(),
+    on: vi.fn().mockImplementation((event, callback) => {
+      if (!callbacks[event]) callbacks[event] = [];
+      callbacks[event].push(callback);
+      // Auto-fire load event
+      if (event === 'load') {
+        setTimeout(() => callback(), 0);
+      }
+      return this;
+    }),
+    off: vi.fn().mockImplementation((event, callback) => {
+      if (callbacks[event]) {
+        callbacks[event] = callbacks[event].filter(cb => cb !== callback);
+      }
+      return this;
+    }),
+    once: vi.fn().mockImplementation((event, callback) => {
+      if (event === 'load') {
+        setTimeout(() => callback(), 0);
+      }
+      return this;
+    }),
+  };
+});
+
+global.Howl = createMockHowl;
+global.Howler = {
+  volume: vi.fn().mockReturnValue(1),
+  mute: vi.fn(),
+  stop: vi.fn(),
+  unload: vi.fn(),
+  codecs: vi.fn().mockReturnValue(true),
+  ctx: {
+    createAnalyser: vi.fn().mockReturnValue({
+      fftSize: 256,
+      frequencyBinCount: 128,
+      getByteFrequencyData: vi.fn(),
+      connect: vi.fn(),
+      disconnect: vi.fn(),
+    }),
+  },
+  masterGain: {
+    connect: vi.fn(),
+  },
+};
+
+// Mock HLS.js for video player
+const createMockHls = vi.fn().mockImplementation(() => {
+  const callbacks = {};
+  return {
+    loadSource: vi.fn(),
+    attachMedia: vi.fn(),
+    destroy: vi.fn(),
+    currentLevel: -1,
+    levels: [
+      { height: 360, bitrate: 500000 },
+      { height: 480, bitrate: 1000000 },
+      { height: 720, bitrate: 2500000 },
+      { height: 1080, bitrate: 5000000 },
+    ],
+    on: vi.fn().mockImplementation((event, callback) => {
+      if (!callbacks[event]) callbacks[event] = [];
+      callbacks[event].push(callback);
+    }),
+    off: vi.fn(),
+    trigger: vi.fn().mockImplementation((event, data) => {
+      if (callbacks[event]) {
+        callbacks[event].forEach(cb => cb(event, data));
+      }
+    }),
+  };
+});
+
+createMockHls.isSupported = vi.fn().mockReturnValue(true);
+createMockHls.Events = {
+  MANIFEST_PARSED: 'hlsManifestParsed',
+  LEVEL_LOADED: 'hlsLevelLoaded',
+  ERROR: 'hlsError',
+  FRAG_LOADED: 'hlsFragLoaded',
+};
+createMockHls.ErrorTypes = {
+  NETWORK_ERROR: 'networkError',
+  MEDIA_ERROR: 'mediaError',
+};
+
+global.Hls = createMockHls;
 
 // Mock matchMedia
 global.matchMedia = vi.fn().mockImplementation(query => ({

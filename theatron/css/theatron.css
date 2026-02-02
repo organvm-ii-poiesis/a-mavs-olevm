@@ -1,0 +1,508 @@
+/* ========================================
+   THEATRON CHAMBER STYLES
+   Performance stage, dramatic presentation
+   Purple primary (#800080) with velvet red secondary
+   ======================================== */
+
+/* ========================================
+   CHAMBER-WIDE STYLES
+   ======================================== */
+
+.theatron-chamber {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #0a0a0a 100%);
+  color: white;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.theatron-chamber::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(128, 0, 128, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 0% 50%, rgba(139, 0, 0, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ========================================
+   HEADER STYLES
+   ======================================== */
+
+.theatron-header {
+  border-bottom: 2px solid rgba(128, 0, 128, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.theatron-header h1 {
+  font-size: 1.5rem;
+  letter-spacing: 0.15em;
+  font-weight: 100;
+}
+
+/* ========================================
+   HOVER STATES
+   ======================================== */
+
+.hover-theatron {
+  transition: all 0.3s ease;
+}
+
+.hover-theatron:hover {
+  color: #dda0dd !important;
+  text-shadow: 0 0 15px rgba(128, 0, 128, 0.6);
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+
+.theatron-hero {
+  min-height: 50vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    rgba(128, 0, 128, 0.08) 0%,
+    rgba(128, 0, 128, 0.03) 30%,
+    transparent 100%
+  ) !important;
+}
+
+.theatron-spotlight {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 500px;
+  height: 500px;
+  transform: translateX(-50%) translateY(-30%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(128, 0, 128, 0.3) 0%,
+    rgba(128, 0, 128, 0.1) 30%,
+    transparent 70%
+  );
+  filter: blur(80px);
+  opacity: 0.8;
+  animation: spotlightPulse 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes spotlightPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.theatron-hero-title {
+  text-shadow:
+    0 0 20px rgba(128, 0, 128, 0.8),
+    0 0 40px rgba(128, 0, 128, 0.4),
+    0 2px 10px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.2em;
+  font-weight: 100;
+  z-index: 2;
+  animation: heroGlow 3s ease-in-out infinite;
+}
+
+@keyframes heroGlow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 20px rgba(128, 0, 128, 0.8),
+      0 0 40px rgba(128, 0, 128, 0.4),
+      0 2px 10px rgba(0, 0, 0, 0.8);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(128, 0, 128, 1),
+      0 0 60px rgba(128, 0, 128, 0.6),
+      0 2px 10px rgba(0, 0, 0, 0.8);
+  }
+}
+
+.theatron-hero-subtitle {
+  color: #dda0dd;
+  letter-spacing: 0.1em;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* ========================================
+   MAIN CONTENT AREA
+   ======================================== */
+
+.theatron-main {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================
+   SECTION NAVIGATION
+   ======================================== */
+
+.theatron-section-btn {
+  background: rgba(128, 0, 128, 0.1);
+  border: 2px solid rgba(128, 0, 128, 0.3);
+  color: #dda0dd;
+  padding: 1rem 2rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  font-weight: 100;
+  text-transform: uppercase;
+  font-family: 'Futura', sans-serif;
+}
+
+.theatron-section-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(128, 0, 128, 0.3);
+  transition: left 0.4s ease;
+  z-index: -1;
+}
+
+.theatron-section-btn:hover {
+  border-color: #800080;
+  color: white;
+  text-shadow: 0 0 10px rgba(128, 0, 128, 0.8);
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.3);
+}
+
+.theatron-section-btn:hover::before {
+  left: 100%;
+}
+
+.theatron-section-btn.active {
+  background: rgba(128, 0, 128, 0.25);
+  border-color: #800080;
+  color: white;
+  box-shadow: 0 0 25px rgba(128, 0, 128, 0.5);
+  text-shadow: 0 0 15px rgba(128, 0, 128, 0.8);
+}
+
+.theatron-section-label {
+  display: inline-block;
+  letter-spacing: 0.15em;
+}
+
+/* ========================================
+   SECTION STYLES
+   ======================================== */
+
+.theatron-section {
+  display: none;
+  animation: fadeInSection 0.4s ease-in;
+}
+
+.theatron-section.active {
+  display: block;
+}
+
+@keyframes fadeInSection {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.theatron-section-title {
+  color: #800080;
+  text-shadow: 0 0 20px rgba(128, 0, 128, 0.4);
+  letter-spacing: 0.2em;
+  font-weight: 100;
+  position: relative;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(128, 0, 128, 0.2);
+}
+
+.theatron-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, #800080, transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    box-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(128, 0, 128, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
+  }
+}
+
+/* ========================================
+   PLACEHOLDER CONTENT
+   ======================================== */
+
+.theatron-placeholder {
+  padding: 4rem 2rem;
+  text-align: center;
+  border: 2px dashed rgba(128, 0, 128, 0.3);
+  border-radius: 0.25rem;
+  background: rgba(128, 0, 128, 0.05);
+  min-width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.theatron-placeholder::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(128, 0, 128, 0.1) 50%, transparent 70%);
+  animation: shimmerWave 3s infinite;
+}
+
+@keyframes shimmerWave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.theatron-placeholder p {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================
+   VIDEO PLAYER SECTION
+   ======================================== */
+
+.theatron-player-section {
+  border-top: 2px solid rgba(128, 0, 128, 0.2);
+}
+
+.theatron-video-player-placeholder {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.theatron-player-frame {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, rgba(128, 0, 128, 0.1) 0%, rgba(139, 0, 0, 0.05) 100%);
+  border: 2px solid rgba(128, 0, 128, 0.3);
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(128, 0, 128, 0.1);
+}
+
+.theatron-player-frame::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(128, 0, 128, 0.03) 2px,
+    rgba(128, 0, 128, 0.03) 4px
+  );
+  animation: scanlines 8s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes scanlines {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
+
+.theatron-player-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+/* ========================================
+   CHAMBER CARDS
+   ======================================== */
+
+.chamber-card.theatron {
+  border-color: #800080;
+  background: linear-gradient(135deg, rgba(128, 0, 128, 0.08) 0%, rgba(139, 0, 0, 0.04) 100%);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.chamber-card.theatron::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(128, 0, 128, 0.2) 0%, transparent 50%, rgba(139, 0, 0, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.chamber-card.theatron:hover {
+  background: linear-gradient(135deg, rgba(128, 0, 128, 0.15) 0%, rgba(139, 0, 0, 0.08) 100%);
+  border-color: #dda0dd;
+  box-shadow:
+    0 0 20px rgba(128, 0, 128, 0.4),
+    inset 0 0 20px rgba(128, 0, 128, 0.05);
+}
+
+.chamber-card.theatron:hover::after {
+  opacity: 1;
+}
+
+/* ========================================
+   TEXT AND TYPOGRAPHY
+   ======================================== */
+
+.theatron-text {
+  color: #800080;
+  transition: all 0.3s ease;
+}
+
+.theatron-text-light {
+  color: #dda0dd;
+}
+
+.theatron-text-accent {
+  color: #c71585;
+}
+
+/* ========================================
+   FOOTER STYLES
+   ======================================== */
+
+.theatron-footer {
+  border-top: 2px solid rgba(128, 0, 128, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.theatron-footer a {
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.theatron-footer a:hover {
+  color: #dda0dd;
+  text-shadow: 0 0 10px rgba(128, 0, 128, 0.6);
+}
+
+/* ========================================
+   ACCESSIBILITY & RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+  .theatron-hero {
+    min-height: 40vh;
+  }
+
+  .theatron-hero-title {
+    font-size: 2rem;
+    letter-spacing: 0.15em;
+  }
+
+  .theatron-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .theatron-section-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.75rem;
+  }
+
+  .theatron-spotlight {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theatron-spotlight,
+  .theatron-hero-title,
+  .theatron-section-btn,
+  .theatron-section-title::after {
+    animation: none;
+  }
+
+  .theatron-section-btn::before,
+  .theatron-placeholder::before {
+    transition: none;
+  }
+}
+
+/* ========================================
+   FOCUS STATES FOR ACCESSIBILITY
+   ======================================== */
+
+.theatron-section-btn:focus {
+  outline: 2px solid #dda0dd;
+  outline-offset: 2px;
+}
+
+a:focus,
+button:focus {
+  outline: 2px solid #dda0dd;
+  outline-offset: 2px;
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.theatron-glow {
+  text-shadow: 0 0 10px rgba(128, 0, 128, 0.6);
+}
+
+.theatron-dramatic {
+  background: linear-gradient(135deg, rgba(128, 0, 128, 0.15) 0%, rgba(139, 0, 0, 0.08) 100%);
+  border: 2px solid rgba(128, 0, 128, 0.3);
+}
+
+.gap-3 {
+  gap: 1rem;
+}
+
+.gap-4 {
+  gap: 1.5rem;
+}

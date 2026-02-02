@@ -1326,7 +1326,14 @@
         <img id="loading-artwork" src="" alt="" aria-hidden="true" />
         <div id="loading-overlay">
           <h1 class="loading-title" aria-label="O G O D">OGOD</h1>
-          <div class="loading-bar-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Loading progress">
+          <div
+            class="loading-bar-container"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            aria-label="Loading progress"
+          >
             <div class="loading-bar" id="loading-bar"></div>
           </div>
           <p class="loading-text" id="loading-text" aria-live="polite">Initializing...</p>
@@ -1337,7 +1344,12 @@
       <div id="transition-overlay" aria-hidden="true"></div>
 
       <!-- 3D Canvas Container -->
-      <div id="canvas-container" role="application" aria-label="3D environment - use WASD or arrow keys to move, mouse to look around" tabindex="0"></div>
+      <div
+        id="canvas-container"
+        role="application"
+        aria-label="3D environment - use WASD or arrow keys to move, mouse to look around"
+        tabindex="0"
+      ></div>
 
       <!-- Back Button -->
       <a href="index.html" id="back-btn" aria-label="Go back to main site">&larr; Back</a>
@@ -1367,7 +1379,13 @@
               <div class="stem-meter-fill" id="meter-vocals" aria-labelledby="label-vocals"></div>
             </div>
           </div>
-          <div class="stem-meter" role="meter" aria-label="Other instruments level" aria-valuemin="0" aria-valuemax="100">
+          <div
+            class="stem-meter"
+            role="meter"
+            aria-label="Other instruments level"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
             <label id="label-other">Other</label>
             <div class="stem-meter-bar">
               <div class="stem-meter-fill" id="meter-other" aria-labelledby="label-other"></div>
@@ -1380,8 +1398,22 @@
       <button id="audio-btn" aria-label="Start audio playback" aria-pressed="false">Click to Start Audio</button>
 
       <!-- Settings Button -->
-      <button id="settings-btn" aria-label="Open settings panel" aria-haspopup="dialog" aria-expanded="false" title="Settings (ESC)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <button
+        id="settings-btn"
+        aria-label="Open settings panel"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        title="Settings (ESC)"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
           <circle cx="12" cy="12" r="3"></circle>
           <path
             d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"
@@ -1906,7 +1938,7 @@
               onSessionEnd: () => {
                 announceToScreenReader('VR session ended.');
               },
-              onTeleport: (position) => {
+              onTeleport: position => {
                 console.log('Teleported to:', position);
               },
             });
@@ -2080,33 +2112,80 @@
 
       // Initialize
       async function init() {
-        // Get track from URL hash
-        const hash = window.location.hash.slice(1);
-        if (hash && tracks[hash]) {
-          currentTrack = parseInt(hash);
+        try {
+          console.log('[OGOD] Starting initialization...');
+
+          // Get track from URL hash
+          const hash = window.location.hash.slice(1);
+          if (hash && tracks[hash]) {
+            currentTrack = parseInt(hash);
+          }
+          console.log('[OGOD] Current track:', currentTrack);
+
+          // Initialize UI components
+          console.log('[OGOD] Initializing UI components...');
+          initUIComponents();
+          console.log('[OGOD] UI components initialized');
+
+          console.log('[OGOD] Creating track buttons...');
+          createTrackButtons();
+          console.log('[OGOD] Track buttons created');
+
+          updateStemMeters();
+
+          console.log('[OGOD] Loading track...');
+          await loadTrack(currentTrack);
+          console.log('[OGOD] Track loaded successfully');
+        } catch (error) {
+          console.error('[OGOD] Initialization failed:', error);
+          updateLoading(0, 'Error: ' + error.message);
+          loadingText.style.color = '#ff4444';
         }
-
-        // Initialize UI components
-        initUIComponents();
-
-        createTrackButtons();
-        updateStemMeters();
-        await loadTrack(currentTrack);
       }
 
       // Handle URL hash changes
       window.addEventListener('hashchange', () => {
         const hash = window.location.hash.slice(1);
         if (hash && tracks[hash] && parseInt(hash) !== currentTrack) {
-          loadTrack(parseInt(hash));
+          loadTrack(parseInt(hash)).catch(err => {
+            console.error('[OGOD] Track change failed:', err);
+          });
         }
       });
 
       // Start when DOM ready
+      function startInit() {
+        // Verify dependencies are loaded
+        const deps = {
+          THREE: typeof THREE !== 'undefined',
+          Tone: typeof Tone !== 'undefined',
+          SceneManager: typeof SceneManager !== 'undefined',
+          OGODSceneManager: typeof OGODSceneManager !== 'undefined',
+          createOGODExperience: typeof createOGODExperience !== 'undefined',
+        };
+
+        const missing = Object.entries(deps)
+          .filter(([k, v]) => !v)
+          .map(([k]) => k);
+        if (missing.length > 0) {
+          console.error('[OGOD] Missing dependencies:', missing);
+          updateLoading(0, 'Error: Missing ' + missing.join(', '));
+          loadingText.style.color = '#ff4444';
+          return;
+        }
+
+        console.log('[OGOD] All dependencies loaded');
+        init().catch(err => {
+          console.error('[OGOD] Init promise rejected:', err);
+          updateLoading(0, 'Error: ' + err.message);
+          loadingText.style.color = '#ff4444';
+        });
+      }
+
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', startInit);
       } else {
-        init();
+        startInit();
       }
     </script>
   </body>

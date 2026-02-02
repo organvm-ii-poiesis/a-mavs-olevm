@@ -2,6 +2,7 @@
  * @file tests/unit/DOFPass.test.js
  * @description Unit tests for DOFPass (Depth of Field) post-processing effect
  * Tests bokeh-style depth of field with blur based on depth
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -21,7 +22,9 @@ describe('DOFPass', () => {
     // Define DOFPass class for testing
     DOFPass = class {
       constructor(options = {}) {
-        this.resolution = options.resolution || new THREE.Vector2(window.innerWidth, window.innerHeight);
+        this.resolution =
+          options.resolution ||
+          new THREE.Vector2(window.innerWidth, window.innerHeight);
         this.scene = options.scene;
         this.camera = options.camera;
 
@@ -68,7 +71,8 @@ describe('DOFPass', () => {
             cameraNear: { value: this.camera?.near || 0.1 },
             cameraFar: { value: this.camera?.far || 1000 },
           },
-          vertexShader: 'void main() { gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+          vertexShader:
+            'void main() { gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
           fragmentShader: 'void main() { gl_FragColor = vec4(1.0); }',
         });
 
@@ -82,8 +86,10 @@ describe('DOFPass', () => {
             maxBlur: { value: this.maxBlur },
             resolution: { value: this.resolution },
           },
-          vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-          fragmentShader: 'uniform sampler2D tDiffuse; varying vec2 vUv; void main() { gl_FragColor = texture2D(tDiffuse, vUv); }',
+          vertexShader:
+            'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+          fragmentShader:
+            'uniform sampler2D tDiffuse; varying vec2 vUv; void main() { gl_FragColor = texture2D(tDiffuse, vUv); }',
         });
 
         // Create fullscreen quad
@@ -207,17 +213,29 @@ describe('DOFPass', () => {
     });
 
     it('should accept custom focus distance', () => {
-      pass = new DOFPass({ scene: mockScene, camera: mockCamera, focusDistance: 20 });
+      pass = new DOFPass({
+        scene: mockScene,
+        camera: mockCamera,
+        focusDistance: 20,
+      });
       expect(pass.focusDistance).toBe(20);
     });
 
     it('should accept custom aperture', () => {
-      pass = new DOFPass({ scene: mockScene, camera: mockCamera, aperture: 0.05 });
+      pass = new DOFPass({
+        scene: mockScene,
+        camera: mockCamera,
+        aperture: 0.05,
+      });
       expect(pass.aperture).toBe(0.05);
     });
 
     it('should accept custom max blur', () => {
-      pass = new DOFPass({ scene: mockScene, camera: mockCamera, maxBlur: 2.0 });
+      pass = new DOFPass({
+        scene: mockScene,
+        camera: mockCamera,
+        maxBlur: 2.0,
+      });
       expect(pass.maxBlur).toBe(2.0);
     });
 
@@ -316,17 +334,29 @@ describe('DOFPass', () => {
 
   describe('getters', () => {
     it('should return focus distance', () => {
-      pass = new DOFPass({ scene: mockScene, camera: mockCamera, focusDistance: 15 });
+      pass = new DOFPass({
+        scene: mockScene,
+        camera: mockCamera,
+        focusDistance: 15,
+      });
       expect(pass.getFocusDistance()).toBe(15);
     });
 
     it('should return aperture', () => {
-      pass = new DOFPass({ scene: mockScene, camera: mockCamera, aperture: 0.05 });
+      pass = new DOFPass({
+        scene: mockScene,
+        camera: mockCamera,
+        aperture: 0.05,
+      });
       expect(pass.getAperture()).toBe(0.05);
     });
 
     it('should return max blur', () => {
-      pass = new DOFPass({ scene: mockScene, camera: mockCamera, maxBlur: 2.0 });
+      pass = new DOFPass({
+        scene: mockScene,
+        camera: mockCamera,
+        maxBlur: 2.0,
+      });
       expect(pass.getMaxBlur()).toBe(2.0);
     });
   });

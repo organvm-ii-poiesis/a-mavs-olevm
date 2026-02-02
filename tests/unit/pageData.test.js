@@ -6,6 +6,8 @@
  * - Page hierarchy relationships
  * - Page configuration integrity
  * - Navigation flow validation
+ *
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';

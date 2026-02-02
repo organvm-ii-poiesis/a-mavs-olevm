@@ -1,6 +1,7 @@
 /**
  * @file QualityConfig.test.js
  * @description Unit tests for QualityConfig quality presets and device detection
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
@@ -245,14 +246,22 @@ describe('detectRecommendedQuality', () => {
 
 describe('interpolatePresets', () => {
   it('should return first preset values at t=0', () => {
-    const result = interpolatePresets(QualityPresets.low, QualityPresets.ultra, 0);
+    const result = interpolatePresets(
+      QualityPresets.low,
+      QualityPresets.ultra,
+      0
+    );
     expect(result.resolutionScale).toBe(0.5);
     expect(result.particleMultiplier).toBe(0.25);
     expect(result.name).toBe('Low');
   });
 
   it('should return second preset values at t=1', () => {
-    const result = interpolatePresets(QualityPresets.low, QualityPresets.ultra, 1);
+    const result = interpolatePresets(
+      QualityPresets.low,
+      QualityPresets.ultra,
+      1
+    );
     expect(result.resolutionScale).toBe(1.0);
     expect(result.particleMultiplier).toBe(1.0);
     expect(result.name).toBe('Ultra');

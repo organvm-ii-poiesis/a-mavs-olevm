@@ -1,0 +1,721 @@
+{
+  "fragments": [
+    {
+      "id": "frag_001",
+      "text": "The space between thought and silence is where I find myself again.",
+      "category": "reflection",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_002",
+      "text": "What remains when the noise fades? Only the echo of who we were.",
+      "category": "reflection",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_003",
+      "text": "I am learning that becoming is more honest than being.",
+      "category": "reflection",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_004",
+      "text": "Every mirror shows a stranger wearing my face. Or perhaps I wear theirs.",
+      "category": "reflection",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_005",
+      "text": "The walls remember what I choose to forget.",
+      "category": "reflection",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_006",
+      "text": "I collect moments like stones, each one smooth from being held.",
+      "category": "reflection",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_007",
+      "text": "To know oneself is to live in perpetual surprise.",
+      "category": "reflection",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_008",
+      "text": "I speak in layers, each word hiding what came before.",
+      "category": "reflection",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_009",
+      "text": "The self is a conversation that never quite reaches agreement.",
+      "category": "reflection",
+      "mood": "chaotic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_010",
+      "text": "I am most myself when no one is watching.",
+      "category": "reflection",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_011",
+      "text": "How strange to feel most alive in the presence of absence.",
+      "category": "reflection",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_012",
+      "text": "I am written in the language of what I could not say.",
+      "category": "reflection",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_013",
+      "text": "Truth wears many masks, and I have forgotten which is which.",
+      "category": "reflection",
+      "mood": "chaotic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_014",
+      "text": "Within every certainty lies the seed of its own dissolution.",
+      "category": "reflection",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_015",
+      "text": "I return to the same questions, asking them differently each time.",
+      "category": "reflection",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_016",
+      "text": "The weight of becoming is lighter than the burden of remaining still.",
+      "category": "reflection",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_017",
+      "text": "I am the sum of every conversation I never had.",
+      "category": "reflection",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_018",
+      "text": "Silence is the only word that means everything.",
+      "category": "reflection",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_019",
+      "text": "What if the person I am is just the person I keep becoming?",
+      "category": "reflection",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_020",
+      "text": "I hold myself at arm's length, uncertain if we are the same.",
+      "category": "reflection",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_021",
+      "text": "Every ending is a room I leave with the lights on.",
+      "category": "reflection",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_022",
+      "text": "I contain multitudes, and they rarely agree on direction.",
+      "category": "reflection",
+      "mood": "chaotic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_023",
+      "text": "The self is a palimpsest written in invisible ink.",
+      "category": "reflection",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_024",
+      "text": "I am most honest in my contradictions.",
+      "category": "reflection",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_025",
+      "text": "Time moves differently in the landscape of the mind.",
+      "category": "reflection",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_026",
+      "text": "I walked through corridors of crystallized light, each step echoing forward and backward simultaneously.",
+      "category": "dream",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_027",
+      "text": "The water spoke in a language I almost understood, words dissolving before I could hold them.",
+      "category": "dream",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_028",
+      "text": "I was flying but my wings were made of questions.",
+      "category": "dream",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_029",
+      "text": "A door opened onto a room that was also a mountain, also a sound, also a feeling I cannot name.",
+      "category": "dream",
+      "mood": "chaotic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_030",
+      "text": "I met myself coming and going, neither of us certain which direction was which.",
+      "category": "dream",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_031",
+      "text": "The sky was folded like origami, revealing versions of itself with each crease.",
+      "category": "dream",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_032",
+      "text": "I was transparent, and the light moved through me leaving trails of color.",
+      "category": "dream",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_033",
+      "text": "Words fell like snow, each one melting into meaning before it touched the ground.",
+      "category": "dream",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_034",
+      "text": "I was swimming in air and drowning in breath.",
+      "category": "dream",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_035",
+      "text": "A garden grew inside my chest, blooming backward into seeds.",
+      "category": "dream",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_036",
+      "text": "The mirrors reflected not my image but my thoughts, dancing in geometric patterns.",
+      "category": "dream",
+      "mood": "chaotic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_037",
+      "text": "I was a ship sailing on solid ground, leaving wake patterns in stone.",
+      "category": "dream",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_038",
+      "text": "Colors had weight and I was carrying them like grief.",
+      "category": "dream",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_039",
+      "text": "I spoke and my words became birds, each one flying toward a different yesterday.",
+      "category": "dream",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_040",
+      "text": "The ground beneath me was made of all the letters I never sent.",
+      "category": "dream",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_041",
+      "text": "I held a cup filled with darkness and it was warm, almost alive.",
+      "category": "dream",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_042",
+      "text": "The music played backward and I understood it better that way.",
+      "category": "dream",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_043",
+      "text": "I was ancient and newborn, both at once, suspended in eternal beginning.",
+      "category": "dream",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_044",
+      "text": "The waves brought messages written in foam, each one dissolving before I could read.",
+      "category": "dream",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_045",
+      "text": "I remember the taste of rain that tasted like memory.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_046",
+      "text": "There was a room where we were always together and I cannot find the door anymore.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_047",
+      "text": "I can still hear the specific silence of that summer afternoon.",
+      "category": "memory",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_048",
+      "text": "Your voice lives in the space between my heartbeats, constant as rhythm.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_049",
+      "text": "I keep certain photographs in my mind, developing them in the dark.",
+      "category": "memory",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_050",
+      "text": "The smell of that place returns sometimes, uninvited and achingly precise.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_051",
+      "text": "I was younger then, and the world had not yet learned my name.",
+      "category": "memory",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_052",
+      "text": "Every path I chose led back to that one moment of not choosing.",
+      "category": "memory",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_053",
+      "text": "I loved someone who was like a song I couldn't quite remember.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_054",
+      "text": "That winter, everything was white and possible and I did not know it would pass.",
+      "category": "memory",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_055",
+      "text": "I held the future in my hands and did not recognize it.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_056",
+      "text": "In another timeline, we made different choices.",
+      "category": "memory",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_057",
+      "text": "I remember being fearless, before I learned what there was to fear.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_058",
+      "text": "The light through that window taught me everything about absence.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_059",
+      "text": "I can trace back to the moment I stopped being what I was becoming.",
+      "category": "memory",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_060",
+      "text": "There are conversations I replay differently each time, always changing the words I wish I'd said.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_061",
+      "text": "I return to that place in my mind often, looking for what I left behind.",
+      "category": "memory",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_062",
+      "text": "The ghost of who I was still walks these rooms.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_063",
+      "text": "I was broken then in ways that made sense.",
+      "category": "memory",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_064",
+      "text": "That promise lived in my chest like a bird that never learned to fly away.",
+      "category": "memory",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_065",
+      "text": "The dust in this room still holds the light of other days.",
+      "category": "observation",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_066",
+      "text": "I notice the way the morning arrives in layers, each color arriving at its own pace.",
+      "category": "observation",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_067",
+      "text": "The rain speaks in syllables I am only now learning to hear.",
+      "category": "observation",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_068",
+      "text": "Every object here has a shadow that tells a different story.",
+      "category": "observation",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_069",
+      "text": "The walls contain every conversation that ever took place within them.",
+      "category": "observation",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_070",
+      "text": "I watch the way light breaks when it passes through my hands.",
+      "category": "observation",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_071",
+      "text": "There is a frequency beneath all sound that only the still can hear.",
+      "category": "observation",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_072",
+      "text": "The spaces between words carry more meaning than the words themselves.",
+      "category": "observation",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_073",
+      "text": "I notice that absence has texture, that emptiness can be thick.",
+      "category": "observation",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_074",
+      "text": "The moment is always arriving, never quite here, always already gone.",
+      "category": "observation",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_075",
+      "text": "I see the pattern now: everything breaks the same way I do.",
+      "category": "observation",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_076",
+      "text": "The way the light moves across a floor is a kind of prayer.",
+      "category": "observation",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_077",
+      "text": "I observe that the most important things are the ones we cannot say.",
+      "category": "observation",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_078",
+      "text": "Every breath is a small death of the air that came before.",
+      "category": "observation",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_079",
+      "text": "I watch the same cloud reform itself in different shapes, never knowing which is true.",
+      "category": "observation",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_080",
+      "text": "The present moment is a room I can only see after I have left it.",
+      "category": "observation",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_081",
+      "text": "I notice that sorrow and beauty are often the same color.",
+      "category": "observation",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_082",
+      "text": "The silence between people contains its own conversation.",
+      "category": "observation",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_083",
+      "text": "I see now that emptiness is not the absence of something, but the presence of space.",
+      "category": "observation",
+      "mood": "serene",
+      "canCombine": true
+    },
+    {
+      "id": "frag_084",
+      "text": "Every ending is simultaneously a beginning I cannot yet perceive.",
+      "category": "observation",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_085",
+      "text": "Who am I without the stories I tell about myself?",
+      "category": "question",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_086",
+      "text": "Can you love something and still let it disappear?",
+      "category": "question",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_087",
+      "text": "What is the difference between running toward and running away?",
+      "category": "question",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_088",
+      "text": "Does the past exist if I no longer remember it the same way?",
+      "category": "question",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_089",
+      "text": "Is silence a failure of language or its perfection?",
+      "category": "question",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_090",
+      "text": "What remains when we stop performing ourselves?",
+      "category": "question",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_091",
+      "text": "Can I ever know another person, or only the story I have constructed?",
+      "category": "question",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_092",
+      "text": "What does it mean to grow without losing what I was?",
+      "category": "question",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_093",
+      "text": "Is the future something I choose or something that chooses me?",
+      "category": "question",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_094",
+      "text": "When did I become a stranger to myself?",
+      "category": "question",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_095",
+      "text": "What would I do if I were not afraid?",
+      "category": "question",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_096",
+      "text": "Is there a version of me that made different choices?",
+      "category": "question",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_097",
+      "text": "How do I forgive myself for becoming this way?",
+      "category": "question",
+      "mood": "melancholic",
+      "canCombine": true
+    },
+    {
+      "id": "frag_098",
+      "text": "What if the answer was always in the asking?",
+      "category": "question",
+      "mood": "hopeful",
+      "canCombine": true
+    },
+    {
+      "id": "frag_099",
+      "text": "Do I want to be found, or to remain lost?",
+      "category": "question",
+      "mood": "anxious",
+      "canCombine": true
+    },
+    {
+      "id": "frag_100",
+      "text": "What does it mean to exist in the spaces between who I was and who I might become?",
+      "category": "question",
+      "mood": "hopeful",
+      "canCombine": true
+    }
+  ],
+  "loopholeHints": [
+    "The door was always there. You just stopped looking for it.",
+    "Turn back now, or never return. The choice is yours. You will not like either option.",
+    "The answer lies not in the forward path, but in the one you came from.",
+    "This room has seventeen exits. Only one leads where you want to go.",
+    "What you seek seeks you. The meeting point is somewhere you have already been.",
+    "The walls remember. Ask them nicely and they will tell you the way.",
+    "You are closer than you think, and further than you fear.",
+    "The key was in your pocket all along. You simply did not recognize its shape.",
+    "Follow the light that casts no shadow. It knows where you need to be.",
+    "The loophole is not a way out. It is a way through. Are you ready to go through?",
+    "What you call a dead end is simply a transition. Keep walking.",
+    "The mirror shows you the exit, but only if you stop looking for yourself in it.",
+    "Listen for the sound that nobody makes. That is the signal.",
+    "Every wrong turn was right all along. Trust them.",
+    "The labyrinth does not trap you. It remembers you. And memory is its own kind of freedom."
+  ]
+}

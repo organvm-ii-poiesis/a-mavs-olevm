@@ -2,6 +2,7 @@
  * @file tests/unit/EnvironmentData.test.js
  * @description Unit tests for EnvironmentData class
  * Tests time calculations, weather parsing, moon phase calculations, and visual params
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -126,7 +127,14 @@ class EnvironmentData {
 
 // Execute the class definition - use indirect eval for global scope
 // The class is assigned to globalThis to make it accessible
-(0, eval)('globalThis.EnvironmentData = ' + EnvironmentDataCode.trim().replace(/^class EnvironmentData/, '(class EnvironmentData') + ')');
+(0, eval)(
+  'globalThis.EnvironmentData = ' +
+    EnvironmentDataCode.trim().replace(
+      /^class EnvironmentData/,
+      '(class EnvironmentData'
+    ) +
+    ')'
+);
 const EnvironmentData = globalThis.EnvironmentData;
 
 describe('EnvironmentData', () => {

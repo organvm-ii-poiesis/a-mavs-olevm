@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Chamber-specific meta -->
+    <title>ERGASTERION | ET CETER4</title>
+    <meta
+      name="description"
+      content="The workshop and laboratory of ETCETER4: interactive code experiments, algorithmic explorations, and technical prototypes"
+    />
+    <meta name="author" content="ET CETER4" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="ERGASTERION | ET CETER4" />
+    <meta property="og:description" content="Code experiments, prototypes, interactive demos" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ET CETER4" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/chamber-colors.css" />
+    <link rel="stylesheet" href="css/ergasterion.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../img/favicon.ico" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#00FF00" />
+  </head>
+
+  <body class="min-vh-100 w-100 futura fw1 ergasterion-chamber">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#chamber-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
+
+    <!-- Chamber Header -->
+    <header class="chamber-header fixed top-0 left-0 w-100 z-5 pa3" style="background: rgba(0, 0, 0, 0.8)">
+      <nav class="flex justify-between items-center mw9 center" aria-label="Chamber navigation">
+        <a href="../index.html#menu" class="chamber-back-btn white f6 link flex items-center">
+          <span class="mr2">&larr;</span>
+          <span>Back to Naos</span>
+        </a>
+        <h1 class="ma0 f4 tracked-mega" style="color: #00ff00">ERGASTERION</h1>
+        <div class="chamber-nav-spacer w4"></div>
+      </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="chamber-content" class="pt5 pb5 min-vh-100" role="main" aria-label="Ergasterion content">
+      <!-- Chamber Hero Section -->
+      <section
+        class="chamber-hero vh-50 flex flex-column justify-center items-center tc"
+        style="background: linear-gradient(180deg, rgba(0, 255, 0, 0.15) 0%, transparent 100%)"
+      >
+        <h2 class="f-headline-ns f1 tracked-mega ma0 mb3" style="color: #00ff00">ERGASTERION</h2>
+        <p class="bodoni f4 o-80 mw6 ph4" style="color: #bfff00">Code experiments, prototypes, interactive demos</p>
+      </section>
+
+      <!-- Content Grid -->
+      <section id="chamber-grid" class="mw9 center ph4 pv5">
+        <!-- Section Navigation -->
+        <div class="chamber-section-nav flex flex-wrap justify-center mb5 gap-3">
+          <button class="section-btn active" data-section="experiments" aria-label="View experiments">
+            experiments
+          </button>
+          <button class="section-btn" data-section="tools" aria-label="View tools">tools</button>
+        </div>
+
+        <!-- Content Area -->
+        <div id="chamber-items" class="flex flex-wrap justify-center">
+          <!-- EXPERIMENTS SECTION -->
+          <section id="experiments-section" class="chamber-item w-100">
+            <div class="section-header">
+              <h2>EXPERIMENTS</h2>
+            </div>
+
+            <div class="experiment-card mb4">
+              <h3>Generative Art Sketches</h3>
+              <p class="f6" style="color: #bfff00">
+                Algorithmic visual experiments using p5.js, Three.js, and shader-based rendering. Real-time exploration
+                of mathematical patterns, fractal geometries, and procedural generation.
+              </p>
+              <div class="project-meta">
+                <span>status: active</span>
+                <span>type: sketch</span>
+                <span>lang: javascript</span>
+              </div>
+              <div class="mt3">
+                <button class="btn-execute mr2">Execute</button>
+                <button class="btn-copy">Copy Code</button>
+              </div>
+            </div>
+
+            <div class="experiment-card mb4">
+              <h3>Audio Reactive Visuals</h3>
+              <p class="f6" style="color: #bfff00">
+                Interactive experiments synchronizing visual effects with audio input. Web Audio API analysis driving
+                real-time shader uniforms and particle systems.
+              </p>
+              <div class="project-meta">
+                <span>status: active</span>
+                <span>type: interactive</span>
+                <span>lang: glsl + javascript</span>
+              </div>
+              <div class="mt3">
+                <button class="btn-execute mr2">Execute</button>
+                <button class="btn-copy">Copy Code</button>
+              </div>
+            </div>
+
+            <div class="experiment-card mb4">
+              <h3>DOM Manipulation Sandbox</h3>
+              <p class="f6" style="color: #bfff00">
+                Experimental CSS and JavaScript techniques. Advanced CSS Grid, Flexbox patterns, animation loops, and
+                dynamic DOM manipulation with real-time performance monitoring.
+              </p>
+              <div class="project-meta">
+                <span>status: experimental</span>
+                <span>type: component</span>
+                <span>lang: html + css + js</span>
+              </div>
+              <div class="mt3">
+                <button class="btn-execute mr2">Execute</button>
+                <button class="btn-copy">Copy Code</button>
+              </div>
+            </div>
+
+            <!-- Sandbox Area for Code Execution -->
+            <div class="sandbox-container mt4 mb4">
+              <p class="f7" style="color: #00ff00; margin: 2rem 0 0 0">
+                Output area - select an experiment above to run code in this sandbox
+              </p>
+              <iframe
+                class="sandbox-iframe mt3"
+                sandbox="allow-scripts allow-same-origin"
+                title="Code execution sandbox"
+              ></iframe>
+            </div>
+          </section>
+
+          <!-- TOOLS SECTION (Hidden by default) -->
+          <section id="tools-section" class="chamber-item w-100" style="display: none">
+            <div class="section-header">
+              <h2>TOOLS</h2>
+            </div>
+
+            <div class="tool-card mb4">
+              <h3>Code Formatter</h3>
+              <p class="f6" style="color: #bfff00">
+                Format and beautify JavaScript, HTML, CSS code. Built-in syntax validation and automated code analysis.
+                Supports Prettier configuration presets.
+              </p>
+              <div class="project-meta">
+                <span>type: utility</span>
+                <span>status: active</span>
+              </div>
+              <div class="mt3">
+                <button class="btn-execute mr2">Open Tool</button>
+              </div>
+            </div>
+
+            <div class="tool-card mb4">
+              <h3>Color Palette Generator</h3>
+              <p class="f6" style="color: #bfff00">
+                Generate harmonious color palettes using color theory algorithms. Export in CSS custom properties, SCSS
+                variables, or JSON format.
+              </p>
+              <div class="project-meta">
+                <span>type: generator</span>
+                <span>status: active</span>
+              </div>
+              <div class="mt3">
+                <button class="btn-execute mr2">Open Tool</button>
+              </div>
+            </div>
+
+            <div class="tool-card mb4">
+              <h3>Regex Tester</h3>
+              <p class="f6" style="color: #bfff00">
+                Interactive regular expression testing and debugging. Pattern visualization, match highlighting, and
+                code generation for multiple languages.
+              </p>
+              <div class="project-meta">
+                <span>type: utility</span>
+                <span>status: planning</span>
+              </div>
+              <div class="mt3">
+                <button class="btn-execute mr2" disabled>Open Tool</button>
+              </div>
+            </div>
+
+            <div class="tool-card mb4">
+              <h3>JSON/YAML Converter</h3>
+              <p class="f6" style="color: #bfff00">
+                Convert between JSON, YAML, and TOML formats. Validation, beautification, and schema analysis. Support
+                for nested structures and complex data types.
+              </p>
+              <div class="project-meta">
+                <span>type: converter</span>
+                <span>status: planning</span>
+              </div>
+              <div class="mt3">
+                <button class="btn-execute mr2" disabled>Open Tool</button>
+              </div>
+            </div>
+
+            <div class="tool-card mb4">
+              <h3>Performance Monitor</h3>
+              <p class="f6" style="color: #bfff00">
+                Real-time performance metrics for web applications. FPS counter, memory usage, rendering bottleneck
+                detection, and frame rate analysis dashboard.
+              </p>
+              <div class="project-meta">
+                <span>type: profiler</span>
+                <span>status: planning</span>
+              </div>
+              <div class="mt3">
+                <button class="btn-execute mr2" disabled>Open Tool</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- Terminal Output / Console Area -->
+      <section class="mw9 center ph4 pv4">
+        <div class="section-header">
+          <h2>CONSOLE</h2>
+        </div>
+        <div class="terminal-output" id="terminal-output">
+          <div class="log" style="color: var(--ergasterion-accent)">$ Welcome to ERGASTERION workshop</div>
+          <div class="log" style="color: var(--ergasterion-primary)">$ Ready for code execution</div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Chamber Footer -->
+    <footer class="chamber-footer fixed bottom-0 w-100 pa3 bg-black-90" role="contentinfo">
+      <nav class="flex justify-center items-center" aria-label="Footer navigation">
+        <a href="../index.html#landing" class="white-70 f7 link mh3">ETCETER4</a>
+        <span class="white-30">//</span>
+        <a href="../index.html#menu" class="white-70 f7 link mh3">NAOS</a>
+        <span class="white-30">//</span>
+        <a href="../sitemap.html" class="white-70 f7 link mh3">SITE MAP</a>
+      </nav>
+    </footer>
+
+    <!-- Scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
+      integrity="sha512-+ZPnKPFqf/PjXPKJLBykOgAOnUmCp0ufqCYWsuvMV5FhlYCf/DlTdB3PQJuXzA3otXm1FiooUNrBncLRLbYaxA=="
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="../js/config.js"></script>
+    <script type="text/javascript" src="../js/living-pantheon/LivingPantheonCore.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+
+    <!-- Ergasterion-specific initialization script -->
+    <script>
+      'use strict';
+
+      document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Living Pantheon if available
+        if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
+          LivingPantheonCore.initialize({
+            chamber: 'ergasterion',
+            color: '#00FF00',
+          });
+        }
+
+        // Section navigation functionality
+        const sectionBtns = document.querySelectorAll('.section-btn');
+        const experimentSection = document.getElementById('experiments-section');
+        const toolsSection = document.getElementById('tools-section');
+
+        sectionBtns.forEach(btn => {
+          btn.addEventListener('click', function () {
+            const section = this.dataset.section;
+
+            // Update button states
+            sectionBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            // Show/hide sections
+            if (section === 'experiments') {
+              experimentSection.style.display = 'block';
+              toolsSection.style.display = 'none';
+            } else if (section === 'tools') {
+              experimentSection.style.display = 'none';
+              toolsSection.style.display = 'block';
+            }
+          });
+        });
+
+        // Terminal logging helper
+        window.logToTerminal = function (message, type = 'log') {
+          const terminal = document.getElementById('terminal-output');
+          const logEntry = document.createElement('div');
+          logEntry.className = `log ${type}`;
+          logEntry.textContent = '$ ' + message;
+          terminal.appendChild(terminal);
+        };
+
+        // Execute button handlers
+        document.querySelectorAll('.btn-execute').forEach(btn => {
+          btn.addEventListener('click', function () {
+            const card = this.closest('.experiment-card, .tool-card');
+            const title = card.querySelector('h3').textContent;
+            console.log('Executing:', title);
+          });
+        });
+
+        // Copy button handlers
+        document.querySelectorAll('.btn-copy').forEach(btn => {
+          btn.addEventListener('click', function () {
+            const card = this.closest('.experiment-card');
+            if (card) {
+              this.textContent = 'Copied!';
+              setTimeout(() => {
+                this.textContent = 'Copy Code';
+              }, 2000);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

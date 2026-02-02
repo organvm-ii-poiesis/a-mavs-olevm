@@ -1,0 +1,26 @@
+AMBIENT AUDIO SYSTEM PLACEHOLDER
+
+This directory requires 11 MP3 audio files for the ambient soundscape system.
+Each file should be a 30-60 second seamless loop at MP3 format (128-192 kbps).
+
+Required files:
+1. temple-drone.mp3 - Default ambient pad (deep resonant drone)
+2. scholarly-hum.mp3 - Akademia section (intellectual, library-inspired)
+3. paper-rustle.mp3 - Bibliotheke section (tactile paper sounds)
+4. hearth-crackle.mp3 - Oikos section (warm fireplace ambience)
+5. gallery-echo.mp3 - Pinakotheke section (spacious gallery reverb)
+6. concert-hall.mp3 - Odeion section (grand concert hall ambience)
+7. stage-ambience.mp3 - Theatron section (theatrical dramatic space)
+8. crowd-murmur.mp3 - Agora section (marketplace crowd)
+9. conversation.mp3 - Symposion section (conversational ambience)
+10. machine-hum.mp3 - Ergasterion section (workshop machinery)
+11. clock-tick.mp3 - Khronos section (temporal/clock ambience)
+
+See README.md in this directory for:
+- Detailed specifications for each file
+- Technical requirements (format, duration, looping, volume)
+- Sourcing guidelines (recording, royalty-free libraries, synthesis)
+- Integration details with the audio system
+- Testing checklist before deployment
+
+These files are referenced in js/config.js and loaded by js/audioLoader.js.

@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Manifesto meta -->
+    <title>Manifesto: Creative Resistance | AGORA</title>
+    <meta
+      name="description"
+      content="A manifesto on creative resistance against algorithmic conformity. Reclaim your imagination, reject mass production, build meaning."
+    />
+    <meta name="author" content="ET CETER4" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Manifesto: Creative Resistance | AGORA" />
+    <meta property="og:description" content="A manifesto on creative resistance against algorithmic conformity." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ET CETER4" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <link rel="stylesheet" href="../../css/chamber-colors.css" />
+    <link rel="stylesheet" href="../css/agora.css" />
+
+    <!-- Manifesto-specific styles -->
+    <style>
+      .manifesto-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        background: rgba(0, 0, 0, 0.7);
+        border: 2px solid #dc143c;
+      }
+
+      .manifesto-header {
+        text-align: center;
+        border-bottom: 3px solid #dc143c;
+        padding-bottom: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .manifesto-title {
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        font-weight: 900;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #dc143c;
+        text-shadow:
+          2px 2px 0 rgba(0, 0, 0, 0.5),
+          0 0 20px rgba(220, 20, 60, 0.3);
+        margin: 0 0 1rem 0;
+        line-height: 1.1;
+      }
+
+      .manifesto-subtitle {
+        font-size: 1.25rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.8);
+        font-style: italic;
+        margin: 0;
+      }
+
+      .manifesto-preamble {
+        margin: 3rem 0 2rem 0;
+        padding: 1.5rem;
+        border-left: 4px solid #dc143c;
+        background: rgba(220, 20, 60, 0.08);
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .manifesto-declarations {
+        margin: 2rem 0;
+      }
+
+      .declaration {
+        margin-bottom: 2.5rem;
+        padding: 1.5rem;
+        border: 1px solid rgba(220, 20, 60, 0.4);
+        background: rgba(220, 20, 60, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .declaration:hover {
+        background: rgba(220, 20, 60, 0.12);
+        border-color: #dc143c;
+        box-shadow: 0 0 15px rgba(220, 20, 60, 0.2);
+      }
+
+      .declaration-number {
+        display: inline-block;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: #dc143c;
+        color: #000000;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 2.5rem;
+        font-weight: 900;
+        font-size: 1.25rem;
+        margin-right: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .declaration-title {
+        font-size: 1.3rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #dc143c;
+        margin-bottom: 0.75rem;
+      }
+
+      .declaration-text {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      .manifesto-closer {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 3px solid #dc143c;
+        text-align: center;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #dc143c;
+      }
+
+      .manifesto-signature {
+        margin-top: 1.5rem;
+        font-size: 1rem;
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: all 0.2s ease;
+        margin-bottom: 2rem;
+      }
+
+      .back-button:hover {
+        color: #dc143c;
+        text-shadow: 0 0 10px rgba(220, 20, 60, 0.6);
+      }
+
+      @media (max-width: 768px) {
+        .manifesto-container {
+          padding: 1.5rem 1rem;
+        }
+
+        .manifesto-title {
+          font-size: 1.75rem;
+        }
+
+        .declaration-number {
+          width: 2rem;
+          height: 2rem;
+          line-height: 2rem;
+          font-size: 1rem;
+        }
+
+        .declaration-title {
+          font-size: 1.1rem;
+        }
+
+        .declaration-text {
+          font-size: 0.95rem;
+        }
+      }
+    </style>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../img/favicon.ico" />
+  </head>
+
+  <body class="min-vh-100 w-100 futura fw1 agora-chamber" style="background: #0a0a0a">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#manifesto-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
+
+    <!-- Manifesto Header -->
+    <header class="chamber-header fixed top-0 left-0 w-100 z-5 pa3" style="background: rgba(0, 0, 0, 0.95)">
+      <nav class="flex justify-between items-center mw9 center" aria-label="Navigation">
+        <a href="../index.html" class="back-button">
+          <span>&larr;</span>
+          <span>Back to Agora</span>
+        </a>
+        <h1 class="ma0 f5 tracked-mega" style="color: #dc143c; flex: 1; text-align: center">MANIFESTO</h1>
+        <div class="w4"></div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="manifesto-content" class="pt5 pb5 min-vh-100" role="main" aria-label="Manifesto content">
+      <div class="manifesto-container">
+        <div class="manifesto-header">
+          <h2 class="manifesto-title">Creative Resistance</h2>
+          <p class="manifesto-subtitle">Against algorithmic conformity and the colonization of imagination</p>
+        </div>
+
+        <article>
+          <div class="manifesto-preamble">
+            We are creatures made to imagine. Yet the systems we inhabit are designed to stifle imagination, to
+            homogenize creativity, to reduce the infinite possibilities of human expression to quantifiable engagement
+            metrics. Algorithms do not liberate artists—they domesticate them. It is time to resist.
+          </div>
+
+          <div class="manifesto-declarations">
+            <div class="declaration">
+              <span class="declaration-number">1</span>
+              <h3 class="declaration-title">Create for Creation's Sake</h3>
+              <p class="declaration-text">
+                We reject the equation that ties creative value to engagement, virality, and algorithmic performance.
+                Art does not need permission from the algorithm to exist. Make work that moves you, confuses you, angers
+                you, saves you—regardless of whether it will trend. The world does not need more content; it needs more
+                meaning.
+              </p>
+            </div>
+
+            <div class="declaration">
+              <span class="declaration-number">2</span>
+              <h3 class="declaration-title">Embrace Weirdness; Reject Optimization</h3>
+              <p class="declaration-text">
+                The algorithm hunts for patterns and eliminates outliers. Your weirdness—your specific, idiosyncratic
+                voice—is your resistance. Embrace the strange. Build work that cannot be easily categorized, monetized,
+                or recommended. Let your creation be gloriously unmarketable. This is your power.
+              </p>
+            </div>
+
+            <div class="declaration">
+              <span class="declaration-number">3</span>
+              <h3 class="declaration-title">Build Community, Not Audience</h3>
+              <p class="declaration-text">
+                Audiences are passive consumers. Communities are active participants. We reject the follower economy.
+                Instead, we cultivate spaces where creators and audiences are in genuine dialogue—where creativity is a
+                shared act, not a broadcast. Small, deep communities beat massive, shallow followings every time.
+              </p>
+            </div>
+
+            <div class="declaration">
+              <span class="declaration-number">4</span>
+              <h3 class="declaration-title">Own Your Work Completely</h3>
+              <p class="declaration-text">
+                Platform dependency is a trap. When you create on rented land, your work can vanish at the whim of an
+                algorithm update or a platform's descent into chaos. We commit to ownership—to archives, self-hosted
+                sites, open formats. Your creative work is your legacy. Protect it.
+              </p>
+            </div>
+
+            <div class="declaration">
+              <span class="declaration-number">5</span>
+              <h3 class="declaration-title">Time Is Not a Metric</h3>
+              <p class="declaration-text">
+                Great work takes time—sometimes years. Algorithms demand speed: more content, faster posts, constant
+                novelty. We reject this logic. We make work that is slow, patient, meditative. We resist the tyranny of
+                the content cycle. Quality over quantity. Depth over frequency. Always.
+              </p>
+            </div>
+
+            <div class="declaration">
+              <span class="declaration-number">6</span>
+              <h3 class="declaration-title">Collaborate Fearlessly</h3>
+              <p class="declaration-text">
+                Creativity flourishes in collaboration. Yet algorithms reward individual creators, feeding competitive
+                instincts and discouraging genuine partnership. We choose to build together. We remix, sample,
+                reference, and build upon each other's work. Generosity in creativity is not weakness—it is revolution.
+              </p>
+            </div>
+
+            <div class="declaration">
+              <span class="declaration-number">7</span>
+              <h3 class="declaration-title">Refuse Surveillance in the Creative Process</h3>
+              <p class="declaration-text">
+                Every like, every view, every second watched is data harvested. We demand space for creation that is not
+                tracked, measured, and sold. Create in private. Publish selectively. Build friction between your
+                creative self and the systems that would exploit it. Some things should not be quantified.
+              </p>
+            </div>
+
+            <div class="declaration">
+              <span class="declaration-number">8</span>
+              <h3 class="declaration-title">Celebrate Imperfection and Failure</h3>
+              <p class="declaration-text">
+                Algorithms optimize for perfection and polish. But true creativity lives in failure, in the broken, the
+                unfinished, the beautiful accident. We celebrate the sketch, the rough draft, the experimental failure.
+                Perfection kills invention. Embrace your beautiful mistakes.
+              </p>
+            </div>
+
+            <div class="declaration">
+              <span class="declaration-number">9</span>
+              <h3 class="declaration-title">Remember That Art Is Inherently Political</h3>
+              <p class="declaration-text">
+                Algorithms will tell you to stay neutral, to avoid controversy, to make work that offends no one. This
+                is a lie. All art makes a choice. All creativity reflects a vision of how the world should be. Your
+                weirdness, your voice, your perspective—these are political acts. Own that power.
+              </p>
+            </div>
+
+            <div class="declaration">
+              <span class="declaration-number">10</span>
+              <h3 class="declaration-title">Create the Future You Want to Inherit</h3>
+              <p class="declaration-text">
+                We are not waiting for permission to build a new creative landscape. We are building it now—with tools
+                we make ourselves, in communities we cultivate, on principles we choose. What you create today
+                determines what becomes possible tomorrow. Create accordingly.
+              </p>
+            </div>
+          </div>
+
+          <div class="manifesto-closer">
+            Your imagination is not for sale.<br />
+            Your voice cannot be optimized.<br />
+            Create anyway.
+
+            <div class="manifesto-signature">
+              — The Agora, in assembly<br />
+              <span class="tracked" style="font-size: 0.9rem">For art that refuses to be tamed</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="chamber-footer w-100 pa4 bt b--agora"
+      style="background: rgba(0, 0, 0, 0.9); border-top: 2px solid #dc143c"
+    >
+      <div class="mw9 center tc f6 gray">
+        <p class="ma0 mb2">
+          <a href="../index.html" class="link-agora">Back to Agora</a> |
+          <a href="../../index.html" class="link-agora">Back to Naos</a>
+        </p>
+        <p class="ma0 f7 tracked">ET CETER4 | AGORA Chamber | Creative Manifesto</p>
+      </div>
+    </footer>
+  </body>
+</html>

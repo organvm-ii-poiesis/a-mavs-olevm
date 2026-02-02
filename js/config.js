@@ -467,4 +467,308 @@ const ETCETER4_CONFIG = {
       artwork: 'img/photos/artwork/ogod/ogod29.jpg',
     },
   },
+
+  /**
+   * Self-hosted media infrastructure configuration
+   * Workstream B: Replace Bandcamp embeds with self-hosted audio/video
+   */
+  media: {
+    // Cloudflare R2 storage base URL (to be configured)
+    r2BaseUrl: 'https://media.etceter4.com',
+
+    // Audio player settings
+    audio: {
+      // Default audio format preference order
+      formatPriority: ['mp3', 'flac', 'ogg'],
+      // Preview clip duration in seconds
+      previewDuration: 30,
+      // Waveform visualization settings
+      waveform: {
+        height: 80,
+        barWidth: 2,
+        barGap: 1,
+        primaryColor: '#00FFFF',
+        secondaryColor: '#FF00FF',
+        progressColor: '#FFFFFF',
+        backgroundColor: 'transparent',
+      },
+      // Crossfade duration between tracks (ms)
+      crossfadeDuration: 1000,
+      // Volume settings
+      defaultVolume: 0.8,
+      fadeOutDuration: 500,
+      fadeInDuration: 500,
+    },
+
+    // Video player settings
+    video: {
+      // Quality preference order
+      qualityOrder: ['1080p', '720p', '480p', '360p'],
+      // Default to adaptive streaming if available
+      preferAdaptive: true,
+      // Thumbnail preview interval (seconds)
+      thumbnailInterval: 10,
+      // Buffer ahead duration (seconds)
+      bufferAhead: 30,
+    },
+
+    // Album metadata
+    albums: {
+      ogod: {
+        id: 'ogod',
+        title: 'OGOD',
+        artist: 'ET CETER4',
+        year: 2015,
+        trackCount: 29,
+        coverArt: {
+          large: 'audio/albums/ogod/cover-1200.jpg',
+          medium: 'audio/albums/ogod/cover-600.jpg',
+          small: 'audio/albums/ogod/cover-300.jpg',
+        },
+        hasLyrics: true,
+        hasStems: true,
+      },
+      rmxs: {
+        id: 'rmxs',
+        title: 'ET CETER4 RMXS',
+        artist: 'ET CETER4',
+        year: 2020,
+        trackCount: 0, // TBD
+        coverArt: {
+          large: 'audio/albums/rmxs/cover-1200.jpg',
+          medium: 'audio/albums/rmxs/cover-600.jpg',
+          small: 'audio/albums/rmxs/cover-300.jpg',
+        },
+      },
+      progressionDigression: {
+        id: 'progression-digression',
+        title: 'The Progression of Digression',
+        artist: 'ET CETER4',
+        year: 2012,
+        trackCount: 0, // TBD
+        coverArt: {
+          large: 'audio/albums/progression-digression/cover-1200.jpg',
+          medium: 'audio/albums/progression-digression/cover-600.jpg',
+          small: 'audio/albums/progression-digression/cover-300.jpg',
+        },
+      },
+      etc: {
+        id: 'etc',
+        title: 'Etc',
+        artist: 'ET CETER4',
+        year: 2011,
+        trackCount: 0, // TBD
+        coverArt: {
+          large: 'audio/albums/etc/cover-1200.jpg',
+          medium: 'audio/albums/etc/cover-600.jpg',
+          small: 'audio/albums/etc/cover-300.jpg',
+        },
+      },
+    },
+
+    // Service Worker caching settings
+    cache: {
+      enabled: true,
+      // Cache audio for offline listening
+      audioTTL: 604800000, // 7 days
+      // Cache video thumbnails
+      thumbnailTTL: 86400000, // 24 hours
+      // Max cached audio size in bytes (100MB)
+      maxAudioCacheSize: 104857600,
+    },
+  },
+
+  /**
+   * Living Pantheon generative features configuration
+   * Workstream C: Generative visual/audio system
+   */
+  livingPantheon: {
+    // Master toggle
+    enabled: true,
+
+    // Global glitch effects (2% random visual glitches)
+    glitch: {
+      enabled: true,
+      // Probability of glitch occurring per check (0.02 = 2%)
+      frequency: 0.02,
+      // Check interval in milliseconds
+      checkInterval: 5000,
+      // Available glitch effect types
+      types: ['text', 'color', 'position', 'image'],
+      // Duration of glitch effect in milliseconds
+      duration: {
+        min: 50,
+        max: 200,
+      },
+      // Elements to exclude from glitching (selectors)
+      excludeSelectors: ['.no-glitch', 'input', 'button', 'a'],
+    },
+
+    // Morphing image system (photo→glitch→abstract over 60s)
+    morphing: {
+      enabled: true,
+      // Total transition duration in milliseconds
+      transitionDuration: 60000,
+      // Pause between morph cycles
+      pauseBetween: 30000,
+      // Image containers to morph (selectors)
+      targetSelectors: ['.morph-image', '.morphing-target'],
+      // Blend modes to cycle through
+      blendModes: ['normal', 'multiply', 'screen', 'overlay', 'difference'],
+    },
+
+    // Ambient sound layer (5% volume background)
+    ambient: {
+      enabled: true,
+      // Base volume (0.0 to 1.0, recommended 0.05 for 5%)
+      baseVolume: 0.05,
+      // Chamber-specific ambient sounds
+      chamberSpecific: true,
+      // Fade duration when changing chambers
+      crossfadeDuration: 2000,
+      // Default ambient track path
+      defaultTrack: 'audio/ambient/temple-drone.mp3',
+      // Chamber-specific ambient tracks
+      chamberTracks: {
+        akademia: 'audio/ambient/scholarly-hum.mp3',
+        bibliotheke: 'audio/ambient/paper-rustle.mp3',
+        oikos: 'audio/ambient/hearth-crackle.mp3',
+        pinakotheke: 'audio/ambient/gallery-echo.mp3',
+        odeion: 'audio/ambient/concert-hall.mp3',
+        theatron: 'audio/ambient/stage-ambience.mp3',
+        agora: 'audio/ambient/crowd-murmur.mp3',
+        symposion: 'audio/ambient/conversation.mp3',
+        ergasterion: 'audio/ambient/machine-hum.mp3',
+        khronos: 'audio/ambient/clock-tick.mp3',
+      },
+    },
+
+    // Animated content (breathing sections, text drift)
+    animation: {
+      enabled: true,
+      // Breathing animation (subtle scale pulse)
+      breathing: {
+        enabled: true,
+        // Scale range (1.0 = no scale, 1.02 = 2% larger)
+        scaleMin: 1.0,
+        scaleMax: 1.02,
+        // Duration of one breath cycle in milliseconds
+        duration: 4000,
+        // Elements to animate (selectors)
+        targetSelectors: ['.breathing', '.living-element'],
+      },
+      // Text drift (subtle position movement)
+      textDrift: {
+        enabled: true,
+        // Maximum drift in pixels
+        maxDrift: 2,
+        // Duration of drift cycle in milliseconds
+        duration: 8000,
+        // Elements to animate (selectors)
+        targetSelectors: ['.drifting-text', '.living-text'],
+      },
+    },
+
+    // Generative labyrinth (expanded diary with fragments)
+    labyrinth: {
+      enabled: true,
+      // Number of text fragments to include
+      fragmentCount: 100,
+      // Number of secret loopholes
+      loopholeCount: 10,
+      // Fragment sources
+      fragmentSources: ['js/living-pantheon/data/fragments.json'],
+      // Loophole trigger probability
+      loopholeProbability: 0.05,
+    },
+
+    // Accessibility settings
+    accessibility: {
+      // Respect prefers-reduced-motion media query
+      respectReducedMotion: true,
+      // Allow user to toggle via localStorage
+      allowUserToggle: true,
+      // LocalStorage key for user preference
+      storageKey: 'etceter4-living-pantheon-enabled',
+      // Keyboard shortcut to toggle (Ctrl+Shift+L)
+      toggleShortcut: { ctrl: true, shift: true, key: 'l' },
+    },
+  },
+
+  /**
+   * Chamber configuration
+   * Maps chamber IDs to their visual themes
+   */
+  chambers: {
+    // East Wing - Scholarship
+    akademia: {
+      name: 'AKADEMIA',
+      subtitle: 'Essays, research, theoretical writings',
+      color: '#00FFFF',
+      wing: 'east',
+    },
+    bibliotheke: {
+      name: 'BIBLIOTHEKE',
+      subtitle: 'Poetry, prose, lyrics, literary criticism',
+      color: '#8B4513',
+      secondaryColor: '#F5F5DC',
+      wing: 'east',
+    },
+    pinakotheke: {
+      name: 'PINAKOTHEKE',
+      subtitle: 'Photography, digital art, glitch, generative',
+      color: '#FF00FF',
+      wing: 'east',
+    },
+
+    // West Wing - Discourse
+    agora: {
+      name: 'AGORA',
+      subtitle: 'Political commentary, manifestos, social critique',
+      color: '#DC143C',
+      wing: 'west',
+    },
+    symposion: {
+      name: 'SYMPOSION',
+      subtitle: 'Dialogues, interviews, conversations',
+      color: '#722F37',
+      secondaryColor: '#F5F5DC',
+      wing: 'west',
+    },
+    oikos: {
+      name: 'OIKOS',
+      subtitle: 'Reflections, dreams, confessions',
+      color: '#FF8C00',
+      secondaryColor: '#FFB6C1',
+      wing: 'west',
+    },
+
+    // Southern Portico - Performance
+    odeion: {
+      name: 'ODEION',
+      subtitle: 'Albums, singles, demos, experimental',
+      color: '#FFD700',
+      wing: 'south',
+    },
+    theatron: {
+      name: 'THEATRON',
+      subtitle: 'Performance recordings, rehearsals, stage',
+      color: '#800080',
+      wing: 'south',
+    },
+
+    // Northern Portal - Process
+    ergasterion: {
+      name: 'ERGASTERION',
+      subtitle: 'Code experiments, prototypes, interactive demos',
+      color: '#00FF00',
+      wing: 'north',
+    },
+    khronos: {
+      name: 'KHRONOS',
+      subtitle: 'Historical archive, evolution tracking, milestones',
+      color: '#4169E1',
+      wing: 'north',
+    },
+  },
 };

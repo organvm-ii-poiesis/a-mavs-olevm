@@ -2,6 +2,7 @@
  * @file tests/unit/AudioAnalyzer.test.js
  * @description Unit tests for AudioAnalyzer class
  * Tests FFT frequency analysis for audio-visual reactivity
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -101,12 +102,20 @@ describe('AudioAnalyzer', () => {
         }
 
         const rawFFT = this.fftAnalyser.getValue();
-        for (let i = 0; i < rawFFT.length && i < this.frequencyData.length; i++) {
+        for (
+          let i = 0;
+          i < rawFFT.length && i < this.frequencyData.length;
+          i++
+        ) {
           this.frequencyData[i] = rawFFT[i];
         }
 
         const rawWaveform = this.waveformAnalyser.getValue();
-        for (let i = 0; i < rawWaveform.length && i < this.waveformData.length; i++) {
+        for (
+          let i = 0;
+          i < rawWaveform.length && i < this.waveformData.length;
+          i++
+        ) {
           this.waveformData[i] = rawWaveform[i];
         }
 
@@ -170,13 +179,19 @@ describe('AudioAnalyzer', () => {
       }
 
       getCombinedBassLevel() {
-        return Math.min(1, (this.bandLevels.subBass + this.bandLevels.bass) / 1.5);
+        return Math.min(
+          1,
+          (this.bandLevels.subBass + this.bandLevels.bass) / 1.5
+        );
       }
 
       getCombinedMidLevel() {
         return Math.min(
           1,
-          (this.bandLevels.lowMid + this.bandLevels.mid + this.bandLevels.highMid) / 2
+          (this.bandLevels.lowMid +
+            this.bandLevels.mid +
+            this.bandLevels.highMid) /
+            2
         );
       }
 
@@ -193,7 +208,9 @@ describe('AudioAnalyzer', () => {
         const nyquist = this.sampleRate / 2;
 
         for (const band in this.frequencyRanges) {
-          if (Object.prototype.hasOwnProperty.call(this.frequencyRanges, band)) {
+          if (
+            Object.prototype.hasOwnProperty.call(this.frequencyRanges, band)
+          ) {
             const range = this.frequencyRanges[band];
             const level = this._getFrequencyRangeLevel(
               range.min,
@@ -203,7 +220,8 @@ describe('AudioAnalyzer', () => {
             );
 
             const prevLevel = this._prevBandLevels[band];
-            const smoothedLevel = prevLevel + (level - prevLevel) * (1 - this.smoothing);
+            const smoothedLevel =
+              prevLevel + (level - prevLevel) * (1 - this.smoothing);
 
             this.bandLevels[band] = smoothedLevel;
             this._prevBandLevels[band] = smoothedLevel;
@@ -213,7 +231,10 @@ describe('AudioAnalyzer', () => {
 
       _getFrequencyRangeLevel(minFreq, maxFreq, nyquist, binCount) {
         const minBin = Math.floor((minFreq / nyquist) * binCount);
-        const maxBin = Math.min(binCount - 1, Math.ceil((maxFreq / nyquist) * binCount));
+        const maxBin = Math.min(
+          binCount - 1,
+          Math.ceil((maxFreq / nyquist) * binCount)
+        );
 
         if (minBin >= maxBin) return 0;
 
@@ -444,7 +465,9 @@ describe('AudioAnalyzer', () => {
         analyzer.update();
       }
 
-      expect(analyzer.energyHistory.length).toBeLessThanOrEqual(analyzer.energyHistorySize);
+      expect(analyzer.energyHistory.length).toBeLessThanOrEqual(
+        analyzer.energyHistorySize
+      );
     });
   });
 

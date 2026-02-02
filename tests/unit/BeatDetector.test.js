@@ -2,6 +2,7 @@
  * @file tests/unit/BeatDetector.test.js
  * @description Unit tests for BeatDetector class
  * Tests beat detection and tempo analysis for audio-visual synchronization
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -153,7 +154,8 @@ describe('BeatDetector', () => {
         }
 
         // Calculate average interval
-        const avgInterval = intervals.reduce((a, b) => a + b, 0) / intervals.length;
+        const avgInterval =
+          intervals.reduce((a, b) => a + b, 0) / intervals.length;
 
         // Convert to BPM
         this.bpm = Math.round(60000 / avgInterval);
@@ -163,8 +165,10 @@ describe('BeatDetector', () => {
 
         // Calculate confidence based on variance
         const variance =
-          intervals.reduce((sum, int) => sum + Math.pow(int - avgInterval, 2), 0) /
-          intervals.length;
+          intervals.reduce(
+            (sum, int) => sum + Math.pow(int - avgInterval, 2),
+            0
+          ) / intervals.length;
         const stdDev = Math.sqrt(variance);
         this.confidence = Math.max(0, 1 - stdDev / avgInterval);
       }

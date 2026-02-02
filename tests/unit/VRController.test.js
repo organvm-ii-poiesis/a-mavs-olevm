@@ -1,6 +1,7 @@
 /**
  * @file VRController.test.js
  * @description Unit tests for VRController WebXR VR support
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
@@ -301,9 +302,7 @@ describe('VRController', () => {
       vrController.showVRButton();
 
       // Button should not be in body since not supported
-      expect(
-        document.body.querySelector('.ogod-vr-button')
-      ).toBeNull();
+      expect(document.body.querySelector('.ogod-vr-button')).toBeNull();
     });
   });
 

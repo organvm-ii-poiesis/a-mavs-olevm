@@ -1,6 +1,7 @@
 /**
  * @file EnvironmentBase.test.js
  * @description Unit tests for EnvironmentBase abstract class
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';

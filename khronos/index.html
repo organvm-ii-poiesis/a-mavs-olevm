@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Chamber-specific meta -->
+    <title>KHRONOS | ET CETER4</title>
+    <meta name="description" content="Historical archive, evolution tracking, milestones" />
+    <meta name="author" content="ET CETER4" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="KHRONOS | ET CETER4" />
+    <meta property="og:description" content="Historical archive, evolution tracking, milestones" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ET CETER4" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/chamber-colors.css" />
+    <link rel="stylesheet" href="css/khronos.css" />
+
+    <!-- Timeline Libraries (D3.js and vis.js) -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../img/favicon.ico" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#4169E1" />
+  </head>
+
+  <body class="min-vh-100 w-100 futura fw1 khronos-chamber">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#chamber-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
+
+    <!-- Chamber Header -->
+    <header class="chamber-header fixed top-0 left-0 w-100 z-5 pa3" style="background: rgba(0, 0, 0, 0.8)">
+      <nav class="flex justify-between items-center mw9 center" aria-label="Chamber navigation">
+        <a href="../index.html#menu" class="chamber-back-btn white f6 link flex items-center">
+          <span class="mr2">&larr;</span>
+          <span>Back to Naos</span>
+        </a>
+        <h1 class="ma0 f4 tracked-mega khronos-text">KHRONOS</h1>
+        <div class="chamber-nav-spacer w4"></div>
+      </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="chamber-content" class="pt5 pb5 min-vh-100" role="main" aria-label="KHRONOS content">
+      <!-- Chamber Hero Section -->
+      <section
+        class="chamber-hero khronos vh-50 flex flex-column justify-center items-center tc"
+        style="background: linear-gradient(180deg, rgba(65, 105, 225, 0.2) 0%, transparent 100%)"
+      >
+        <h2 class="f-headline-ns f1 tracked-mega ma0 mb3 khronos-text">KHRONOS</h2>
+        <p class="bodoni f4 o-80 mw6 ph4">Historical archive, evolution tracking, milestones</p>
+      </section>
+
+      <!-- Timeline Navigation -->
+      <section id="timeline-nav" class="mw9 center ph4 pv4">
+        <div class="chamber-section-nav flex flex-wrap justify-center mb5 gap-3">
+          <button class="timeline-nav-btn active khronos-text tracked" data-section="eras">ERAS</button>
+          <button class="timeline-nav-btn khronos-text tracked" data-section="milestones">MILESTONES</button>
+        </div>
+      </section>
+
+      <!-- Content Grid -->
+      <section id="chamber-grid" class="mw9 center ph4 pv5">
+        <!-- ERAS Section -->
+        <div id="eras-section" class="timeline-section active">
+          <h3 class="f3 tracked khronos-text mb4">ERAS</h3>
+          <div class="khronos-timeline">
+            <!-- Vertical timeline container for eras -->
+            <div id="eras-timeline" class="timeline-vertical">
+              <!-- Era cards will be populated here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- MILESTONES Section -->
+        <div id="milestones-section" class="timeline-section dn">
+          <h3 class="f3 tracked khronos-text mb4">MILESTONES</h3>
+          <div id="milestones-container" class="milestones-flex">
+            <!-- Milestone cards will be populated here -->
+          </div>
+          <!-- D3.js Timeline Visualization -->
+          <div id="timeline-viz" class="mt5 mh-auto" style="max-width: 100%; overflow-x: auto"></div>
+        </div>
+      </section>
+
+      <!-- Footer information -->
+      <section class="mw9 center ph4 pv5 bt b--khronos mt5">
+        <h4 class="f5 tracked khronos-text mb3">TIMELINE METADATA</h4>
+        <p class="f6 o-60 lh-copy">
+          The Khronos chamber serves as a historical archive tracking the evolution and key milestones of the ETCETER4
+          project. Navigate between eras (major time periods) and milestones (specific events) to explore the project's
+          chronological development. Integration with D3.js and vis.js provides interactive timeline visualizations and
+          temporal data exploration.
+        </p>
+      </section>
+    </main>
+
+    <!-- Chamber Footer -->
+    <footer class="chamber-footer fixed bottom-0 w-100 pa3 bg-black-90" role="contentinfo">
+      <nav class="flex justify-center items-center" aria-label="Footer navigation">
+        <a href="../index.html#landing" class="white-70 f7 link mh3">ETCETER4</a>
+        <span class="white-30">//</span>
+        <a href="../index.html#menu" class="white-70 f7 link mh3">NAOS</a>
+        <span class="white-30">//</span>
+        <a href="../sitemap.html" class="white-70 f7 link mh3">SITE MAP</a>
+      </nav>
+    </footer>
+
+    <!-- Scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
+      integrity="sha512-+ZPnKPFqf/PjXPKJLBykOgAOnUmCp0ufqCYWsuvMV5FhlYCf/DlTdB3PQJuXzA3otXm1FiooUNrBncLRLbYaxA=="
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="../js/config.js"></script>
+    <script type="text/javascript" src="../js/living-pantheon/LivingPantheonCore.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script type="text/javascript" src="khronos.js"></script>
+    <script>
+      // Chamber initialization
+      document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Living Pantheon if available
+        if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
+          LivingPantheonCore.initialize({
+            chamber: 'khronos',
+            color: '#4169E1',
+          });
+        }
+
+        // Initialize Khronos timeline
+        if (typeof KhronosTimeline !== 'undefined') {
+          KhronosTimeline.initialize(KHRONOS_CONFIG);
+        }
+      });
+    </script>
+  </body>
+</html>

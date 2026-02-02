@@ -1,0 +1,35 @@
+<svg viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Metadata -->
+  <defs>
+    <style>
+      .et-logo-text { font-family: 'Monaco', 'Courier New', monospace; font-weight: bold; font-size: 56px; letter-spacing: 2px; }
+      .et-logo-dark { fill: #FFFFFF; }
+      .et-logo-accent { fill: #00FFFF; }
+      .et-logo-accent-mag { fill: #FF00FF; }
+    </style>
+  </defs>
+
+  <!-- Background (optional subtle grid) -->
+  <rect width="240" height="80" fill="#000000" opacity="0"/>
+
+  <!-- Main text: "ET CETER" -->
+  <text x="8" y="60" class="et-logo-text et-logo-dark">ET CETER</text>
+
+  <!-- Custom "4" with geometric design -->
+  <g transform="translate(200, 20)">
+    <!-- Vertical bar (left side) -->
+    <rect x="0" y="0" width="4" height="40" fill="#FF00FF"/>
+
+    <!-- Horizontal bar (middle) -->
+    <rect x="0" y="16" width="20" height="4" fill="#00FFFF"/>
+
+    <!-- Diagonal accent line -->
+    <line x1="20" y1="0" x2="20" y2="40" stroke="#FF00FF" stroke-width="3"/>
+  </g>
+
+  <!-- Decorative underline accent -->
+  <line x1="8" y1="68" x2="230" y2="68" stroke="#FF00FF" stroke-width="2" opacity="0.6"/>
+
+  <!-- Accent dot after logo -->
+  <circle cx="235" cy="62" r="2" fill="#00FFFF"/>
+</svg>

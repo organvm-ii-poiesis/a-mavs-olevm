@@ -2,6 +2,7 @@
  * @file tests/unit/FirstPersonController.test.js
  * @description Unit tests for FirstPersonController class
  * Tests camera controls, keyboard/mouse input, touch controls, and gyroscope
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';

@@ -41,6 +41,19 @@ const _pID = {
   stills: '#stills',
   info: '#info',
   ogod3d: '#ogod3d',
+  eastWing: '#east-wing',
+  westWing: '#west-wing',
+  southWing: '#south-wing',
+  northWing: '#north-wing',
+  bibliotheke: '#bibliotheke',
+  oikos: '#oikos',
+  pinakotheke: '#pinakotheke',
+  agora: '#agora',
+  symposion: '#symposion',
+  odeion: '#odeion',
+  theatron: '#theatron',
+  ergasterion: '#ergasterion',
+  khronos: '#khronos',
 };
 
 /**
@@ -68,7 +81,16 @@ let pages = [];
 pages.menu = new Page({
   id: _pID.menu,
   tier: 2,
-  downLinks: [_pID.words, _pID.sound, _pID.vision, _pID.info],
+  downLinks: [
+    _pID.words,
+    _pID.sound,
+    _pID.vision,
+    _pID.info,
+    _pID.eastWing,
+    _pID.westWing,
+    _pID.southWing,
+    _pID.northWing,
+  ],
   upLinks: [_pID.landing],
   initialize() {
     // get the lib and sketch
@@ -291,9 +313,9 @@ pages.ogod3d = new Page({
 
       Object.keys(tracks).forEach(num => {
         const btn = document.createElement('button');
-        btn.className =
-          `ogod3d-track-btn${ 
-          parseInt(num) === state.currentTrack ? ' active' : ''}`;
+        btn.className = `ogod3d-track-btn${
+          parseInt(num) === state.currentTrack ? ' active' : ''
+        }`;
         btn.dataset.track = num;
         btn.textContent = [
           '',
@@ -371,6 +393,123 @@ pages.ogod3d = new Page({
   },
 });
 
+/**
+ * Wing page configurations
+ * Tier 3 - Navigation hubs for chamber groupings
+ */
+pages.eastWing = new Page({
+  id: _pID.eastWing,
+  tier: 3,
+  upLinks: [_pID.menu],
+  downLinks: [_pID.bibliotheke, _pID.oikos, _pID.pinakotheke],
+});
+
+pages.westWing = new Page({
+  id: _pID.westWing,
+  tier: 3,
+  upLinks: [_pID.menu],
+  downLinks: [_pID.agora, _pID.symposion],
+});
+
+pages.southWing = new Page({
+  id: _pID.southWing,
+  tier: 3,
+  upLinks: [_pID.menu],
+  downLinks: [_pID.odeion, _pID.theatron],
+});
+
+pages.northWing = new Page({
+  id: _pID.northWing,
+  tier: 3,
+  upLinks: [_pID.menu],
+  downLinks: [_pID.ergasterion, _pID.khronos],
+});
+
+/**
+ * Chamber page configurations
+ * Tier 4 - Individual chambers within each wing
+ */
+pages.bibliotheke = new Page({
+  id: _pID.bibliotheke,
+  tier: 4,
+  upLinks: [_pID.eastWing],
+  initialize() {
+    replacePlaceholders(this.id);
+  },
+});
+
+pages.oikos = new Page({
+  id: _pID.oikos,
+  tier: 4,
+  upLinks: [_pID.eastWing],
+  initialize() {
+    replacePlaceholders(this.id);
+  },
+});
+
+pages.pinakotheke = new Page({
+  id: _pID.pinakotheke,
+  tier: 4,
+  upLinks: [_pID.eastWing],
+  initialize() {
+    replacePlaceholders(this.id);
+  },
+});
+
+pages.agora = new Page({
+  id: _pID.agora,
+  tier: 4,
+  upLinks: [_pID.westWing],
+  initialize() {
+    replacePlaceholders(this.id);
+  },
+});
+
+pages.symposion = new Page({
+  id: _pID.symposion,
+  tier: 4,
+  upLinks: [_pID.westWing],
+  initialize() {
+    replacePlaceholders(this.id);
+  },
+});
+
+pages.odeion = new Page({
+  id: _pID.odeion,
+  tier: 4,
+  upLinks: [_pID.southWing],
+  initialize() {
+    replacePlaceholders(this.id);
+  },
+});
+
+pages.theatron = new Page({
+  id: _pID.theatron,
+  tier: 4,
+  upLinks: [_pID.southWing],
+  initialize() {
+    replacePlaceholders(this.id);
+  },
+});
+
+pages.ergasterion = new Page({
+  id: _pID.ergasterion,
+  tier: 4,
+  upLinks: [_pID.northWing],
+  initialize() {
+    replacePlaceholders(this.id);
+  },
+});
+
+pages.khronos = new Page({
+  id: _pID.khronos,
+  tier: 4,
+  upLinks: [_pID.northWing],
+  initialize() {
+    replacePlaceholders(this.id);
+  },
+});
+
 pages = [
   pages.menu,
   pages.sound,
@@ -378,6 +517,19 @@ pages = [
   pages.diary,
   pages.info,
   pages.ogod3d,
+  pages.eastWing,
+  pages.westWing,
+  pages.southWing,
+  pages.northWing,
+  pages.bibliotheke,
+  pages.oikos,
+  pages.pinakotheke,
+  pages.agora,
+  pages.symposion,
+  pages.odeion,
+  pages.theatron,
+  pages.ergasterion,
+  pages.khronos,
   new Page({
     id: _pID.landing,
     tier: 1,

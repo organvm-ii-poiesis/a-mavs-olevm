@@ -1,6 +1,7 @@
 /**
  * @file LODManager.test.js
  * @description Unit tests for LODManager level-of-detail system
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';

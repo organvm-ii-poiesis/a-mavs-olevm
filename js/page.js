@@ -3,9 +3,11 @@
 /**
  * @global {Object} currentPage - current page object
  * @global {string} transitionState - current transition state (IDLE, TRANSITIONING, READY)
+ * @global {boolean} livingPantheonInitialized - track if Living Pantheon has been initialized
  */
 
 let currentPage = {};
+let livingPantheonInitialized = false;
 
 /**
  * Transition State Machine
@@ -134,6 +136,22 @@ function showNewSection(_loadingSection) {
     // Set state to transitioning
     transitionState = TransitionState.TRANSITIONING;
 
+    // Prepare ambient audio crossfade before fadeOut
+    try {
+      if (typeof LivingPantheonCore !== 'undefined') {
+        const livingPantheon = LivingPantheonCore.getInstance();
+        if (livingPantheon && livingPantheon.subsystems.ambient) {
+          // Prepare ambient layer for crossfade on the new chamber
+          // This will be triggered after fadeInPage completes
+        }
+      }
+    } catch (pantheError) {
+      console.warn(
+        'Living Pantheon audio preparation warning:',
+        pantheError.message
+      );
+    }
+
     // Play page exit sound
     if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
       UISounds.pageExit(0.5);
@@ -154,6 +172,30 @@ function showNewSection(_loadingSection) {
 
     fadeOutPage(currentPage, () => {
       fadeInPage(loadingSection, () => {
+        // Transition Living Pantheon to new chamber after page is visible
+        try {
+          if (typeof LivingPantheonCore !== 'undefined') {
+            const livingPantheon = LivingPantheonCore.getInstance();
+            if (livingPantheon && livingPantheon.isRunning) {
+              // Extract chamber ID from page ID (remove '#' prefix)
+              const chamberId = _loadingSection.replace('#', '');
+              // Get chamber color from config if available
+              const chamberConfig =
+                typeof ETCETER4_CONFIG !== 'undefined'
+                  ? ETCETER4_CONFIG.livingPantheon?.chambers?.[chamberId]
+                  : null;
+              const chamberColor = chamberConfig?.color || null;
+
+              livingPantheon.transitionToNewChamber(chamberId, chamberColor);
+            }
+          }
+        } catch (pantheError) {
+          console.warn(
+            'Living Pantheon transition warning:',
+            pantheError.message
+          );
+        }
+
         // Play page enter sound
         if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
           UISounds.pageEnter(0.5);
@@ -417,6 +459,21 @@ document.addEventListener('keydown', event => {
     return;
   }
 
+  // Check for Living Pantheon toggle (Ctrl+Shift+L)
+  const isCtrl =
+    event.ctrlKey || (event.metaKey && navigator.platform.includes('Mac'));
+  const isShift = event.shiftKey;
+  const isL = event.key.toLowerCase() === 'l';
+
+  if (isCtrl && isShift && isL) {
+    // Living Pantheon toggle - allow LivingPantheonCore to handle it
+    // This will be processed by LivingPantheonCore's keydown listener
+    if (typeof LivingPantheonCore !== 'undefined') {
+      // The LivingPantheonCore will handle this event
+      return;
+    }
+  }
+
   switch (event.key) {
     case 'Escape':
       // Go back/up in navigation hierarchy
@@ -470,6 +527,12 @@ document.addEventListener('keydown', event => {
         showNewSection('#menu');
       }
       break;
+
+    case '?':
+      // Show keyboard shortcuts help
+      // Note: Ctrl+Shift+L toggles Living Pantheon immersive effects
+      // (This could trigger a help modal if implemented)
+      break;
   }
 });
 
@@ -518,4 +581,62 @@ function announcePageTransition(pageId) {
 
   const pageName = pageNames[pageId] || `${pageId.replace('#', '')} page`;
   announcer.textContent = `Navigated to ${pageName}`;
+}
+
+/**
+ * Initialize Living Pantheon system on first page load
+ * Sets up the generative immersive effects with proper error handling
+ * @param {string} initialPageId - The initial page ID to set as first chamber
+ */
+function initializeLivingPantheon(initialPageId) {
+  if (livingPantheonInitialized) {
+    return; // Already initialized
+  }
+
+  try {
+    if (typeof LivingPantheonCore === 'undefined') {
+      console.info('Living Pantheon not available');
+      return;
+    }
+
+    const livingPantheon = LivingPantheonCore.getInstance();
+    if (!livingPantheon) {
+      console.warn('Failed to get Living Pantheon instance');
+      return;
+    }
+
+    // Extract chamber ID from page ID (remove '#' prefix)
+    const chamberId = initialPageId.replace('#', '');
+
+    // Get chamber color from config if available
+    let chamberColor = null;
+    if (
+      typeof ETCETER4_CONFIG !== 'undefined' &&
+      ETCETER4_CONFIG.livingPantheon?.chambers?.[chamberId]
+    ) {
+      chamberColor = ETCETER4_CONFIG.livingPantheon.chambers[chamberId].color;
+    }
+
+    // Initialize with first page
+    livingPantheon.initialize({
+      chamberId,
+      chamberColor,
+    });
+
+    // Start the system (respects user preference from localStorage)
+    livingPantheon.start();
+
+    // Listen for status changes for debugging/monitoring
+    livingPantheon.on(eventDetail => {
+      if (eventDetail.status.isRunning) {
+        console.debug('Living Pantheon active');
+      }
+    });
+
+    livingPantheonInitialized = true;
+    console.info('Living Pantheon initialized');
+  } catch (error) {
+    console.warn('Living Pantheon initialization error:', error.message);
+    // Don't throw - system is optional and shouldn't break page navigation
+  }
 }

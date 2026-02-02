@@ -2,6 +2,7 @@
  * @file tests/unit/SceneManager.test.js
  * @description Unit tests for SceneManager class
  * Tests Three.js lifecycle management, animation loop, and post-processing
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';

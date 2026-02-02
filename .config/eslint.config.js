@@ -22,6 +22,8 @@ export default [
       'js/loophole.js',
       'js/sketch.js',
       'js/3d/**/*.js',
+      'js/living-pantheon/**/*.js',
+      'js/media/**/*.js',
     ],
     languageOptions: {
       ecmaVersion: 2024,
@@ -67,6 +69,13 @@ export default [
         StemMixer: 'writable',
         PresetSelector: 'writable',
         SessionManager: 'writable',
+        LivingPantheonCore: 'writable',
+        GlobalGlitchSystem: 'writable',
+        AmbientSoundLayer: 'writable',
+        EnhancedAudioPlayer: 'writable',
+        WaveformVisualizer: 'writable',
+        LyricsSync: 'writable',
+        EnhancedVideoPlayer: 'writable',
       },
     },
     rules: {
@@ -85,7 +94,13 @@ export default [
   },
   {
     // Special config for files that define global classes/objects
-    files: ['js/3d/**/*.js', 'js/config.js'],
+    files: [
+      'js/3d/**/*.js',
+      'js/config.js',
+      'js/pageData.js',
+      'js/living-pantheon/**/*.js',
+      'js/media/**/*.js',
+    ],
     rules: {
       // Allow class/const definitions that are assigned to window or global scope
       'no-redeclare': 'off',

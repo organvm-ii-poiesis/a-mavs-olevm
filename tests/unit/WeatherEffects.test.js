@@ -1,6 +1,7 @@
 /**
  * @file WeatherEffects.test.js
  * @description Unit tests for WeatherEffects weather particle systems
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
@@ -330,18 +331,36 @@ describe('WeatherEffects', () => {
     });
 
     it('should return correct values for weather conditions', () => {
-      expect(weatherEffects._calculatePrecipitation({ condition: 'storm' })).toBe(1.0);
-      expect(weatherEffects._calculatePrecipitation({ condition: 'rain' })).toBe(0.7);
-      expect(weatherEffects._calculatePrecipitation({ condition: 'drizzle' })).toBe(0.3);
-      expect(weatherEffects._calculatePrecipitation({ condition: 'snow' })).toBe(0.8);
-      expect(weatherEffects._calculatePrecipitation({ condition: 'fog' })).toBe(0.1);
-      expect(weatherEffects._calculatePrecipitation({ condition: 'haze' })).toBe(0.1);
-      expect(weatherEffects._calculatePrecipitation({ condition: 'cloudy' })).toBe(0);
-      expect(weatherEffects._calculatePrecipitation({ condition: 'clear' })).toBe(0);
+      expect(
+        weatherEffects._calculatePrecipitation({ condition: 'storm' })
+      ).toBe(1.0);
+      expect(
+        weatherEffects._calculatePrecipitation({ condition: 'rain' })
+      ).toBe(0.7);
+      expect(
+        weatherEffects._calculatePrecipitation({ condition: 'drizzle' })
+      ).toBe(0.3);
+      expect(
+        weatherEffects._calculatePrecipitation({ condition: 'snow' })
+      ).toBe(0.8);
+      expect(weatherEffects._calculatePrecipitation({ condition: 'fog' })).toBe(
+        0.1
+      );
+      expect(
+        weatherEffects._calculatePrecipitation({ condition: 'haze' })
+      ).toBe(0.1);
+      expect(
+        weatherEffects._calculatePrecipitation({ condition: 'cloudy' })
+      ).toBe(0);
+      expect(
+        weatherEffects._calculatePrecipitation({ condition: 'clear' })
+      ).toBe(0);
     });
 
     it('should return 0 for unknown conditions', () => {
-      expect(weatherEffects._calculatePrecipitation({ condition: 'unknown' })).toBe(0);
+      expect(
+        weatherEffects._calculatePrecipitation({ condition: 'unknown' })
+      ).toBe(0);
     });
   });
 
@@ -399,7 +418,9 @@ describe('WeatherEffects', () => {
       });
       weatherEffects._updateWeatherEffects();
 
-      expect(weatherEffects.rainSystem.material.uniforms.uWindX.value).not.toBe(0);
+      expect(weatherEffects.rainSystem.material.uniforms.uWindX.value).not.toBe(
+        0
+      );
     });
   });
 
@@ -439,7 +460,9 @@ describe('WeatherEffects', () => {
 
       uninitializedWeather.start();
 
-      expect(consoleSpy).toHaveBeenCalledWith('WeatherEffects: Not initialized');
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'WeatherEffects: Not initialized'
+      );
       consoleSpy.mockRestore();
     });
   });
@@ -456,7 +479,8 @@ describe('WeatherEffects', () => {
       weatherEffects.isRunning = false;
       weatherEffects.setWeather({ condition: 'rain' });
 
-      const initialTime = weatherEffects.rainSystem.material.uniforms.uTime.value;
+      const initialTime =
+        weatherEffects.rainSystem.material.uniforms.uTime.value;
       weatherEffects._updateParticles(0.016, 1);
 
       expect(weatherEffects.rainSystem.material.uniforms.uTime.value).toBe(

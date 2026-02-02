@@ -1,6 +1,7 @@
 /**
  * @file SessionManager.test.js
  * @description Unit tests for SessionManager session persistence
+ * @vitest-environment jsdom
  */
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
@@ -453,7 +454,9 @@ describe('SessionManager', () => {
 
     it('should return false for invalid import JSON', () => {
       sessionManager = new SessionManager();
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
 
       const result = sessionManager.importState('invalid json');
 

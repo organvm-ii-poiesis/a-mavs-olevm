@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Chamber-specific meta -->
+    <title>AGORA | ET CETER4</title>
+    <meta
+      name="description"
+      content="Political commentary, manifestos, and social critique from the public assembly."
+    />
+    <meta name="author" content="ET CETER4" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="AGORA | ET CETER4" />
+    <meta
+      property="og:description"
+      content="Political commentary, manifestos, and social critique from the public assembly."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ET CETER4" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/chamber-colors.css" />
+    <link rel="stylesheet" href="css/agora.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../img/favicon.ico" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#DC143C" />
+  </head>
+
+  <body class="min-vh-100 w-100 futura fw1 agora-chamber">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#chamber-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
+
+    <!-- Chamber Header -->
+    <header class="chamber-header fixed top-0 left-0 w-100 z-5 pa3" style="background: rgba(0, 0, 0, 0.9)">
+      <nav class="flex justify-between items-center mw9 center" aria-label="Chamber navigation">
+        <a href="../index.html#menu" class="chamber-back-btn white f6 link flex items-center">
+          <span class="mr2">&larr;</span>
+          <span>Back to Naos</span>
+        </a>
+        <h1 class="ma0 f4 tracked-mega" style="color: #dc143c">AGORA</h1>
+        <div class="chamber-nav-spacer w4"></div>
+      </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="chamber-content" class="pt5 pb5 min-vh-100" role="main" aria-label="Agora content">
+      <!-- Chamber Hero Section -->
+      <section
+        class="chamber-hero vh-50 flex flex-column justify-center items-center tc"
+        style="background: linear-gradient(180deg, #dc143c22 0%, transparent 100%)"
+      >
+        <h2 class="f-headline-ns f1 tracked-mega ma0 mb3" style="color: #dc143c">AGORA</h2>
+        <p class="bodoni f4 o-80 mw6 ph4">Political commentary, manifestos, social critique</p>
+        <p class="agora-subtitle f5 tracked o-70 mw7 ph4">The public assembly speaks. Discourse shapes discourse.</p>
+      </section>
+
+      <!-- Content Grid -->
+      <section id="chamber-grid" class="mw9 center ph4 pv5">
+        <!-- Section Navigation -->
+        <div class="chamber-section-nav flex flex-wrap justify-center mb5 gap-3">
+          <button class="section-btn active" data-section="feed" style="border-color: #dc143c">
+            <span class="tracked">CHRONOLOGICAL FEED</span>
+          </button>
+          <button class="section-btn" data-section="commentary" style="border-color: #dc143c">
+            <span class="tracked">COMMENTARY</span>
+          </button>
+          <button class="section-btn" data-section="manifestos" style="border-color: #dc143c">
+            <span class="tracked">MANIFESTOS</span>
+          </button>
+        </div>
+
+        <!-- Tag Filter Controls -->
+        <div class="agora-filter-controls flex flex-wrap justify-center mb5 pb4 bb b--agora">
+          <span class="f7 mr3 gray tracked">Filter by topic:</span>
+          <button class="agora-tag-filter active" data-tag="all">ALL</button>
+          <button class="agora-tag-filter" data-tag="politics">POLITICS</button>
+          <button class="agora-tag-filter" data-tag="society">SOCIETY</button>
+          <button class="agora-tag-filter" data-tag="ideology">IDEOLOGY</button>
+          <button class="agora-tag-filter" data-tag="power">POWER</button>
+          <button class="agora-tag-filter" data-tag="justice">JUSTICE</button>
+          <button class="agora-tag-filter" data-tag="discourse">DISCOURSE</button>
+        </div>
+
+        <!-- Content Area -->
+        <div id="chamber-items" class="flex flex-wrap justify-start">
+          <!-- Feed Section (Default) -->
+          <div class="section-content active" id="feed-section" style="width: 100%">
+            <!-- Chronological Feed Items -->
+            <article class="chamber-card agora w-100 mb4 pb4" data-tags="politics,society">
+              <div class="agora-item-meta f7 gray tracked mb2">
+                <span class="agora-date">2026-02-02</span>
+                <span class="ml3 agora-topic" style="color: #dc143c">POLITICS</span>
+              </div>
+              <h3 class="f3 tracked-tight ma0 mb2" style="color: #dc143c">The Paradox of Democratic Representation</h3>
+              <p class="f5 lh-copy mb3">
+                How systems designed to amplify the many end up silencing the singular voice. A meditation on plurality,
+                consent, and the tyranny of the majority.
+              </p>
+              <div class="agora-tags">
+                <span class="agora-tag">politics</span>
+                <span class="agora-tag">society</span>
+                <span class="agora-tag">discourse</span>
+              </div>
+            </article>
+
+            <article class="chamber-card agora w-100 mb4 pb4" data-tags="ideology,power">
+              <div class="agora-item-meta f7 gray tracked mb2">
+                <span class="agora-date">2026-02-01</span>
+                <span class="ml3 agora-topic" style="color: #dc143c">IDEOLOGY</span>
+              </div>
+              <h3 class="f3 tracked-tight ma0 mb2" style="color: #dc143c">Power as Narrative Architecture</h3>
+              <p class="f5 lh-copy mb3">
+                The stories we tell ourselves become the structures we live within. An examination of how ideology
+                manifests through language, symbols, and social institutions.
+              </p>
+              <div class="agora-tags">
+                <span class="agora-tag">ideology</span>
+                <span class="agora-tag">power</span>
+              </div>
+            </article>
+
+            <article class="chamber-card agora w-100 mb4 pb4" data-tags="justice,society">
+              <div class="agora-item-meta f7 gray tracked mb2">
+                <span class="agora-date">2026-01-31</span>
+                <span class="ml3 agora-topic" style="color: #dc143c">JUSTICE</span>
+              </div>
+              <h3 class="f3 tracked-tight ma0 mb2" style="color: #dc143c">On the Violence of Silence</h3>
+              <p class="f5 lh-copy mb3">
+                What is not spoken becomes normalized. A critical investigation into the ethics of visibility, voice,
+                and the political act of witnessing.
+              </p>
+              <div class="agora-tags">
+                <span class="agora-tag">justice</span>
+                <span class="agora-tag">society</span>
+                <span class="agora-tag">discourse</span>
+              </div>
+            </article>
+          </div>
+
+          <!-- Commentary Section -->
+          <div class="section-content" id="commentary-section" style="width: 100%; display: none">
+            <div class="commentary-intro mb5">
+              <h3 class="f2 tracked ma0 mb3" style="color: #dc143c">COMMENTARY</h3>
+              <p class="f5 lh-copy gray mw7">
+                Sharp analysis of contemporary political and social phenomena. Each piece engages with current events
+                through the lens of history, philosophy, and critical theory.
+              </p>
+            </div>
+
+            <article class="chamber-card agora w-100 mb4" data-tags="politics,discourse">
+              <h4 class="f4 tracked ma0 mb2" style="color: #dc143c">The Spectacle of Transparency</h4>
+              <p class="f6 gray mb3">
+                On institutional visibility, surveillance, and the paradox of perfect information.
+              </p>
+              <p class="f5 lh-copy mb3">
+                Transparency as an ideal has become transparency as a tool of control. Institutions parade their
+                openness while data flows in unmarked channels. A commentary on the distinction between revelation and
+                confession.
+              </p>
+            </article>
+
+            <article class="chamber-card agora w-100 mb4" data-tags="power,ideology">
+              <h4 class="f4 tracked ma0 mb2" style="color: #dc143c">Authority and the Aesthetic</h4>
+              <p class="f6 gray mb3">How design, gesture, and form legitimize power.</p>
+              <p class="f5 lh-copy mb3">
+                The architecture of authority is aesthetic before it is legal. Consider the marble halls, the formal
+                dress, the ceremonial language. These are not ornamental—they are fundamental to how power maintains
+                itself in the realm of perception and feeling.
+              </p>
+            </article>
+          </div>
+
+          <!-- Manifestos Section -->
+          <div class="section-content" id="manifestos-section" style="width: 100%; display: none">
+            <div class="manifestos-intro mb5">
+              <h3 class="f2 tracked ma0 mb3" style="color: #dc143c">MANIFESTOS</h3>
+              <p class="f5 lh-copy gray mw7">
+                Declarations of position, principle, and possibility. These are invitations to reimagine what is
+                possible and what must be resisted.
+              </p>
+            </div>
+
+            <article class="chamber-card agora w-100 mb4 pb4" data-tags="ideology">
+              <h4 class="f3 tracked ma0 mb3" style="color: #dc143c">A Manifesto Against Comfort</h4>
+              <div class="f6 gray tracked mb3">
+                <span class="agora-date">2026-02-02</span>
+              </div>
+              <p class="f5 lh-copy mb3 i">
+                We refuse the ease of the familiar. We declare: discomfort is prerequisite to thought. Complacency is
+                the enemy of justice. The comfortable do not revolutionize; they preserve.
+              </p>
+              <p class="f5 lh-copy">
+                Therefore: embrace the friction. Seek the contradiction. Stay in the question until the answer burns.
+              </p>
+            </article>
+
+            <article class="chamber-card agora w-100 mb4 pb4" data-tags="justice,society">
+              <h4 class="f3 tracked ma0 mb3" style="color: #dc143c">On the Necessity of Critique</h4>
+              <div class="f6 gray tracked mb3">
+                <span class="agora-date">2026-02-01</span>
+              </div>
+              <p class="f5 lh-copy mb3 i">
+                Critique is love in its most rigorous form. To examine, to question, to demand better—this is not
+                destruction but reconstruction. We manifest: criticism is care.
+              </p>
+              <p class="f5 lh-copy">
+                Let the structures that fail us fall. Let the language that constrains us dissolve. From the rubble, new
+                speech. From the silence, new sound.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Chamber Footer -->
+    <footer class="chamber-footer fixed bottom-0 w-100 pa3 bg-black-90" role="contentinfo">
+      <nav class="flex justify-center items-center" aria-label="Footer navigation">
+        <a href="../index.html#landing" class="white-70 f7 link mh3">ETCETER4</a>
+        <span class="white-30">//</span>
+        <a href="../index.html#menu" class="white-70 f7 link mh3">NAOS</a>
+        <span class="white-30">//</span>
+        <a href="../sitemap.html" class="white-70 f7 link mh3">SITE MAP</a>
+      </nav>
+    </footer>
+
+    <!-- Scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
+      integrity="sha512-+ZPnKPFqf/PjXPKJLBykOgAOnUmCp0ufqCYWsuvMV5FhlYCf/DlTdB3PQJuXzA3otXm1FiooUNrBncLRLbYaxA=="
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="../js/config.js"></script>
+    <script type="text/javascript" src="../js/living-pantheon/LivingPantheonCore.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script type="text/javascript" src="js/agora.js"></script>
+    <script>
+      // Chamber initialization
+      document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Living Pantheon if available
+        if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
+          LivingPantheonCore.initialize({
+            chamber: 'agora',
+            color: '#DC143C',
+          });
+        }
+        // Initialize Agora functionality
+        if (typeof AgoraUI !== 'undefined') {
+          AgoraUI.init();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,9 +1,16 @@
+<div align="center">
+
+![ET CETER4 Logo](docs/assets/logo-dark.svg#gh-dark-mode-only)
+![ET CETER4 Logo](docs/assets/logo-light.svg#gh-light-mode-only)
+
 # ETCETER4 - THE PANTHEON
 
 [![CI/CD Pipeline](https://github.com/ivviiviivvi/a-mavs-olevm/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/ivviiviivvi/a-mavs-olevm/actions/workflows/ci-cd.yml)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
+</div>
 
 **A Living Temple of Art, Sound, and Words**
 

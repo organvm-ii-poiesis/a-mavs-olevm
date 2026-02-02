@@ -1,0 +1,217 @@
+─────┬────────────────────────────────────────────────────────────────────────── │ STDIN
+─────┼────────────────────────────────────────────────────────────────────────── 1 │ <!doctype html> 2 │
+<html lang="en-US">
+  3 │
+  <head>
+    4 │
+    <meta charset="utf-8" />
+    5 │
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    6 │
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    7 │ 8 │
+    <!-- Chamber-specific meta -->
+    9 │
+    <title>OIKOS | ET CETER4</title>
+    10 │
+    <meta name="description" content="Reflections, dreams, and confessions—the intimate chamber of OIKOS" />
+    11 │
+    <meta name="author" content="ET CETER4" />
+    12 │ 13 │
+    <!-- Open Graph -->
+    14 │
+    <meta property="og:title" content="OIKOS | ET CETER4" />
+    15 │
+    <meta property="og:description" content="Reflections, dreams, and confessions—the intimate chamber of OIKOS" />
+    16 │
+    <meta property="og:type" content="website" />
+    17 │
+    <meta property="og:site_name" content="ET CETER4" />
+    18 │ 19 │
+    <!-- CSS -->
+    20 │
+    <link rel="stylesheet" href="../css/vendor/tachyons/css/tachyons.min.css" />
+    21 │
+    <link rel="stylesheet" href="../css/styles.css" />
+    22 │
+    <link rel="stylesheet" href="../css/chamber-colors.css" />
+    23 │
+    <link rel="stylesheet" href="css/oikos.css" />
+    24 │ 25 │
+    <!-- Favicon -->
+    26 │
+    <link rel="icon" type="image/png" href="../img/favicon.ico" />
+    27 │ 28 │
+    <!-- PWA Manifest -->
+    29 │
+    <link rel="manifest" href="../manifest.json" />
+    30 │
+    <meta name="theme-color" content="#FF8C00" />
+    31 │
+  </head>
+  32 │ 33 │
+  <body class="min-vh-100 w-100 futura fw1 oikos-chamber">
+    34 │
+    <!-- Skip to main content link for accessibility -->
+    35 │ <a href="#chamber-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a> 36 │ 37
+    │
+    <!-- Chamber Header -->
+    38 │
+    <header class="chamber-header fixed top-0 left-0 w-100 z-5 pa3" style="background: rgba(0, 0, 0, 0.8)">
+      39 │
+      <nav class="flex justify-between items-center mw9 center" aria-label="Chamber navigation">
+        40 │
+        <a href="../index.html#menu" class="chamber-back-btn white f6 link flex items-center">
+          41 │ <span class="mr2">&larr;</span> 42 │ <span>Back to Naos</span> 43 │
+        </a>
+        44 │
+        <h1 class="ma0 f4 tracked-mega" style="color: #ff8c00">OIKOS</h1>
+        45 │
+        <div class="chamber-nav-spacer w4"></div>
+        46 │
+      </nav>
+      47 │
+    </header>
+    48 │ 49 │
+    <!-- Main Content Area -->
+    50 │
+    <main id="chamber-content" class="pt5 pb5 min-vh-100" role="main" aria-label="OIKOS chamber content">
+      51 │
+      <!-- Chamber Hero Section -->
+      52 │
+      <section
+        class="chamber-hero oikos vh-50 flex flex-column justify-center items-center tc"
+        53
+        │
+        style="background: linear-gradient(180deg, rgba(255, 140, 0, 0.2) 0%, transparent 100%)"
+      >
+        54 │
+        <h2 class="f-headline-ns f1 tracked-mega ma0 mb3 oikos-text">OIKOS</h2>
+        55 │
+        <p class="bodoni f4 o-80 mw6 ph4">Reflections, dreams, confessions</p>
+        56 │
+      </section>
+      57 │ 58 │
+      <!-- Content Grid -->
+      59 │
+      <section id="chamber-grid" class="mw9 center ph4 pv5">
+        60 │
+        <!-- Section Navigation -->
+        61 │
+        <div class="chamber-section-nav flex flex-wrap justify-center mb5 gap-3">
+          62 │
+          <button
+            class="oikos-section-btn oikos-section-btn--reflections pv2 ph3 f6 tracked link"
+            63
+            │
+            data-section="reflections"
+            aria-label="View reflections"
+          >
+            64 │ REFLECTIONS 65 │
+          </button>
+          66 │
+          <button
+            class="oikos-section-btn oikos-section-btn--dreams pv2 ph3 f6 tracked link"
+            67
+            │
+            data-section="dreams"
+            aria-label="View dreams"
+          >
+            68 │ DREAMS 69 │
+          </button>
+          70 │
+          <button
+            class="oikos-section-btn oikos-section-btn--confessions pv2 ph3 f6 tracked link"
+            71
+            │
+            data-section="confessions"
+            aria-label="View confessions"
+          >
+            72 │ CONFESSIONS 73 │
+          </button>
+          74 │
+        </div>
+        75 │ 76 │
+        <!-- Content Area -->
+        77 │
+        <div id="chamber-items" class="flex flex-column items-center">
+          78 │
+          <!-- Placeholder for entries -->
+          79 │
+          <div class="tc pa4">
+            80 │
+            <p class="f5 o-60">Select a section to view entries</p>
+            81 │
+          </div>
+          82 │
+        </div>
+        83 │
+      </section>
+      84 │
+    </main>
+    85 │ 86 │
+    <!-- Chamber Footer -->
+    87 │
+    <footer class="chamber-footer fixed bottom-0 w-100 pa3 bg-black-90" role="contentinfo">
+      88 │
+      <nav class="flex justify-center items-center" aria-label="Footer navigation">
+        89 │ <a href="../index.html#landing" class="white-70 f7 link mh3">ETCETER4</a> 90 │
+        <span class="white-30">//</span> 91 │ <a href="../index.html#menu" class="white-70 f7 link mh3">NAOS</a> 92 │
+        <span class="white-30">//</span> 93 │ <a href="../sitemap.html" class="white-70 f7 link mh3">SITE MAP</a> 94 │
+      </nav>
+      95 │
+    </footer>
+    96 │ 97 │
+    <!-- Scripts -->
+    98 │
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      99
+      │
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      100
+      │
+      crossorigin="anonymous"
+    ></script>
+    101 │
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
+      102
+      │
+      integrity="sha512-+ZPnKPFqf/PjXPKJLBykOgAOnUmCp0ufqCYWsuvMV5FhlYCf/DlTdB3PQJuXzA3otXm1FiooUNrBncLRLbYaxA=="
+      103
+      │
+      crossorigin="anonymous"
+    ></script>
+    104 │
+    <script type="text/javascript" src="../js/config.js"></script>
+    105 │
+    <script type="text/javascript" src="../js/living-pantheon/LivingPantheonCore.js"></script>
+    106 │
+    <script type="text/javascript" src="config.js"></script>
+    107 │
+    <script type="text/javascript" src="oikos.js"></script>
+    108 │
+    <script>
+      109 │       // Chamber initialization
+      110 │       document.addEventListener('DOMContentLoaded', function() {
+      111 │         // Initialize Oikos chamber
+      112 │         if (typeof OikosModule !== 'undefined') {
+      113 │           OikosModule.init();
+      114 │         }
+      115 │
+      116 │         // Initialize Living Pantheon if available
+      117 │         if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
+      118 │           LivingPantheonCore.initialize({
+      119 │             chamber: 'oikos',
+      120 │             color: '#FF8C00'
+      121 │           });
+      122 │         }
+      123 │       });
+      124 │
+    </script>
+    125 │
+  </body>
+  126 │
+</html>
+─────┴──────────────────────────────────────────────────────────────────────────

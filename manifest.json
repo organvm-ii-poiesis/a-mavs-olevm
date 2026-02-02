@@ -1,18 +1,219 @@
 {
-  "name": "ET CETER4",
+  "name": "ET CETER4 - Interactive Web Labyrinth",
   "short_name": "ETCETER4",
-  "description": "ET CETER4 is a composer of sounds/words/images - explore the depths of our web labyrinth",
+  "description": "ET CETER4 is a composer of sounds, words, and images. Navigate the depths of an interactive web labyrinth exploring chambers of music, visual art, text, and immersive 3D experiences.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "background_color": "#000000",
   "theme_color": "#00ffff",
-  "orientation": "any",
   "icons": [
     {
       "src": "img/favicon.ico",
       "sizes": "64x64",
       "type": "image/x-icon"
+    },
+    {
+      "src": "img/ogod.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/ogod.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
-  "categories": ["entertainment", "music", "art"]
+  "categories": ["entertainment", "music", "art", "graphics"],
+  "screenshots": [
+    {
+      "src": "img/ogod.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "OGOD 3D immersive experience"
+    },
+    {
+      "src": "img/ETC-VISION-BG.gif",
+      "sizes": "1280x720",
+      "type": "image/gif",
+      "form_factor": "wide",
+      "label": "ET CETER4 visual interface"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Sound",
+      "short_name": "Sound",
+      "description": "Music and Bandcamp albums",
+      "url": "/?page=sound",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Vision",
+      "short_name": "Vision",
+      "description": "3D experiences and visual art",
+      "url": "/?page=vision",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Words",
+      "short_name": "Words",
+      "description": "Written content and diary",
+      "url": "/?page=words",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Bibliotheke",
+      "short_name": "Bibliotheke",
+      "description": "Library chamber - texts and references",
+      "url": "/?page=bibliotheke",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Oikos",
+      "short_name": "Oikos",
+      "description": "House chamber - domestic and intimate works",
+      "url": "/?page=oikos",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Pinakotheke",
+      "short_name": "Pinakotheke",
+      "description": "Gallery chamber - visual artworks",
+      "url": "/?page=pinakotheke",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Agora",
+      "short_name": "Agora",
+      "description": "Public chamber - community and exchange",
+      "url": "/?page=agora",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Symposion",
+      "short_name": "Symposion",
+      "description": "Discussion chamber - ideas and dialogue",
+      "url": "/?page=symposion",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Odeion",
+      "short_name": "Odeion",
+      "description": "Music chamber - sound and performance",
+      "url": "/?page=odeion",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Theatron",
+      "short_name": "Theatron",
+      "description": "Theater chamber - dramatic and visual works",
+      "url": "/?page=theatron",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Ergasterion",
+      "short_name": "Ergasterion",
+      "description": "Workshop chamber - creation and craft",
+      "url": "/?page=ergasterion",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Khronos",
+      "short_name": "Khronos",
+      "description": "Time chamber - temporal and archival works",
+      "url": "/?page=khronos",
+      "icons": [
+        {
+          "src": "img/ogod.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "dir": "ltr",
+  "lang": "en-US"
 }

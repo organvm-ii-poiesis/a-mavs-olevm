@@ -1,0 +1,693 @@
+/**
+ * Living Pantheon Animation Keyframes & Utilities
+ *
+ * Comprehensive animation system for living elements, breathing effects,
+ * text drift, glitch, and ambient visual feedback.
+ *
+ * Features:
+ * - Breathing animations with depth variation
+ * - Text drift and floating effects
+ * - Glow pulse for attention
+ * - Glitch effect for digital aesthetics
+ * - Fade transitions
+ * - Shimmer for loading states
+ * - Scan lines for retro feel
+ * - Respects prefers-reduced-motion
+ */
+
+/* ============================================================================
+   CSS Custom Properties (Animation Config)
+   ============================================================================ */
+
+:root {
+  /* Breathing animation */
+  --breathing-duration: 4s;
+  --breathing-scale-min: 0.98;
+  --breathing-scale-max: 1.02;
+  --breathing-opacity-min: 0.7;
+  --breathing-opacity-max: 1;
+
+  /* Text drift animation */
+  --drift-duration: 6s;
+  --drift-distance: 8px;
+  --drift-angle: 1.5deg;
+
+  /* Glow pulse */
+  --glow-duration: 3s;
+  --glow-intensity-min: 0.4;
+  --glow-intensity-max: 1;
+
+  /* Glitch effect */
+  --glitch-duration: 3s;
+  --glitch-offset: 3px;
+  --glitch-opacity: 0.8;
+
+  /* Fade transitions */
+  --fade-duration: 1s;
+  --fade-delay: 0;
+
+  /* Shimmer loading */
+  --shimmer-duration: 2s;
+  --shimmer-speed: 2s;
+
+  /* Scan lines */
+  --scan-duration: 8s;
+}
+
+/* ============================================================================
+   BREATHING ANIMATION
+   ============================================================================ */
+
+@keyframes breathing {
+  0% {
+    transform: scale(var(--breathing-scale-min));
+    opacity: var(--breathing-opacity-min);
+  }
+  25% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(var(--breathing-scale-max));
+    opacity: var(--breathing-opacity-max);
+  }
+  75% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(var(--breathing-scale-min));
+    opacity: var(--breathing-opacity-min);
+  }
+}
+
+/* Subtle breathing variant */
+@keyframes breathing-subtle {
+  0% {
+    transform: scale(0.995);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.005);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.995);
+    opacity: 0.85;
+  }
+}
+
+/* Intense breathing variant */
+@keyframes breathing-intense {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+  25% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+}
+
+/* ============================================================================
+   TEXT DRIFT ANIMATION
+   ============================================================================ */
+
+@keyframes text-drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translate(calc(var(--drift-distance) * 0.5), calc(var(--drift-distance) * -0.7))
+      rotate(var(--drift-angle) * 0.5);
+  }
+  50% {
+    transform: translate(var(--drift-distance), calc(var(--drift-distance) * -1)) rotate(var(--drift-angle));
+    opacity: 1;
+  }
+  75% {
+    transform: translate(calc(var(--drift-distance) * 0.5), calc(var(--drift-distance) * -0.7))
+      rotate(var(--drift-angle) * 0.5);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.8;
+  }
+}
+
+/* Horizontal drift variant */
+@keyframes text-drift-horizontal {
+  0% {
+    transform: translateX(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(var(--drift-distance));
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 0.8;
+  }
+}
+
+/* Vertical drift variant */
+@keyframes text-drift-vertical {
+  0% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(calc(var(--drift-distance) * -1));
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+}
+
+/* ============================================================================
+   GLOW PULSE ANIMATION
+   ============================================================================ */
+
+@keyframes glow-pulse {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, var(--glow-intensity-min));
+    box-shadow: 0 0 20px rgba(255, 255, 255, var(--glow-intensity-min));
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, var(--glow-intensity-max));
+    box-shadow: 0 0 40px rgba(255, 255, 255, var(--glow-intensity-max));
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, var(--glow-intensity-min));
+    box-shadow: 0 0 20px rgba(255, 255, 255, var(--glow-intensity-min));
+  }
+}
+
+/* Colored glow pulse variants */
+@keyframes glow-pulse-cyan {
+  0% {
+    box-shadow: 0 0 10px rgba(0, 255, 255, var(--glow-intensity-min));
+    text-shadow: 0 0 10px rgba(0, 255, 255, var(--glow-intensity-min));
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 255, 255, var(--glow-intensity-max));
+    text-shadow: 0 0 20px rgba(0, 255, 255, var(--glow-intensity-max));
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 255, var(--glow-intensity-min));
+    text-shadow: 0 0 10px rgba(0, 255, 255, var(--glow-intensity-min));
+  }
+}
+
+@keyframes glow-pulse-magenta {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 0, 255, var(--glow-intensity-min));
+    text-shadow: 0 0 10px rgba(255, 0, 255, var(--glow-intensity-min));
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 0, 255, var(--glow-intensity-max));
+    text-shadow: 0 0 20px rgba(255, 0, 255, var(--glow-intensity-max));
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 0, 255, var(--glow-intensity-min));
+    text-shadow: 0 0 10px rgba(255, 0, 255, var(--glow-intensity-min));
+  }
+}
+
+/* ============================================================================
+   GLITCH EFFECT ANIMATION
+   ============================================================================ */
+
+@keyframes glitch {
+  0% {
+    clip-path: inset(40% 0 61% 0);
+    transform: translate(-var(--glitch-offset), -var(--glitch-offset));
+  }
+  20% {
+    clip-path: inset(92% 0 1% 0);
+    transform: translate(var(--glitch-offset), var(--glitch-offset));
+  }
+  40% {
+    clip-path: inset(43% 0 1% 0);
+    transform: translate(-var(--glitch-offset), var(--glitch-offset));
+  }
+  60% {
+    clip-path: inset(25% 0 58% 0);
+    transform: translate(var(--glitch-offset), -var(--glitch-offset));
+  }
+  80% {
+    clip-path: inset(54% 0 7% 0);
+    transform: translate(-var(--glitch-offset), var(--glitch-offset));
+  }
+  100% {
+    clip-path: inset(58% 0 43% 0);
+    transform: translate(var(--glitch-offset), -var(--glitch-offset));
+  }
+}
+
+/* Glitch shadow (pseudo-element) */
+@keyframes glitch-shadow {
+  0% {
+    text-shadow:
+      -2px 0 #ff00ff,
+      2px 0 #00ffff,
+      0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    text-shadow:
+      2px 0 #ff00ff,
+      -2px 0 #00ffff,
+      0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    text-shadow:
+      -2px 0 #ff00ff,
+      2px 0 #00ffff,
+      0 0 10px rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* ============================================================================
+   FADE IN / OUT ANIMATIONS
+   ============================================================================ */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Fade in with scale */
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Fade in with slide up */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in with slide down */
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================================
+   SHIMMER EFFECT (Loading States)
+   ============================================================================ */
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Shimmer with opacity pulse */
+@keyframes shimmer-pulse {
+  0% {
+    background-position: -1000px 0;
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    background-position: 1000px 0;
+    opacity: 0.8;
+  }
+}
+
+/* ============================================================================
+   SCAN LINES EFFECT (Retro Aesthetics)
+   ============================================================================ */
+
+@keyframes scan-lines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 10px;
+  }
+}
+
+/* Scan lines with opacity */
+@keyframes scan-lines-fade {
+  0% {
+    background-position: 0 0;
+    opacity: 0.03;
+  }
+  50% {
+    opacity: 0.05;
+  }
+  100% {
+    background-position: 0 10px;
+    opacity: 0.03;
+  }
+}
+
+/* ============================================================================
+   MORPHING ANIMATIONS
+   ============================================================================ */
+
+@keyframes morph-shape {
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+}
+
+@keyframes morph-colors {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(180deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* ============================================================================
+   UTILITY CLASSES - BREATHING
+   ============================================================================ */
+
+.breathing {
+  animation: breathing var(--breathing-duration) infinite ease-in-out;
+}
+
+.breathing-subtle {
+  animation: breathing-subtle var(--breathing-duration) infinite ease-in-out;
+}
+
+.breathing-intense {
+  animation: breathing-intense var(--breathing-duration) infinite ease-in-out;
+}
+
+.living-element {
+  animation: breathing var(--breathing-duration) infinite ease-in-out;
+}
+
+/* ============================================================================
+   UTILITY CLASSES - TEXT DRIFT
+   ============================================================================ */
+
+.drifting-text {
+  animation: text-drift var(--drift-duration) infinite ease-in-out;
+}
+
+.living-text {
+  animation: text-drift var(--drift-duration) infinite ease-in-out;
+}
+
+.drifting-horizontal {
+  animation: text-drift-horizontal var(--drift-duration) infinite ease-in-out;
+}
+
+.drifting-vertical {
+  animation: text-drift-vertical var(--drift-duration) infinite ease-in-out;
+}
+
+/* ============================================================================
+   UTILITY CLASSES - GLOW PULSE
+   ============================================================================ */
+
+.glow-pulse {
+  animation: glow-pulse var(--glow-duration) infinite ease-in-out;
+}
+
+.glow-pulse-cyan {
+  animation: glow-pulse-cyan var(--glow-duration) infinite ease-in-out;
+}
+
+.glow-pulse-magenta {
+  animation: glow-pulse-magenta var(--glow-duration) infinite ease-in-out;
+}
+
+/* ============================================================================
+   UTILITY CLASSES - GLITCH
+   ============================================================================ */
+
+.glitch {
+  position: relative;
+  animation: glitch var(--glitch-duration) infinite;
+}
+
+.glitch-text {
+  animation: glitch-shadow var(--glitch-duration) infinite;
+}
+
+.no-glitch {
+  animation: none !important;
+}
+
+/* ============================================================================
+   UTILITY CLASSES - FADE
+   ============================================================================ */
+
+.fade-in {
+  animation: fade-in var(--fade-duration) ease-out forwards;
+  animation-delay: var(--fade-delay);
+}
+
+.fade-out {
+  animation: fade-out var(--fade-duration) ease-out forwards;
+  animation-delay: var(--fade-delay);
+}
+
+.fade-in-scale {
+  animation: fade-in-scale var(--fade-duration) ease-out forwards;
+  animation-delay: var(--fade-delay);
+}
+
+.fade-in-up {
+  animation: fade-in-up var(--fade-duration) ease-out forwards;
+  animation-delay: var(--fade-delay);
+}
+
+.fade-in-down {
+  animation: fade-in-down var(--fade-duration) ease-out forwards;
+  animation-delay: var(--fade-delay);
+}
+
+/* ============================================================================
+   UTILITY CLASSES - SHIMMER
+   ============================================================================ */
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer var(--shimmer-duration) infinite;
+}
+
+.shimmer-pulse {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer-pulse var(--shimmer-duration) infinite;
+}
+
+/* ============================================================================
+   UTILITY CLASSES - SCAN LINES
+   ============================================================================ */
+
+.scan-lines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  background-size: 100% 10px;
+  animation: scan-lines var(--scan-duration) linear infinite;
+}
+
+.scan-lines-fade {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  background-size: 100% 10px;
+  animation: scan-lines-fade var(--scan-duration) ease-in-out infinite;
+}
+
+/* ============================================================================
+   UTILITY CLASSES - MORPHING
+   ============================================================================ */
+
+.morph-image {
+  animation: morph-shape 6s ease-in-out infinite;
+}
+
+.morphing-target {
+  animation: morph-colors 8s ease-in-out infinite;
+}
+
+/* ============================================================================
+   REDUCED MOTION ACCESSIBILITY
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all animations for users who prefer reduced motion */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Specific animation disables */
+  .breathing,
+  .breathing-subtle,
+  .breathing-intense,
+  .living-element,
+  .drifting-text,
+  .living-text,
+  .drifting-horizontal,
+  .drifting-vertical,
+  .glow-pulse,
+  .glow-pulse-cyan,
+  .glow-pulse-magenta,
+  .glitch,
+  .glitch-text,
+  .fade-in,
+  .fade-out,
+  .fade-in-scale,
+  .fade-in-up,
+  .fade-in-down,
+  .shimmer,
+  .shimmer-pulse,
+  .scan-lines,
+  .scan-lines-fade,
+  .morph-image,
+  .morphing-target {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ============================================================================
+   ANIMATION DURATION UTILITIES
+   ============================================================================ */
+
+/* Duration modifiers */
+.animate-slow {
+  --breathing-duration: 6s;
+  --drift-duration: 8s;
+  --glow-duration: 4s;
+  --glitch-duration: 4s;
+  --fade-duration: 1.5s;
+}
+
+.animate-normal {
+  --breathing-duration: 4s;
+  --drift-duration: 6s;
+  --glow-duration: 3s;
+  --glitch-duration: 3s;
+  --fade-duration: 1s;
+}
+
+.animate-fast {
+  --breathing-duration: 2s;
+  --drift-duration: 3s;
+  --glow-duration: 2s;
+  --glitch-duration: 2s;
+  --fade-duration: 0.5s;
+}
+
+/* Animation delay utilities */
+.delay-0 {
+  --fade-delay: 0s;
+}
+
+.delay-1 {
+  --fade-delay: 0.1s;
+}
+
+.delay-2 {
+  --fade-delay: 0.2s;
+}
+
+.delay-3 {
+  --fade-delay: 0.3s;
+}
+
+.delay-4 {
+  --fade-delay: 0.4s;
+}
+
+.delay-5 {
+  --fade-delay: 0.5s;
+}

@@ -1,0 +1,1035 @@
+/* ========================================
+   CHAMBER COLOR SYSTEM
+   10 Chambers of ETCETER4
+   ======================================== */
+
+/* ========================================
+   CSS CUSTOM PROPERTIES - LIGHT MODE
+   ======================================== */
+
+:root {
+  /* Akademia - Cyan */
+  --akademia-primary: #00ffff;
+  --akademia-secondary: #00ffff;
+  --akademia-dark: #00ced1;
+  --akademia-light: #e0ffff;
+
+  /* Bibliotheke - Brown/Cream */
+  --bibliotheke-primary: #8b4513;
+  --bibliotheke-secondary: #f5f5dc;
+  --bibliotheke-dark: #654321;
+  --bibliotheke-light: #deb887;
+
+  /* Pinakotheke - Magenta */
+  --pinakotheke-primary: #ff00ff;
+  --pinakotheke-secondary: #ff00ff;
+  --pinakotheke-dark: #c71585;
+  --pinakotheke-light: #ffb6ff;
+
+  /* Agora - Crimson */
+  --agora-primary: #dc143c;
+  --agora-secondary: #dc143c;
+  --agora-dark: #8b0000;
+  --agora-light: #ff69b4;
+
+  /* Symposion - Maroon/Cream */
+  --symposion-primary: #722f37;
+  --symposion-secondary: #f5f5dc;
+  --symposion-dark: #3e1b23;
+  --symposion-light: #a0522d;
+
+  /* Oikos - Orange/Pink */
+  --oikos-primary: #ff8c00;
+  --oikos-secondary: #ffb6c1;
+  --oikos-dark: #cc7000;
+  --oikos-light: #ffd9b3;
+
+  /* Odeion - Gold */
+  --odeion-primary: #ffd700;
+  --odeion-secondary: #ffd700;
+  --odeion-dark: #daa520;
+  --odeion-light: #ffff99;
+
+  /* Theatron - Purple */
+  --theatron-primary: #800080;
+  --theatron-secondary: #800080;
+  --theatron-dark: #4b0082;
+  --theatron-light: #dda0dd;
+
+  /* Ergasterion - Lime */
+  --ergasterion-primary: #00ff00;
+  --ergasterion-secondary: #00ff00;
+  --ergasterion-dark: #228b22;
+  --ergasterion-light: #bfff00;
+
+  /* Khronos - Royal Blue */
+  --khronos-primary: #4169e1;
+  --khronos-secondary: #4169e1;
+  --khronos-dark: #00008b;
+  --khronos-light: #87ceeb;
+}
+
+/* ========================================
+   CSS CUSTOM PROPERTIES - DARK MODE
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Akademia - Cyan (brightened for dark mode) */
+    --akademia-primary: #00ffff;
+    --akademia-secondary: #00ffff;
+    --akademia-dark: #00ced1;
+    --akademia-light: #87ceeb;
+
+    /* Bibliotheke - Lighter in dark mode */
+    --bibliotheke-primary: #d2b48c;
+    --bibliotheke-secondary: #f5f5dc;
+    --bibliotheke-dark: #8b4513;
+    --bibliotheke-light: #ffdab9;
+
+    /* Pinakotheke - Magenta (brightened) */
+    --pinakotheke-primary: #ff1493;
+    --pinakotheke-secondary: #ff1493;
+    --pinakotheke-dark: #c71585;
+    --pinakotheke-light: #ffb6ff;
+
+    /* Agora - Crimson (lighter) */
+    --agora-primary: #ff6b6b;
+    --agora-secondary: #ff6b6b;
+    --agora-dark: #dc143c;
+    --agora-light: #ffb6c1;
+
+    /* Symposion - Lighter for dark mode */
+    --symposion-primary: #cd919e;
+    --symposion-secondary: #f5f5dc;
+    --symposion-dark: #722f37;
+    --symposion-light: #e6c8d3;
+
+    /* Oikos - Brightened */
+    --oikos-primary: #ffb347;
+    --oikos-secondary: #ffb6c1;
+    --oikos-dark: #ff8c00;
+    --oikos-light: #ffdab9;
+
+    /* Odeion - Gold (lighter) */
+    --odeion-primary: #ffe135;
+    --odeion-secondary: #ffe135;
+    --odeion-dark: #ffd700;
+    --odeion-light: #ffff99;
+
+    /* Theatron - Lighter purple */
+    --theatron-primary: #da70d6;
+    --theatron-secondary: #da70d6;
+    --theatron-dark: #800080;
+    --theatron-light: #dda0dd;
+
+    /* Ergasterion - Brightened lime */
+    --ergasterion-primary: #7fff00;
+    --ergasterion-secondary: #7fff00;
+    --ergasterion-dark: #00ff00;
+    --ergasterion-light: #adff2f;
+
+    /* Khronos - Brightened blue */
+    --khronos-primary: #6495ed;
+    --khronos-secondary: #6495ed;
+    --khronos-dark: #4169e1;
+    --khronos-light: #87ceeb;
+  }
+}
+
+/* ========================================
+   BACKGROUND CLASSES - Tachyons style
+   ======================================== */
+
+.bg-akademia {
+  background-color: var(--akademia-primary);
+}
+
+.bg-bibliotheke {
+  background-color: var(--bibliotheke-primary);
+}
+
+.bg-pinakotheke {
+  background-color: var(--pinakotheke-primary);
+}
+
+.bg-agora {
+  background-color: var(--agora-primary);
+}
+
+.bg-symposion {
+  background-color: var(--symposion-primary);
+}
+
+.bg-oikos {
+  background-color: var(--oikos-primary);
+}
+
+.bg-odeion {
+  background-color: var(--odeion-primary);
+}
+
+.bg-theatron {
+  background-color: var(--theatron-primary);
+}
+
+.bg-ergasterion {
+  background-color: var(--ergasterion-primary);
+}
+
+.bg-khronos {
+  background-color: var(--khronos-primary);
+}
+
+/* Light background variants */
+.bg-akademia--light {
+  background-color: var(--akademia-light);
+}
+
+.bg-bibliotheke--light {
+  background-color: var(--bibliotheke-secondary);
+}
+
+.bg-pinakotheke--light {
+  background-color: var(--pinakotheke-light);
+}
+
+.bg-agora--light {
+  background-color: var(--agora-light);
+}
+
+.bg-symposion--light {
+  background-color: var(--symposion-secondary);
+}
+
+.bg-oikos--light {
+  background-color: var(--oikos-secondary);
+}
+
+.bg-odeion--light {
+  background-color: var(--odeion-light);
+}
+
+.bg-theatron--light {
+  background-color: var(--theatron-light);
+}
+
+.bg-ergasterion--light {
+  background-color: var(--ergasterion-light);
+}
+
+.bg-khronos--light {
+  background-color: var(--khronos-light);
+}
+
+/* ========================================
+   TEXT COLOR CLASSES
+   ======================================== */
+
+.akademia-text {
+  color: var(--akademia-primary);
+}
+
+.bibliotheke-text {
+  color: var(--bibliotheke-primary);
+}
+
+.pinakotheke-text {
+  color: var(--pinakotheke-primary);
+}
+
+.agora-text {
+  color: var(--agora-primary);
+}
+
+.symposion-text {
+  color: var(--symposion-primary);
+}
+
+.oikos-text {
+  color: var(--oikos-primary);
+}
+
+.odeion-text {
+  color: var(--odeion-primary);
+}
+
+.theatron-text {
+  color: var(--theatron-primary);
+}
+
+.ergasterion-text {
+  color: var(--ergasterion-primary);
+}
+
+.khronos-text {
+  color: var(--khronos-primary);
+}
+
+/* ========================================
+   BORDER CLASSES - Tachyons style (b--)
+   ========================================*/
+
+.b--akademia {
+  border-color: var(--akademia-primary);
+}
+
+.b--bibliotheke {
+  border-color: var(--bibliotheke-primary);
+}
+
+.b--pinakotheke {
+  border-color: var(--pinakotheke-primary);
+}
+
+.b--agora {
+  border-color: var(--agora-primary);
+}
+
+.b--symposion {
+  border-color: var(--symposion-primary);
+}
+
+.b--oikos {
+  border-color: var(--oikos-primary);
+}
+
+.b--odeion {
+  border-color: var(--odeion-primary);
+}
+
+.b--theatron {
+  border-color: var(--theatron-primary);
+}
+
+.b--ergasterion {
+  border-color: var(--ergasterion-primary);
+}
+
+.b--khronos {
+  border-color: var(--khronos-primary);
+}
+
+/* ========================================
+   GRADIENT BACKGROUNDS
+   ======================================== */
+
+.gradient-akademia {
+  background: linear-gradient(135deg, var(--akademia-primary), var(--akademia-dark));
+}
+
+.gradient-bibliotheke {
+  background: linear-gradient(135deg, var(--bibliotheke-primary), var(--bibliotheke-secondary));
+}
+
+.gradient-pinakotheke {
+  background: linear-gradient(135deg, var(--pinakotheke-primary), var(--pinakotheke-dark));
+}
+
+.gradient-agora {
+  background: linear-gradient(135deg, var(--agora-primary), var(--agora-dark));
+}
+
+.gradient-symposion {
+  background: linear-gradient(135deg, var(--symposion-primary), var(--symposion-secondary));
+}
+
+.gradient-oikos {
+  background: linear-gradient(135deg, var(--oikos-primary), var(--oikos-secondary));
+}
+
+.gradient-odeion {
+  background: linear-gradient(135deg, var(--odeion-primary), var(--odeion-dark));
+}
+
+.gradient-theatron {
+  background: linear-gradient(135deg, var(--theatron-primary), var(--theatron-dark));
+}
+
+.gradient-ergasterion {
+  background: linear-gradient(135deg, var(--ergasterion-primary), var(--ergasterion-dark));
+}
+
+.gradient-khronos {
+  background: linear-gradient(135deg, var(--khronos-primary), var(--khronos-dark));
+}
+
+/* ========================================
+   GLOW EFFECTS
+   ======================================== */
+
+.glow-akademia {
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.5),
+    0 0 40px rgba(0, 255, 255, 0.3);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.glow-bibliotheke {
+  box-shadow:
+    0 0 20px rgba(139, 69, 19, 0.5),
+    0 0 40px rgba(139, 69, 19, 0.3);
+  text-shadow: 0 0 10px rgba(139, 69, 19, 0.5);
+}
+
+.glow-pinakotheke {
+  box-shadow:
+    0 0 20px rgba(255, 0, 255, 0.5),
+    0 0 40px rgba(255, 0, 255, 0.3);
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.glow-agora {
+  box-shadow:
+    0 0 20px rgba(220, 20, 60, 0.5),
+    0 0 40px rgba(220, 20, 60, 0.3);
+  text-shadow: 0 0 10px rgba(220, 20, 60, 0.5);
+}
+
+.glow-symposion {
+  box-shadow:
+    0 0 20px rgba(114, 47, 55, 0.5),
+    0 0 40px rgba(114, 47, 55, 0.3);
+  text-shadow: 0 0 10px rgba(114, 47, 55, 0.5);
+}
+
+.glow-oikos {
+  box-shadow:
+    0 0 20px rgba(255, 140, 0, 0.5),
+    0 0 40px rgba(255, 140, 0, 0.3);
+  text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+}
+
+.glow-odeion {
+  box-shadow:
+    0 0 20px rgba(255, 215, 0, 0.5),
+    0 0 40px rgba(255, 215, 0, 0.3);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.glow-theatron {
+  box-shadow:
+    0 0 20px rgba(128, 0, 128, 0.5),
+    0 0 40px rgba(128, 0, 128, 0.3);
+  text-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
+}
+
+.glow-ergasterion {
+  box-shadow:
+    0 0 20px rgba(0, 255, 0, 0.5),
+    0 0 40px rgba(0, 255, 0, 0.3);
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.glow-khronos {
+  box-shadow:
+    0 0 20px rgba(65, 105, 225, 0.5),
+    0 0 40px rgba(65, 105, 225, 0.3);
+  text-shadow: 0 0 10px rgba(65, 105, 225, 0.5);
+}
+
+/* ========================================
+   LINK HOVER STATES
+   ======================================== */
+
+a.link-akademia {
+  color: var(--akademia-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.link-akademia:hover {
+  color: var(--akademia-dark);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+}
+
+a.link-bibliotheke {
+  color: var(--bibliotheke-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.link-bibliotheke:hover {
+  color: var(--bibliotheke-light);
+  text-shadow: 0 0 10px rgba(139, 69, 19, 0.6);
+}
+
+a.link-pinakotheke {
+  color: var(--pinakotheke-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.link-pinakotheke:hover {
+  color: var(--pinakotheke-dark);
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.6);
+}
+
+a.link-agora {
+  color: var(--agora-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.link-agora:hover {
+  color: var(--agora-dark);
+  text-shadow: 0 0 10px rgba(220, 20, 60, 0.6);
+}
+
+a.link-symposion {
+  color: var(--symposion-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.link-symposion:hover {
+  color: var(--symposion-light);
+  text-shadow: 0 0 10px rgba(114, 47, 55, 0.6);
+}
+
+a.link-oikos {
+  color: var(--oikos-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.link-oikos:hover {
+  color: var(--oikos-dark);
+  text-shadow: 0 0 10px rgba(255, 140, 0, 0.6);
+}
+
+a.link-odeion {
+  color: var(--odeion-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.link-odeion:hover {
+  color: var(--odeion-dark);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+a.link-theatron {
+  color: var(--theatron-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.link-theatron:hover {
+  color: var(--theatron-light);
+  text-shadow: 0 0 10px rgba(128, 0, 128, 0.6);
+}
+
+a.link-ergasterion {
+  color: var(--ergasterion-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.link-ergasterion:hover {
+  color: var(--ergasterion-dark);
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+}
+
+a.link-khronos {
+  color: var(--khronos-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.link-khronos:hover {
+  color: var(--khronos-dark);
+  text-shadow: 0 0 10px rgba(65, 105, 225, 0.6);
+}
+
+/* ========================================
+   CHAMBER CARD COMPONENT
+   ======================================== */
+
+.chamber-card {
+  padding: 1.5rem;
+  border-radius: 0.25rem;
+  border: 2px solid;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.chamber-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: left 0.3s ease;
+  z-index: 0;
+}
+
+.chamber-card:hover::before {
+  left: 100%;
+}
+
+.chamber-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.chamber-card.akademia {
+  border-color: var(--akademia-primary);
+  background-color: rgba(0, 255, 255, 0.05);
+}
+
+.chamber-card.akademia:hover {
+  background-color: rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.chamber-card.bibliotheke {
+  border-color: var(--bibliotheke-primary);
+  background-color: rgba(139, 69, 19, 0.05);
+}
+
+.chamber-card.bibliotheke:hover {
+  background-color: rgba(139, 69, 19, 0.15);
+  box-shadow: 0 0 20px rgba(139, 69, 19, 0.3);
+}
+
+.chamber-card.pinakotheke {
+  border-color: var(--pinakotheke-primary);
+  background-color: rgba(255, 0, 255, 0.05);
+}
+
+.chamber-card.pinakotheke:hover {
+  background-color: rgba(255, 0, 255, 0.15);
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+}
+
+.chamber-card.agora {
+  border-color: var(--agora-primary);
+  background-color: rgba(220, 20, 60, 0.05);
+}
+
+.chamber-card.agora:hover {
+  background-color: rgba(220, 20, 60, 0.15);
+  box-shadow: 0 0 20px rgba(220, 20, 60, 0.3);
+}
+
+.chamber-card.symposion {
+  border-color: var(--symposion-primary);
+  background-color: rgba(114, 47, 55, 0.05);
+}
+
+.chamber-card.symposion:hover {
+  background-color: rgba(114, 47, 55, 0.15);
+  box-shadow: 0 0 20px rgba(114, 47, 55, 0.3);
+}
+
+.chamber-card.oikos {
+  border-color: var(--oikos-primary);
+  background-color: rgba(255, 140, 0, 0.05);
+}
+
+.chamber-card.oikos:hover {
+  background-color: rgba(255, 140, 0, 0.15);
+  box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+}
+
+.chamber-card.odeion {
+  border-color: var(--odeion-primary);
+  background-color: rgba(255, 215, 0, 0.05);
+}
+
+.chamber-card.odeion:hover {
+  background-color: rgba(255, 215, 0, 0.15);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.chamber-card.theatron {
+  border-color: var(--theatron-primary);
+  background-color: rgba(128, 0, 128, 0.05);
+}
+
+.chamber-card.theatron:hover {
+  background-color: rgba(128, 0, 128, 0.15);
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.3);
+}
+
+.chamber-card.ergasterion {
+  border-color: var(--ergasterion-primary);
+  background-color: rgba(0, 255, 0, 0.05);
+}
+
+.chamber-card.ergasterion:hover {
+  background-color: rgba(0, 255, 0, 0.15);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+.chamber-card.khronos {
+  border-color: var(--khronos-primary);
+  background-color: rgba(65, 105, 225, 0.05);
+}
+
+.chamber-card.khronos:hover {
+  background-color: rgba(65, 105, 225, 0.15);
+  box-shadow: 0 0 20px rgba(65, 105, 225, 0.3);
+}
+
+/* ========================================
+   CHAMBER HERO COMPONENT
+   ======================================== */
+
+.chamber-hero {
+  position: relative;
+  padding: 3rem;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.chamber-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.chamber-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.chamber-hero.akademia {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(0, 255, 255, 0.05));
+}
+
+.chamber-hero.bibliotheke {
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.2), rgba(245, 245, 220, 0.05));
+}
+
+.chamber-hero.pinakotheke {
+  background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(255, 0, 255, 0.05));
+}
+
+.chamber-hero.agora {
+  background: linear-gradient(135deg, rgba(220, 20, 60, 0.2), rgba(220, 20, 60, 0.05));
+}
+
+.chamber-hero.symposion {
+  background: linear-gradient(135deg, rgba(114, 47, 55, 0.2), rgba(245, 245, 220, 0.05));
+}
+
+.chamber-hero.oikos {
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.2), rgba(255, 182, 193, 0.05));
+}
+
+.chamber-hero.odeion {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.05));
+}
+
+.chamber-hero.theatron {
+  background: linear-gradient(135deg, rgba(128, 0, 128, 0.2), rgba(128, 0, 128, 0.05));
+}
+
+.chamber-hero.ergasterion {
+  background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 0, 0.05));
+}
+
+.chamber-hero.khronos {
+  background: linear-gradient(135deg, rgba(65, 105, 225, 0.2), rgba(65, 105, 225, 0.05));
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+/* Chamber accent borders */
+.bt--akademia {
+  border-top-color: var(--akademia-primary);
+}
+
+.br--akademia {
+  border-right-color: var(--akademia-primary);
+}
+
+.bb--akademia {
+  border-bottom-color: var(--akademia-primary);
+}
+
+.bl--akademia {
+  border-left-color: var(--akademia-primary);
+}
+
+/* Repeat pattern for all chambers */
+.bt--bibliotheke {
+  border-top-color: var(--bibliotheke-primary);
+}
+
+.br--bibliotheke {
+  border-right-color: var(--bibliotheke-primary);
+}
+
+.bb--bibliotheke {
+  border-bottom-color: var(--bibliotheke-primary);
+}
+
+.bl--bibliotheke {
+  border-left-color: var(--bibliotheke-primary);
+}
+
+.bt--pinakotheke {
+  border-top-color: var(--pinakotheke-primary);
+}
+
+.br--pinakotheke {
+  border-right-color: var(--pinakotheke-primary);
+}
+
+.bb--pinakotheke {
+  border-bottom-color: var(--pinakotheke-primary);
+}
+
+.bl--pinakotheke {
+  border-left-color: var(--pinakotheke-primary);
+}
+
+.bt--agora {
+  border-top-color: var(--agora-primary);
+}
+
+.br--agora {
+  border-right-color: var(--agora-primary);
+}
+
+.bb--agora {
+  border-bottom-color: var(--agora-primary);
+}
+
+.bl--agora {
+  border-left-color: var(--agora-primary);
+}
+
+.bt--symposion {
+  border-top-color: var(--symposion-primary);
+}
+
+.br--symposion {
+  border-right-color: var(--symposion-primary);
+}
+
+.bb--symposion {
+  border-bottom-color: var(--symposion-primary);
+}
+
+.bl--symposion {
+  border-left-color: var(--symposion-primary);
+}
+
+.bt--oikos {
+  border-top-color: var(--oikos-primary);
+}
+
+.br--oikos {
+  border-right-color: var(--oikos-primary);
+}
+
+.bb--oikos {
+  border-bottom-color: var(--oikos-primary);
+}
+
+.bl--oikos {
+  border-left-color: var(--oikos-primary);
+}
+
+.bt--odeion {
+  border-top-color: var(--odeion-primary);
+}
+
+.br--odeion {
+  border-right-color: var(--odeion-primary);
+}
+
+.bb--odeion {
+  border-bottom-color: var(--odeion-primary);
+}
+
+.bl--odeion {
+  border-left-color: var(--odeion-primary);
+}
+
+.bt--theatron {
+  border-top-color: var(--theatron-primary);
+}
+
+.br--theatron {
+  border-right-color: var(--theatron-primary);
+}
+
+.bb--theatron {
+  border-bottom-color: var(--theatron-primary);
+}
+
+.bl--theatron {
+  border-left-color: var(--theatron-primary);
+}
+
+.bt--ergasterion {
+  border-top-color: var(--ergasterion-primary);
+}
+
+.br--ergasterion {
+  border-right-color: var(--ergasterion-primary);
+}
+
+.bb--ergasterion {
+  border-bottom-color: var(--ergasterion-primary);
+}
+
+.bl--ergasterion {
+  border-left-color: var(--ergasterion-primary);
+}
+
+.bt--khronos {
+  border-top-color: var(--khronos-primary);
+}
+
+.br--khronos {
+  border-right-color: var(--khronos-primary);
+}
+
+.bb--khronos {
+  border-bottom-color: var(--khronos-primary);
+}
+
+.bl--khronos {
+  border-left-color: var(--khronos-primary);
+}
+
+/* Opacity variants for subtle backgrounds */
+.bg-akademia--o-10 {
+  background-color: rgba(0, 255, 255, 0.1);
+}
+
+.bg-akademia--o-20 {
+  background-color: rgba(0, 255, 255, 0.2);
+}
+
+.bg-akademia--o-30 {
+  background-color: rgba(0, 255, 255, 0.3);
+}
+
+/* Repeat for all chambers */
+.bg-bibliotheke--o-10 {
+  background-color: rgba(139, 69, 19, 0.1);
+}
+
+.bg-bibliotheke--o-20 {
+  background-color: rgba(139, 69, 19, 0.2);
+}
+
+.bg-bibliotheke--o-30 {
+  background-color: rgba(139, 69, 19, 0.3);
+}
+
+.bg-pinakotheke--o-10 {
+  background-color: rgba(255, 0, 255, 0.1);
+}
+
+.bg-pinakotheke--o-20 {
+  background-color: rgba(255, 0, 255, 0.2);
+}
+
+.bg-pinakotheke--o-30 {
+  background-color: rgba(255, 0, 255, 0.3);
+}
+
+.bg-agora--o-10 {
+  background-color: rgba(220, 20, 60, 0.1);
+}
+
+.bg-agora--o-20 {
+  background-color: rgba(220, 20, 60, 0.2);
+}
+
+.bg-agora--o-30 {
+  background-color: rgba(220, 20, 60, 0.3);
+}
+
+.bg-symposion--o-10 {
+  background-color: rgba(114, 47, 55, 0.1);
+}
+
+.bg-symposion--o-20 {
+  background-color: rgba(114, 47, 55, 0.2);
+}
+
+.bg-symposion--o-30 {
+  background-color: rgba(114, 47, 55, 0.3);
+}
+
+.bg-oikos--o-10 {
+  background-color: rgba(255, 140, 0, 0.1);
+}
+
+.bg-oikos--o-20 {
+  background-color: rgba(255, 140, 0, 0.2);
+}
+
+.bg-oikos--o-30 {
+  background-color: rgba(255, 140, 0, 0.3);
+}
+
+.bg-odeion--o-10 {
+  background-color: rgba(255, 215, 0, 0.1);
+}
+
+.bg-odeion--o-20 {
+  background-color: rgba(255, 215, 0, 0.2);
+}
+
+.bg-odeion--o-30 {
+  background-color: rgba(255, 215, 0, 0.3);
+}
+
+.bg-theatron--o-10 {
+  background-color: rgba(128, 0, 128, 0.1);
+}
+
+.bg-theatron--o-20 {
+  background-color: rgba(128, 0, 128, 0.2);
+}
+
+.bg-theatron--o-30 {
+  background-color: rgba(128, 0, 128, 0.3);
+}
+
+.bg-ergasterion--o-10 {
+  background-color: rgba(0, 255, 0, 0.1);
+}
+
+.bg-ergasterion--o-20 {
+  background-color: rgba(0, 255, 0, 0.2);
+}
+
+.bg-ergasterion--o-30 {
+  background-color: rgba(0, 255, 0, 0.3);
+}
+
+.bg-khronos--o-10 {
+  background-color: rgba(65, 105, 225, 0.1);
+}
+
+.bg-khronos--o-20 {
+  background-color: rgba(65, 105, 225, 0.2);
+}
+
+.bg-khronos--o-30 {
+  background-color: rgba(65, 105, 225, 0.3);
+}

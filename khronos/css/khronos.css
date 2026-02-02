@@ -1,0 +1,588 @@
+/* ========================================
+   KHRONOS CHAMBER STYLES
+   Timeline and Historical Archive Styling
+   ======================================== */
+
+/* ========================================
+   CHAMBER-SPECIFIC OVERRIDES
+   ======================================== */
+
+.khronos-chamber {
+  --khronos-primary: #4169e1;
+  --khronos-secondary: #87ceeb;
+  --khronos-accent: #6495ed;
+  --khronos-dark: #00008b;
+}
+
+/* ========================================
+   TIMELINE LAYOUT - VERTICAL SCROLLING
+   ======================================== */
+
+.khronos-timeline {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.timeline-vertical {
+  position: relative;
+  padding-left: 2rem;
+}
+
+/* Central vertical line connecting timeline events */
+.timeline-vertical::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(65, 105, 225, 0.8), rgba(65, 105, 225, 0.3));
+}
+
+/* ========================================
+   ERA CARDS
+   Date range cards with visual styling
+   ======================================== */
+
+.era-card {
+  position: relative;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  border-left: 4px solid var(--khronos-primary);
+  border-radius: 0.25rem;
+  background: linear-gradient(135deg, rgba(65, 105, 225, 0.1) 0%, rgba(135, 206, 235, 0.05) 100%);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.era-card::before {
+  content: '';
+  position: absolute;
+  left: -2.5rem;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translateY(-50%);
+  background: var(--khronos-primary);
+  border: 3px solid rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(65, 105, 225, 0.6);
+  z-index: 2;
+}
+
+.era-card:hover {
+  background: linear-gradient(135deg, rgba(65, 105, 225, 0.2) 0%, rgba(135, 206, 235, 0.1) 100%);
+  box-shadow: 0 4px 20px rgba(65, 105, 225, 0.3);
+  border-left-color: var(--khronos-dark);
+}
+
+.era-card.active::before {
+  width: 20px;
+  height: 20px;
+  left: -2.75rem;
+  background: var(--khronos-dark);
+  box-shadow: 0 0 15px rgba(65, 105, 225, 0.8);
+}
+
+.era-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(65, 105, 225, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.era-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--khronos-primary);
+  letter-spacing: 0.1em;
+}
+
+.era-card-date {
+  font-size: 0.875rem;
+  color: rgba(65, 105, 225, 0.7);
+  font-style: italic;
+}
+
+.era-card-description {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.era-card-focus {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(65, 105, 225, 0.3);
+}
+
+.era-card-focus-title {
+  font-size: 0.85rem;
+  color: var(--khronos-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.era-card-focus-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.era-card-focus-item {
+  font-size: 0.8rem;
+  background: rgba(65, 105, 225, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(65, 105, 225, 0.4);
+}
+
+.era-card-status {
+  margin-top: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.era-card-status.completed {
+  background: rgba(100, 149, 237, 0.2);
+  color: #87ceeb;
+  border: 1px solid rgba(135, 206, 235, 0.5);
+}
+
+.era-card-status.active {
+  background: rgba(65, 105, 225, 0.3);
+  color: #ffd700;
+  border: 1px solid rgba(65, 105, 225, 0.6);
+  box-shadow: 0 0 10px rgba(65, 105, 225, 0.4);
+}
+
+/* ========================================
+   MILESTONE MARKERS & CONNECTORS
+   Timeline points with connecting lines
+   ======================================== */
+
+.milestones-flex {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.milestone-card {
+  position: relative;
+  padding: 1.5rem;
+  border: 2px solid var(--khronos-primary);
+  border-radius: 0.25rem;
+  background: rgba(65, 105, 225, 0.05);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.milestone-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(135, 206, 235, 0.1);
+  transition: left 0.3s ease;
+  z-index: 0;
+}
+
+.milestone-card:hover {
+  background: rgba(65, 105, 225, 0.15);
+  box-shadow: 0 0 20px rgba(65, 105, 225, 0.4);
+  border-color: var(--khronos-dark);
+}
+
+.milestone-card:hover::before {
+  left: 100%;
+}
+
+.milestone-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.milestone-date {
+  font-size: 0.75rem;
+  color: var(--khronos-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.milestone-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--khronos-primary);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.milestone-category {
+  display: inline-block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  background: rgba(65, 105, 225, 0.2);
+  border: 1px solid rgba(65, 105, 225, 0.4);
+  border-radius: 0.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+  letter-spacing: 0.06em;
+}
+
+.milestone-description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 1rem;
+}
+
+.milestone-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.milestone-tag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(65, 105, 225, 0.15);
+  border-radius: 0.2rem;
+  color: var(--khronos-secondary);
+  border: 1px solid rgba(135, 206, 235, 0.3);
+}
+
+.milestone-impact {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(65, 105, 225, 0.2);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.milestone-impact-badge {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--khronos-accent);
+  text-transform: uppercase;
+}
+
+/* ========================================
+   TIMELINE NAVIGATION
+   Section switching buttons
+   ======================================== */
+
+.chamber-section-nav {
+  border-bottom: 2px solid rgba(65, 105, 225, 0.3);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.timeline-nav-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: transparent;
+  border: 2px solid var(--khronos-primary);
+  color: var(--khronos-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 0.25rem;
+  margin: 0.25rem;
+}
+
+.timeline-nav-btn:hover {
+  background: rgba(65, 105, 225, 0.1);
+  box-shadow: 0 0 10px rgba(65, 105, 225, 0.3);
+}
+
+.timeline-nav-btn.active {
+  background: var(--khronos-primary);
+  color: white;
+  box-shadow: 0 0 15px rgba(65, 105, 225, 0.6);
+}
+
+/* ========================================
+   TIMELINE SECTIONS
+   Show/hide behavior for eras vs milestones
+   ======================================== */
+
+.timeline-section {
+  animation: fadeIn 0.3s ease;
+}
+
+.timeline-section.dn {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   D3.js VISUALIZATION
+   Timeline chart area
+   ======================================== */
+
+#timeline-viz {
+  background: rgba(65, 105, 225, 0.05);
+  border: 1px solid rgba(65, 105, 225, 0.2);
+  border-radius: 0.25rem;
+  padding: 2rem;
+  margin: 2rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+#timeline-viz svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.timeline-axis {
+  color: rgba(135, 206, 235, 0.7);
+  font-size: 0.85rem;
+}
+
+.timeline-axis-label {
+  fill: rgba(135, 206, 235, 0.8);
+  font-size: 0.8rem;
+}
+
+.timeline-dot {
+  fill: var(--khronos-primary);
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 2px;
+  transition: all 0.2s ease;
+}
+
+.timeline-dot:hover {
+  fill: var(--khronos-dark);
+  stroke: white;
+  stroke-width: 2px;
+  cursor: pointer;
+  filter: drop-shadow(0 0 8px rgba(65, 105, 225, 0.6));
+}
+
+.timeline-line {
+  stroke: rgba(65, 105, 225, 0.3);
+  stroke-width: 1px;
+  fill: none;
+}
+
+.timeline-area {
+  fill: rgba(65, 105, 225, 0.1);
+  opacity: 0.3;
+}
+
+/* ========================================
+   TOOLTIP & POPOVER
+   Information display on interaction
+   ======================================== */
+
+.timeline-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.95);
+  color: var(--khronos-secondary);
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+  pointer-events: none;
+  z-index: 10;
+  border: 1px solid var(--khronos-primary);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  max-width: 250px;
+  word-wrap: break-word;
+}
+
+.timeline-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgba(0, 0, 0, 0.95);
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   Mobile and tablet breakpoints
+   ======================================== */
+
+@media screen and (max-width: 768px) {
+  .timeline-vertical {
+    padding-left: 1rem;
+  }
+
+  .timeline-vertical::before {
+    left: -0.5px;
+  }
+
+  .era-card {
+    padding: 1.5rem 1rem;
+    border-left: 3px solid var(--khronos-primary);
+  }
+
+  .era-card::before {
+    left: -1.75rem;
+    width: 12px;
+    height: 12px;
+  }
+
+  .era-card.active::before {
+    left: -2rem;
+    width: 16px;
+    height: 16px;
+  }
+
+  .milestones-flex {
+    grid-template-columns: 1fr;
+  }
+
+  .era-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .era-card-title {
+    font-size: 1.25rem;
+  }
+
+  .era-card-date {
+    margin-top: 0.5rem;
+  }
+
+  .timeline-nav-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  #timeline-viz {
+    padding: 1rem;
+    max-height: 400px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .timeline-vertical {
+    padding-left: 0.75rem;
+  }
+
+  .era-card {
+    padding: 1rem 0.75rem;
+    margin-bottom: 2rem;
+    border-left: 2px solid var(--khronos-primary);
+  }
+
+  .era-card::before {
+    left: -1.25rem;
+    width: 10px;
+    height: 10px;
+  }
+
+  .era-card-title {
+    font-size: 1.1rem;
+  }
+
+  .era-card-description {
+    font-size: 0.9rem;
+  }
+
+  .era-card-focus-item {
+    font-size: 0.7rem;
+  }
+
+  .timeline-nav-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* ========================================
+   GLOW & ANIMATION EFFECTS
+   Visual feedback and emphasis
+   ======================================== */
+
+.timeline-glow {
+  animation: timelineGlow 2s ease-in-out infinite;
+}
+
+@keyframes timelineGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(65, 105, 225, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(65, 105, 225, 0.7);
+  }
+}
+
+.timeline-pulse {
+  animation: timelinePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes timelinePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .chamber-header,
+  .chamber-footer,
+  .timeline-nav-btn {
+    display: none;
+  }
+
+  .timeline-section {
+    page-break-inside: avoid;
+  }
+
+  .era-card,
+  .milestone-card {
+    page-break-inside: avoid;
+    border: 1px solid #666;
+  }
+
+  .era-card::before,
+  .milestone-card::before {
+    display: none;
+  }
+}

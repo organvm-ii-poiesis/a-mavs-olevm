@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Chamber-specific meta -->
+    <title>PINAKOTHEKE | ET CETER4</title>
+    <meta name="description" content="Photography, digital art, glitch, and generative visual works" />
+    <meta name="author" content="ET CETER4" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="PINAKOTHEKE | ET CETER4" />
+    <meta property="og:description" content="Photography, digital art, glitch, and generative visual works" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ET CETER4" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/chamber-colors.css" />
+    <link rel="stylesheet" href="css/pinakotheke.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../img/favicon.ico" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="../manifest.json" />
+    <meta name="theme-color" content="#FF00FF" />
+  </head>
+
+  <body class="min-vh-100 w-100 futura fw1 pinakotheke-chamber">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#chamber-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
+
+    <!-- Chamber Header -->
+    <header class="chamber-header fixed top-0 left-0 w-100 z-5 pa3" style="background: rgba(0, 0, 0, 0.8)">
+      <nav class="flex justify-between items-center mw9 center" aria-label="Chamber navigation">
+        <a href="../index.html#menu" class="chamber-back-btn white f6 link flex items-center">
+          <span class="mr2">&larr;</span>
+          <span>Back to Naos</span>
+        </a>
+        <h1 class="ma0 f4 tracked-mega" style="color: #ff00ff">PINAKOTHEKE</h1>
+        <div class="chamber-nav-spacer w4"></div>
+      </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="chamber-content" class="pt5 pb5 min-vh-100" role="main" aria-label="PINAKOTHEKE content">
+      <!-- Chamber Hero Section -->
+      <section
+        class="chamber-hero pinakotheke vh-50 flex flex-column justify-center items-center tc"
+        style="background: linear-gradient(180deg, rgba(255, 0, 255, 0.2) 0%, transparent 100%)"
+      >
+        <h2 class="f-headline-ns f1 tracked-mega ma0 mb3 pinakotheke-text">PINAKOTHEKE</h2>
+        <p class="bodoni f4 o-80 mw6 ph4">Photography, digital art, glitch, generative</p>
+      </section>
+
+      <!-- Content Grid -->
+      <section id="chamber-grid" class="mw9 center ph4 pv5">
+        <!-- Section Navigation -->
+        <div class="chamber-section-nav flex flex-wrap justify-center mb5 gap3">
+          <button class="section-nav-btn active" data-section="all" style="border-color: #ff00ff; color: #ff00ff">
+            ALL
+          </button>
+          <button class="section-nav-btn" data-section="photography" style="border-color: #ff00ff; color: #ff00ff">
+            PHOTOGRAPHY
+          </button>
+          <button class="section-nav-btn" data-section="digital" style="border-color: #ff00ff; color: #ff00ff">
+            DIGITAL
+          </button>
+          <button class="section-nav-btn" data-section="glitch" style="border-color: #ff00ff; color: #ff00ff">
+            GLITCH
+          </button>
+          <button class="section-nav-btn" data-section="generative" style="border-color: #ff00ff; color: #ff00ff">
+            GENERATIVE
+          </button>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div id="chamber-items" class="gallery-grid">
+          <!-- Items will be populated from config.js -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Chamber Footer -->
+    <footer class="chamber-footer fixed bottom-0 w-100 pa3 bg-black-90" role="contentinfo">
+      <nav class="flex justify-center items-center" aria-label="Footer navigation">
+        <a href="../index.html#landing" class="white-70 f7 link mh3">ETCETER4</a>
+        <span class="white-30">//</span>
+        <a href="../index.html#menu" class="white-70 f7 link mh3">NAOS</a>
+        <span class="white-30">//</span>
+        <a href="../sitemap.html" class="white-70 f7 link mh3">SITE MAP</a>
+      </nav>
+    </footer>
+
+    <!-- Scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"
+      integrity="sha512-+ZPnKPFqf/PjXPKJLBykOgAOnUmCp0ufqCYWsuvMV5FhlYCf/DlTdB3PQJuXzA3otXm1FiooUNrBncLRLbYaxA=="
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="../js/config.js"></script>
+    <script type="text/javascript" src="../js/living-pantheon/LivingPantheonCore.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script>
+      // Gallery rendering and section filtering
+      document.addEventListener('DOMContentLoaded', function () {
+        const galleryItems = PINAKOTHEKE_CONFIG.items || [];
+        const gallery = document.getElementById('chamber-items');
+        const sectionBtns = document.querySelectorAll('.section-nav-btn');
+
+        // Function to render gallery items
+        function renderGallery(items) {
+          gallery.innerHTML = '';
+          items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = `gallery-item ${item.section || 'all'}`;
+            div.innerHTML = `
+              <div class="gallery-item-wrapper">
+                <img src="${item.image}" alt="${item.title}" loading="lazy" />
+                <div class="gallery-overlay">
+                  <h3 class="f5 tracked mb2">${item.title}</h3>
+                  <p class="f7 o-80">${item.category}</p>
+                </div>
+              </div>
+            `;
+            gallery.appendChild(div);
+          });
+        }
+
+        // Section filtering
+        sectionBtns.forEach(btn => {
+          btn.addEventListener('click', function () {
+            const section = this.dataset.section;
+            sectionBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const items = section === 'all' ? galleryItems : galleryItems.filter(item => item.section === section);
+
+            renderGallery(items);
+          });
+        });
+
+        // Initial render
+        renderGallery(galleryItems);
+
+        // Initialize Living Pantheon if available
+        if (typeof LivingPantheonCore !== 'undefined' && ETCETER4_CONFIG.livingPantheon?.enabled) {
+          LivingPantheonCore.initialize({
+            chamber: 'pinakotheke',
+            color: '#FF00FF',
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

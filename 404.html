@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Descriptive Metas -->
+    <title>404 - Lost in the Labyrinth | ET CETER4</title>
+    <meta
+      name="description"
+      content="Page not found. You have wandered into the depths of the labyrinth. Return to the surface or explore the site map."
+    />
+    <meta name="author" content="ET CETER4" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/vendor/tachyons/css/tachyons.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.ico" />
+
+    <!-- 404-specific styles -->
+    <style>
+      /* Dark theme matching ETCETER4 */
+      .error-404-container {
+        min-height: 100vh;
+        width: 100%;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Animated background glitch pattern */
+      .error-404-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+        opacity: 0.5;
+      }
+
+      /* Labyrinth-themed grid overlay */
+      .labyrinth-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+          linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(rgba(255, 0, 255, 0.02) 2px, transparent 2px),
+          linear-gradient(90deg, rgba(255, 0, 255, 0.02) 2px, transparent 2px);
+        background-size:
+          40px 40px,
+          40px 40px,
+          200px 200px,
+          200px 200px;
+        animation: gridDrift 20s linear infinite;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      @keyframes gridDrift {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(40px, 40px);
+        }
+      }
+
+      /* Main content wrapper */
+      .error-404-content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 2rem;
+        max-width: 90%;
+      }
+
+      /* Glitch effect on 404 heading */
+      .error-404-title {
+        font-size: clamp(3rem, 15vw, 12rem);
+        font-weight: 100;
+        font-family: futura, 'Futura PT', sans-serif;
+        letter-spacing: 0.2em;
+        margin: 0;
+        line-height: 1;
+        color: #fff;
+        text-shadow:
+          0 0 10px rgba(0, 255, 255, 0.5),
+          0 0 20px rgba(0, 255, 255, 0.3),
+          0 0 30px rgba(255, 0, 255, 0.2);
+        position: relative;
+        animation: glitch-404 3s infinite;
+      }
+
+      /* Glitch animation keyframes */
+      @keyframes glitch-404 {
+        0% {
+          text-shadow:
+            0 0 10px rgba(0, 255, 255, 0.5),
+            0 0 20px rgba(0, 255, 255, 0.3),
+            0 0 30px rgba(255, 0, 255, 0.2);
+          transform: translate(0, 0);
+        }
+        10% {
+          text-shadow:
+            -3px 0 0 rgba(255, 0, 255, 0.7),
+            3px 0 0 rgba(0, 255, 255, 0.7);
+          transform: translate(-2px, 2px);
+        }
+        20% {
+          text-shadow:
+            0 0 10px rgba(0, 255, 255, 0.5),
+            0 0 20px rgba(0, 255, 255, 0.3);
+          transform: translate(0, 0);
+        }
+        30% {
+          text-shadow:
+            3px 0 0 rgba(0, 255, 255, 0.7),
+            -3px 0 0 rgba(255, 0, 255, 0.7);
+          transform: translate(2px, -2px);
+        }
+        40% {
+          text-shadow:
+            -2px 2px 0 rgba(255, 0, 255, 0.5),
+            2px -2px 0 rgba(0, 255, 255, 0.5);
+          transform: translate(1px, 1px);
+        }
+        50% {
+          text-shadow:
+            0 0 10px rgba(0, 255, 255, 0.5),
+            0 0 20px rgba(0, 255, 255, 0.3),
+            0 0 30px rgba(255, 0, 255, 0.2);
+          transform: translate(0, 0);
+        }
+        60% {
+          text-shadow:
+            2px -2px 0 rgba(255, 0, 255, 0.6),
+            -2px 2px 0 rgba(0, 255, 255, 0.6);
+          transform: translate(-1px, 1px);
+        }
+        70% {
+          text-shadow:
+            -3px 0 0 rgba(0, 255, 255, 0.8),
+            3px 0 0 rgba(255, 0, 255, 0.8);
+          transform: translate(2px, -1px);
+        }
+        80% {
+          text-shadow:
+            0 0 10px rgba(0, 255, 255, 0.5),
+            0 0 20px rgba(0, 255, 255, 0.3);
+          transform: translate(0, 0);
+        }
+        90% {
+          text-shadow:
+            2px 0 0 rgba(255, 0, 255, 0.7),
+            -2px 0 0 rgba(0, 255, 255, 0.7);
+          transform: translate(-2px, -2px);
+        }
+        100% {
+          text-shadow:
+            0 0 10px rgba(0, 255, 255, 0.5),
+            0 0 20px rgba(0, 255, 255, 0.3),
+            0 0 30px rgba(255, 0, 255, 0.2);
+          transform: translate(0, 0);
+        }
+      }
+
+      /* Subtitle text */
+      .error-404-subtitle {
+        font-size: clamp(1rem, 5vw, 2rem);
+        color: #ccc;
+        margin: 1rem 0 2rem 0;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+        font-weight: 300;
+      }
+
+      /* Quote section */
+      .error-404-quote {
+        font-style: italic;
+        color: #00ffff;
+        margin: 3rem 0;
+        font-size: clamp(0.9rem, 3vw, 1.3rem);
+        line-height: 1.6;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .quote-author {
+        color: #ff00ff;
+        margin-top: 0.5rem;
+        font-size: 0.9em;
+        font-style: normal;
+      }
+
+      /* Navigation buttons container */
+      .error-404-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 3rem;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      /* Link button styles */
+      .error-404-link {
+        display: inline-block;
+        padding: 1rem 2rem;
+        border: 2px solid;
+        text-decoration: none;
+        font-family: futura, 'Futura PT', sans-serif;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        font-size: clamp(0.9rem, 2vw, 1.1rem);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .error-404-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        transition: left 0.3s ease;
+      }
+
+      /* Home/Landing button - Cyan */
+      .error-404-link.home {
+        color: #00ffff;
+        border-color: #00ffff;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      }
+
+      .error-404-link.home::before {
+        background: rgba(0, 255, 255, 0.1);
+      }
+
+      .error-404-link.home:hover {
+        background: rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+      }
+
+      /* Menu button - Magenta */
+      .error-404-link.menu {
+        color: #ff00ff;
+        border-color: #ff00ff;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+      }
+
+      .error-404-link.menu::before {
+        background: rgba(255, 0, 255, 0.1);
+      }
+
+      .error-404-link.menu:hover {
+        background: rgba(255, 0, 255, 0.2);
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+        text-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+      }
+
+      /* Site Map button - Yellow */
+      .error-404-link.sitemap {
+        color: #ffff00;
+        border-color: #ffff00;
+        text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+      }
+
+      .error-404-link.sitemap::before {
+        background: rgba(255, 255, 0, 0.1);
+      }
+
+      .error-404-link.sitemap:hover {
+        background: rgba(255, 255, 0, 0.2);
+        box-shadow: 0 0 20px rgba(255, 255, 0, 0.6);
+        text-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+      }
+
+      /* Responsive design */
+      @media (min-width: 48em) {
+        .error-404-nav {
+          flex-direction: row;
+          gap: 2rem;
+        }
+      }
+
+      /* Footer help text */
+      .error-404-help {
+        position: absolute;
+        bottom: 2rem;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #666;
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
+      }
+
+      /* Accessibility: Reduce motion */
+      @media (prefers-reduced-motion: reduce) {
+        .error-404-title {
+          animation: none;
+          text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .labyrinth-grid {
+          animation: none;
+        }
+
+        .error-404-link {
+          transition: none;
+        }
+
+        .error-404-link::before {
+          transition: none;
+        }
+      }
+
+      /* Mobile adjustments */
+      @media (max-width: 30em) {
+        .error-404-content {
+          padding: 1rem;
+        }
+
+        .error-404-link {
+          width: 100%;
+          max-width: 250px;
+        }
+
+        .error-404-quote {
+          font-size: 0.95rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="min-vh-100 w-100 futura fw1 bg-black">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#error-content" class="skip-link" aria-label="Skip to main content">Skip to main content</a>
+
+    <!-- 404 Error Container -->
+    <div class="error-404-container">
+      <!-- Animated background -->
+      <div class="error-404-bg"></div>
+
+      <!-- Labyrinth grid overlay -->
+      <div class="labyrinth-grid"></div>
+
+      <!-- Main content -->
+      <main id="error-content" class="error-404-content" role="main">
+        <!-- Glitching 404 heading -->
+        <h1 class="error-404-title" role="heading" aria-level="1">404</h1>
+
+        <!-- Subtitle -->
+        <h2 class="error-404-subtitle" role="heading" aria-level="2">LOST IN THE LABYRINTH</h2>
+
+        <!-- Description -->
+        <p style="color: #aaa; font-size: clamp(0.95rem, 2vw, 1.1rem); margin: 1.5rem 0">
+          The path you sought has vanished into the depths of our digital labyrinth.<br />
+          The walls shift. The corridors bend. Nothing remains where it was before.
+        </p>
+
+        <!-- Philosophical quote about being lost (randomized) -->
+        <div class="error-404-quote" id="quote-container">
+          <p id="quote-text">"We are all lost in the labyrinth of life, seeking the exit that leads home."</p>
+          <p class="quote-author">— Unknown Guide</p>
+        </div>
+
+        <!-- Navigation options -->
+        <nav class="error-404-nav" aria-label="Error page navigation">
+          <a href="/" class="error-404-link home" aria-label="Return to home page">Return to Landing</a>
+          <a href="/#menu" class="error-404-link menu" aria-label="Go to main menu">Explore Menu</a>
+          <a href="sitemap.html" class="error-404-link sitemap" aria-label="View site map to navigate">View Site Map</a>
+        </nav>
+
+        <!-- Help text -->
+        <div class="error-404-help">
+          <p>
+            If you believe this is an error,<br class="dn-ns" />
+            <a href="mailto:etceter4@etceter4.com" style="color: #00ffff; text-decoration: none">contact us</a>
+          </p>
+        </div>
+      </main>
+    </div>
+
+    <!-- Quote collection for random selection -->
+    <script>
+      // Philosophical quotes about being lost in labyrinth/darkness
+      const quotes = [
+        {
+          text: 'We are all lost in the labyrinth of life, seeking the exit that leads home.',
+          author: 'Unknown Guide',
+        },
+        {
+          text: 'In the labyrinth of error, the thread of truth is barely visible.',
+          author: 'The Archivist',
+        },
+        {
+          text: 'To be lost is to be free. To be found is to be imprisoned.',
+          author: 'A Voice in the Dark',
+        },
+        {
+          text: 'The labyrinth teaches us: there are many paths, and most lead nowhere.',
+          author: 'An Ancient Wanderer',
+        },
+        {
+          text: 'What you seek is always hidden behind the wall you just passed.',
+          author: 'The Keeper of Corridors',
+        },
+        {
+          text: 'In losing ourselves, we find the truest part of who we are.',
+          author: 'A Philosopher',
+        },
+        {
+          text: 'The labyrinth has no exit. It only has deeper chambers.',
+          author: 'The Eternal Wanderer',
+        },
+        {
+          text: 'Being lost is simply another way of saying you have not yet arrived.',
+          author: 'The Patient Guide',
+        },
+        {
+          text: 'The walls remember every footstep. They know you better than you know yourself.',
+          author: 'The Memory Keeper',
+        },
+        {
+          text: 'Error 404: The answer you seek was never really there.',
+          author: 'The System',
+        },
+      ];
+
+      // Randomly select and display a quote
+      document.addEventListener('DOMContentLoaded', function () {
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        const quoteText = document.getElementById('quote-text');
+        const quoteAuthor = document.querySelector('.quote-author');
+
+        if (quoteText) {
+          quoteText.textContent = '"' + randomQuote.text + '"';
+        }
+        if (quoteAuthor) {
+          quoteAuthor.textContent = '— ' + randomQuote.author;
+        }
+
+        // Optionally trigger glitch system if available (Living Pantheon)
+        if (typeof GlobalGlitchSystem !== 'undefined') {
+          try {
+            const glitchSystem = new GlobalGlitchSystem({
+              frequency: 0.05, // Slightly higher frequency on 404
+              checkInterval: 3000,
+              types: ['text', 'color', 'image'],
+            });
+            glitchSystem.start();
+
+            // Clean up on page unload
+            window.addEventListener('beforeunload', function () {
+              glitchSystem.dispose();
+            });
+          } catch (e) {
+            // Silently fail if glitch system has issues
+            console.info('Glitch system not available on 404 page');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

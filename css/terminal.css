@@ -1,0 +1,943 @@
+/**
+ * Terminal Component Styles
+ * Ergasterion terminal/code display with retro CRT aesthetic
+ *
+ * Features:
+ * - Terminal green (#00FF00) on black theme with dark/light variants
+ * - Monaco monospace font with glow effects
+ * - CRT screen effects (subtle curve, scan lines)
+ * - Syntax highlighting
+ * - Command prompt and output styling
+ * - Blinking cursor and typing animations
+ * - File tree and tab bar support
+ * - Retro hacker aesthetic
+ */
+
+/* ==========================================================================
+   Root Variables - Terminal Theme
+   ========================================================================== */
+
+:root {
+  /* Terminal Colors */
+  --terminal-bg: #0a0e27;
+  --terminal-text: #00ff00;
+  --terminal-text-dim: #00aa00;
+  --terminal-cursor: #00ff00;
+  --terminal-glow: rgba(0, 255, 0, 0.5);
+  --terminal-scanline: rgba(0, 0, 0, 0.15);
+
+  /* Syntax Highlighting */
+  --syntax-keyword: #00ffff;
+  --syntax-string: #ffff00;
+  --syntax-number: #ff00ff;
+  --syntax-function: #00ff00;
+  --syntax-comment: #00aa00;
+  --syntax-operator: #00ff00;
+
+  /* Status Colors */
+  --status-error: #ff0055;
+  --status-success: #00ff00;
+  --status-warning: #ffaa00;
+  --status-info: #00ffff;
+
+  /* UI Elements */
+  --header-bg: #1a1f38;
+  --button-inactive: #444;
+  --button-close: #ff5555;
+  --button-minimize: #ffaa00;
+  --button-maximize: #00ff00;
+
+  /* Fonts */
+  --font-mono: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+/* Light variant */
+:root.terminal-light {
+  --terminal-bg: #f5f5f5;
+  --terminal-text: #000;
+  --terminal-text-dim: #666;
+  --terminal-cursor: #000;
+  --terminal-glow: rgba(0, 0, 0, 0.1);
+  --terminal-scanline: rgba(0, 0, 0, 0.03);
+
+  --syntax-keyword: #0066cc;
+  --syntax-string: #cc6600;
+  --syntax-number: #9933cc;
+  --syntax-function: #006633;
+  --syntax-comment: #999;
+  --syntax-operator: #000;
+
+  --status-error: #cc0033;
+  --status-success: #006633;
+  --status-warning: #cc6600;
+  --status-info: #0066cc;
+
+  --header-bg: #e0e0e0;
+  --button-inactive: #ccc;
+  --button-close: #cc0033;
+  --button-minimize: #cc6600;
+  --button-maximize: #006633;
+}
+
+/* ==========================================================================
+   Terminal Container
+   ========================================================================== */
+
+.terminal {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  background: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.terminal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px) 0 0 / 100% 2px,
+    linear-gradient(
+        90deg,
+        transparent 24%,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.05) 26%,
+        transparent 27%,
+        transparent 74%,
+        rgba(255, 255, 255, 0.05) 75%,
+        rgba(255, 255, 255, 0.05) 76%,
+        transparent 77%,
+        transparent
+      )
+      0 0 / 50px 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* CRT curvature effect */
+.terminal.crt {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.terminal.crt::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Glow effect */
+.terminal.glow {
+  box-shadow:
+    0 0 20px var(--terminal-glow),
+    0 0 40px var(--terminal-glow),
+    0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+/* ==========================================================================
+   Terminal Header
+   ========================================================================== */
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--header-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  user-select: none;
+  position: relative;
+  z-index: 3;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--button-inactive);
+}
+
+.terminal-button:hover {
+  transform: scale(1.2);
+}
+
+.terminal-button.close {
+  background: var(--button-close);
+}
+
+.terminal-button.minimize {
+  background: var(--button-minimize);
+}
+
+.terminal-button.maximize {
+  background: var(--button-maximize);
+}
+
+.terminal-title {
+  flex: 1;
+  margin-left: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--terminal-text);
+  letter-spacing: 0.5px;
+}
+
+.terminal-status {
+  font-size: 10px;
+  color: var(--terminal-text-dim);
+  text-align: right;
+}
+
+/* ==========================================================================
+   Terminal Body
+   ========================================================================== */
+
+.terminal-body {
+  position: relative;
+  padding: 16px;
+  min-height: 200px;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: auto;
+  background: var(--terminal-bg);
+  z-index: 0;
+}
+
+.terminal-body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+  background: var(--terminal-glow);
+  border-radius: 4px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--terminal-text);
+}
+
+/* Scan lines overlay */
+.terminal-body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--terminal-scanline),
+    var(--terminal-scanline) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Code Block
+   ========================================================================== */
+
+.code-block {
+  position: relative;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--terminal-glow);
+  border-radius: 4px;
+  padding: 12px;
+  margin: 8px 0;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.code-block.error {
+  border-color: var(--status-error);
+  background: rgba(255, 0, 85, 0.05);
+}
+
+.code-block.success {
+  border-color: var(--status-success);
+  background: rgba(0, 255, 0, 0.05);
+}
+
+.code-block.warning {
+  border-color: var(--status-warning);
+  background: rgba(255, 170, 0, 0.05);
+}
+
+.code-block.info {
+  border-color: var(--status-info);
+  background: rgba(0, 255, 255, 0.05);
+}
+
+.code-block code {
+  font-family: var(--font-mono);
+  display: block;
+  color: var(--terminal-text);
+  text-shadow: 0 0 10px var(--terminal-glow);
+}
+
+/* ==========================================================================
+   Syntax Highlighting
+   ========================================================================== */
+
+.keyword {
+  color: var(--syntax-keyword);
+  text-shadow: 0 0 10px var(--syntax-keyword);
+}
+
+.string {
+  color: var(--syntax-string);
+  text-shadow: 0 0 8px var(--syntax-string);
+}
+
+.number {
+  color: var(--syntax-number);
+  text-shadow: 0 0 8px var(--syntax-number);
+}
+
+.function {
+  color: var(--syntax-function);
+  text-shadow: 0 0 10px var(--syntax-function);
+}
+
+.comment {
+  color: var(--syntax-comment);
+  font-style: italic;
+}
+
+.operator {
+  color: var(--syntax-operator);
+}
+
+.tag {
+  color: var(--syntax-keyword);
+}
+
+.attr {
+  color: var(--syntax-string);
+}
+
+.attr-value {
+  color: var(--syntax-number);
+}
+
+/* ==========================================================================
+   Command Prompt
+   ========================================================================== */
+
+.prompt {
+  display: flex;
+  align-items: baseline;
+  margin: 8px 0;
+  position: relative;
+}
+
+.prompt-symbol {
+  color: var(--terminal-text);
+  margin-right: 8px;
+  font-weight: 600;
+  text-shadow: 0 0 10px var(--terminal-glow);
+  user-select: none;
+}
+
+.prompt-path {
+  color: var(--syntax-keyword);
+  margin-right: 4px;
+  text-shadow: 0 0 8px var(--syntax-keyword);
+}
+
+.prompt-input {
+  color: var(--terminal-text);
+  flex: 1;
+  position: relative;
+  text-shadow: 0 0 10px var(--terminal-glow);
+}
+
+.prompt-input.typing {
+  animation: typing 0.1s steps(1);
+}
+
+/* ==========================================================================
+   Command Output
+   ========================================================================== */
+
+.output {
+  margin: 8px 0;
+  color: var(--terminal-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.6;
+  text-shadow: 0 0 8px var(--terminal-glow);
+}
+
+.output.error {
+  color: var(--status-error);
+  text-shadow: 0 0 8px var(--status-error);
+}
+
+.output.success {
+  color: var(--status-success);
+  text-shadow: 0 0 8px var(--status-success);
+}
+
+.output.warning {
+  color: var(--status-warning);
+  text-shadow: 0 0 8px var(--status-warning);
+}
+
+.output.info {
+  color: var(--status-info);
+  text-shadow: 0 0 8px var(--status-info);
+}
+
+.output.dim {
+  color: var(--terminal-text-dim);
+  text-shadow: 0 0 4px var(--terminal-glow);
+}
+
+/* ==========================================================================
+   Cursor Animations
+   ========================================================================== */
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--terminal-cursor);
+  margin-left: 4px;
+  animation: blink 1s infinite;
+  text-shadow: 0 0 10px var(--terminal-glow);
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.cursor.solid {
+  animation: none;
+  opacity: 1;
+}
+
+.cursor.fast {
+  animation: blink 0.5s infinite;
+}
+
+/* Block cursor */
+.cursor.block {
+  width: 8px;
+  background: var(--terminal-text);
+}
+
+/* Underline cursor */
+.cursor.underline {
+  width: 100%;
+  height: 2px;
+  margin: 0;
+  margin-top: -2px;
+}
+
+/* ==========================================================================
+   Typing Animation
+   ========================================================================== */
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.typing-effect {
+  overflow: hidden;
+  border-right: 2px solid var(--terminal-cursor);
+  animation:
+    typing 3.5s steps(40, end),
+    blink 0.75s step-end infinite;
+  white-space: nowrap;
+}
+
+.typing-effect.fast {
+  animation:
+    typing 1.5s steps(20, end),
+    blink 0.5s step-end infinite;
+}
+
+.typing-effect.slow {
+  animation:
+    typing 5s steps(60, end),
+    blink 1s step-end infinite;
+}
+
+/* ==========================================================================
+   Status Messages
+   ========================================================================== */
+
+.terminal-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin: 8px 0;
+  border-radius: 4px;
+  font-size: 12px;
+  position: relative;
+}
+
+.terminal-message::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.terminal-message.error {
+  background: rgba(255, 0, 85, 0.1);
+  color: var(--status-error);
+  border-left: 2px solid var(--status-error);
+}
+
+.terminal-message.error::before {
+  background: var(--status-error);
+}
+
+.terminal-message.success {
+  background: rgba(0, 255, 0, 0.1);
+  color: var(--status-success);
+  border-left: 2px solid var(--status-success);
+}
+
+.terminal-message.success::before {
+  background: var(--status-success);
+}
+
+.terminal-message.warning {
+  background: rgba(255, 170, 0, 0.1);
+  color: var(--status-warning);
+  border-left: 2px solid var(--status-warning);
+}
+
+.terminal-message.warning::before {
+  background: var(--status-warning);
+}
+
+.terminal-message.info {
+  background: rgba(0, 255, 255, 0.1);
+  color: var(--status-info);
+  border-left: 2px solid var(--status-info);
+}
+
+.terminal-message.info::before {
+  background: var(--status-info);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* ==========================================================================
+   File Tree Display
+   ========================================================================== */
+
+.file-tree {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--terminal-text);
+}
+
+.file-tree-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  text-shadow: 0 0 8px var(--terminal-glow);
+}
+
+.file-tree-item.folder {
+  color: var(--syntax-keyword);
+}
+
+.file-tree-item.file {
+  color: var(--terminal-text);
+}
+
+.file-tree-item.expanded::before {
+  content: '▼';
+  display: inline-block;
+  width: 12px;
+  text-align: center;
+}
+
+.file-tree-item.collapsed::before {
+  content: '▶';
+  display: inline-block;
+  width: 12px;
+  text-align: center;
+}
+
+.file-tree-indent {
+  display: inline-block;
+  width: 16px;
+}
+
+.file-tree-name {
+  font-family: var(--font-mono);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.file-tree-name:hover {
+  color: var(--syntax-string);
+  text-shadow: 0 0 12px var(--syntax-string);
+}
+
+.file-tree-name.active {
+  color: var(--status-success);
+  background: rgba(0, 255, 0, 0.1);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Tab Bar
+   ========================================================================== */
+
+.terminal-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 0 12px;
+  background: var(--header-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: auto;
+  position: relative;
+  z-index: 3;
+}
+
+.terminal-tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.terminal-tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-tabs::-webkit-scrollbar-thumb {
+  background: var(--terminal-glow);
+  border-radius: 3px;
+}
+
+.terminal-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--terminal-text-dim);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.terminal-tab:hover {
+  color: var(--terminal-text);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.terminal-tab.active {
+  color: var(--terminal-text);
+  background: var(--terminal-bg);
+  border-color: var(--terminal-glow);
+  box-shadow: 0 0 10px var(--terminal-glow);
+  text-shadow: 0 0 8px var(--terminal-glow);
+}
+
+.terminal-tab-close {
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.terminal-tab-close:hover {
+  opacity: 1;
+  color: var(--status-error);
+}
+
+.terminal-tab-icon {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   Code Line Numbers
+   ========================================================================== */
+
+.code-lines {
+  display: flex;
+}
+
+.code-line-numbers {
+  color: var(--terminal-text-dim);
+  padding-right: 12px;
+  border-right: 1px solid rgba(0, 255, 0, 0.2);
+  margin-right: 12px;
+  text-align: right;
+  user-select: none;
+  min-width: 40px;
+}
+
+.code-line-number {
+  display: block;
+  height: 1.5em;
+}
+
+.code-content {
+  flex: 1;
+  color: var(--terminal-text);
+}
+
+.code-line {
+  display: block;
+  height: 1.5em;
+}
+
+.code-line.highlight {
+  background: rgba(0, 255, 0, 0.1);
+  margin: 0 -12px;
+  padding: 0 12px;
+}
+
+/* ==========================================================================
+   Loading State
+   ========================================================================== */
+
+.terminal.loading {
+  opacity: 0.8;
+}
+
+.terminal-loading-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+  overflow: hidden;
+  z-index: 4;
+}
+
+.terminal-loading-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--terminal-glow), transparent);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .terminal {
+    font-size: 11px;
+    border-radius: 4px;
+  }
+
+  .terminal-body {
+    padding: 12px;
+    min-height: 150px;
+    max-height: 400px;
+  }
+
+  .code-block {
+    padding: 8px;
+    font-size: 11px;
+  }
+
+  .terminal-tab {
+    padding: 6px 10px;
+    font-size: 10px;
+  }
+
+  .file-tree-item {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .terminal {
+    font-size: 10px;
+    border-radius: 0;
+  }
+
+  .terminal-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .terminal-title {
+    margin-left: 0;
+  }
+
+  .terminal-body {
+    padding: 8px;
+  }
+
+  .code-block {
+    padding: 6px;
+    font-size: 10px;
+  }
+
+  .terminal-tabs {
+    padding: 0 8px;
+  }
+
+  .terminal-tab {
+    padding: 4px 8px;
+  }
+}
+
+/* ==========================================================================
+   Dark Mode Override
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  .terminal {
+    box-shadow:
+      0 0 20px var(--terminal-glow),
+      0 20px 60px rgba(0, 0, 0, 0.8);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .terminal {
+    --terminal-bg: #f5f5f5;
+    --terminal-text: #000;
+    --terminal-text-dim: #666;
+    --terminal-glow: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+  .terminal {
+    box-shadow: none;
+    page-break-inside: avoid;
+  }
+
+  .terminal::before,
+  .terminal::after,
+  .terminal-body::before {
+    display: none;
+  }
+
+  .cursor,
+  .typing-effect {
+    animation: none;
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+
+.terminal[aria-label] {
+  position: relative;
+}
+
+.terminal:focus-within {
+  outline: 2px solid var(--terminal-glow);
+  outline-offset: 2px;
+}
+
+.cursor:focus {
+  box-shadow: 0 0 10px var(--terminal-glow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal,
+  .terminal-button,
+  .file-tree-name,
+  .terminal-tab,
+  .cursor,
+  .typing-effect,
+  .terminal-message::before,
+  .terminal-loading-bar::after {
+    animation: none;
+    transition: none;
+  }
+}

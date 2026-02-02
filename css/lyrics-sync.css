@@ -1,0 +1,519 @@
+/* LyricsSync Component Styles */
+/* Dark mode karaoke-style lyrics display with smooth animations */
+
+/* ============================================================================
+   Container & Layout
+   ============================================================================ */
+
+.lyrics-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  color: #e0f0ff;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+  position: relative;
+}
+
+.lyrics-scroll-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding: 2rem 1.5rem;
+  position: relative;
+
+  /* Custom scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: #ffd700 rgba(255, 215, 0, 0.1);
+}
+
+.lyrics-scroll-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.lyrics-scroll-wrapper::-webkit-scrollbar-track {
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.lyrics-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #ffd700;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.lyrics-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #ffed4e;
+}
+
+.lyrics-content {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* ============================================================================
+   Lyrics Line Styling
+   ============================================================================ */
+
+.lyrics-line {
+  position: relative;
+  padding: 0.5rem 1rem;
+  line-height: 1.6;
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+
+  /* Past lines: dimmed */
+  color: #6b7a99;
+  opacity: 0.6;
+  transform: scale(0.95);
+  text-align: left;
+}
+
+/* Active/current line */
+.lyrics-line.active {
+  color: #00ffff;
+  opacity: 1;
+  transform: scale(1.05) translateX(0.5rem);
+  font-weight: bold;
+  text-align: center;
+
+  /* Glowing effect */
+  text-shadow:
+    0 0 10px rgba(0, 255, 255, 0.6),
+    0 0 20px rgba(0, 255, 255, 0.3),
+    0 0 30px rgba(255, 215, 0, 0.2);
+
+  /* Karaoke highlight animation */
+  animation: karaoke-pulse 1.5s ease-in-out infinite;
+}
+
+/* Future lines: normal but not highlighted */
+.lyrics-line.future {
+  color: #a8b8d8;
+  opacity: 0.8;
+  transform: scale(1);
+}
+
+/* Hover effect */
+.lyrics-line:hover {
+  color: #00ffff;
+  opacity: 1;
+  transform: translateX(0.5rem);
+}
+
+/* ============================================================================
+   Instrumental & Special Notations
+   ============================================================================ */
+
+.lyrics-line.instrumental {
+  font-style: italic;
+  color: #9b7ebd;
+  opacity: 0.7;
+  font-size: 0.9em;
+  letter-spacing: 0.1em;
+}
+
+.lyrics-line.instrumental::before {
+  content: '♪ ';
+  margin-right: 0.25rem;
+  color: #d4a5ff;
+}
+
+/* Verse/Chorus/Bridge markers */
+.lyrics-marker {
+  display: inline-block;
+  background: rgba(255, 215, 0, 0.15);
+  border-left: 3px solid #ffd700;
+  color: #ffd700;
+  padding: 0.25rem 0.75rem;
+  margin-right: 0.5rem;
+  font-size: 0.8em;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+}
+
+.lyrics-line.verse .lyrics-marker {
+  border-left-color: #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+  color: #00ffff;
+}
+
+.lyrics-line.chorus .lyrics-marker {
+  border-left-color: #ffd700;
+  background: rgba(255, 215, 0, 0.15);
+  color: #ffd700;
+}
+
+.lyrics-line.bridge .lyrics-marker {
+  border-left-color: #d4a5ff;
+  background: rgba(212, 165, 255, 0.1);
+  color: #d4a5ff;
+}
+
+.lyrics-line.outro .lyrics-marker {
+  border-left-color: #ff6b9d;
+  background: rgba(255, 107, 157, 0.1);
+  color: #ff6b9d;
+}
+
+/* ============================================================================
+   Interactive Elements & Feedback
+   ============================================================================ */
+
+/* Click-to-seek cursor hint */
+.lyrics-container[data-interactive='true'] .lyrics-line {
+  cursor: pointer;
+}
+
+.lyrics-line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.lyrics-line:hover::after {
+  background: rgba(0, 255, 255, 0.5);
+}
+
+.lyrics-line.active::after {
+  background: #ffd700;
+  box-shadow: 0 0 10px #ffd700;
+}
+
+/* Timestamp display (if present) */
+.lyrics-timestamp {
+  display: inline-block;
+  font-size: 0.75em;
+  color: #6b7a99;
+  margin-left: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lyrics-line:hover .lyrics-timestamp {
+  opacity: 0.7;
+}
+
+.lyrics-line.active .lyrics-timestamp {
+  color: #ffd700;
+  opacity: 1;
+}
+
+/* ============================================================================
+   Animations
+   ============================================================================ */
+
+@keyframes karaoke-pulse {
+  0% {
+    text-shadow:
+      0 0 10px rgba(0, 255, 255, 0.6),
+      0 0 20px rgba(0, 255, 255, 0.3),
+      0 0 30px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    text-shadow:
+      0 0 15px rgba(0, 255, 255, 0.8),
+      0 0 30px rgba(0, 255, 255, 0.5),
+      0 0 45px rgba(255, 215, 0, 0.3);
+  }
+  100% {
+    text-shadow:
+      0 0 10px rgba(0, 255, 255, 0.6),
+      0 0 20px rgba(0, 255, 255, 0.3),
+      0 0 30px rgba(255, 215, 0, 0.2);
+  }
+}
+
+@keyframes highlight-slide {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Progressive highlight animation for karaoke effect */
+.lyrics-line.highlight-active {
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+  background-size: 200% 100%;
+  animation: highlight-slide 1s ease-in-out;
+}
+
+/* ============================================================================
+   Header & Footer Controls
+   ============================================================================ */
+
+.lyrics-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 14, 39, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.lyrics-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffd700;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.lyrics-artist {
+  font-size: 0.9rem;
+  color: #a8b8d8;
+  margin: 0;
+  margin-top: 0.25rem;
+}
+
+.lyrics-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.lyrics-control-btn {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #00ffff;
+  color: #00ffff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.lyrics-control-btn:hover {
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+}
+
+.lyrics-control-btn:active {
+  transform: scale(0.95);
+}
+
+/* ============================================================================
+   Status & Metadata
+   ============================================================================ */
+
+.lyrics-status {
+  padding: 0.75rem 1.5rem;
+  background: rgba(10, 14, 39, 0.6);
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  font-size: 0.85rem;
+  color: #a8b8d8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lyrics-time {
+  font-variant-numeric: tabular-nums;
+  color: #00ffff;
+  font-weight: bold;
+}
+
+.lyrics-progress {
+  flex: 1;
+  margin: 0 1rem;
+  height: 4px;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.lyrics-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00ffff, #ffd700);
+  width: 0%;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* ============================================================================
+   Responsive Design
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .lyrics-scroll-wrapper {
+    padding: 1.5rem 1rem;
+  }
+
+  .lyrics-line {
+    padding: 0.4rem 0.75rem;
+    font-size: clamp(0.85rem, 3vw, 1rem);
+  }
+
+  .lyrics-line.active {
+    transform: scale(1.02) translateX(0.25rem);
+  }
+
+  .lyrics-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 0.75rem 1rem;
+  }
+
+  .lyrics-controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .lyrics-status {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .lyrics-progress {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .lyrics-container {
+    font-size: 0.9rem;
+  }
+
+  .lyrics-scroll-wrapper {
+    padding: 1rem 0.75rem;
+  }
+
+  .lyrics-line {
+    padding: 0.3rem 0.5rem;
+  }
+
+  .lyrics-line.active {
+    transform: scale(1.01) translateX(0.1rem);
+  }
+
+  .lyrics-marker {
+    font-size: 0.7em;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .lyrics-title {
+    font-size: 0.95rem;
+  }
+
+  .lyrics-control-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* ============================================================================
+   Accessibility: Reduced Motion
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .lyrics-line {
+    transition: none;
+  }
+
+  .lyrics-line.active {
+    animation: none;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  }
+
+  .lyrics-scroll-wrapper {
+    scroll-behavior: auto;
+  }
+
+  .lyrics-control-btn {
+    transition: none;
+  }
+
+  .lyrics-progress-bar {
+    transition: none;
+  }
+
+  .lyrics-line:hover::after {
+    transition: none;
+  }
+
+  .lyrics-timestamp {
+    transition: none;
+  }
+
+  .lyrics-highlight-slide {
+    animation: none;
+  }
+}
+
+/* ============================================================================
+   Dark Mode Enhancement (for systems with dark mode preference)
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+  .lyrics-container {
+    background: linear-gradient(135deg, #050a1a 0%, #0f1428 100%);
+  }
+
+  .lyrics-scroll-wrapper {
+    background: rgba(5, 10, 26, 0.5);
+  }
+
+  .lyrics-header,
+  .lyrics-status {
+    background: rgba(5, 10, 26, 0.9);
+  }
+}
+
+/* ============================================================================
+   Print Styles (for lyrics export/printing)
+   ============================================================================ */
+
+@media print {
+  .lyrics-container {
+    background: white;
+    color: black;
+  }
+
+  .lyrics-line {
+    color: #333;
+    opacity: 1;
+    transform: none;
+    page-break-inside: avoid;
+  }
+
+  .lyrics-line.active {
+    color: #000;
+    font-weight: bold;
+    text-shadow: none;
+  }
+
+  .lyrics-header,
+  .lyrics-status,
+  .lyrics-controls {
+    display: none;
+  }
+
+  .lyrics-scroll-wrapper {
+    overflow: visible;
+    padding: 0;
+  }
+
+  .lyrics-marker {
+    border: 1px solid #999;
+    background: #f5f5f5;
+    color: #333;
+  }
+}

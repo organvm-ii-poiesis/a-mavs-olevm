@@ -1,0 +1,514 @@
+─────┬────────────────────────────────────────────────────────────────────────── │ STDIN
+─────┼────────────────────────────────────────────────────────────────────────── 1 │ <!doctype html> 2 │
+<html lang="en-US">
+  3 │
+  <head>
+    4 │
+    <meta charset="utf-8" />
+    5 │
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    6 │
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    7 │ 8 │
+    <title>Particle System | ERGASTERION | ET CETER4</title>
+    9 │
+    <meta name="description" content="Interactive particle system with mouse attraction and repulsion using p5.js" />
+    10 │
+    <meta name="author" content="ET CETER4" />
+    11 │ 12 │
+    <link rel="stylesheet" href="../../css/vendor/tachyons/css/tachyons.min.css" />
+    13 │
+    <link rel="stylesheet" href="../../css/styles.css" />
+    14 │
+    <link rel="stylesheet" href="../../css/chamber-colors.css" />
+    15 │
+    <link rel="stylesheet" href="../css/ergasterion.css" />
+    16 │ 17 │
+    <style>
+       18 │     /* Experiment-specific styles */
+       19 │     .experiment-container {
+       20 │       background: #000000;
+       21 │       color: #00FF00;
+       22 │       font-family: 'Monaco', 'Courier New', monospace;
+       23 │       min-height: 100vh;
+       24 │       padding-top: 80px;
+       25 │       padding-bottom: 60px;
+       26 │     }
+       27 │
+       28 │     .experiment-header {
+       29 │       position: fixed;
+       30 │       top: 0;
+       31 │       left: 0;
+       32 │       right: 0;
+       33 │       width: 100%;
+       34 │       z-index: 5;
+       35 │       padding: 1rem;
+       36 │       background: rgba(0, 0, 0, 0.95);
+       37 │       border-bottom: 2px solid #00FF00;
+       38 │       box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+       39 │     }
+       40 │
+       41 │     .back-link {
+       42 │       color: #BFFF00;
+       43 │       text-decoration: none;
+       44 │       transition: all 0.2s ease;
+       45 │     }
+       46 │
+       47 │     .back-link:hover {
+       48 │       color: #00FF00;
+       49 │       text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+       50 │     }
+       51 │
+       52 │     .canvas-container {
+       53 │       position: relative;
+       54 │       width: 100%;
+       55 │       height: 500px;
+       56 │       background: linear-gradient(180deg, rgba(0,255,0,0.1) 0%, rgba(0,0,0,0.9) 100%);
+       57 │       border: 2px solid #00FF00;
+       58 │       margin: 2rem 0;
+       59 │       box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+       60 │     }
+       61 │
+       62 │     .code-section {
+       63 │       background: rgba(0, 255, 0, 0.05);
+       64 │       border-left: 4px solid #00FF00;
+       65 │       padding: 1.5rem;
+       66 │       margin: 2rem 0;
+       67 │       font-size: 0.85rem;
+       68 │       line-height: 1.6;
+       69 │       overflow-x: auto;
+       70 │     }
+       71 │
+       72 │     .code-label {
+       73 │       color: #BFFF00;
+       74 │       font-weight: bold;
+       75 │       margin-bottom: 1rem;
+       76 │       display: block;
+       77 │     }
+       78 │
+       79 │     .code-section code {
+       80 │       color: #00FF00;
+       81 │       background: rgba(0, 0, 0, 0.5);
+       82 │       padding: 0.25rem 0.5rem;
+       83 │       border-radius: 2px;
+       84 │     }
+       85 │
+       86 │     .info-panel {
+       87 │       background: rgba(0, 255, 0, 0.05);
+       88 │       border: 1px solid #00FF00;
+       89 │       padding: 1rem;
+       90 │       margin: 1.5rem 0;
+       91 │       color: #BFFF00;
+       92 │       font-size: 0.9rem;
+       93 │       line-height: 1.8;
+       94 │     }
+       95 │
+       96 │     .info-title {
+       97 │       color: #00FF00;
+       98 │       font-weight: bold;
+       99 │       margin-bottom: 0.5rem;
+      100 │     }
+      101 │
+      102 │     .footer-nav {
+      103 │       position: fixed;
+      104 │       bottom: 0;
+      105 │       left: 0;
+      106 │       right: 0;
+      107 │       background: rgba(0, 0, 0, 0.95);
+      108 │       border-top: 2px solid #00FF00;
+      109 │       padding: 1rem;
+      110 │       display: flex;
+      111 │       justify-content: center;
+      112 │       gap: 2rem;
+      113 │       z-index: 10;
+      114 │     }
+      115 │
+      116 │     .footer-nav a {
+      117 │       color: #BFFF00;
+      118 │       text-decoration: none;
+      119 │       transition: all 0.2s ease;
+      120 │       font-size: 0.85rem;
+      121 │     }
+      122 │
+      123 │     .footer-nav a:hover {
+      124 │       color: #00FF00;
+      125 │       text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+      126 │     }
+      127 │
+      128 │     pre {
+      129 │       background: rgba(0, 0, 0, 0.7);
+      130 │       padding: 1rem;
+      131 │       overflow-x: auto;
+      132 │       border-radius: 4px;
+      133 │     }
+      134 │
+      135 │     .comment {
+      136 │       color: #228B22;
+      137 │     }
+      138 │
+      139 │     .keyword {
+      140 │       color: #BFFF00;
+      141 │     }
+      142 │
+      143 │     .string {
+      144 │       color: #7FFF00;
+      145 │     }
+      146 │
+    </style>
+    147 │
+  </head>
+  148 │ 149 │
+  <body class="experiment-container">
+    150 │
+    <!-- Header with back navigation -->
+    151 │
+    <header class="experiment-header">
+      152 │
+      <div class="flex justify-between items-center mw9 center">
+        153 │
+        <a href="../index.html" class="back-link">
+          154 │ <span class="mr2">&larr;</span> 155 │ <span>Back to Ergasterion</span> 156 │
+        </a>
+        157 │
+        <h1 class="ma0 f4 tracked-mega" style="color: #00ff00; text-shadow: 0 0 10px rgba(0, 255, 0, 0.6)">
+          158 │ PARTICLE SYSTEM 159 │
+        </h1>
+        160 │
+        <div style="width: 200px"></div>
+        161 │
+      </div>
+      162 │
+    </header>
+    163 │ 164 │
+    <!-- Main content -->
+    165 │
+    <main class="mw9 center ph4 pv4">
+      166 │
+      <!-- Description -->
+      167 │
+      <section class="mb4">
+        168 │
+        <h2 style="color: #00ff00; font-size: 1.5rem; margin-bottom: 1rem">169 │ $ particle_system.exe 170 │</h2>
+        171 │
+        <p style="color: #bfff00; line-height: 1.8">
+          172 │ An interactive particle system exploring emergent behavior through physics simulation. 173 │ Each
+          particle responds to mouse position with attraction and repulsion forces, 174 │ creating organic, flowing
+          patterns in real-time. 175 │
+        </p>
+        176 │
+      </section>
+      177 │ 178 │
+      <!-- Instructions -->
+      179 │
+      <div class="info-panel">
+        180 │
+        <div class="info-title">Interactive Controls</div>
+        181 │
+        <div>
+          182 │ Move your mouse over the canvas to control particle behavior. 183 │ Particles accelerate towards or away
+          from the cursor based on proximity. 184 │ Watch how simple attraction/repulsion rules create complex swarm
+          dynamics. 185 │
+        </div>
+        186 │
+      </div>
+      187 │ 188 │
+      <!-- Canvas Container -->
+      189 │
+      <div class="canvas-container" id="sketch-container"></div>
+      190 │ 191 │
+      <!-- Algorithm Explanation -->
+      192 │
+      <section class="code-section">
+        193 │ <span class="code-label">$ Algorithm: Particle Physics</span> 194 │
+        <pre><code>Particle Motion Algorithm:
+ 195 │   1. Initialize N particles with random positions and velocities
+ 196 │   2. Each frame:
+ 197 │      a. Calculate distance from particle to mouse cursor
+ 198 │      b. If distance < attractionRadius: apply attraction force
+ 199 │      c. If distance < repulsionRadius: apply repulsion force
+ 200 │      d. Update velocity using F = ma (Newton's Second Law)
+ 201 │      e. Apply drag/friction to velocity
+ 202 │      f. Update position: position += velocity
+ 203 │      g. Wrap particles around screen edges
+ 204 │      h. Draw particle with age-based opacity
+ 205 │ 
+ 206 │ Key Physics:
+ 207 │   - Force magnitude decreases with distance squared (inverse square law)
+ 208 │   - Drag coefficient dampens oscillations (natural friction)
+ 209 │   - Color changes based on particle age (lifecycle visualization)
+ 210 │   - Trail effect creates motion blur perception</code></pre>
+        211 │
+      </section>
+      212 │ 213 │
+      <!-- Full Source Code -->
+      214 │
+      <section class="code-section">
+        215 │ <span class="code-label">$ cat particle-system.js</span> 216 │
+        <pre><code><span class="comment">// PARTICLE SYSTEM with p5.js
+ 217 │ // Demonstrates emergent behavior from simple physics rules</span>
+ 218 │ 
+ 219 │ <span class="keyword">let</span> particles = [];
+ 220 │ <span class="keyword">const</span> PARTICLE_COUNT = 100;
+ 221 │ <span class="keyword">const</span> ATTRACTION_RADIUS = 150;
+ 222 │ <span class="keyword">const</span> REPULSION_RADIUS = 50;
+ 223 │ <span class="keyword">const</span> MAX_FORCE = 0.5;
+ 224 │ <span class="keyword">const</span> DRAG = 0.95;
+ 225 │ 
+ 226 │ <span class="keyword">function</span> <span class="keyword">setup</span>() {
+ 227 │   <span class="keyword">let</span> container = document.getElementById(<span class="string">'sketch-container'</span>);
+ 228 │   <span class="keyword">let</span> w = container.offsetWidth;
+ 229 │   <span class="keyword">let</span> h = 500;
+ 230 │ 
+ 231 │   <span class="keyword">let</span> sketchCanvas = <span class="keyword">createCanvas</span>(w, h);
+ 232 │   sketchCanvas.parent(<span class="string">'sketch-container'</span>);
+ 233 │ 
+ 234 │   <span class="comment">// Initialize particles</span>
+ 235 │   <span class="keyword">for</span> (<span class="keyword">let</span> i = 0; i &lt; PARTICLE_COUNT; i++) {
+ 236 │     particles.push(<span class="keyword">new</span> Particle(
+ 237 │       <span class="keyword">random</span>(w),
+ 238 │       <span class="keyword">random</span>(h)
+ 239 │     ));
+ 240 │   }
+ 241 │ }
+ 242 │ 
+ 243 │ <span class="keyword">function</span> <span class="keyword">draw</span>() {
+ 244 │   <span class="keyword">background</span>(0, 0, 0, 25);
+ 245 │ 
+ 246 │   <span class="comment">// Update and draw particles</span>
+ 247 │   <span class="keyword">for</span> (<span class="keyword">let</span> particle <span class="keyword">of</span> particles) {
+ 248 │     particle.update(mouseX, mouseY);
+ 249 │     particle.display();
+ 250 │   }
+ 251 │ 
+ 252 │   <span class="comment">// Draw cursor indicator</span>
+ 253 │   <span class="keyword">stroke</span>(191, 255, 0, 100);
+ 254 │   <span class="keyword">strokeWeight</span>(2);
+ 255 │   <span class="keyword">noFill</span>();
+ 256 │   <span class="keyword">circle</span>(mouseX, mouseY, ATTRACTION_RADIUS * 2);
+ 257 │   <span class="keyword">circle</span>(mouseX, mouseY, REPULSION_RADIUS * 2);
+ 258 │ }
+ 259 │ 
+ 260 │ <span class="keyword">class</span> Particle {
+ 261 │   <span class="keyword">constructor</span>(x, y) {
+ 262 │     <span class="keyword">this</span>.pos = <span class="keyword">createVector</span>(x, y);
+ 263 │     <span class="keyword">this</span>.vel = <span class="keyword">p5.Vector.random2D</span>().mult(2);
+ 264 │     <span class="keyword">this</span>.acc = <span class="keyword">createVector</span>(0, 0);
+ 265 │     <span class="keyword">this</span>.age = 0;
+ 266 │   }
+ 267 │ 
+ 268 │   <span class="keyword">update</span>(targetX, targetY) {
+ 269 │     <span class="keyword">let</span> target = <span class="keyword">createVector</span>(targetX, targetY);
+ 270 │     <span class="keyword">let</span> distance = <span class="keyword">dist</span>(
+ 271 │       <span class="keyword">this</span>.pos.x, <span class="keyword">this</span>.pos.y,
+ 272 │       targetX, targetY
+ 273 │     );
+ 274 │ 
+ 275 │     <span class="comment">// Attraction force</span>
+ 276 │     <span class="keyword">if</span> (distance &lt; ATTRACTION_RADIUS &amp;&amp; distance &gt; REPULSION_RADIUS) {
+ 277 │       <span class="keyword">let</span> direction = <span class="keyword">p5.Vector.sub</span>(target, <span class="keyword">this</span>.pos);
+ 278 │       direction.normalize();
+ 279 │       <span class="keyword">let</span> force = direction.mult(MAX_FORCE * 0.3);
+ 280 │       <span class="keyword">this</span>.acc.add(force);
+ 281 │     }
+ 282 │ 
+ 283 │     <span class="comment">// Repulsion force</span>
+ 284 │     <span class="keyword">if</span> (distance &lt; REPULSION_RADIUS) {
+ 285 │       <span class="keyword">let</span> direction = <span class="keyword">p5.Vector.sub</span>(<span class="keyword">this</span>.pos, target);
+ 286 │       direction.normalize();
+ 287 │       <span class="keyword">let</span> force = direction.mult(MAX_FORCE);
+ 288 │       <span class="keyword">this</span>.acc.add(force);
+ 289 │     }
+ 290 │ 
+ 291 │     <span class="comment">// Apply physics</span>
+ 292 │     <span class="keyword">this</span>.vel.add(<span class="keyword">this</span>.acc);
+ 293 │     <span class="keyword">this</span>.vel.mult(DRAG);
+ 294 │     <span class="keyword">this</span>.pos.add(<span class="keyword">this</span>.vel);
+ 295 │     <span class="keyword">this</span>.acc.mult(0);
+ 296 │ 
+ 297 │     <span class="comment">// Wrap around edges</span>
+ 298 │     <span class="keyword">this</span>.pos.x = (<span class="keyword">this</span>.pos.x + width) % width;
+ 299 │     <span class="keyword">this</span>.pos.y = (<span class="keyword">this</span>.pos.y + height) % height;
+ 300 │ 
+ 301 │     <span class="keyword">this</span>.age++;
+ 302 │   }
+ 303 │ 
+ 304 │   <span class="keyword">display</span>() {
+ 305 │     <span class="keyword">let</span> opacity = <span class="keyword">map</span>(<span class="keyword">this</span>.age, 0, 300, 255, 0);
+ 306 │     <span class="keyword">let</span> speed = <span class="keyword">this</span>.vel.mag();
+ 307 │     <span class="keyword">let</span> hueValue = <span class="keyword">map</span>(speed, 0, 5, 120, 50);
+ 308 │ 
+ 309 │     <span class="keyword">colorMode</span>(HSB);
+ 310 │     <span class="keyword">stroke</span>(hueValue, 100, 100, opacity);
+ 311 │     <span class="keyword">strokeWeight</span>(2);
+ 312 │     <span class="keyword">point</span>(<span class="keyword">this</span>.pos.x, <span class="keyword">this</span>.pos.y);
+ 313 │     <span class="keyword">colorMode</span>(RGB);
+ 314 │   }
+ 315 │ }</code></pre>
+        316 │
+      </section>
+      317 │ 318 │
+      <!-- Parameters Section -->
+      319 │
+      <section class="code-section">
+        320 │ <span class="code-label">$ Tunable Parameters</span> 321 │
+        <pre><code>PARTICLE_COUNT = 100
+ 322 │   Increase for more visible swarms, decrease for cleaner animation
+ 323 │ 
+ 324 │ ATTRACTION_RADIUS = 150
+ 325 │   Distance at which particles begin accelerating toward cursor
+ 326 │   Larger values = particles respond from further away
+ 327 │ 
+ 328 │ REPULSION_RADIUS = 50
+ 329 │   Inner radius where particles flee from cursor
+ 330 │   Creates the "avoid" zone around cursor
+ 331 │ 
+ 332 │ MAX_FORCE = 0.5
+ 333 │   Maximum acceleration magnitude per frame
+ 334 │   Higher values = snappier, more responsive movement
+ 335 │ 
+ 336 │ DRAG = 0.95
+ 337 │   Velocity dampening factor (0-1)
+ 338 │   Lower = more friction, smoother motion
+ 339 │   Higher = less friction, more momentum</code></pre>
+        340 │
+      </section>
+      341 │ 342 │
+      <!-- Concept Section -->
+      343 │
+      <div class="info-panel">
+        344 │
+        <div class="info-title">Emergent Behavior</div>
+        345 │
+        <div>
+          346 │ This system demonstrates how complex, organic-looking behavior emerges from simple rules. 347 │ No
+          particle "knows" about others—they only respond to the mouse cursor and physics. 348 │ The collective swarm
+          behavior appears intelligent yet requires no explicit coordination. 349 │ This is the basis of flocking
+          algorithms used in games, animation, and robotics. 350 │
+        </div>
+        351 │
+      </div>
+      352 │ 353 │
+      <!-- Footer spacer -->
+      354 │
+      <div style="height: 100px"></div>
+      355 │
+    </main>
+    356 │ 357 │
+    <!-- Footer Navigation -->
+    358 │
+    <nav class="footer-nav">
+      359 │ <a href="../index.html">ERGASTERION</a> 360 │ <span style="color: #00ff00; opacity: 0.3">//</span> 361 │
+      <a href="../../index.html#menu">NAOS</a> 362 │ <span style="color: #00ff00; opacity: 0.3">//</span> 363 │
+      <a href="../../sitemap.html">SITE MAP</a> 364 │
+    </nav>
+    365 │ 366 │
+    <!-- p5.js Library -->
+    367 │
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    368 │ 369 │
+    <!-- Sketch Code (inline) -->
+    370 │
+    <script>
+      371 │     'use strict';
+      372 │
+      373 │     let particles = [];
+      374 │     const PARTICLE_COUNT = 100;
+      375 │     const ATTRACTION_RADIUS = 150;
+      376 │     const REPULSION_RADIUS = 50;
+      377 │     const MAX_FORCE = 0.5;
+      378 │     const DRAG = 0.95;
+      379 │
+      380 │     function setup() {
+      381 │       let container = document.getElementById('sketch-container');
+      382 │       let w = container.offsetWidth;
+      383 │       let h = 500;
+      384 │
+      385 │       let sketchCanvas = createCanvas(w, h);
+      386 │       sketchCanvas.parent('sketch-container');
+      387 │
+      388 │       for (let i = 0; i < PARTICLE_COUNT; i++) {
+      389 │         particles.push(new Particle(random(w), random(h)));
+      390 │       }
+      391 │     }
+      392 │
+      393 │     function draw() {
+      394 │       background(0, 0, 0, 25);
+      395 │
+      396 │       for (let particle of particles) {
+      397 │         particle.update(mouseX, mouseY);
+      398 │         particle.display();
+      399 │       }
+      400 │
+      401 │       stroke(191, 255, 0, 100);
+      402 │       strokeWeight(2);
+      403 │       noFill();
+      404 │       circle(mouseX, mouseY, ATTRACTION_RADIUS * 2);
+      405 │       circle(mouseX, mouseY, REPULSION_RADIUS * 2);
+      406 │     }
+      407 │
+      408 │     class Particle {
+      409 │       constructor(x, y) {
+      410 │         this.pos = createVector(x, y);
+      411 │         this.vel = p5.Vector.random2D().mult(2);
+      412 │         this.acc = createVector(0, 0);
+      413 │         this.age = 0;
+      414 │       }
+      415 │
+      416 │       update(targetX, targetY) {
+      417 │         let target = createVector(targetX, targetY);
+      418 │         let distance = dist(this.pos.x, this.pos.y, targetX, targetY);
+      419 │
+      420 │         if (distance < ATTRACTION_RADIUS && distance > REPULSION_RADIUS) {
+      421 │           let direction = p5.Vector.sub(target, this.pos);
+      422 │           direction.normalize();
+      423 │           let force = direction.mult(MAX_FORCE * 0.3);
+      424 │           this.acc.add(force);
+      425 │         }
+      426 │
+      427 │         if (distance < REPULSION_RADIUS) {
+      428 │           let direction = p5.Vector.sub(this.pos, target);
+      429 │           direction.normalize();
+      430 │           let force = direction.mult(MAX_FORCE);
+      431 │           this.acc.add(force);
+      432 │         }
+      433 │
+      434 │         this.vel.add(this.acc);
+      435 │         this.vel.mult(DRAG);
+      436 │         this.pos.add(this.vel);
+      437 │         this.acc.mult(0);
+      438 │
+      439 │         this.pos.x = (this.pos.x + width) % width;
+      440 │         this.pos.y = (this.pos.y + height) % height;
+      441 │
+      442 │         this.age++;
+      443 │       }
+      444 │
+      445 │       display() {
+      446 │         let opacity = map(this.age, 0, 300, 255, 0);
+      447 │         let speed = this.vel.mag();
+      448 │         let hueValue = map(speed, 0, 5, 120, 50);
+      449 │
+      450 │         colorMode(HSB);
+      451 │         stroke(hueValue, 100, 100, opacity);
+      452 │         strokeWeight(2);
+      453 │         point(this.pos.x, this.pos.y);
+      454 │         colorMode(RGB);
+      455 │       }
+      456 │     }
+      457 │
+      458 │     function windowResized() {
+      459 │       if (document.getElementById('sketch-container')) {
+      460 │         let container = document.getElementById('sketch-container');
+      461 │         let h = container.offsetHeight;
+      462 │         if (h > 0) {
+      463 │           resizeCanvas(container.offsetWidth, h);
+      464 │         }
+      465 │       }
+      466 │     }
+      467 │
+    </script>
+    468 │
+  </body>
+  469 │
+</html>
+─────┴──────────────────────────────────────────────────────────────────────────

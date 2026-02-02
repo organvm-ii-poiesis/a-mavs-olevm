@@ -1,0 +1,561 @@
+/* ========================================
+   ODEION CHAMBER STYLES
+   Music Hall - Gold & Black Theme
+   ======================================== */
+
+/* ========================================
+   CHAMBER-SPECIFIC VARIABLES
+   ======================================== */
+
+:root {
+  --odeion-primary-color: #ffd700;
+  --odeion-secondary-color: #000000;
+  --odeion-accent-light: #ffff99;
+  --odeion-bg-dark: #1a1a1a;
+  --odeion-player-bg: #222222;
+  --odeion-border-width: 2px;
+}
+
+/* ========================================
+   CHAMBER-SPECIFIC HEADER & LAYOUT
+   ======================================== */
+
+.odeion-chamber {
+  background-color: var(--odeion-bg-dark);
+  color: white;
+}
+
+.odeion-chamber .chamber-header {
+  border-bottom: var(--odeion-border-width) solid var(--odeion-primary-color);
+}
+
+.odeion-chamber .chamber-back-btn {
+  transition: all 0.3s ease;
+}
+
+.odeion-chamber .chamber-back-btn:hover {
+  color: var(--odeion-primary-color);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.odeion-chamber .chamber-hero {
+  background: linear-gradient(180deg, rgba(255, 215, 0, 0.15) 0%, transparent 100%);
+  border-bottom: var(--odeion-border-width) solid var(--odeion-primary-color);
+}
+
+.odeion-chamber .chamber-hero h2 {
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.odeion-chamber .chamber-hero p {
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+}
+
+/* ========================================
+   CHAMBER FOOTER
+   ======================================== */
+
+.odeion-chamber .chamber-footer {
+  border-top: var(--odeion-border-width) solid var(--odeion-primary-color);
+}
+
+/* ========================================
+   SECTION NAVIGATION
+   ======================================== */
+
+.section-nav-btn {
+  background: transparent;
+  border: 2px solid var(--odeion-primary-color);
+  color: var(--odeion-primary-color);
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  font-family: 'Futura', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.section-nav-btn:hover {
+  background-color: rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+}
+
+.section-nav-btn.active {
+  background-color: var(--odeion-primary-color);
+  color: var(--odeion-secondary-color);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  text-shadow: none;
+}
+
+/* ========================================
+   AUDIO PLAYER CONTAINER
+   ======================================== */
+
+.odeion-player-container {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 0 20px rgba(255, 215, 0, 0.1),
+    0 0 30px rgba(255, 215, 0, 0.2);
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.odeion-player-container .odeion-cover-art {
+  box-shadow:
+    0 0 20px rgba(255, 215, 0, 0.4),
+    inset 0 0 20px rgba(255, 215, 0, 0.1);
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.odeion-player-container .odeion-cover-art:hover {
+  box-shadow:
+    0 0 30px rgba(255, 215, 0, 0.6),
+    inset 0 0 20px rgba(255, 215, 0, 0.2);
+  transform: scale(1.02);
+}
+
+/* ========================================
+   NOW PLAYING SECTION
+   ======================================== */
+
+.now-playing-info {
+  width: 100%;
+}
+
+.now-playing-info h3 {
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  color: var(--odeion-primary-color);
+}
+
+#now-playing-album {
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+/* ========================================
+   WAVEFORM CANVAS
+   ======================================== */
+
+.waveform-container {
+  background: linear-gradient(90deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 15px rgba(255, 215, 0, 0.1),
+    0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+#waveform-canvas {
+  display: block;
+}
+
+/* ========================================
+   PLAYBACK CONTROLS
+   ======================================== */
+
+.playback-controls {
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.odeion-btn {
+  background-color: transparent;
+  border: 2px solid var(--odeion-primary-color);
+  color: var(--odeion-primary-color);
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-family: 'Futura', sans-serif;
+  font-weight: bold;
+}
+
+.odeion-btn:hover {
+  background-color: var(--odeion-primary-color);
+  color: var(--odeion-secondary-color);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+.odeion-btn:active {
+  transform: scale(0.95);
+}
+
+/* ========================================
+   TIME DISPLAY
+   ======================================== */
+
+.time-display {
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+}
+
+/* ========================================
+   VOLUME CONTROL
+   ======================================== */
+
+.volume-control {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.odeion-slider {
+  flex: 1;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, var(--odeion-primary-color) 50%, transparent 100%);
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.odeion-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background-color: var(--odeion-primary-color);
+  border: 2px solid var(--odeion-secondary-color);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.odeion-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  transform: scale(1.2);
+}
+
+.odeion-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background-color: var(--odeion-primary-color);
+  border: 2px solid var(--odeion-secondary-color);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.odeion-slider::-moz-range-thumb:hover {
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  transform: scale(1.2);
+}
+
+#volume-percent {
+  min-width: 35px;
+  text-align: right;
+}
+
+/* ========================================
+   CONTENT GRID & ITEM CARDS
+   ======================================== */
+
+#chamber-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.music-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 2px solid var(--odeion-primary-color);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.music-item:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 25px rgba(255, 215, 0, 0.3),
+    inset 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+.music-item-cover {
+  width: 100%;
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2px solid var(--odeion-primary-color);
+}
+
+.music-item-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.music-item:hover .music-item-cover img {
+  transform: scale(1.05);
+}
+
+.music-item-cover .placeholder {
+  color: var(--odeion-primary-color);
+  opacity: 0.5;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.music-item-info {
+  padding: 1.5rem;
+}
+
+.music-item-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--odeion-primary-color);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+.music-item-meta {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
+.music-item-meta-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.music-item-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.feature-tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  color: var(--odeion-primary-color);
+  border-radius: 2px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.music-item-action {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.play-track-btn {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: transparent;
+  border: 1px solid var(--odeion-primary-color);
+  color: var(--odeion-primary-color);
+  cursor: pointer;
+  font-family: 'Futura', sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+}
+
+.play-track-btn:hover {
+  background-color: var(--odeion-primary-color);
+  color: var(--odeion-secondary-color);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 768px) {
+  .odeion-player-container {
+    padding: 1.5rem;
+  }
+
+  .odeion-player-container .odeion-cover-art {
+    width: 150px;
+    height: 150px;
+  }
+
+  #chamber-items {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .chamber-hero h2 {
+    font-size: 2rem;
+  }
+
+  .chamber-section-nav {
+    gap: 0.5rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-nav-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  #chamber-items {
+    grid-template-columns: 1fr;
+  }
+
+  .playback-controls {
+    gap: 1rem;
+  }
+
+  .odeion-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .music-item {
+    border-width: 1px;
+  }
+
+  .music-item-info {
+    padding: 1rem;
+  }
+
+  .music-item-title {
+    font-size: 0.95rem;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+.odeion-chamber .section-nav-btn:focus,
+.odeion-chamber .odeion-btn:focus,
+.odeion-chamber .play-track-btn:focus {
+  outline: 2px solid var(--odeion-primary-color);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background-color: var(--odeion-primary-color);
+  color: var(--odeion-secondary-color);
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+}
+
+.odeion-chamber .chamber-hero h2:hover {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.music-item {
+  animation: slide-in 0.3s ease-out;
+}
+
+.music-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.music-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.music-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.music-item:nth-child(n + 4) {
+  animation-delay: 0.2s;
+}
+
+/* ========================================
+   DARK MODE ENHANCEMENTS
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  .odeion-player-container {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(0, 0, 0, 0.5) 100%);
+  }
+
+  .odeion-btn:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+
+  .section-nav-btn:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .odeion-player-container,
+  .playback-controls,
+  .section-nav-btn {
+    display: none;
+  }
+
+  .music-item {
+    page-break-inside: avoid;
+  }
+}

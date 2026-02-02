@@ -1,0 +1,543 @@
+─────┬────────────────────────────────────────────────────────────────────────── │ STDIN
+─────┼────────────────────────────────────────────────────────────────────────── 1 │ <!doctype html> 2 │
+<html lang="en-US">
+  3 │
+  <head>
+    4 │
+    <meta charset="utf-8" />
+    5 │
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    6 │
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    7 │ 8 │
+    <title>Perlin Noise Flow Field | ERGASTERION | ET CETER4</title>
+    9 │
+    <meta name="description" content="Generative flow field using Perlin noise with p5.js" />
+    10 │
+    <meta name="author" content="ET CETER4" />
+    11 │ 12 │
+    <link rel="stylesheet" href="../../css/vendor/tachyons/css/tachyons.min.css" />
+    13 │
+    <link rel="stylesheet" href="../../css/styles.css" />
+    14 │
+    <link rel="stylesheet" href="../../css/chamber-colors.css" />
+    15 │
+    <link rel="stylesheet" href="../css/ergasterion.css" />
+    16 │ 17 │
+    <style>
+       18 │     /* Experiment-specific styles */
+       19 │     .experiment-container {
+       20 │       background: #000000;
+       21 │       color: #00FF00;
+       22 │       font-family: 'Monaco', 'Courier New', monospace;
+       23 │       min-height: 100vh;
+       24 │       padding-top: 80px;
+       25 │       padding-bottom: 60px;
+       26 │     }
+       27 │
+       28 │     .experiment-header {
+       29 │       position: fixed;
+       30 │       top: 0;
+       31 │       left: 0;
+       32 │       right: 0;
+       33 │       width: 100%;
+       34 │       z-index: 5;
+       35 │       padding: 1rem;
+       36 │       background: rgba(0, 0, 0, 0.95);
+       37 │       border-bottom: 2px solid #00FF00;
+       38 │       box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+       39 │     }
+       40 │
+       41 │     .back-link {
+       42 │       color: #BFFF00;
+       43 │       text-decoration: none;
+       44 │       transition: all 0.2s ease;
+       45 │     }
+       46 │
+       47 │     .back-link:hover {
+       48 │       color: #00FF00;
+       49 │       text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+       50 │     }
+       51 │
+       52 │     .canvas-container {
+       53 │       position: relative;
+       54 │       width: 100%;
+       55 │       height: 500px;
+       56 │       background: linear-gradient(180deg, rgba(0,255,0,0.1) 0%, rgba(0,0,0,0.9) 100%);
+       57 │       border: 2px solid #00FF00;
+       58 │       margin: 2rem 0;
+       59 │       box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+       60 │     }
+       61 │
+       62 │     .code-section {
+       63 │       background: rgba(0, 255, 0, 0.05);
+       64 │       border-left: 4px solid #00FF00;
+       65 │       padding: 1.5rem;
+       66 │       margin: 2rem 0;
+       67 │       font-size: 0.85rem;
+       68 │       line-height: 1.6;
+       69 │       overflow-x: auto;
+       70 │     }
+       71 │
+       72 │     .code-label {
+       73 │       color: #BFFF00;
+       74 │       font-weight: bold;
+       75 │       margin-bottom: 1rem;
+       76 │       display: block;
+       77 │     }
+       78 │
+       79 │     .code-section code {
+       80 │       color: #00FF00;
+       81 │       background: rgba(0, 0, 0, 0.5);
+       82 │       padding: 0.25rem 0.5rem;
+       83 │       border-radius: 2px;
+       84 │     }
+       85 │
+       86 │     .info-panel {
+       87 │       background: rgba(0, 255, 0, 0.05);
+       88 │       border: 1px solid #00FF00;
+       89 │       padding: 1rem;
+       90 │       margin: 1.5rem 0;
+       91 │       color: #BFFF00;
+       92 │       font-size: 0.9rem;
+       93 │       line-height: 1.8;
+       94 │     }
+       95 │
+       96 │     .info-title {
+       97 │       color: #00FF00;
+       98 │       font-weight: bold;
+       99 │       margin-bottom: 0.5rem;
+      100 │     }
+      101 │
+      102 │     .footer-nav {
+      103 │       position: fixed;
+      104 │       bottom: 0;
+      105 │       left: 0;
+      106 │       right: 0;
+      107 │       background: rgba(0, 0, 0, 0.95);
+      108 │       border-top: 2px solid #00FF00;
+      109 │       padding: 1rem;
+      110 │       display: flex;
+      111 │       justify-content: center;
+      112 │       gap: 2rem;
+      113 │       z-index: 10;
+      114 │     }
+      115 │
+      116 │     .footer-nav a {
+      117 │       color: #BFFF00;
+      118 │       text-decoration: none;
+      119 │       transition: all 0.2s ease;
+      120 │       font-size: 0.85rem;
+      121 │     }
+      122 │
+      123 │     .footer-nav a:hover {
+      124 │       color: #00FF00;
+      125 │       text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+      126 │     }
+      127 │
+      128 │     pre {
+      129 │       background: rgba(0, 0, 0, 0.7);
+      130 │       padding: 1rem;
+      131 │       overflow-x: auto;
+      132 │       border-radius: 4px;
+      133 │     }
+      134 │
+      135 │     .comment {
+      136 │       color: #228B22;
+      137 │     }
+      138 │
+      139 │     .keyword {
+      140 │       color: #BFFF00;
+      141 │     }
+      142 │
+      143 │     .string {
+      144 │       color: #7FFF00;
+      145 │     }
+      146 │
+    </style>
+    147 │
+  </head>
+  148 │ 149 │
+  <body class="experiment-container">
+    150 │
+    <!-- Header with back navigation -->
+    151 │
+    <header class="experiment-header">
+      152 │
+      <div class="flex justify-between items-center mw9 center">
+        153 │
+        <a href="../index.html" class="back-link">
+          154 │ <span class="mr2">&larr;</span> 155 │ <span>Back to Ergasterion</span> 156 │
+        </a>
+        157 │
+        <h1 class="ma0 f4 tracked-mega" style="color: #00ff00; text-shadow: 0 0 10px rgba(0, 255, 0, 0.6)">
+          158 │ PERLIN NOISE FLOW FIELD 159 │
+        </h1>
+        160 │
+        <div style="width: 200px"></div>
+        161 │
+      </div>
+      162 │
+    </header>
+    163 │ 164 │
+    <!-- Main content -->
+    165 │
+    <main class="mw9 center ph4 pv4">
+      166 │
+      <!-- Description -->
+      167 │
+      <section class="mb4">
+        168 │
+        <h2 style="color: #00ff00; font-size: 1.5rem; margin-bottom: 1rem">169 │ $ noise_field.exe 170 │</h2>
+        171 │
+        <p style="color: #bfff00; line-height: 1.8">
+          172 │ A generative flow field visualization using multi-dimensional Perlin noise. 173 │ Particles follow the
+          direction of the noise gradient, creating organic, continuous motion patterns. 174 │ Classic technique in
+          procedural generation, used in games, visual effects, and generative art. 175 │
+        </p>
+        176 │
+      </section>
+      177 │ 178 │
+      <!-- Instructions -->
+      179 │
+      <div class="info-panel">
+        180 │
+        <div class="info-title">Interactive Controls</div>
+        181 │
+        <div>
+          182 │ Watch particles flow through a continuously evolving noise field. 183 │ The flow direction at each point
+          is determined by Perlin noise sampling. 184 │ Noise scale, particle speed, and evolution rate determine the
+          visual character. 185 │ Reload the page or click the canvas to see different noise variations. 186 │
+        </div>
+        187 │
+      </div>
+      188 │ 189 │
+      <!-- Canvas Container -->
+      190 │
+      <div class="canvas-container" id="sketch-container"></div>
+      191 │ 192 │
+      <!-- Algorithm Explanation -->
+      193 │
+      <section class="code-section">
+        194 │ <span class="code-label">$ Algorithm: Perlin Noise Flow Field</span> 195 │
+        <pre><code>Noise Field Algorithm:
+ 196 │   1. Create a 2D grid of flow vectors
+ 197 │   2. Initialize particles at random positions
+ 198 │   3. Each frame:
+ 199 │      a. Sample Perlin noise at each grid point: noise3D(x, y, time)
+ 200 │      b. Convert noise value to angle: angle = noise * TWO_PI
+ 201 │      c. Create vector from angle: direction = [cos(angle), sin(angle)]
+ 202 │      d. For each particle:
+ 203 │         - Look up flow direction at particle position
+ 204 │         - Accelerate particle in that direction
+ 205 │         - Update position and velocity
+ 206 │         - Draw particle as line segment (direction indicator)
+ 207 │         - Wrap around screen edges
+ 208 │ 
+ 209 │ Key Concepts:
+ 210 │   - Perlin Noise: Smooth, continuous pseudo-random values
+ 211 │   - Time dimension: noise evolves over time for continuous variation
+ 212 │   - Scale parameter: Controls "zoom" of noise (larger = more variation)
+ 213 │   - Flow visualization: Arrows/lines show direction and magnitude
+ 214 │ 
+ 215 │ Properties:
+ 216 │   - Deterministic: Same seed produces same pattern
+ 217 │   - Continuous: Values change smoothly, no abrupt transitions
+ 218 │   - Multi-scale: Can layer multiple noise octaves (Fractional Brownian Motion)</code></pre>
+        219 │
+      </section>
+      220 │ 221 │
+      <!-- Full Source Code -->
+      222 │
+      <section class="code-section">
+        223 │ <span class="code-label">$ cat noise-field.js</span> 224 │
+        <pre><code><span class="comment">// PERLIN NOISE FLOW FIELD with p5.js
+ 225 │ // Particles follow the direction of Perlin noise gradients</span>
+ 226 │ 
+ 227 │ <span class="keyword">let</span> particles = [];
+ 228 │ <span class="keyword">const</span> PARTICLE_COUNT = 200;
+ 229 │ <span class="keyword">const</span> NOISE_SCALE = 0.015;
+ 230 │ <span class="keyword">const</span> PARTICLE_SPEED = 2;
+ 231 │ <span class="keyword">const</span> TRAIL_LENGTH = 3;
+ 232 │ 
+ 233 │ <span class="keyword">let</span> timeOffset = 0;
+ 234 │ 
+ 235 │ <span class="keyword">function</span> <span class="keyword">setup</span>() {
+ 236 │   <span class="keyword">let</span> container = document.getElementById(<span class="string">'sketch-container'</span>);
+ 237 │   <span class="keyword">let</span> w = container.offsetWidth;
+ 238 │   <span class="keyword">let</span> h = 500;
+ 239 │ 
+ 240 │   <span class="keyword">let</span> sketchCanvas = <span class="keyword">createCanvas</span>(w, h);
+ 241 │   sketchCanvas.parent(<span class="string">'sketch-container'</span>);
+ 242 │ 
+ 243 │   <span class="comment">// Initialize particles</span>
+ 244 │   <span class="keyword">for</span> (<span class="keyword">let</span> i = 0; i &lt; PARTICLE_COUNT; i++) {
+ 245 │     particles.push(<span class="keyword">new</span> FlowParticle(
+ 246 │       <span class="keyword">random</span>(w),
+ 247 │       <span class="keyword">random</span>(h)
+ 248 │     ));
+ 249 │   }
+ 250 │ }
+ 251 │ 
+ 252 │ <span class="keyword">function</span> <span class="keyword">draw</span>() {
+ 253 │   <span class="keyword">background</span>(0, 0, 0, 15);
+ 254 │ 
+ 255 │   <span class="keyword">for</span> (<span class="keyword">let</span> particle <span class="keyword">of</span> particles) {
+ 256 │     <span class="keyword">let</span> angle = <span class="keyword">noise</span>(
+ 257 │       particle.pos.x * NOISE_SCALE,
+ 258 │       particle.pos.y * NOISE_SCALE,
+ 259 │       timeOffset
+ 260 │     ) * TWO_PI;
+ 261 │ 
+ 262 │     particle.flowDirection = <span class="keyword">p5.Vector.fromAngle</span>(angle);
+ 263 │     particle.update();
+ 264 │     particle.display();
+ 265 │   }
+ 266 │ 
+ 267 │   timeOffset += 0.002;
+ 268 │ }
+ 269 │ 
+ 270 │ <span class="keyword">class</span> FlowParticle {
+ 271 │   <span class="keyword">constructor</span>(x, y) {
+ 272 │     <span class="keyword">this</span>.pos = <span class="keyword">createVector</span>(x, y);
+ 273 │     <span class="keyword">this</span>.vel = <span class="keyword">createVector</span>(0, 0);
+ 274 │     <span class="keyword">this</span>.flowDirection = <span class="keyword">createVector</span>(1, 0);
+ 275 │     <span class="keyword">this</span>.trailLength = TRAIL_LENGTH;
+ 276 │   }
+ 277 │ 
+ 278 │   <span class="keyword">update</span>() {
+ 279 │     <span class="comment">// Accelerate toward flow direction</span>
+ 280 │     <span class="keyword">this</span>.vel.lerp(<span class="keyword">this</span>.flowDirection, 0.1);
+ 281 │     <span class="keyword">this</span>.vel.limit(PARTICLE_SPEED);
+ 282 │ 
+ 283 │     <span class="comment">// Update position</span>
+ 284 │     <span class="keyword">this</span>.pos.add(<span class="keyword">this</span>.vel);
+ 285 │ 
+ 286 │     <span class="comment">// Wrap around edges</span>
+ 287 │     <span class="keyword">this</span>.pos.x = (<span class="keyword">this</span>.pos.x + width) % width;
+ 288 │     <span class="keyword">this</span>.pos.y = (<span class="keyword">this</span>.pos.y + height) % height;
+ 289 │   }
+ 290 │ 
+ 291 │   <span class="keyword">display</span>() {
+ 292 │     <span class="comment">// Draw particle as direction indicator line</span>
+ 293 │     <span class="keyword">let</span> speed = <span class="keyword">this</span>.vel.mag();
+ 294 │     <span class="keyword">let</span> opacity = <span class="keyword">map</span>(speed, 0, PARTICLE_SPEED, 50, 200);
+ 295 │ 
+ 296 │     <span class="keyword">stroke</span>(0, 255, 0, opacity);
+ 297 │     <span class="keyword">strokeWeight</span>(1.5);
+ 298 │     <span class="keyword">line</span>(
+ 299 │       <span class="keyword">this</span>.pos.x,
+ 300 │       <span class="keyword">this</span>.pos.y,
+ 301 │       <span class="keyword">this</span>.pos.x + <span class="keyword">this</span>.flowDirection.x * <span class="keyword">this</span>.trailLength,
+ 302 │       <span class="keyword">this</span>.pos.y + <span class="keyword">this</span>.flowDirection.y * <span class="keyword">this</span>.trailLength
+ 303 │     );
+ 304 │ 
+ 305 │     <span class="comment">// Optional: draw particle dot</span>
+ 306 │     <span class="keyword">point</span>(<span class="keyword">this</span>.pos.x, <span class="keyword">this</span>.pos.y);
+ 307 │   }
+ 308 │ }</code></pre>
+        309 │
+      </section>
+      310 │ 311 │
+      <!-- Parameters Section -->
+      312 │
+      <section class="code-section">
+        313 │ <span class="code-label">$ Tunable Parameters</span> 314 │
+        <pre><code>PARTICLE_COUNT = 200
+ 315 │   Number of particles in the field
+ 316 │   More particles = denser visualization, slower performance
+ 317 │ 
+ 318 │ NOISE_SCALE = 0.015
+ 319 │   Controls the "zoom level" of the noise function
+ 320 │   Smaller values = larger noise features (more swirling)
+ 321 │   Larger values = finer detail (more chaotic)
+ 322 │   Typical range: 0.005 - 0.05
+ 323 │ 
+ 324 │ PARTICLE_SPEED = 2
+ 325 │   Maximum velocity magnitude for particles
+ 326 │   Higher = faster, more energetic movement
+ 327 │ 
+ 328 │ TRAIL_LENGTH = 3
+ 329 │   Length of the direction indicator line
+ 330 │   Longer lines make direction more visible
+ 331 │ 
+ 332 │ timeOffset increment (currently 0.002)
+ 333 │   How fast the noise field evolves
+ 334 │   Lower = slower evolution, more time-stretched patterns
+ 335 │   Higher = faster evolution, more chaotic change</code></pre>
+        336 │
+      </section>
+      337 │ 338 │
+      <!-- Advanced Concepts -->
+      339 │
+      <div class="info-panel">
+        340 │
+        <div class="info-title">Perlin Noise Fundamentals</div>
+        341 │
+        <div>
+          342 │ Perlin noise was invented by Ken Perlin in 1983 and is fundamental to procedural generation. 343 │
+          Unlike random noise, Perlin noise produces smooth, continuous values that change gradually. 344 │ The 3D
+          sampling (x, y, time) creates an animated flow field that evolves naturally over time. 345 │ This technique is
+          used in game terrain generation, cloud simulation, and digital art. 346 │
+        </div>
+        347 │
+      </div>
+      348 │ 349 │
+      <!-- Variations Section -->
+      350 │
+      <section class="code-section">
+        351 │ <span class="code-label">$ Advanced: Fractal Brownian Motion</span> 352 │
+        <pre><code><span class="comment">// Multi-octave noise for richer detail
+ 353 │ // Each octave adds finer detail with reduced amplitude</span>
+ 354 │ 
+ 355 │ <span class="keyword">function</span> <span class="keyword">fbm</span>(x, y, time) {
+ 356 │   <span class="keyword">let</span> value = 0;
+ 357 │   <span class="keyword">let</span> amplitude = 1;
+ 358 │   <span class="keyword">let</span> frequency = 1;
+ 359 │   <span class="keyword">let</span> maxValue = 0;
+ 360 │ 
+ 361 │   <span class="keyword">for</span> (<span class="keyword">let</span> i = 0; i &lt; 4; i++) {
+ 362 │     value += <span class="keyword">noise</span>(
+ 363 │       x * frequency,
+ 364 │       y * frequency,
+ 365 │       time
+ 366 │     ) * amplitude;
+ 367 │ 
+ 368 │     maxValue += amplitude;
+ 369 │     amplitude *= 0.5;
+ 370 │     frequency *= 2;
+ 371 │   }
+ 372 │ 
+ 373 │   <span class="keyword">return</span> value / maxValue;
+ 374 │ }</code></pre>
+        375 │
+      </section>
+      376 │ 377 │
+      <!-- Concept Section -->
+      378 │
+      <div class="info-panel">
+        379 │
+        <div class="info-title">Visual Interpretation</div>
+        380 │
+        <div>
+          381 │ The flow field represents a 2D vector field where each point has a direction and magnitude. 382 │ The
+          Perlin noise function determines these directions, ensuring smooth transitions. 383 │ Particles follow the
+          field like water flowing through pipes—no intelligence required, 384 │ only simple physics applied
+          consistently. This produces aesthetically pleasing emergent patterns. 385 │
+        </div>
+        386 │
+      </div>
+      387 │ 388 │
+      <!-- Footer spacer -->
+      389 │
+      <div style="height: 100px"></div>
+      390 │
+    </main>
+    391 │ 392 │
+    <!-- Footer Navigation -->
+    393 │
+    <nav class="footer-nav">
+      394 │ <a href="../index.html">ERGASTERION</a> 395 │ <span style="color: #00ff00; opacity: 0.3">//</span> 396 │
+      <a href="../../index.html#menu">NAOS</a> 397 │ <span style="color: #00ff00; opacity: 0.3">//</span> 398 │
+      <a href="../../sitemap.html">SITE MAP</a> 399 │
+    </nav>
+    400 │ 401 │
+    <!-- p5.js Library -->
+    402 │
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    403 │ 404 │
+    <!-- Sketch Code (inline) -->
+    405 │
+    <script>
+      406 │     'use strict';
+      407 │
+      408 │     let particles = [];
+      409 │     const PARTICLE_COUNT = 200;
+      410 │     const NOISE_SCALE = 0.015;
+      411 │     const PARTICLE_SPEED = 2;
+      412 │     const TRAIL_LENGTH = 3;
+      413 │
+      414 │     let timeOffset = 0;
+      415 │
+      416 │     function setup() {
+      417 │       let container = document.getElementById('sketch-container');
+      418 │       let w = container.offsetWidth;
+      419 │       let h = 500;
+      420 │
+      421 │       let sketchCanvas = createCanvas(w, h);
+      422 │       sketchCanvas.parent('sketch-container');
+      423 │
+      424 │       for (let i = 0; i < PARTICLE_COUNT; i++) {
+      425 │         particles.push(new FlowParticle(random(w), random(h)));
+      426 │       }
+      427 │     }
+      428 │
+      429 │     function draw() {
+      430 │       background(0, 0, 0, 15);
+      431 │
+      432 │       for (let particle of particles) {
+      433 │         let angle = noise(
+      434 │           particle.pos.x * NOISE_SCALE,
+      435 │           particle.pos.y * NOISE_SCALE,
+      436 │           timeOffset
+      437 │         ) * TWO_PI;
+      438 │
+      439 │         particle.flowDirection = p5.Vector.fromAngle(angle);
+      440 │         particle.update();
+      441 │         particle.display();
+      442 │       }
+      443 │
+      444 │       timeOffset += 0.002;
+      445 │     }
+      446 │
+      447 │     class FlowParticle {
+      448 │       constructor(x, y) {
+      449 │         this.pos = createVector(x, y);
+      450 │         this.vel = createVector(0, 0);
+      451 │         this.flowDirection = createVector(1, 0);
+      452 │         this.trailLength = TRAIL_LENGTH;
+      453 │       }
+      454 │
+      455 │       update() {
+      456 │         this.vel.lerp(this.flowDirection, 0.1);
+      457 │         this.vel.limit(PARTICLE_SPEED);
+      458 │
+      459 │         this.pos.add(this.vel);
+      460 │
+      461 │         this.pos.x = (this.pos.x + width) % width;
+      462 │         this.pos.y = (this.pos.y + height) % height;
+      463 │       }
+      464 │
+      465 │       display() {
+      466 │         let speed = this.vel.mag();
+      467 │         let opacity = map(speed, 0, PARTICLE_SPEED, 50, 200);
+      468 │
+      469 │         stroke(0, 255, 0, opacity);
+      470 │         strokeWeight(1.5);
+      471 │         line(
+      472 │           this.pos.x,
+      473 │           this.pos.y,
+      474 │           this.pos.x + this.flowDirection.x * this.trailLength,
+      475 │           this.pos.y + this.flowDirection.y * this.trailLength
+      476 │         );
+      477 │
+      478 │         point(this.pos.x, this.pos.y);
+      479 │       }
+      480 │     }
+      481 │
+      482 │     function windowResized() {
+      483 │       if (document.getElementById('sketch-container')) {
+      484 │         let container = document.getElementById('sketch-container');
+      485 │         let h = container.offsetHeight;
+      486 │         if (h > 0) {
+      487 │           resizeCanvas(container.offsetWidth, h);
+      488 │         }
+      489 │       }
+      490 │     }
+      491 │
+    </script>
+    492 │
+  </body>
+  493 │
+</html>
+─────┴──────────────────────────────────────────────────────────────────────────
