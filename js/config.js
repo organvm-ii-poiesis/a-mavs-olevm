@@ -771,4 +771,114 @@ const ETCETER4_CONFIG = {
       wing: 'north',
     },
   },
+
+  /**
+   * Discovery system configuration
+   * Unified search, filtering, and content discovery across all chambers
+   */
+  discovery: {
+    // Search configuration
+    search: {
+      // Minimum characters before search triggers
+      minQueryLength: 2,
+      // Debounce delay for search input (ms)
+      debounceMs: 300,
+      // MiniSearch options
+      fuzzyThreshold: 0.3,
+      // Field weights for search scoring
+      fieldWeights: {
+        title: 3,
+        tags: 2.5,
+        description: 2,
+        content: 1,
+      },
+      // Maximum results to return
+      maxResults: 50,
+    },
+
+    // Filter configuration
+    filters: {
+      // Maximum tags shown in tag cloud
+      maxTagsShown: 20,
+      // Persist filter state to URL
+      persistToUrl: true,
+      // Default filter state
+      defaults: {
+        tags: [],
+        chambers: [],
+        types: [],
+        wings: [],
+      },
+    },
+
+    // Related works configuration
+    relatedWorks: {
+      // Maximum related items to show
+      maxItems: 5,
+      // Minimum score threshold to show item
+      scoreThreshold: 0.15,
+      // Scoring weights
+      weights: {
+        tagOverlap: 0.4, // Jaccard similarity of tags
+        sameSection: 0.15, // Same section within chamber
+        sameChamber: 0.1, // Same chamber
+        sameWing: 0.05, // Same wing
+        temporal: 0.15, // Temporal proximity (same year/period)
+        typeMatch: 0.15, // Same content type
+      },
+    },
+
+    // Pagination configuration
+    pagination: {
+      // Items per page in discovery view
+      itemsPerPage: 24,
+      // Maximum page navigation buttons to show
+      maxPageButtons: 7,
+    },
+
+    // UI configuration
+    ui: {
+      // Show quick filter buttons
+      showQuickFilters: true,
+      // Quick filter presets
+      quickFilters: [
+        { id: 'all', label: 'All', criteria: {} },
+        { id: 'audio', label: 'Audio', criteria: { types: ['audio'] } },
+        { id: 'visual', label: 'Visual', criteria: { types: ['visual'] } },
+        { id: 'text', label: 'Writing', criteria: { types: ['text'] } },
+        { id: 'code', label: 'Code', criteria: { types: ['code'] } },
+      ],
+      // Animate result changes
+      animateResults: true,
+      // Animation duration (ms)
+      animationDuration: 200,
+    },
+
+    // Keyboard shortcuts
+    shortcuts: {
+      // Open global search modal
+      openSearch: { meta: true, key: 'k' },
+      // Close modal
+      closeModal: { key: 'Escape' },
+      // Navigate results
+      nextResult: { key: 'ArrowDown' },
+      prevResult: { key: 'ArrowUp' },
+      // Select result
+      selectResult: { key: 'Enter' },
+    },
+
+    // Accessibility
+    accessibility: {
+      // Storage key for preferences
+      storageKey: 'etceter4-discovery-prefs',
+      // ARIA labels
+      ariaLabels: {
+        searchInput: 'Search all chambers',
+        filterPanel: 'Filter options',
+        resultsGrid: 'Search results',
+        tagCloud: 'Filter by tag',
+        pagination: 'Results pagination',
+      },
+    },
+  },
 };

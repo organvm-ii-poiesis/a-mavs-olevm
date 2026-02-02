@@ -142,6 +142,25 @@ if (_originalShowNewSection) {
 
 $(document).ready(() => {
   const hash = window.location.hash;
+
+  // Initialize ContentRegistry for discovery system
+  // This runs early to make search available across all pages
+  if (typeof ContentRegistry !== 'undefined') {
+    try {
+      const registry = ContentRegistry.getInstance();
+      registry
+        .initialize()
+        .then(() => {
+          console.info('ContentRegistry initialized');
+        })
+        .catch(err => {
+          console.warn('ContentRegistry initialization error:', err.message);
+        });
+    } catch (registryError) {
+      console.warn('ContentRegistry setup error:', registryError.message);
+    }
+  }
+
   // Goes to the section in the URL
   if (hash) {
     try {

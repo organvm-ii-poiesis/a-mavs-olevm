@@ -54,6 +54,7 @@ const _pID = {
   theatron: '#theatron',
   ergasterion: '#ergasterion',
   khronos: '#khronos',
+  discovery: '#discovery',
 };
 
 /**
@@ -90,6 +91,7 @@ pages.menu = new Page({
     _pID.westWing,
     _pID.southWing,
     _pID.northWing,
+    _pID.discovery,
   ],
   upLinks: [_pID.landing],
   initialize() {
@@ -510,6 +512,23 @@ pages.khronos = new Page({
   },
 });
 
+/**
+ * Discovery page configuration
+ * Tier 2 - Same level as menu for quick access
+ * Unified search and filtering across all chambers
+ */
+pages.discovery = new Page({
+  id: _pID.discovery,
+  tier: 2,
+  upLinks: [_pID.menu],
+  initialize() {
+    // Initialize discovery controller
+    if (typeof DiscoveryController !== 'undefined') {
+      DiscoveryController.initialize();
+    }
+  },
+});
+
 pages = [
   pages.menu,
   pages.sound,
@@ -530,6 +549,7 @@ pages = [
   pages.theatron,
   pages.ergasterion,
   pages.khronos,
+  pages.discovery,
   new Page({
     id: _pID.landing,
     tier: 1,

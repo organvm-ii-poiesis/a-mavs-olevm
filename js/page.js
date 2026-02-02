@@ -454,7 +454,21 @@ $('.c-hamburger').on('click', function () {
  */
 
 document.addEventListener('keydown', event => {
-  // Skip if user is typing in an input field
+  // Check for Cmd/Ctrl+K to open global search (works even in input fields)
+  const isMetaOrCtrl = event.metaKey || event.ctrlKey;
+  if (isMetaOrCtrl && event.key === 'k') {
+    event.preventDefault();
+    // Open search modal via DiscoveryController
+    if (typeof DiscoveryController !== 'undefined') {
+      const controller = DiscoveryController.getInstance();
+      if (controller && controller.openSearchModal) {
+        controller.openSearchModal();
+      }
+    }
+    return;
+  }
+
+  // Skip other shortcuts if user is typing in an input field
   if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
     return;
   }

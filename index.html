@@ -42,6 +42,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/vendor/tachyons/css/tachyons.min.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/discovery.css" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/favicon.ico" />
@@ -128,6 +129,16 @@
                 class="db f2 link tji tji-fix yellow-link"
                 aria-label="Info - About and contact information"
                 >I N F O</a
+              >
+            </div>
+            <div class="tji tji-fix mt3 pt3 bt b--black-20">
+              <a
+                href="#discovery"
+                id="toDiscoveryPage"
+                class="db f4 link tji tji-fix gray hover-black"
+                aria-label="Discovery - Search and explore all chambers"
+                title="Search all chambers (Cmd+K)"
+                >&#x1F50D; D I S C O V E R Y</a
               >
             </div>
           </nav>
@@ -789,7 +800,169 @@
           }
         </style>
       </section>
+
+      <!-- Discovery Page - Unified Search and Content Discovery -->
+      <section
+        id="discovery"
+        class="dn vh-100 w-100 pb-6rem bg-white black"
+        aria-label="Discovery - Search and filter all chambers"
+      >
+        <div class="discovery-container pa4 mw9 center">
+          <!-- Header -->
+          <header class="discovery-header flex justify-between items-center mb4 pb3 bb b--light-gray">
+            <h1 class="f2 f1-ns tracked-mega ma0">DISCOVERY</h1>
+            <a href="#menu" class="black-link f4 link" aria-label="Back to Naos">&#8629; Back</a>
+          </header>
+
+          <!-- Search Input -->
+          <div class="discovery-search mb4">
+            <input
+              type="text"
+              id="discoverySearchInput"
+              class="w-100 pa3 f4 ba b--light-gray br2"
+              placeholder="Search all chambers..."
+              aria-label="Search all chambers"
+            />
+          </div>
+
+          <!-- Quick Filters -->
+          <div
+            id="quickFilters"
+            class="discovery-quick-filters flex flex-wrap gap2 mb4"
+            role="group"
+            aria-label="Quick filters"
+          ></div>
+
+          <!-- Advanced Filters -->
+          <details class="discovery-filters mb4 ba b--light-gray br2">
+            <summary class="pa3 pointer fw6 tracked">Advanced Filters</summary>
+            <div class="filter-panel-content pa3" id="filterPanel">
+              <!-- Tag Cloud -->
+              <div class="filter-group mb3">
+                <span class="filter-group-label db mb2 f7 tracked ttu gray">Tags</span>
+                <div
+                  id="tagCloud"
+                  class="flex flex-wrap gap2 pa3 bg-near-white br2"
+                  role="group"
+                  aria-label="Filter by tag"
+                ></div>
+              </div>
+
+              <!-- Chamber Filters -->
+              <div class="filter-group mb3">
+                <span class="filter-group-label db mb2 f7 tracked ttu gray">Chambers</span>
+                <div id="chamberFilters" class="filter-group-options flex flex-wrap gap2"></div>
+              </div>
+
+              <!-- Type Filters -->
+              <div class="filter-group mb3">
+                <span class="filter-group-label db mb2 f7 tracked ttu gray">Content Type</span>
+                <div id="typeFilters" class="filter-group-options flex flex-wrap gap2"></div>
+              </div>
+
+              <!-- Wing Filters -->
+              <div class="filter-group mb3">
+                <span class="filter-group-label db mb2 f7 tracked ttu gray">Wing</span>
+                <div id="wingFilters" class="filter-group-options flex flex-wrap gap2"></div>
+              </div>
+
+              <!-- Year Range -->
+              <div class="filter-group mb3">
+                <span class="filter-group-label db mb2 f7 tracked ttu gray">Year Range</span>
+                <div class="filter-year-range flex items-center gap2">
+                  <input
+                    type="number"
+                    id="yearFromInput"
+                    class="filter-year-input pa2 ba b--light-gray br2 w4"
+                    placeholder="From"
+                    min="2000"
+                    max="2030"
+                  />
+                  <span>to</span>
+                  <input
+                    type="number"
+                    id="yearToInput"
+                    class="filter-year-input pa2 ba b--light-gray br2 w4"
+                    placeholder="To"
+                    min="2000"
+                    max="2030"
+                  />
+                </div>
+              </div>
+
+              <!-- Clear Filters -->
+              <button id="clearFiltersBtn" class="pa2 ph3 ba b--black br2 bg-white pointer f6">
+                Clear All Filters
+              </button>
+            </div>
+          </details>
+
+          <!-- Results Header -->
+          <div class="discovery-results-header flex justify-between items-center mb3">
+            <span id="resultCount" class="f6 gray">0 items</span>
+            <div class="flex items-center gap2">
+              <span id="filterSummary" class="f7 gray dn db-ns">No filters active</span>
+              <select id="sortSelect" class="pa2 ba b--light-gray br2 f6 bg-white">
+                <option value="relevance-desc">Relevance</option>
+                <option value="date-desc">Newest First</option>
+                <option value="date-asc">Oldest First</option>
+                <option value="title-asc">A-Z</option>
+                <option value="title-desc">Z-A</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Results Grid -->
+          <div
+            id="resultsGrid"
+            class="discovery-results mb4"
+            role="region"
+            aria-label="Search results"
+            aria-live="polite"
+          ></div>
+
+          <!-- Pagination -->
+          <nav
+            id="pagination"
+            class="discovery-pagination flex justify-center gap2 mb4"
+            role="navigation"
+            aria-label="Results pagination"
+          ></nav>
+
+          <!-- Recommendations -->
+          <aside class="discovery-recommendations mt5 pt4 bt b--light-gray">
+            <h2 class="f5 tracked ttu mb4">Recommended For You</h2>
+            <div id="recommendationsGrid" role="region" aria-label="Recommended content"></div>
+          </aside>
+        </div>
+      </section>
     </main>
+
+    <!-- Global Search Modal (Cmd+K) -->
+    <div
+      id="searchModal"
+      class="search-modal dn fixed top-0 left-0 w-100 vh-100 z-9999"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Quick search"
+    >
+      <div class="search-modal-content mw6 w-90 bg-white br3 overflow-hidden shadow-4 mt5 mt6-ns center">
+        <input
+          type="text"
+          id="globalSearchInput"
+          class="w-100 pa3 pa4-ns f4 f3-ns bn bb b--light-gray"
+          placeholder="Search..."
+          aria-label="Quick search input"
+        />
+        <div id="globalSearchResults" class="overflow-y-auto" style="max-height: 50vh">
+          <p class="search-empty tc pa4 gray">Type to search...</p>
+        </div>
+        <div class="search-modal-hint pa2 bg-near-white f7 gray flex justify-between">
+          <span><kbd>↑↓</kbd> Navigate <kbd>↵</kbd> Select</span>
+          <span><kbd>esc</kbd> Close</span>
+        </div>
+      </div>
+    </div>
 
     <!-- Ad -->
     <section id="ad" class="dn vh-auto w-auto pb-6rem tc bg-hot-pink white overflow-y-none">
@@ -1096,6 +1269,21 @@
     <!-- Enhanced Media Systems -->
     <script type="text/javascript" src="js/media/audio/EnhancedAudioPlayer.js" defer></script>
     <script type="text/javascript" src="js/media/audio/WaveformVisualizer.js" defer></script>
+    <!-- MiniSearch for Discovery System -->
+    <script src="https://cdn.jsdelivr.net/npm/minisearch@6/dist/umd/index.min.js" defer></script>
+    <!-- Chamber Configurations (needed for ContentRegistry) -->
+    <script type="text/javascript" src="akademia/config.js" defer></script>
+    <script type="text/javascript" src="bibliotheke/config.js" defer></script>
+    <script type="text/javascript" src="pinakotheke/config.js" defer></script>
+    <script type="text/javascript" src="odeion/config.js" defer></script>
+    <script type="text/javascript" src="agora/config.js" defer></script>
+    <!-- Discovery System -->
+    <script type="text/javascript" src="js/discovery/ContentRegistry.js" defer></script>
+    <script type="text/javascript" src="js/discovery/SearchEngine.js" defer></script>
+    <script type="text/javascript" src="js/discovery/FilterSystem.js" defer></script>
+    <script type="text/javascript" src="js/discovery/RelatedWorksEngine.js" defer></script>
+    <script type="text/javascript" src="js/discovery/ShareLinks.js" defer></script>
+    <script type="text/javascript" src="js/discovery/DiscoveryController.js" defer></script>
     <!-- Three.js Post-processing for OGOD bloom effect -->
     <script defer>
       // Minimal EffectComposer implementation for bloom

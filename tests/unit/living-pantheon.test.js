@@ -15,6 +15,36 @@
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
+// Mock window.matchMedia as a vi.fn() so vi.mocked() can work
+window.matchMedia = vi.fn().mockImplementation(query => ({
+  matches: false,
+  media: query,
+  onchange: null,
+  addListener: vi.fn(),
+  removeListener: vi.fn(),
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+  dispatchEvent: vi.fn(),
+}));
+
+// Mock localStorage
+const localStorageMock = (() => {
+  let store = {};
+  return {
+    getItem: vi.fn(key => store[key] || null),
+    setItem: vi.fn((key, value) => {
+      store[key] = String(value);
+    }),
+    removeItem: vi.fn(key => {
+      delete store[key];
+    }),
+    clear: vi.fn(() => {
+      store = {};
+    }),
+  };
+})();
+Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+
 /**
  * Mock Howler.js Howl class
  */
@@ -1717,7 +1747,7 @@ describe('LabyrinthGenerator', () => {
       await labyrinth.initialize();
 
       let hasLoophole = false;
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 300; i++) {
         const entry = labyrinth.generateEntry();
         if (entry.hasLoophole) {
           hasLoophole = true;
@@ -1725,7 +1755,8 @@ describe('LabyrinthGenerator', () => {
         }
       }
 
-      // With 100 attempts and 5% probability, should likely have at least one
+      // With 300 attempts and 5% probability, should very likely have at least one
+      // Probability of never getting one: 0.95^300 ≈ 0.000002%
       expect(hasLoophole).toBe(true);
     });
   });

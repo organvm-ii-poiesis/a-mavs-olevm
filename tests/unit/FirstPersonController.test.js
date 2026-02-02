@@ -6,6 +6,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import './setup.js';
 
 describe('FirstPersonController', () => {
   let FirstPersonController;
