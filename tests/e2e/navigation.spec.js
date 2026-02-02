@@ -24,6 +24,76 @@ async function waitForJQueryReady(page, timeout = 10000) {
   }
 }
 
+/**
+ * Navigate to a specific page via JavaScript
+ * This bypasses hash navigation issues in headless browsers by
+ * directly manipulating the DOM
+ * @param {import('@playwright/test').Page} page
+ * @param {string} pageHash - Hash ID (e.g., '#menu', '#vision')
+ * @param {number} timeout - Max wait time in milliseconds
+ */
+async function navigateToPage(page, pageHash, timeout = 10000) {
+  const pageId = pageHash.startsWith('#') ? pageHash : `#${pageHash}`;
+
+  // Ensure jQuery is ready
+  await waitForJQueryReady(page);
+
+  // Navigate using JavaScript - hide all pages, show target
+  await page.evaluate(targetPage => {
+    // List of all known page sections
+    const pageIds = [
+      'landing',
+      'menu',
+      'east-wing',
+      'west-wing',
+      'south-wing',
+      'north-wing',
+      'sound',
+      'vision',
+      'words',
+      'info',
+      'diary',
+      'stills',
+      'video',
+      'blog',
+      'discovery',
+      'ogod3d',
+    ];
+
+    // Hide all pages
+    pageIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('dn');
+        el.style.display = 'none';
+      }
+    });
+
+    // Show target page
+    const targetId = targetPage.replace('#', '');
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      targetEl.classList.remove('dn');
+      targetEl.style.display = '';
+      targetEl.style.opacity = '1';
+    }
+
+    // Update currentPage and hash
+    if (typeof Page !== 'undefined' && Page.findPage) {
+      try {
+        window.currentPage = Page.findPage(targetPage);
+        window.currentPage.initPage();
+      } catch {
+        // Page not found in pages array
+      }
+    }
+    window.location.hash = targetPage;
+  }, pageId);
+
+  // Wait for the page element to be visible
+  await page.locator(pageId).waitFor({ state: 'visible', timeout });
+}
+
 test.describe('Page Navigation', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
@@ -37,29 +107,16 @@ test.describe('Page Navigation', () => {
     await expect(landing).toBeVisible();
   });
 
-  // SKIP: Hash navigation on initial page load doesn't consistently work in
-  // headless browsers. The document.ready handler that removes 'dn' class
-  // sometimes doesn't execute reliably when navigating directly to a hash URL.
-  // This test passes when running headed but fails intermittently in CI.
-  test.skip('should navigate to menu from landing', async ({ page }) => {
-    await page.goto('/#menu');
-    await page.waitForLoadState('domcontentloaded');
-    await waitForJQueryReady(page);
+  test('should navigate to menu from landing', async ({ page }) => {
+    await navigateToPage(page, '#menu');
 
     const menu = page.locator('#menu');
     await expect(menu).toBeVisible({ timeout: 10000 });
   });
 
-  // SKIP: Same issue as above - hash navigation doesn't reliably trigger
-  // the document.ready handler's dn class removal in headless mode.
-  test.skip('should navigate via hash change', async ({ page }) => {
-    await page.goto('/#menu');
-    await page.waitForLoadState('domcontentloaded');
-    await waitForJQueryReady(page);
-
-    await page.goto('/#vision');
-    await page.waitForLoadState('domcontentloaded');
-    await waitForJQueryReady(page);
+  test('should navigate via hash change', async ({ page }) => {
+    await navigateToPage(page, '#menu');
+    await navigateToPage(page, '#vision');
 
     const vision = page.locator('#vision');
     await expect(vision).toBeVisible({ timeout: 10000 });

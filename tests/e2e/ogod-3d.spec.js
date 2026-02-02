@@ -12,7 +12,9 @@
 import { test, expect } from '@playwright/test';
 
 // Skip all tests in this file when running headless or in CI
-// WebGL requires GPU access which is not available in headless browsers
+// WebGL requires GPU access which is not available in headless browsers.
+// Even though SwiftShader may report WebGL as available, actual 3D rendering
+// fails in headless mode. Run with --headed flag locally for GPU support.
 test.beforeEach(async ({}, testInfo) => {
   // Check if running in CI environment
   const isCI = !!process.env.CI;

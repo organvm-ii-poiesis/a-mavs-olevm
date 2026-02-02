@@ -137,12 +137,16 @@ test.describe('Stills Carousel', () => {
 });
 
 test.describe('Carousel Touch Support', () => {
-  // Touch events don't work reliably in headless Playwright.
-  // The carousel uses touchstart/touchend event listeners, but Playwright's
-  // mouse-based swipe simulation doesn't trigger touch handlers.
-  // Skip this test in automated runs - touch functionality should be
-  // verified manually on real devices.
-  test.skip('should support touch swipe on mobile', async ({ page }) => {
+  test('should support touch swipe on mobile', async ({
+    page,
+    browserName,
+  }) => {
+    // Skip in Firefox - TouchEvent API not available in Firefox headless
+    if (browserName === 'firefox') {
+      test.skip(true, 'TouchEvent API not available in Firefox headless');
+      return;
+    }
+
     await page.goto('/');
     await page.waitForLoadState('domcontentloaded');
     await waitForJQueryReady(page);
@@ -153,14 +157,49 @@ test.describe('Carousel Touch Support', () => {
     const box = await container.boundingBox();
 
     if (box) {
-      // Simulate swipe left
-      await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
+      const startX = box.x + box.width * 0.75;
+      const endX = box.x + box.width * 0.25;
+      const y = box.y + box.height / 2;
 
-      // Perform swipe gesture
-      await page.mouse.move(box.x + box.width * 0.75, box.y + box.height / 2);
-      await page.mouse.down();
-      await page.mouse.move(box.x + box.width * 0.25, box.y + box.height / 2);
-      await page.mouse.up();
+      // Use page.evaluate to dispatch actual TouchEvent objects
+      // This bypasses Playwright's mouse-based simulation which doesn't trigger touch handlers
+      await page.evaluate(
+        ({ startX, endX, y }) => {
+          const container = document.querySelector('#stills');
+          if (!container) return;
+
+          // Create and dispatch touchstart event
+          const touchStart = new TouchEvent('touchstart', {
+            bubbles: true,
+            cancelable: true,
+            touches: [
+              new Touch({
+                identifier: 0,
+                target: container,
+                clientX: startX,
+                clientY: y,
+              }),
+            ],
+          });
+          container.dispatchEvent(touchStart);
+
+          // Create and dispatch touchend event
+          const touchEnd = new TouchEvent('touchend', {
+            bubbles: true,
+            cancelable: true,
+            changedTouches: [
+              new Touch({
+                identifier: 0,
+                target: container,
+                clientX: endX,
+                clientY: y,
+              }),
+            ],
+          });
+          container.dispatchEvent(touchEnd);
+        },
+        { startX, endX, y }
+      );
 
       await page.waitForTimeout(500);
 
