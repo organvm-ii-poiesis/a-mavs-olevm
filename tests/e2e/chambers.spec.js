@@ -39,6 +39,10 @@ async function ensureSearchModalClosed(page) {
       modal.classList.add('dn');
       modal.classList.remove('db');
       modal.style.pointerEvents = 'none';
+      // Also disable pointer events on all children
+      modal.querySelectorAll('*').forEach(el => {
+        el.style.pointerEvents = 'none';
+      });
     }
     // Restore body scroll if locked
     document.body.style.overflow = '';

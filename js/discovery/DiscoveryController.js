@@ -658,7 +658,7 @@ class DiscoveryController {
     }
 
     if (results.length === 0) {
-      container.innerHTML = '<p class="search-empty tc pa3 gray">Type to search...</p>';
+      container.innerHTML = '<p class="search-empty tc pa3 dark-gray">Type to search...</p>';
       return;
     }
 

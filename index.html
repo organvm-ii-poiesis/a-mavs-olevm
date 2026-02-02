@@ -79,7 +79,7 @@
 
             <div class="flex flex-column center tc pa4">
               <div class="">
-                <a href="#menu" id="toMenuPage" class="_enterButton dib relative"> </a>
+                <a href="#menu" id="toMenuPage" class="_enterButton dib relative" aria-label="Enter site"> </a>
               </div>
             </div>
           </div>
@@ -880,6 +880,7 @@
                     placeholder="From"
                     min="2000"
                     max="2030"
+                    aria-label="Year range start"
                   />
                   <span>to</span>
                   <input
@@ -889,6 +890,7 @@
                     placeholder="To"
                     min="2000"
                     max="2030"
+                    aria-label="Year range end"
                   />
                 </div>
               </div>
@@ -958,9 +960,9 @@
           aria-label="Quick search input"
         />
         <div id="globalSearchResults" class="overflow-y-auto" style="max-height: 50vh">
-          <p class="search-empty tc pa4 gray">Type to search...</p>
+          <p class="search-empty tc pa4 dark-gray">Type to search...</p>
         </div>
-        <div class="search-modal-hint pa2 bg-near-white f7 gray flex justify-between">
+        <div class="search-modal-hint pa2 bg-near-white f7 dark-gray flex justify-between">
           <span><kbd>↑↓</kbd> Navigate <kbd>↵</kbd> Select</span>
           <span><kbd>esc</kbd> Close</span>
         </div>
@@ -1093,94 +1095,108 @@
         </li>
 
         <!-- Social Sharing -->
-        <section id="socialRow" class="db-ns w-100 mb2">
-          <a
-            class="social-link"
-            href="http://www.facebook.com/etceter4"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Facebook"
-          >
-            <i class="social-icon">
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="98" height="98" viewBox="0 0 97.8 97.8">
-                <path
-                  d="M48.9 0C21.9 0 0 21.9 0 48.9S21.9 97.8 48.9 97.8 97.8 75.9 97.8 48.9 75.9 0 48.9 0zM67.5 24.9l-6.8 0c-5.3 0-6.3 2.5-6.3 6.2v8.2h12.6L67.1 52H54.4v32.8H41.3V52H30.2V39.3h11v-9.4c0-10.9 6.7-16.9 16.4-16.9l9.9 0V24.9L67.5 24.9z"
-                /></svg></i
-          ></a>
-
-          <a
-            class="social-link"
-            href="https://twitter.com/_etceter4"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Twitter"
-          >
-            <i class="social-icon">
-              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="98" height="98" viewBox="0 0 97.8 97.8">
-                <path
-                  d="M48.9 0C21.9 0 0 21.9 0 48.9S21.9 97.8 48.9 97.8 97.8 75.9 97.8 48.9 75.9 0 48.9 0zM78.4 35.8c0 0.6 0 1.2 0 1.7 0 20.9-15.9 42.5-42.5 42.5 -8.1 0-16-2.3-22.9-6.7 -0.1-0.1-0.2-0.3-0.1-0.4 0.1-0.2 0.2-0.3 0.4-0.2 1.1 0.1 2.3 0.2 3.5 0.2 6.3 0 12.3-2 17.4-5.7 -6.1-0.5-11.3-4.6-13.2-10.5 0-0.1 0-0.3 0.1-0.4 0.1-0.1 0.2-0.1 0.3-0.1 1.7 0.3 3.4 0.3 5 0.1 -6.3-1.9-10.7-7.8-10.7-14.5l0-0.2c0-0.1 0.1-0.2 0.2-0.3 0.1-0.1 0.2-0.1 0.4 0 1.6 0.9 3.4 1.5 5.3 1.7 -3.6-2.9-5.7-7.2-5.7-11.9 0-2.7 0.7-5.3 2.1-7.6 0.1-0.1 0.2-0.2 0.3-0.2 0.1 0 0.2 0 0.3 0.1 7.4 9 18.2 14.6 29.8 15.3 -0.2-1-0.3-2-0.3-3 0-8.4 6.8-15.2 15.2-15.2 4.1 0 8.1 1.7 10.9 4.6 3.2-0.7 6.3-1.8 9.1-3.5 0.1-0.1 0.3-0.1 0.4 0 0.1 0.1 0.2 0.3 0.1 0.4 -1 3-2.8 5.6-5.3 7.5 2.4-0.4 4.7-1.1 6.8-2.1 0.1-0.1 0.3 0 0.4 0.1 0.1 0.1 0.1 0.3 0 0.4C83.8 31.2 81.3 33.7 78.4 35.8z"
-                /></svg></i
-          ></a>
-
-          <a
-            class="social-link"
-            href="https://www.instagram.com/etceter4/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-          >
-            <i class="social-icon">
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="97.75"
-                height="97.75"
-                viewBox="0 0 97.75 97.75"
-              >
-                <ellipse cx="48.944" cy="48.719" rx="14.465" ry="14.017" />
-                <path
-                  d="M71.333 49.501c0 11.981-10.024 21.692-22.389 21.692s-22.389-9.711-22.389-21.692c0-2.147 0.324-4.221 0.924-6.18h-6.616v30.427c0 1.576 1.288 2.863 2.863 2.863h50.159c1.576 0 2.865-1.287 2.865-2.863V43.321h-6.341C71.008 45.28 71.333 47.354 71.333 49.501z"
-                />
-                <path
-                  d="M65.332 35.11h8.141c1.784 0 3.242-1.458 3.242-3.242v-7.762c0-1.785-1.458-3.243-3.242-3.243h-8.141c-1.785 0-3.243 1.458-3.243 3.243v7.762C62.088 33.651 63.547 35.11 65.332 35.11z"
-                />
-                <path
-                  d="M48.875 0C21.882 0 0 21.882 0 48.875S21.882 97.75 48.875 97.75 97.75 75.868 97.75 48.875 75.868 0 48.875 0zM75.645 84.891H22.106c-5.087 0-9.246-3.765-9.246-9.244V22.105c0-5.481 4.159-9.245 9.246-9.245h53.539c5.086 0 9.246 3.764 9.246 9.245v53.542C84.891 81.126 80.73 84.891 75.645 84.891z"
-                /></svg></i
-          ></a>
-
-          <a
-            class="social-link"
-            href="https://www.youtube.com/user/etceter4"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="YouTube"
-          >
-            <i class="social-icon">
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="98"
-                height="98"
-                viewBox="0 0 97.75 97.75"
-              >
-                <path
-                  d="M61.52 45.424c-6.555-3.492-13.097-7.008-19.667-10.468 -3.166-1.667-5.914 0.025-5.941 3.612 -0.027 3.492-0.006 6.985-0.006 10.479 0 3.537 0.012 7.074-0.005 10.61 -0.007 1.229 0.362 2.26 1.38 3 1.355 0.985 2.719 1.018 4.219 0.228 6.609-3.482 13.24-6.924 19.874-10.361 1.458-0.756 2.562-1.707 2.616-3.508C64.044 47.194 62.966 46.194 61.52 45.424z"
-                />
-                <path
-                  d="M48.875 0C21.883 0 0 21.882 0 48.875S21.883 97.75 48.875 97.75 97.75 75.868 97.75 48.875 75.867 0 48.875 0zM82.833 66.998c0 8.746-7.089 15.835-15.836 15.835H30.753c-8.746 0-15.836-7.09-15.836-15.835V30.752c0-8.746 7.09-15.835 15.836-15.835h36.244c8.747 0 15.836 7.09 15.836 15.835V66.998z"
-                /></svg></i
-          ></a>
-          <!-- Audio Player -->
-          <section id="audioPlayer" class="audioPlayer r-c center mb2">
-            <iframe
-              style="border: 0; width: 100%; height: 42px"
-              src="https://bandcamp.com/EmbeddedPlayer/album=3780915385/size=small/bgcol=ffffff/linkcol=333333/artwork=none/transparent=true/"
-              title="ET CETER4 music player from Bandcamp"
-              >></iframe
+        <li class="list-none">
+          <section id="socialRow" class="db-ns w-100 mb2">
+            <a
+              class="social-link"
+              href="http://www.facebook.com/etceter4"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
             >
+              <i class="social-icon">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="98"
+                  height="98"
+                  viewBox="0 0 97.8 97.8"
+                >
+                  <path
+                    d="M48.9 0C21.9 0 0 21.9 0 48.9S21.9 97.8 48.9 97.8 97.8 75.9 97.8 48.9 75.9 0 48.9 0zM67.5 24.9l-6.8 0c-5.3 0-6.3 2.5-6.3 6.2v8.2h12.6L67.1 52H54.4v32.8H41.3V52H30.2V39.3h11v-9.4c0-10.9 6.7-16.9 16.4-16.9l9.9 0V24.9L67.5 24.9z"
+                  /></svg></i
+            ></a>
+
+            <a
+              class="social-link"
+              href="https://twitter.com/_etceter4"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
+              <i class="social-icon">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="98"
+                  height="98"
+                  viewBox="0 0 97.8 97.8"
+                >
+                  <path
+                    d="M48.9 0C21.9 0 0 21.9 0 48.9S21.9 97.8 48.9 97.8 97.8 75.9 97.8 48.9 75.9 0 48.9 0zM78.4 35.8c0 0.6 0 1.2 0 1.7 0 20.9-15.9 42.5-42.5 42.5 -8.1 0-16-2.3-22.9-6.7 -0.1-0.1-0.2-0.3-0.1-0.4 0.1-0.2 0.2-0.3 0.4-0.2 1.1 0.1 2.3 0.2 3.5 0.2 6.3 0 12.3-2 17.4-5.7 -6.1-0.5-11.3-4.6-13.2-10.5 0-0.1 0-0.3 0.1-0.4 0.1-0.1 0.2-0.1 0.3-0.1 1.7 0.3 3.4 0.3 5 0.1 -6.3-1.9-10.7-7.8-10.7-14.5l0-0.2c0-0.1 0.1-0.2 0.2-0.3 0.1-0.1 0.2-0.1 0.4 0 1.6 0.9 3.4 1.5 5.3 1.7 -3.6-2.9-5.7-7.2-5.7-11.9 0-2.7 0.7-5.3 2.1-7.6 0.1-0.1 0.2-0.2 0.3-0.2 0.1 0 0.2 0 0.3 0.1 7.4 9 18.2 14.6 29.8 15.3 -0.2-1-0.3-2-0.3-3 0-8.4 6.8-15.2 15.2-15.2 4.1 0 8.1 1.7 10.9 4.6 3.2-0.7 6.3-1.8 9.1-3.5 0.1-0.1 0.3-0.1 0.4 0 0.1 0.1 0.2 0.3 0.1 0.4 -1 3-2.8 5.6-5.3 7.5 2.4-0.4 4.7-1.1 6.8-2.1 0.1-0.1 0.3 0 0.4 0.1 0.1 0.1 0.1 0.3 0 0.4C83.8 31.2 81.3 33.7 78.4 35.8z"
+                  /></svg></i
+            ></a>
+
+            <a
+              class="social-link"
+              href="https://www.instagram.com/etceter4/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <i class="social-icon">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="97.75"
+                  height="97.75"
+                  viewBox="0 0 97.75 97.75"
+                >
+                  <ellipse cx="48.944" cy="48.719" rx="14.465" ry="14.017" />
+                  <path
+                    d="M71.333 49.501c0 11.981-10.024 21.692-22.389 21.692s-22.389-9.711-22.389-21.692c0-2.147 0.324-4.221 0.924-6.18h-6.616v30.427c0 1.576 1.288 2.863 2.863 2.863h50.159c1.576 0 2.865-1.287 2.865-2.863V43.321h-6.341C71.008 45.28 71.333 47.354 71.333 49.501z"
+                  />
+                  <path
+                    d="M65.332 35.11h8.141c1.784 0 3.242-1.458 3.242-3.242v-7.762c0-1.785-1.458-3.243-3.242-3.243h-8.141c-1.785 0-3.243 1.458-3.243 3.243v7.762C62.088 33.651 63.547 35.11 65.332 35.11z"
+                  />
+                  <path
+                    d="M48.875 0C21.882 0 0 21.882 0 48.875S21.882 97.75 48.875 97.75 97.75 75.868 97.75 48.875 75.868 0 48.875 0zM75.645 84.891H22.106c-5.087 0-9.246-3.765-9.246-9.244V22.105c0-5.481 4.159-9.245 9.246-9.245h53.539c5.086 0 9.246 3.764 9.246 9.245v53.542C84.891 81.126 80.73 84.891 75.645 84.891z"
+                  /></svg></i
+            ></a>
+
+            <a
+              class="social-link"
+              href="https://www.youtube.com/user/etceter4"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+            >
+              <i class="social-icon">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="98"
+                  height="98"
+                  viewBox="0 0 97.75 97.75"
+                >
+                  <path
+                    d="M61.52 45.424c-6.555-3.492-13.097-7.008-19.667-10.468 -3.166-1.667-5.914 0.025-5.941 3.612 -0.027 3.492-0.006 6.985-0.006 10.479 0 3.537 0.012 7.074-0.005 10.61 -0.007 1.229 0.362 2.26 1.38 3 1.355 0.985 2.719 1.018 4.219 0.228 6.609-3.482 13.24-6.924 19.874-10.361 1.458-0.756 2.562-1.707 2.616-3.508C64.044 47.194 62.966 46.194 61.52 45.424z"
+                  />
+                  <path
+                    d="M48.875 0C21.883 0 0 21.882 0 48.875S21.883 97.75 48.875 97.75 97.75 75.868 97.75 48.875 75.867 0 48.875 0zM82.833 66.998c0 8.746-7.089 15.835-15.836 15.835H30.753c-8.746 0-15.836-7.09-15.836-15.835V30.752c0-8.746 7.09-15.835 15.836-15.835h36.244c8.747 0 15.836 7.09 15.836 15.835V66.998z"
+                  /></svg></i
+            ></a>
+            <!-- Audio Player -->
+            <section id="audioPlayer" class="audioPlayer r-c center mb2">
+              <iframe
+                style="border: 0; width: 100%; height: 42px"
+                src="https://bandcamp.com/EmbeddedPlayer/album=3780915385/size=small/bgcol=ffffff/linkcol=333333/artwork=none/transparent=true/"
+                title="ET CETER4 music player from Bandcamp"
+                >></iframe
+              >
+            </section>
           </section>
-        </section>
+        </li>
       </ul>
     </section>
 

@@ -12,6 +12,46 @@ import AxeBuilder from '@axe-core/playwright';
 test.setTimeout(60000);
 
 /**
+ * Wait for jQuery to be loaded and document ready to have fired.
+ * Returns true if successful within timeout, false otherwise.
+ */
+async function waitForJQueryReady(page, timeout = 10000) {
+  try {
+    await page.waitForFunction(
+      () => {
+        if (typeof window.jQuery === 'undefined') return false;
+        return window.jQuery.isReady === true;
+      },
+      { timeout }
+    );
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Ensure search modal is closed and won't intercept clicks.
+ * Call this before any navigation tests.
+ */
+async function ensureSearchModalClosed(page) {
+  await page.evaluate(() => {
+    const modal = document.getElementById('searchModal');
+    if (modal) {
+      modal.classList.add('dn');
+      modal.classList.remove('db');
+      modal.style.pointerEvents = 'none';
+      // Also disable pointer events on all children
+      modal.querySelectorAll('*').forEach(el => {
+        el.style.pointerEvents = 'none';
+      });
+    }
+    // Restore body scroll if locked
+    document.body.style.overflow = '';
+  });
+}
+
+/**
  * Helper to run axe-core scan and return violations
  * @param {Page} page - Playwright page object
  * @param {Object} options - axe-core options
@@ -24,13 +64,18 @@ async function checkAccessibility(page, options = {}) {
       type: 'tag',
       values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'],
     },
-    // Exclude known third-party embeds that we can't control
-    exclude: [['iframe[src*="bandcamp.com"]'], ['iframe[src*="youtube.com"]']],
   };
 
   const axeOptions = { ...defaultOptions, ...options };
 
-  const results = await new AxeBuilder({ page }).options(axeOptions).analyze();
+  // Exclude known third-party embeds that we can't control
+  // Using AxeBuilder's exclude() method to properly skip iframe content
+  const results = await new AxeBuilder({ page })
+    .exclude('iframe[src*="bandcamp.com"]')
+    .exclude('iframe[src*="youtube.com"]')
+    .exclude('#audioPlayer')
+    .options(axeOptions)
+    .analyze();
 
   return results.violations;
 }
@@ -51,7 +96,9 @@ function formatViolations(violations) {
 test.describe('Accessibility - Landing Page', () => {
   test('should have no critical accessibility violations', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     // Wait for any initial animations
     await page.waitForTimeout(1000);
@@ -71,7 +118,9 @@ test.describe('Accessibility - Landing Page', () => {
 
   test('should have proper heading structure', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     // Check that h1 exists
     const h1Count = await page.locator('h1').count();
@@ -80,7 +129,9 @@ test.describe('Accessibility - Landing Page', () => {
 
   test('should have accessible links', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     // Run specific link-related checks
     const violations = await checkAccessibility(page, {
@@ -97,7 +148,9 @@ test.describe('Accessibility - Landing Page', () => {
 test.describe('Accessibility - Menu Navigation', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     // Navigate to menu by clicking on landing
     await page.click('#landing');
@@ -130,7 +183,9 @@ test.describe('Accessibility - Menu Navigation', () => {
 test.describe('Accessibility - Focus Management', () => {
   test('should have visible focus indicators', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     const violations = await checkAccessibility(page, {
       runOnly: {
@@ -144,7 +199,9 @@ test.describe('Accessibility - Focus Management', () => {
 
   test('should not trap keyboard focus', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     // Press Tab multiple times to ensure focus can move through page
     for (let i = 0; i < 10; i++) {
@@ -160,7 +217,9 @@ test.describe('Accessibility - Focus Management', () => {
 test.describe('Accessibility - Color Contrast', () => {
   test('should have sufficient color contrast', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     const violations = await checkAccessibility(page, {
       runOnly: {
@@ -186,7 +245,9 @@ test.describe('Accessibility - Color Contrast', () => {
 test.describe('Accessibility - Images', () => {
   test('should have alt text on meaningful images', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     const violations = await checkAccessibility(page, {
       runOnly: {
@@ -202,7 +263,9 @@ test.describe('Accessibility - Images', () => {
 test.describe('Accessibility - Forms', () => {
   test('should have labeled form controls', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     const violations = await checkAccessibility(page, {
       runOnly: {
@@ -218,7 +281,9 @@ test.describe('Accessibility - Forms', () => {
 test.describe('Accessibility - ARIA', () => {
   test('should have valid ARIA attributes', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     const violations = await checkAccessibility(page, {
       runOnly: {
@@ -242,7 +307,9 @@ test.describe('Accessibility - ARIA', () => {
     page,
   }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     // Check for aria-live region
     const ariaLive = await page.locator('[aria-live]').count();
@@ -257,7 +324,9 @@ test.describe('Accessibility - Mobile', () => {
 
   test('should be accessible on mobile viewport', async ({ page }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     const violations = await checkAccessibility(page);
     const critical = violations.filter(
@@ -271,7 +340,9 @@ test.describe('Accessibility - Mobile', () => {
     page,
   }) => {
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+    await ensureSearchModalClosed(page);
 
     // Check interactive elements have minimum size
     const smallTargets = await page.evaluate(() => {

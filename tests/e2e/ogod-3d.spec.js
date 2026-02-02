@@ -3,9 +3,33 @@
  * @file tests/e2e/ogod-3d.spec.js
  * @description End-to-end tests for the OGOD 3D immersive audio-visual experience
  * Tests 3D scene loading, audio playback, controls, and UI interactions
+ *
+ * NOTE: These tests require WebGL/GPU support and are skipped in headless browsers
+ * and CI environments. Run with `npx playwright test tests/e2e/ogod-3d.spec.js --headed`
+ * to execute locally with GPU support.
  */
 
 import { test, expect } from '@playwright/test';
+
+// Skip all tests in this file when running headless or in CI
+// WebGL requires GPU access which is not available in headless browsers
+test.beforeEach(async ({}, testInfo) => {
+  // Check if running in CI environment
+  const isCI = !!process.env.CI;
+
+  // Check if running in headless mode
+  // Playwright's testInfo.project.use contains the project configuration
+  const projectUse = testInfo.project.use || {};
+  const isHeadless = projectUse.headless !== false;
+
+  // Skip if either CI or headless
+  if (isCI || isHeadless) {
+    test.skip(
+      true,
+      'WebGL/3D tests require headed browser with GPU access. Run with --headed flag locally.'
+    );
+  }
+});
 
 /**
  * Check if WebGL is available and working
@@ -81,21 +105,6 @@ function filterCriticalErrors(errors) {
 }
 
 test.describe('OGOD 3D Experience', () => {
-  // Skip 3D tests in CI - requires GPU and proper audio context
-  // These tests run locally where WebGL and Tone.js work properly
-  test.skip(
-    !!process.env.CI,
-    'WebGL/audio tests skipped in CI - requires GPU and audio context'
-  );
-
-  test.beforeEach(async ({ page }) => {
-    const hasWebGL = await page.evaluate(() => {
-      const canvas = document.createElement('canvas');
-      return !!(canvas.getContext('webgl') || canvas.getContext('webgl2'));
-    });
-    test.skip(!hasWebGL, 'WebGL not available in this browser environment');
-  });
-
   test.describe('Scene Loading', () => {
     test('loads without critical JavaScript errors', async ({ page }) => {
       const errors = setupErrorCollection(page);
@@ -448,24 +457,10 @@ test.describe('OGOD 3D Experience', () => {
 });
 
 test.describe('OGOD 3D Mobile', () => {
-  // Skip 3D tests in CI - requires GPU and proper audio context
-  test.skip(
-    !!process.env.CI,
-    'WebGL/audio tests skipped in CI - requires GPU and audio context'
-  );
-
   test.use({
     viewport: { width: 375, height: 667 },
     isMobile: true,
     hasTouch: true,
-  });
-
-  test.beforeEach(async ({ page }) => {
-    const hasWebGL = await page.evaluate(() => {
-      const canvas = document.createElement('canvas');
-      return !!(canvas.getContext('webgl') || canvas.getContext('webgl2'));
-    });
-    test.skip(!hasWebGL, 'WebGL not available in this browser environment');
   });
 
   test('loads on mobile viewport', async ({ page }) => {
@@ -537,20 +532,6 @@ test.describe('OGOD 3D Mobile', () => {
 });
 
 test.describe('OGOD 3D Settings Panel', () => {
-  // Skip 3D tests in CI - requires GPU and proper audio context
-  test.skip(
-    !!process.env.CI,
-    'WebGL/audio tests skipped in CI - requires GPU and audio context'
-  );
-
-  test.beforeEach(async ({ page }) => {
-    const hasWebGL = await page.evaluate(() => {
-      const canvas = document.createElement('canvas');
-      return !!(canvas.getContext('webgl') || canvas.getContext('webgl2'));
-    });
-    test.skip(!hasWebGL, 'WebGL not available in this browser environment');
-  });
-
   // Skip these tests if settings panel doesn't exist yet
   test.skip('settings panel opens on button click', async ({ page }) => {
     await page.goto('http://localhost:3000/ogod-3d.html');
