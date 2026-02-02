@@ -55,7 +55,7 @@ function handleHashChange() {
     if (targetPage) {
       showNewSection(hash);
     }
-  } catch (_error) {
+  } catch (error) {
     // If page not found, navigate to landing
     console.warn(`Page not found: ${hash}, navigating to landing`);
     window.location.hash = '#landing';
@@ -74,6 +74,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('/sw.js')
       .then(registration => {
+        console.log('SW registered:', registration.scope);
         // Check for updates periodically
         setInterval(() => {
           registration.update().catch(error => {
@@ -89,6 +90,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('/js/media/cache/MediaServiceWorker.js')
       .then(registration => {
+        console.log('MediaServiceWorker registered:', registration.scope);
         // Check for updates periodically
         setInterval(() => {
           registration.update().catch(error => {
@@ -166,7 +168,7 @@ $(document).ready(() => {
           );
         }
       }
-    } catch (_error) {
+    } catch (error) {
       // Fallback to landing page if hash is invalid
       console.warn(`Invalid hash on load: ${hash}, defaulting to landing`);
       $('#landing').removeClass('dn');

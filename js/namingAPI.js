@@ -23,6 +23,10 @@ var ETCETERNaming = {
     this.engine = NameSearchEngine.initialize().setUserProfile(userProfile);
     this.isInitialized = true;
 
+    console.log(
+      '🎯 ET CETER4 Naming System initialized with profile:',
+      userProfile
+    );
     return this;
   },
 
@@ -100,7 +104,7 @@ var ETCETERNaming = {
   /**
    * Get improvement suggestions for existing name
    */
-  improve(currentName, expectedMeaning, _type) {
+  improve(currentName, expectedMeaning, type) {
     if (!this.isInitialized) {
       this.init();
     }
@@ -127,6 +131,7 @@ var ETCETERNaming = {
     }
 
     this.engine.setUserProfile(profileName);
+    console.log('👤 Switched to profile:', profileName);
     return this;
   },
 
@@ -216,9 +221,15 @@ var ETCETERNaming = {
      * Start interactive naming session
      */
     start() {
+      console.log('🤖 ET CETER4 Naming Assistant');
+      console.log("Type 'help' for commands, 'exit' to quit");
+
       if (typeof prompt !== 'undefined') {
         this._runInteractiveSession();
       } else {
+        console.log(
+          'Interactive mode requires a browser environment with prompt() support'
+        );
         return this._createAPIMethods();
       }
     },
@@ -255,6 +266,12 @@ var ETCETERNaming = {
         }
 
         if (input === 'help') {
+          console.log('Commands:');
+          console.log('  suggest <input> <type> - Get naming suggestions');
+          console.log('  validate <name> <meaning> - Validate existing name');
+          console.log('  profile <name> - Change user profile');
+          console.log('  analyze - Analyze current codebase');
+          console.log('  exit - Quit assistant');
           continue;
         }
 
@@ -264,24 +281,30 @@ var ETCETERNaming = {
 
         switch (command) {
           case 'suggest': {
-            ETCETERNaming.suggest(args.join(' '), args[args.length - 1]);
+            const suggestions = ETCETERNaming.suggest(
+              args.join(' '),
+              args[args.length - 1]
+            );
+            console.log('Suggestions:', suggestions);
             break;
           }
           case 'validate': {
             const name = args[0];
             const meaning = args.slice(1).join(' ');
-            ETCETERNaming.validate(name, meaning);
+            const validation = ETCETERNaming.validate(name, meaning);
+            console.log('Validation:', validation);
             break;
           }
           case 'profile':
             ETCETERNaming.setProfile(args[0].toUpperCase());
             break;
           case 'analyze': {
-            ETCETERNaming.analyzeCodebase();
+            const analysis = ETCETERNaming.analyzeCodebase();
+            console.log('Codebase Analysis:', analysis);
             break;
           }
           default:
-          // Unknown command
+            console.log("Unknown command. Type 'help' for available commands.");
         }
       }
     },
@@ -378,6 +401,7 @@ function createNamedPage(description, config) {
       `Page ID '${config.id}' may not follow best practices:`,
       validation.issues
     );
+    console.log('Consider these alternatives:', validation.suggestions);
   }
 
   return new Page(config);
@@ -386,8 +410,12 @@ function createNamedPage(description, config) {
 /**
  * Enhanced function naming helper
  */
-function createNamedFunction(description, fn, _context) {
+function createNamedFunction(description, fn, context) {
   const suggestedName = suggestFunctionName(description);
+
+  console.log(
+    `💡 Suggested function name for '${description}': ${suggestedName}`
+  );
 
   // For debugging/development, attach the suggested name
   if (fn && typeof fn === 'function') {
@@ -407,6 +435,24 @@ if (typeof document !== 'undefined') {
   document.addEventListener('DOMContentLoaded', () => {
     // Initialize with ARTIST profile as default for ET CETER4
     ETCETERNaming.init('ARTIST');
+
+    // Log naming guidelines
+    console.group('🎨 ET CETER4 Naming Guidelines');
+    const guidelines = ETCETERNaming.generateGuidelines();
+    console.log('Conventions:', guidelines.conventions);
+    console.log('ET CETER4 Patterns:', guidelines.etceterPatterns);
+    console.log('Best Practices:', guidelines.bestPractices);
+    console.groupEnd();
+
+    // Analyze existing code and suggest improvements
+    console.group('🔍 Existing Code Analysis');
+    const suggestions = ETCETERNaming.rollForwardExisting();
+    if (Object.keys(suggestions).length > 0) {
+      console.log('Consider improving these names:', suggestions);
+    } else {
+      console.log('✅ All existing names follow good practices!');
+    }
+    console.groupEnd();
   });
 }
 

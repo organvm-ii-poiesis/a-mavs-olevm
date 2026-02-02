@@ -98,7 +98,7 @@ class AudioAnalyzerBridge {
       this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
       this.isConnected = true;
 
-      // Connected to Howler.js
+      console.log('AudioAnalyzerBridge: Connected to Howler.js');
       return true;
     } catch (error) {
       console.error('AudioAnalyzerBridge: Connection error:', error.message);
@@ -162,35 +162,16 @@ class AudioAnalyzerBridge {
     this.bands.bass = bass / (bassEnd * 255);
     this.bands.mid = mid / ((midEnd - bassEnd) * 255);
     this.bands.treble = treble / ((len - midEnd) * 255);
-    this.bands.overall =
-      (this.bands.bass + this.bands.mid + this.bands.treble) / 3;
+    this.bands.overall = (this.bands.bass + this.bands.mid + this.bands.treble) / 3;
 
     // Apply smoothing for less jittery visuals
-    this.smoothBands.bass = this._lerp(
-      this.smoothBands.bass,
-      this.bands.bass,
-      1 - this.smoothingFactor
-    );
-    this.smoothBands.mid = this._lerp(
-      this.smoothBands.mid,
-      this.bands.mid,
-      1 - this.smoothingFactor
-    );
-    this.smoothBands.treble = this._lerp(
-      this.smoothBands.treble,
-      this.bands.treble,
-      1 - this.smoothingFactor
-    );
-    this.smoothBands.overall = this._lerp(
-      this.smoothBands.overall,
-      this.bands.overall,
-      1 - this.smoothingFactor
-    );
+    this.smoothBands.bass = this._lerp(this.smoothBands.bass, this.bands.bass, 1 - this.smoothingFactor);
+    this.smoothBands.mid = this._lerp(this.smoothBands.mid, this.bands.mid, 1 - this.smoothingFactor);
+    this.smoothBands.treble = this._lerp(this.smoothBands.treble, this.bands.treble, 1 - this.smoothingFactor);
+    this.smoothBands.overall = this._lerp(this.smoothBands.overall, this.bands.overall, 1 - this.smoothingFactor);
 
     // Simple beat detection (bass peaks)
-    this.beatDetected =
-      this.bands.bass > this.peakThreshold &&
-      this.bands.bass > this.smoothBands.bass * 1.5;
+    this.beatDetected = this.bands.bass > this.peakThreshold && this.bands.bass > this.smoothBands.bass * 1.5;
 
     return this.smoothBands;
   }

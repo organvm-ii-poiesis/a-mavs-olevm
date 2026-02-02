@@ -10,19 +10,19 @@ class EnhancedVideoPlayer {
   }
 
   initialize() {
-    // Initialize player
+    console.log('EnhancedVideoPlayer initialized');
   }
 
   play() {
-    // Play video
+    console.log('Playing video');
   }
 
   pause() {
-    // Pause video
+    console.log('Video paused');
   }
 
   dispose() {
-    // Cleanup
+    console.log('EnhancedVideoPlayer disposed');
   }
 }
 

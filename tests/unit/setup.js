@@ -248,8 +248,8 @@ const mockMatrix4 = vi.fn().mockImplementation(() => ({
   elements: new Float32Array(16),
 }));
 
-// Create THREE mock namespace and stub it globally
-const THREEMock = {
+// Create THREE mock namespace
+global.THREE = {
   Vector3: mockVector3,
   Vector2: mockVector2,
   Color: mockColor,
@@ -357,13 +357,6 @@ const THREEMock = {
   })),
 };
 
-// Expose THREE globally for all environments (jsdom + node)
-global.THREE = THREEMock;
-globalThis.THREE = THREEMock;
-if (typeof window !== 'undefined') {
-  window.THREE = THREEMock;
-}
-
 // Mock Tone.js namespace
 const mockTonePlayer = vi.fn().mockImplementation(() => ({
   start: vi.fn(),
@@ -400,7 +393,7 @@ const mockToneAnalyser = vi.fn().mockImplementation(() => ({
   smoothing: 0.8,
 }));
 
-const ToneMock = {
+global.Tone = {
   Player: mockTonePlayer,
   Gain: mockToneGain,
   Reverb: mockToneReverb,
@@ -412,11 +405,6 @@ const ToneMock = {
     sampleRate: 44100,
   },
 };
-global.Tone = ToneMock;
-globalThis.Tone = ToneMock;
-if (typeof window !== 'undefined') {
-  window.Tone = ToneMock;
-}
 
 // Mock global configuration
 global.ETCETER4_CONFIG = {
@@ -458,32 +446,14 @@ global.ETCETER4_CONFIG = {
   },
 };
 
-// Mock localStorage for jsdom environment
+// Mock localStorage
 const localStorageMock = {
-  store: {},
-  getItem: vi.fn(key => localStorageMock.store[key] || null),
-  setItem: vi.fn((key, value) => {
-    localStorageMock.store[key] = String(value);
-  }),
-  removeItem: vi.fn(key => {
-    delete localStorageMock.store[key];
-  }),
-  clear: vi.fn(() => {
-    localStorageMock.store = {};
-  }),
-  get length() {
-    return Object.keys(localStorageMock.store).length;
-  },
-  key: vi.fn(i => Object.keys(localStorageMock.store)[i] || null),
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn(),
 };
 global.localStorage = localStorageMock;
-if (typeof window !== 'undefined') {
-  Object.defineProperty(window, 'localStorage', {
-    value: localStorageMock,
-    writable: true,
-    configurable: true,
-  });
-}
 
 // Mock window.devicePixelRatio
 global.window = global.window || {};

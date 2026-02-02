@@ -91,6 +91,7 @@ class MorphingImageSystem {
 
     // Check for prefers-reduced-motion
     if (this._prefersReducedMotion()) {
+      console.info('MorphingImageSystem: Disabled due to prefers-reduced-motion');
       return this;
     }
 
@@ -130,7 +131,7 @@ class MorphingImageSystem {
     this.pauseTimeouts.clear();
 
     // Reset all elements to original state
-    for (const [element] of this.activeMorphs) {
+    for (const [element, state] of this.activeMorphs) {
       element.style.filter = '';
       element.style.mixBlendMode = '';
     }

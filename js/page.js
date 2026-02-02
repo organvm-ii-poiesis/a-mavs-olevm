@@ -3,9 +3,11 @@
 /**
  * @global {Object} currentPage - current page object
  * @global {string} transitionState - current transition state (IDLE, TRANSITIONING, READY)
+ * @global {boolean} livingPantheonInitialized - track if Living Pantheon has been initialized
  */
 
 let currentPage = {};
+let livingPantheonInitialized = false;
 
 /**
  * Transition State Machine
@@ -579,4 +581,62 @@ function announcePageTransition(pageId) {
 
   const pageName = pageNames[pageId] || `${pageId.replace('#', '')} page`;
   announcer.textContent = `Navigated to ${pageName}`;
+}
+
+/**
+ * Initialize Living Pantheon system on first page load
+ * Sets up the generative immersive effects with proper error handling
+ * @param {string} initialPageId - The initial page ID to set as first chamber
+ */
+function initializeLivingPantheon(initialPageId) {
+  if (livingPantheonInitialized) {
+    return; // Already initialized
+  }
+
+  try {
+    if (typeof LivingPantheonCore === 'undefined') {
+      console.info('Living Pantheon not available');
+      return;
+    }
+
+    const livingPantheon = LivingPantheonCore.getInstance();
+    if (!livingPantheon) {
+      console.warn('Failed to get Living Pantheon instance');
+      return;
+    }
+
+    // Extract chamber ID from page ID (remove '#' prefix)
+    const chamberId = initialPageId.replace('#', '');
+
+    // Get chamber color from config if available
+    let chamberColor = null;
+    if (
+      typeof ETCETER4_CONFIG !== 'undefined' &&
+      ETCETER4_CONFIG.livingPantheon?.chambers?.[chamberId]
+    ) {
+      chamberColor = ETCETER4_CONFIG.livingPantheon.chambers[chamberId].color;
+    }
+
+    // Initialize with first page
+    livingPantheon.initialize({
+      chamberId,
+      chamberColor,
+    });
+
+    // Start the system (respects user preference from localStorage)
+    livingPantheon.start();
+
+    // Listen for status changes for debugging/monitoring
+    livingPantheon.on(eventDetail => {
+      if (eventDetail.status.isRunning) {
+        console.debug('Living Pantheon active');
+      }
+    });
+
+    livingPantheonInitialized = true;
+    console.info('Living Pantheon initialized');
+  } catch (error) {
+    console.warn('Living Pantheon initialization error:', error.message);
+    // Don't throw - system is optional and shouldn't break page navigation
+  }
 }

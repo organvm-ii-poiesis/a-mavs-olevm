@@ -20,9 +20,6 @@ export default defineConfig({
     // Environment for DOM testing
     environment: 'jsdom',
 
-    // Make global mocks available
-    globals: true,
-
     // Setup files
     setupFiles: [resolve(projectRoot, 'tests/unit/setup.js')],
 

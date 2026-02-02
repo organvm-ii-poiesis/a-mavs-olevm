@@ -5,7 +5,7 @@
 
 class AnimatedContentSystem {
   constructor(options = {}) {
-    const defaults = {
+    this.config = {
       enabled: true,
       breathing: {
         enabled: true,
@@ -22,36 +22,18 @@ class AnimatedContentSystem {
         drift: [],
       },
     };
-
-    // Merge options deeply
-    this.config = {
-      ...defaults,
-      ...options,
-      breathing: {
-        ...defaults.breathing,
-        ...(options.breathing || {}),
-      },
-      drift: {
-        ...defaults.drift,
-        ...(options.drift || {}),
-      },
-      targets: {
-        ...defaults.targets,
-        ...(options.targets || {}),
-      },
-    };
   }
 
   initialize() {
-    // Initialize animations
+    console.log('AnimatedContentSystem initialized');
   }
 
   animate() {
-    // Animation running
+    console.log('Animation running');
   }
 
   dispose() {
-    // Cleanup
+    console.log('AnimatedContentSystem disposed');
   }
 }
 

@@ -98,6 +98,7 @@ class LabyrinthGenerator {
     }
 
     if (!this.config.enabled) {
+      console.info('LabyrinthGenerator: Disabled');
       return this;
     }
 
@@ -114,6 +115,9 @@ class LabyrinthGenerator {
       this._createLoopholes();
 
       this.isInitialized = true;
+      console.info(
+        `LabyrinthGenerator: Initialized with ${this.fragments.length} fragments and ${this.loopholes.size} loopholes`
+      );
     } catch (error) {
       console.error('LabyrinthGenerator: Initialization error:', error);
     } finally {
@@ -158,6 +162,10 @@ class LabyrinthGenerator {
           .map((frag) => frag.trim());
 
         this.fragments.push(...validFragments);
+
+        console.info(
+          `LabyrinthGenerator: Loaded ${validFragments.length} fragments from ${source}`
+        );
       } catch (error) {
         console.warn(`LabyrinthGenerator: Failed to load fragments from ${source}:`, error);
         // Continue with other sources
@@ -199,6 +207,7 @@ class LabyrinthGenerator {
     ];
 
     this.fragments = [...fallbacks];
+    console.info('LabyrinthGenerator: Using fallback fragments');
   }
 
   /**

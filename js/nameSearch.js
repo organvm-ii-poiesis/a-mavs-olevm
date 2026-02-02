@@ -12,6 +12,7 @@ if (typeof module !== 'undefined' && typeof require !== 'undefined') {
   var NamingConventions = namingModule.NamingConventions;
   var NamingContexts = namingModule.NamingContexts;
   var ETCETERNamingPatterns = namingModule.ETCETERNamingPatterns;
+  var NamingQuality = namingModule.NamingQuality;
   var NamingStrategy = namingModule.NamingStrategy;
 }
 /* eslint-enable no-var */
@@ -95,7 +96,7 @@ var ContextDetector = {
   /**
    * Detect the most appropriate context for a given input
    */
-  detectContext(input, _existingCodeAnalysis) {
+  detectContext(input, existingCodeAnalysis) {
     if (!input) {
       return NamingContexts.VARIABLE;
     }
@@ -541,7 +542,7 @@ var NameSearchEngine = {
   /**
    * Generate explanation for why a suggestion was made
    */
-  _generateExplanation(suggestion, _originalInput) {
+  _generateExplanation(suggestion, originalInput) {
     const explanation = [];
 
     explanation.push(`Generated ${suggestion.type} variant`);

@@ -79,14 +79,11 @@ export default [
       },
     },
     rules: {
-      'no-unused-vars': [
-        'warn',
-        { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' },
-      ],
+      'no-unused-vars': 'warn',
       'no-undef': 'off', // Disabled because code uses global scope for cross-file communication
       'prefer-const': 'error',
       'no-var': 'error',
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-console': 'warn',
       'prefer-template': 'warn',
       'prefer-arrow-callback': 'warn',
       'object-shorthand': 'warn',
@@ -103,8 +100,6 @@ export default [
       'js/pageData.js',
       'js/living-pantheon/**/*.js',
       'js/media/**/*.js',
-      'js/audioAnalyzerBridge.js',
-      'js/uiSounds.js',
     ],
     rules: {
       // Allow class/const definitions that are assigned to window or global scope

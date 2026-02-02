@@ -94,7 +94,7 @@ pages.menu = new Page({
   upLinks: [_pID.landing],
   initialize() {
     // get the lib and sketch
-    $.cachedScript('js/vendor/p5.js').done((_script, _textStatus) => {});
+    $.cachedScript('js/vendor/p5.js').done((script, textStatus) => {});
     // $.cachedScript( "js/sketch.js" ).done(function( script, textStatus ) {});
   },
 });

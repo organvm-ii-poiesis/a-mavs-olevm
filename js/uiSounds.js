@@ -77,13 +77,11 @@ const UISounds = {
       }
 
       // Build sprite array from config
-      const sprites = Object.entries(this.config.sprites).map(
-        ([id, config]) => ({
-          id,
-          startTime: config.startTime,
-          duration: config.duration,
-        })
-      );
+      const sprites = Object.entries(this.config.sprites).map(([id, config]) => ({
+        id,
+        startTime: config.startTime,
+        duration: config.duration,
+      }));
 
       // Register the audio sprite
       createjs.Sound.registerSounds(
@@ -99,7 +97,7 @@ const UISounds = {
       this.registered = true;
       this.initialized = true;
 
-      // UISounds initialized successfully
+      console.log('UISounds: Initialized successfully');
       return true;
     } catch (error) {
       console.error('UISounds: Initialization error:', error.message);

@@ -95,6 +95,7 @@ class GlobalGlitchSystem {
 
     // Check for prefers-reduced-motion
     if (this._prefersReducedMotion()) {
+      console.info('GlobalGlitchSystem: Disabled due to prefers-reduced-motion');
       return this;
     }
 

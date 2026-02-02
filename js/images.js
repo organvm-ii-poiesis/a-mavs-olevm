@@ -174,5 +174,17 @@ function initStillsHandlers() {
   stillsHandlersBound = true;
 }
 
+/**
+ * Cleanup stills gallery resources
+ * Call when navigating away from stills page
+ */
+function cleanupStills() {
+  if (stillsHandlersBound) {
+    $('#stills').off('carousel:slide');
+    stillsHandlersBound = false;
+  }
+  stillsCarousel.destroy();
+}
+
 // Initialize handlers on load
 initStillsHandlers();
