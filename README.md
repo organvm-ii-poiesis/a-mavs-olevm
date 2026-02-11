@@ -2,6 +2,14 @@
 
 # a-mavs-olevm
 
+[![CI](https://github.com/organvm-ii-poiesis/a-mavs-olevm/actions/workflows/ci.yml/badge.svg)](https://github.com/organvm-ii-poiesis/a-mavs-olevm/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-pending-lightgrey)](https://github.com/organvm-ii-poiesis/a-mavs-olevm)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/organvm-ii-poiesis/a-mavs-olevm/blob/main/LICENSE)
+[![Organ II](https://img.shields.io/badge/Organ-II%20Poiesis-EC4899)](https://github.com/organvm-ii-poiesis)
+[![Status](https://img.shields.io/badge/status-active-brightgreen)](https://github.com/organvm-ii-poiesis/a-mavs-olevm)
+[![JavaScript](https://img.shields.io/badge/lang-JavaScript-informational)](https://github.com/organvm-ii-poiesis/a-mavs-olevm)
+
+
 **The Pantheon --- A Living Temple of Art, Sound, and Words**
 
 > *"The temple breathes."*
