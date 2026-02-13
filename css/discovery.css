@@ -433,7 +433,6 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  display: flex;
   align-items: flex-start;
   justify-content: center;
   padding-top: 10vh;
@@ -442,8 +441,9 @@
   pointer-events: none; /* Prevent intercepting clicks when hidden */
 }
 
-/* Enable pointer events when modal is shown (display: block from Tachyons .db) */
+/* Enable flex layout + pointer events when modal is shown */
 .search-modal.db {
+  display: flex;
   pointer-events: auto;
 }
 

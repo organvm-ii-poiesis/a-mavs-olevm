@@ -458,10 +458,14 @@ document.addEventListener('keydown', event => {
   const isMetaOrCtrl = event.metaKey || event.ctrlKey;
   if (isMetaOrCtrl && event.key === 'k') {
     event.preventDefault();
-    // Open search modal via DiscoveryController
+    // Open search modal via DiscoveryController (lazy-init if needed)
     if (typeof DiscoveryController !== 'undefined') {
       const controller = DiscoveryController.getInstance();
-      if (controller && controller.openSearchModal) {
+      if (!controller.isInitialized) {
+        controller.initialize().then(() => {
+          controller.openSearchModal();
+        });
+      } else {
         controller.openSearchModal();
       }
     }
@@ -591,6 +595,22 @@ function announcePageTransition(pageId) {
     '#diary': 'Diary gallery',
     '#blog': 'Blog section',
     '#ogod3d': 'OGOD 3D immersive experience',
+    '#ogod-viewer': 'OGOD Animation Viewer',
+    '#east-wing': 'East Wing - Scholarship',
+    '#west-wing': 'West Wing - Discourse',
+    '#south-wing': 'South Wing - Performance',
+    '#north-wing': 'North Wing - Process',
+    '#akademia': 'Akademia - Scholarship',
+    '#bibliotheke': 'Bibliotheke - Library',
+    '#pinakotheke': 'Pinakotheke - Art Gallery',
+    '#agora': 'Agora - Political Commentary',
+    '#symposion': 'Symposion - Dialogues',
+    '#oikos': 'Oikos - Personal Reflections',
+    '#odeion': 'Odeion - Music Hall',
+    '#theatron': 'Theatron - Theater',
+    '#ergasterion': 'Ergasterion - Workshop',
+    '#khronos': 'Khronos - Timeline',
+    '#discovery': 'Discovery - Search and Explore',
   };
 
   const pageName = pageNames[pageId] || `${pageId.replace('#', '')} page`;
