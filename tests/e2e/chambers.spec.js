@@ -87,6 +87,16 @@ async function navigateToPage(page, pageHash, timeout = 10000) {
       'blog',
       'discovery',
       'ogod3d',
+      'akademia',
+      'bibliotheke',
+      'pinakotheke',
+      'agora',
+      'symposion',
+      'oikos',
+      'odeion',
+      'theatron',
+      'ergasterion',
+      'khronos',
     ];
 
     // Hide all pages
@@ -368,7 +378,157 @@ test.describe('Wing Content Visibility', () => {
   });
 });
 
-// TODO: Add tests for individual chamber navigation once chamber HTML sections are implemented
-// The chamber pages (bibliotheke, akademia, pinakotheke, agora, symposion, oikos, odeion,
-// theatron, ergasterion, khronos) are defined in pageData.js but their HTML sections
-// don't exist in index.html yet.
+test.describe('Chamber Sections Exist', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+    await page.waitForLoadState('domcontentloaded');
+    await waitForJQueryReady(page);
+  });
+
+  const chambers = [
+    { id: 'akademia', wing: 'east-wing', label: 'Akademia' },
+    { id: 'bibliotheke', wing: 'east-wing', label: 'Bibliotheke' },
+    { id: 'pinakotheke', wing: 'east-wing', label: 'Pinakotheke' },
+    { id: 'agora', wing: 'west-wing', label: 'Agora' },
+    { id: 'symposion', wing: 'west-wing', label: 'Symposion' },
+    { id: 'oikos', wing: 'west-wing', label: 'Oikos' },
+    { id: 'odeion', wing: 'south-wing', label: 'Odeion' },
+    { id: 'theatron', wing: 'south-wing', label: 'Theatron' },
+    { id: 'ergasterion', wing: 'north-wing', label: 'Ergasterion' },
+    { id: 'khronos', wing: 'north-wing', label: 'Khronos' },
+  ];
+
+  for (const chamber of chambers) {
+    test(`${chamber.label} section exists and is hidden by default`, async ({
+      page,
+    }) => {
+      const section = page.locator(`#${chamber.id}`);
+      await expect(section).toHaveCount(1);
+      await expect(section).not.toBeVisible();
+
+      // Verify aria-label exists
+      const ariaLabel = await section.getAttribute('aria-label');
+      expect(ariaLabel).toBeDefined();
+      expect(ariaLabel).toContain(chamber.label);
+    });
+  }
+});
+
+test.describe('Chamber Navigation from Wings', () => {
+  const chamberNavTests = [
+    { chamber: 'akademia', wing: 'east-wing', label: 'Akademia' },
+    { chamber: 'bibliotheke', wing: 'east-wing', label: 'Bibliotheke' },
+    { chamber: 'pinakotheke', wing: 'east-wing', label: 'Pinakotheke' },
+    { chamber: 'agora', wing: 'west-wing', label: 'Agora' },
+    { chamber: 'symposion', wing: 'west-wing', label: 'Symposion' },
+    { chamber: 'oikos', wing: 'west-wing', label: 'Oikos' },
+    { chamber: 'odeion', wing: 'south-wing', label: 'Odeion' },
+    { chamber: 'theatron', wing: 'south-wing', label: 'Theatron' },
+    { chamber: 'ergasterion', wing: 'north-wing', label: 'Ergasterion' },
+    { chamber: 'khronos', wing: 'north-wing', label: 'Khronos' },
+  ];
+
+  for (const { chamber, wing, label } of chamberNavTests) {
+    test(`navigate from ${wing} to ${label}`, async ({ page }) => {
+      await page.goto('/');
+      await waitForJQueryReady(page);
+      await ensureSearchModalClosed(page);
+
+      // Navigate to the parent wing
+      await navigateToPage(page, `#${wing}`);
+      await expect(page.locator(`#${wing}`)).toBeVisible({ timeout: 5000 });
+
+      // Verify the chamber link exists in the wing
+      const chamberLink = page.locator(`#${wing} a[href="#${chamber}"]`);
+      await expect(chamberLink).toBeVisible();
+
+      // Navigate to chamber
+      await navigateToPage(page, `#${chamber}`);
+      const chamberSection = page.locator(`#${chamber}`);
+      await expect(chamberSection).toBeVisible({ timeout: 5000 });
+      expect(page.url()).toContain(`#${chamber}`);
+    });
+  }
+});
+
+test.describe('Chamber Back Navigation', () => {
+  const backNavTests = [
+    { chamber: 'akademia', wing: 'east-wing' },
+    { chamber: 'agora', wing: 'west-wing' },
+    { chamber: 'odeion', wing: 'south-wing' },
+    { chamber: 'ergasterion', wing: 'north-wing' },
+  ];
+
+  for (const { chamber, wing } of backNavTests) {
+    test(`back button from ${chamber} points to ${wing}`, async ({ page }) => {
+      await page.goto('/');
+      await waitForJQueryReady(page);
+      await navigateToPage(page, `#${chamber}`);
+      await ensureSearchModalClosed(page);
+
+      // Verify back link points to parent wing
+      const backLink = page.locator(`#${chamber} a[href="#${wing}"]`);
+      await expect(backLink).toBeVisible({ timeout: 5000 });
+
+      // Navigate back
+      await navigateToPage(page, `#${wing}`);
+      const wingSection = page.locator(`#${wing}`);
+      await expect(wingSection).toBeVisible({ timeout: 5000 });
+    });
+  }
+});
+
+test.describe('Chamber Content Containers', () => {
+  test('Odeion has audio player container', async ({ page }) => {
+    await page.goto('/');
+    await waitForJQueryReady(page);
+    await navigateToPage(page, '#odeion');
+
+    const playerContainer = page.locator('#odeion-player-container');
+    await expect(playerContainer).toBeVisible();
+
+    const waveform = page.locator('#odeion-waveform');
+    await expect(waveform).toBeVisible();
+  });
+
+  test('Theatron has video player container', async ({ page }) => {
+    await page.goto('/');
+    await waitForJQueryReady(page);
+    await navigateToPage(page, '#theatron');
+
+    const videoContainer = page.locator('#theatron-video-container');
+    await expect(videoContainer).toBeVisible();
+  });
+
+  test('Pinakotheke has gallery with morph-image class', async ({ page }) => {
+    await page.goto('/');
+    await waitForJQueryReady(page);
+    await navigateToPage(page, '#pinakotheke');
+
+    const morphImages = page.locator('#pinakotheke .morph-image');
+    const count = await morphImages.count();
+    expect(count).toBeGreaterThan(0);
+  });
+
+  test('Each chamber has section navigation buttons', async ({ page }) => {
+    await page.goto('/');
+    await waitForJQueryReady(page);
+
+    const chambersWithSections = [
+      'akademia',
+      'bibliotheke',
+      'agora',
+      'odeion',
+      'theatron',
+      'ergasterion',
+      'khronos',
+    ];
+
+    for (const chamber of chambersWithSections) {
+      await navigateToPage(page, `#${chamber}`);
+      const sectionBtns = page.locator(`#${chamber} .section-btn`);
+      const count = await sectionBtns.count();
+      expect(count).toBeGreaterThan(0);
+    }
+  });
+});

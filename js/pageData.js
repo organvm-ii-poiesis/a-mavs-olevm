@@ -41,6 +41,7 @@ const _pID = {
   stills: '#stills',
   info: '#info',
   ogod3d: '#ogod3d',
+  ogodViewer: '#ogod-viewer',
   eastWing: '#east-wing',
   westWing: '#west-wing',
   southWing: '#south-wing',
@@ -53,6 +54,7 @@ const _pID = {
   odeion: '#odeion',
   theatron: '#theatron',
   ergasterion: '#ergasterion',
+  akademia: '#akademia',
   khronos: '#khronos',
   discovery: '#discovery',
 };
@@ -396,6 +398,290 @@ pages.ogod3d = new Page({
 });
 
 /**
+ * OGOD Animation Viewer page configuration
+ * Tier 4 - 2D animation viewer with mode switching
+ */
+pages.ogodViewer = new Page({
+  id: _pID.ogodViewer,
+  tier: 4,
+  upLinks: [_pID.vision],
+  initialize() {
+    const container = document.getElementById('ogod-viewer-container');
+    if (!container) {
+      console.warn('OGOD Viewer: Container not found');
+      return;
+    }
+
+    // Track state
+    window.ogodViewerState = window.ogodViewerState || {
+      currentTrack: 1,
+      currentMode: 'enhanced',
+      engine: null,
+      audioAdapter: null,
+    };
+
+    const state = window.ogodViewerState;
+
+    // Check for deep link query param (?ogod=N)
+    const params = new URLSearchParams(window.location.search);
+    const ogodParam = params.get('ogod');
+    if (ogodParam) {
+      const trackNum = parseInt(ogodParam);
+      if (trackNum >= 1 && trackNum <= 29) {
+        state.currentTrack = trackNum;
+      }
+    }
+
+    const romanNumerals = [
+      '',
+      'I',
+      'II',
+      'III',
+      'IV',
+      'V',
+      'VI',
+      'VII',
+      'VIII',
+      'IX',
+      'X',
+      'XI',
+      'XII',
+      'XIII',
+      'XIV',
+      'XV',
+      'XVI',
+      'XVII',
+      'XVIII',
+      'XIX',
+      'XX',
+      'XXI',
+      'XXII',
+      'XXIII',
+      'XXIV',
+      'XXV',
+      'XXVI',
+      'XXVII',
+      'XXVIII',
+      'XXIX',
+    ];
+
+    /** Update track info display */
+    const updateTrackInfo = trackNum => {
+      const tracks = ETCETER4_CONFIG.ogodTracks;
+      const track = tracks[trackNum];
+      const infoEl = document.getElementById('ogod-viewer-track-info');
+      if (infoEl && track) {
+        infoEl.textContent = `Track ${romanNumerals[trackNum]} \u2014 ${track.game}`;
+      }
+    };
+
+    /** Load a track with the current mode */
+    const loadTrack = async trackNum => {
+      // Dispose previous engine
+      if (state.engine) {
+        state.engine.dispose();
+        state.engine = null;
+      }
+
+      state.currentTrack = trackNum;
+      container.innerHTML = '';
+
+      // Update track buttons
+      document.querySelectorAll('.ogod-viewer-track-btn').forEach(btn => {
+        btn.classList.toggle(
+          'active',
+          parseInt(btn.dataset.track) === trackNum
+        );
+      });
+
+      updateTrackInfo(trackNum);
+
+      // If 3D mode, switch to ogod3d page
+      if (state.currentMode === '3d') {
+        if (window.ogod3dState) {
+          window.ogod3dState.currentTrack = trackNum;
+        }
+        showNewSection(_pID.ogod3d);
+        return;
+      }
+
+      try {
+        // Create audio adapter (standalone, no Tone.js needed)
+        if (!state.audioAdapter) {
+          state.audioAdapter = new OGODAudioAdapter({});
+        }
+
+        state.engine = new OGODAnimationEngine({
+          container,
+          mode: state.currentMode,
+          trackNumber: trackNum,
+          audioAdapter: state.audioAdapter,
+        });
+
+        const tracks = ETCETER4_CONFIG.ogodTracks;
+        const trackConfig = tracks[trackNum];
+        if (
+          trackConfig &&
+          trackConfig.palette &&
+          state.engine.renderer &&
+          state.engine.renderer.setPalette
+        ) {
+          state.engine.renderer.setPalette(trackConfig.palette);
+        }
+
+        await state.engine.initialize();
+        state.engine.start();
+      } catch (error) {
+        console.error('OGOD Viewer: Failed to load track:', error);
+      }
+    };
+
+    /** Switch rendering mode */
+    const setMode = mode => {
+      if (mode === state.currentMode) {
+        return;
+      }
+
+      state.currentMode = mode;
+
+      // Update mode buttons
+      document.querySelectorAll('.ogod-viewer-mode-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+      });
+
+      if (mode === '3d') {
+        if (window.ogod3dState) {
+          window.ogod3dState.currentTrack = state.currentTrack;
+        }
+        showNewSection(_pID.ogod3d);
+        return;
+      }
+
+      if (state.engine) {
+        state.engine.setMode(mode);
+      } else {
+        loadTrack(state.currentTrack);
+      }
+    };
+
+    // Build track selector
+    const trackSelector = document.getElementById('ogod-viewer-track-selector');
+    if (trackSelector && !trackSelector.dataset.initialized) {
+      trackSelector.dataset.initialized = 'true';
+      const tracks = ETCETER4_CONFIG.ogodTracks;
+
+      Object.keys(tracks).forEach(num => {
+        const btn = document.createElement('button');
+        btn.className = `ogod3d-track-btn ogod-viewer-track-btn${parseInt(num) === state.currentTrack ? ' active' : ''}`;
+        btn.dataset.track = num;
+        btn.textContent = romanNumerals[num];
+        btn.title = tracks[num].game;
+        btn.onclick = () => loadTrack(parseInt(num));
+        trackSelector.appendChild(btn);
+      });
+    }
+
+    // Mode selector
+    const modeSelector = document.getElementById('ogod-viewer-mode-selector');
+    if (modeSelector && !modeSelector.dataset.initialized) {
+      modeSelector.dataset.initialized = 'true';
+      modeSelector.querySelectorAll('.ogod-viewer-mode-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === state.currentMode);
+        btn.onclick = () => setMode(btn.dataset.mode);
+      });
+    }
+
+    // Back button
+    const backBtn = document.getElementById('ogod-viewer-back-btn');
+    if (backBtn && !backBtn.dataset.initialized) {
+      backBtn.dataset.initialized = 'true';
+      backBtn.onclick = e => {
+        e.preventDefault();
+        if (state.engine) {
+          state.engine.dispose();
+          state.engine = null;
+        }
+        showNewSection(_pID.vision);
+      };
+    }
+
+    // Pause button
+    const pauseBtn = document.getElementById('ogod-viewer-pause-btn');
+    if (pauseBtn && !pauseBtn.dataset.initialized) {
+      pauseBtn.dataset.initialized = 'true';
+      pauseBtn.onclick = () => {
+        if (state.engine) {
+          state.engine.togglePause();
+          pauseBtn.textContent = state.engine.isPaused ? 'Play' : 'Pause';
+        }
+      };
+    }
+
+    // Custom image file input
+    const fileInput = document.getElementById('ogod-viewer-file-input');
+    if (fileInput && !fileInput.dataset.initialized) {
+      fileInput.dataset.initialized = 'true';
+      fileInput.onchange = async e => {
+        const file = e.target.files[0];
+        if (!file) {
+          return;
+        }
+        const url = URL.createObjectURL(file);
+        if (state.engine) {
+          await state.engine.setCustomImage(url);
+        }
+      };
+    }
+
+    // Keyboard controls
+    const keyHandler = e => {
+      if (
+        document.activeElement &&
+        document.activeElement.tagName === 'INPUT'
+      ) {
+        return;
+      }
+      switch (e.key) {
+        case ' ':
+          e.preventDefault();
+          if (state.engine) {
+            state.engine.togglePause();
+            if (pauseBtn) {
+              pauseBtn.textContent = state.engine.isPaused ? 'Play' : 'Pause';
+            }
+          }
+          break;
+        case '1':
+          setMode('faithful');
+          break;
+        case '2':
+          setMode('enhanced');
+          break;
+        case '3':
+          setMode('generative');
+          break;
+        case 'ArrowLeft':
+          if (state.currentTrack > 1) {
+            loadTrack(state.currentTrack - 1);
+          }
+          break;
+        case 'ArrowRight':
+          if (state.currentTrack < 29) {
+            loadTrack(state.currentTrack + 1);
+          }
+          break;
+      }
+    };
+    document.addEventListener('keydown', keyHandler);
+    // Store for cleanup
+    window._ogodViewerKeyHandler = keyHandler;
+
+    // Load initial track
+    loadTrack(state.currentTrack);
+  },
+});
+
+/**
  * Wing page configurations
  * Tier 3 - Navigation hubs for chamber groupings
  */
@@ -403,14 +689,14 @@ pages.eastWing = new Page({
   id: _pID.eastWing,
   tier: 3,
   upLinks: [_pID.menu],
-  downLinks: [_pID.bibliotheke, _pID.oikos, _pID.pinakotheke],
+  downLinks: [_pID.akademia, _pID.bibliotheke, _pID.pinakotheke],
 });
 
 pages.westWing = new Page({
   id: _pID.westWing,
   tier: 3,
   upLinks: [_pID.menu],
-  downLinks: [_pID.agora, _pID.symposion],
+  downLinks: [_pID.agora, _pID.symposion, _pID.oikos],
 });
 
 pages.southWing = new Page({
@@ -428,24 +714,54 @@ pages.northWing = new Page({
 });
 
 /**
+ * Initialize section navigation filtering for a chamber
+ * Binds click handlers to .section-btn elements that show/hide .chamber-card elements
+ * @param {string} sectionId - The chamber's section ID selector (e.g., '#akademia')
+ */
+function initChamberSectionNav(sectionId) {
+  const el = $(sectionId);
+  el.find('.section-btn').on('click', function () {
+    el.find('.section-btn').removeClass('active');
+    $(this).addClass('active');
+    const section = $(this).data('section');
+    el.find('.chamber-card').each(function () {
+      const show = section === 'all' || $(this).data('section') === section;
+      $(this).toggleClass('dn', !show);
+    });
+  });
+}
+
+/**
  * Chamber page configurations
  * Tier 4 - Individual chambers within each wing
  */
+pages.akademia = new Page({
+  id: _pID.akademia,
+  tier: 4,
+  upLinks: [_pID.eastWing],
+  initialize() {
+    replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+  },
+});
+
 pages.bibliotheke = new Page({
   id: _pID.bibliotheke,
   tier: 4,
   upLinks: [_pID.eastWing],
   initialize() {
     replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
   },
 });
 
 pages.oikos = new Page({
   id: _pID.oikos,
   tier: 4,
-  upLinks: [_pID.eastWing],
+  upLinks: [_pID.westWing],
   initialize() {
     replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
   },
 });
 
@@ -455,6 +771,7 @@ pages.pinakotheke = new Page({
   upLinks: [_pID.eastWing],
   initialize() {
     replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
   },
 });
 
@@ -464,6 +781,7 @@ pages.agora = new Page({
   upLinks: [_pID.westWing],
   initialize() {
     replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
   },
 });
 
@@ -473,6 +791,7 @@ pages.symposion = new Page({
   upLinks: [_pID.westWing],
   initialize() {
     replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
   },
 });
 
@@ -482,6 +801,31 @@ pages.odeion = new Page({
   upLinks: [_pID.southWing],
   initialize() {
     replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Initialize enhanced audio player if available
+    if (typeof EnhancedAudioPlayer !== 'undefined') {
+      try {
+        const playerContainer = document.getElementById(
+          'odeion-player-container'
+        );
+        const waveformCanvas = document.getElementById('odeion-waveform');
+        if (playerContainer && waveformCanvas) {
+          window.odeionPlayer = new EnhancedAudioPlayer({
+            container: playerContainer,
+            waveformCanvas,
+          });
+          if (typeof WaveformVisualizer !== 'undefined') {
+            window.odeionWaveform = new WaveformVisualizer({
+              canvas: waveformCanvas,
+              primaryColor: '#FFD700',
+              secondaryColor: '#000000',
+            });
+          }
+        }
+      } catch (audioError) {
+        console.warn('Odeion audio player init:', audioError.message);
+      }
+    }
   },
 });
 
@@ -491,6 +835,22 @@ pages.theatron = new Page({
   upLinks: [_pID.southWing],
   initialize() {
     replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
+    // Initialize enhanced video player if available
+    if (typeof EnhancedVideoPlayer !== 'undefined') {
+      try {
+        const videoContainer = document.getElementById(
+          'theatron-video-container'
+        );
+        if (videoContainer) {
+          window.theatronPlayer = new EnhancedVideoPlayer({
+            container: videoContainer,
+          });
+        }
+      } catch (videoError) {
+        console.warn('Theatron video player init:', videoError.message);
+      }
+    }
   },
 });
 
@@ -500,6 +860,7 @@ pages.ergasterion = new Page({
   upLinks: [_pID.northWing],
   initialize() {
     replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
   },
 });
 
@@ -509,6 +870,7 @@ pages.khronos = new Page({
   upLinks: [_pID.northWing],
   initialize() {
     replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
   },
 });
 
@@ -536,10 +898,12 @@ pages = [
   pages.diary,
   pages.info,
   pages.ogod3d,
+  pages.ogodViewer,
   pages.eastWing,
   pages.westWing,
   pages.southWing,
   pages.northWing,
+  pages.akademia,
   pages.bibliotheke,
   pages.oikos,
   pages.pinakotheke,
@@ -559,7 +923,7 @@ pages = [
     id: _pID.vision,
     tier: 3,
     upLinks: [_pID.menu],
-    downLinks: [_pID.ogod3d],
+    downLinks: [_pID.ogod3d, _pID.ogodViewer],
   }),
   new Page({
     id: _pID.words,

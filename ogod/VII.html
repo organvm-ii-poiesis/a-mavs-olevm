@@ -1,95 +1,144 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-
-      <!-- Basic Page Needs
-      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      
-      <!-- Descriptive Metas
-      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-      <title>VII || OGOD || ET CETER4</title>
-      <meta name="description" content="ET CETER4 is a composer of sounds/words/images || explore the depths of our web labyrinth">
-      <meta name="author" content="ET CETER4">
-
-
-      <!-- Fonts(?)
-      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
-
-      <!-- CSS
-      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-      <link rel="stylesheet" href="../css/normalize.css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-      <link rel="stylesheet" href="../css/styles.css">
-      
-      <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-      <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-      <!-- Favicon
-      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-      <link rel="icon" type="image/png" href="../images/favicon.ico">
-
-
-      <style>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VII || OGOD || ET CETER4</title>
+    <meta
+      name="description"
+      content="ET CETER4 is a composer of sounds/words/images || explore the depths of our web labyrinth"
+    />
+    <meta name="author" content="ET CETER4" />
+    <link rel="icon" type="image/png" href="../images/favicon.ico" />
+    <link rel="stylesheet" href="../css/normalize.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <noscript><meta http-equiv="refresh" content="0;url=/?ogod=7#ogod-viewer" /></noscript>
+    <style>
       html {
-      	overflow-y:hidden;
-      	height: 100%;
+        overflow: hidden;
+        height: 100%;
       }
       body {
-      	position: static;
-      	overflow-y:auto;
-      	margin: 0;
-      	padding: 0;
-      	border: 0;
-      	height: 100%;
-      	background-color: #FFFFFF;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #000;
+        color: #fff;
+        font-family: monospace;
       }
       #bg {
-      	position:fixed; top:0; left:0; z-index: -200;
-      }
-      #bgf {
-      	position:fixed; top:0; left:0; width: 100%; height: 100%; z-index: 5;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -200;
       }
       #bgi {
-      	visibility: hidden;
+        visibility: hidden;
       }
-
-
-      </style>
-
-      <script>
-      function r() {}
-      </script>
+      .ogod-controls {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+      }
+      .ogod-controls audio {
+        flex: 1;
+        max-width: 300px;
+        height: 32px;
+      }
+      .ogod-nav {
+        color: #fff;
+        text-decoration: none;
+        font-size: 11px;
+        opacity: 0.6;
+        transition: opacity 0.3s;
+      }
+      .ogod-nav:hover {
+        opacity: 1;
+      }
+      .ogod-mode-select {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 4px 8px;
+        font-size: 11px;
+        font-family: monospace;
+        cursor: pointer;
+        border-radius: 2px;
+      }
+      .ogod-mode-select:focus {
+        outline: 1px solid rgba(255, 255, 255, 0.6);
+      }
+      .ogod-track-label {
+        font-size: 11px;
+        opacity: 0.4;
+        margin-left: auto;
+      }
+      .ogod-spa-link {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 100;
+        color: #fff;
+        font-size: 11px;
+        text-decoration: none;
+        opacity: 0.4;
+        transition: opacity 0.3s;
+      }
+      .ogod-spa-link:hover {
+        opacity: 1;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        body {
+          background: #111 url('bgimages/tumblr_na5ei3a6cE1rkla8lo1_r1_1280.png') center/contain no-repeat;
+        }
+        .ogod-controls {
+          background: rgba(0, 0, 0, 0.7);
+        }
+      }
+    </style>
   </head>
+  <body>
+    <!-- Source image for animation engine -->
+    <div id="bg"><img src="bgimages/tumblr_na5ei3a6cE1rkla8lo1_r1_1280.png" id="bgi" /></div>
 
+    <!-- SPA link -->
+    <a href="/?ogod=7#ogod-viewer" class="ogod-spa-link">Open in ETCETER4 &rarr;</a>
 
-<body>
+    <!-- Controls bar -->
+    <div class="ogod-controls">
+      <a href="VI.html" class="ogod-nav">&larr; VI</a>
+      <audio controls loop>
+        <source src="ogodtracks/07 VII.mp3" type="audio/mpeg" />
+      </audio>
+      <a href="VIII.html" class="ogod-nav">VIII &rarr;</a>
+      <select class="ogod-mode-select" aria-label="Render mode">
+        <option value="faithful">Faithful</option>
+        <option value="enhanced">Enhanced</option>
+        <option value="generative">Generative</option>
+        <option value="tkol" selected>TKOL Glitch</option>
+      </select>
+      <span class="ogod-track-label">VII</span>
+    </div>
 
-	<div id="bg" style="left: -24321px; top: -2835px;"><img src="bgimages/tumblr_na5ei3a6cE1rkla8lo1_r1_1280.png" id="bgi" style="visibility: visible; width: 26880px; height: 8505px;"></div>
+    <!-- Three.js (for enhanced/generative modes) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js" crossorigin="anonymous"></script>
 
-	<audio controls autoplay loop style="display:none;">
-  		<source src="ogodtracks/07 VII.mp3" type="audio/mpeg">
-  		</audio>
-
-
-  	</body>
-
- <!-- JS Requests
- –––––––––––––––––––––––––––––––––––––––––––––––––– -->
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
- <script src="https://cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
- <script src="https://cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/ogod.js"></script>
-  <script src="../js/analytics.js"></script>
-
- </html>
+    <!-- OGOD Animation Engine -->
+    <script src="../js/ogod/OGODFrameSequencer.js"></script>
+    <script src="../js/ogod/OGODImageLoader.js"></script>
+    <script src="../js/ogod/renderers/OGODCanvasRenderer.js"></script>
+    <script src="../js/ogod/renderers/OGODWebGLRenderer.js"></script>
+    <script src="../js/ogod/renderers/OGODGenerativeRenderer.js"></script>
+    <script src="../js/ogod/renderers/OGODTKOLRenderer.js"></script>
+    <script src="../js/ogod/OGODAudioAdapter.js"></script>
+    <script src="../js/ogod/OGODAnimationEngine.js"></script>
+    <script src="../js/ogod.js"></script>
+  </body>
+</html>
