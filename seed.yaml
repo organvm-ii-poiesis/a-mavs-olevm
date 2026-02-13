@@ -1,7 +1,6 @@
 # seed.yaml — Automation Contract for organvm-ii-poiesis/a-mavs-olevm
 # Schema: seed/v1.0
-# Generated: 2026-02-12 (AUTONOMY Sprint)
-# Category: standard
+# Updated: AUTONOMY Sprint Phase E (orphan resolution)
 
 schema_version: "1.0"
 organ: II
@@ -13,15 +12,25 @@ metadata:
   implementation_status: PRODUCTION
   tier: flagship
   promotion_status: PUBLIC_PROCESS
-  last_validated: "2026-02-11"
-  generated: "2026-02-12"
-  sprint: "AUTONOMY"
+  last_validated: 2026-02-11
+  generated: 2026-02-12
+  sprint: AUTONOMY
 
 agents:
   - name: ci
     trigger: on_push
     workflow: .github/workflows/ci-typescript.yml
     description: "Continuous integration pipeline"
+
+produces:
+  - type: creative-artifact
+    description: "Generative art, interactive system, or experiential work"
+    consumers: [ORGAN-IV]
+
+consumes:
+  - type: theory-artifact
+    source: ORGAN-I
+    description: Theoretical frameworks inform art creation
 
 subscriptions:
   - event: governance.updated
