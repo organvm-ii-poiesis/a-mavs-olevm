@@ -1,0 +1,84 @@
+/**
+ * ergasterion.css - Ergasterion chamber exhibit portal styles
+ */
+
+/* ── Exhibit Gallery Grid ──────────────────────────────────────────── */
+
+.exhibit-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.exhibit-card {
+  width: 280px;
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  border-radius: 0.5rem;
+  background: #0a0a0a;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.exhibit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 255, 0, 0.08);
+}
+
+.exhibit-card-icon {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exhibit-card-cta {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.exhibit-card:hover .exhibit-card-cta {
+  opacity: 1;
+}
+
+/* ── Iframe Container ──────────────────────────────────────────────── */
+
+.exhibit-iframe-container {
+  position: relative;
+}
+
+.exhibit-iframe-header {
+  border-bottom: 1px solid rgba(0, 255, 0, 0.15);
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.exhibit-iframe-wrapper {
+  background: #000;
+}
+
+#exhibit-loading {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+#exhibit-iframe {
+  display: block;
+  width: 100%;
+  border: none;
+  background: #000;
+}
+
+/* ── Reduced Motion ────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .exhibit-card {
+    transition: none;
+  }
+  .exhibit-card:hover {
+    transform: none;
+  }
+}

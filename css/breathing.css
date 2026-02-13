@@ -1,0 +1,148 @@
+/**
+ * breathing.css - Living Pantheon animation layer
+ *
+ * CSS keyframe animations and custom properties for the breathing temple system.
+ * AnimatedContentSystem.js drives these via requestAnimationFrame, but these
+ * keyframes provide the fallback/supplementary animation layer for elements
+ * that use the CSS classes directly.
+ */
+
+/* ── Chamber custom properties ─────────────────────────────────────── */
+
+:root {
+  --chamber-color: #ffffff;
+  --chamber-color-rgb: 255, 255, 255;
+  --breathe-intensity: 1;
+}
+
+/* Chamber-specific color mappings */
+#akademia {
+  --chamber-color: #00ffff;
+  --chamber-color-rgb: 0, 255, 255;
+}
+#bibliotheke {
+  --chamber-color: #8b4513;
+  --chamber-color-rgb: 139, 69, 19;
+}
+#pinakotheke {
+  --chamber-color: #ff00ff;
+  --chamber-color-rgb: 255, 0, 255;
+}
+#agora {
+  --chamber-color: #dc143c;
+  --chamber-color-rgb: 220, 20, 60;
+}
+#symposion {
+  --chamber-color: #722f37;
+  --chamber-color-rgb: 114, 47, 55;
+}
+#oikos {
+  --chamber-color: #ff8c00;
+  --chamber-color-rgb: 255, 140, 0;
+}
+#odeion {
+  --chamber-color: #ffd700;
+  --chamber-color-rgb: 255, 215, 0;
+}
+#theatron {
+  --chamber-color: #800080;
+  --chamber-color-rgb: 128, 0, 128;
+}
+#ergasterion {
+  --chamber-color: #00ff00;
+  --chamber-color-rgb: 0, 255, 0;
+}
+#khronos {
+  --chamber-color: #4169e1;
+  --chamber-color-rgb: 65, 105, 225;
+}
+
+/* ── Keyframe animations ───────────────────────────────────────────── */
+
+@keyframes sectionBreathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.005);
+    opacity: 0.97;
+  }
+}
+
+@keyframes textDrift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(1.5px, 0.5px);
+  }
+  50% {
+    transform: translate(0px, 1px);
+  }
+  75% {
+    transform: translate(-1.5px, 0.5px);
+  }
+}
+
+@keyframes subtleGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 0 transparent;
+  }
+  50% {
+    text-shadow: 0 0 8px rgba(var(--chamber-color-rgb), 0.15);
+  }
+}
+
+/* ── Animation classes ─────────────────────────────────────────────── */
+
+/* Breathing: subtle scale pulse on sections and containers */
+.breathing {
+  animation: sectionBreathe 60s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Living element: inherits breathing but with slightly faster cycle */
+.living-element {
+  animation: sectionBreathe 30s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Text drift: gentle positional shift for text blocks */
+.drifting-text {
+  animation: textDrift 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Living text: drift + chamber-tinted glow */
+.living-text {
+  animation:
+    textDrift 8s ease-in-out infinite,
+    subtleGlow 12s ease-in-out infinite;
+  will-change: transform, text-shadow;
+}
+
+/* Morph image targets: prepare for MorphingImageSystem transitions */
+.morph-image {
+  transition:
+    filter 2s ease,
+    opacity 2s ease;
+}
+
+/* ── Reduced motion ────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .breathing,
+  .living-element,
+  .drifting-text,
+  .living-text,
+  .morph-image {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+}

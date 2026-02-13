@@ -59,9 +59,10 @@ class LivingPantheonCore {
    */
   constructor() {
     // Get configuration from global config or use defaults
-    this.config = typeof ETCETER4_CONFIG !== 'undefined'
-      ? ETCETER4_CONFIG.livingPantheon || {}
-      : {};
+    this.config =
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG.livingPantheon || {}
+        : {};
 
     // Core state
     this.isInitialized = false;
@@ -70,7 +71,9 @@ class LivingPantheonCore {
     this.currentChamberColor = null;
 
     // User preference from localStorage
-    const storageKey = this.config.accessibility?.storageKey || 'etceter4-living-pantheon-enabled';
+    const storageKey =
+      this.config.accessibility?.storageKey ||
+      'etceter4-living-pantheon-enabled';
     this.storageKey = storageKey;
     this.userEnabledInStorage = localStorage.getItem(storageKey) !== 'false';
 
@@ -80,6 +83,8 @@ class LivingPantheonCore {
       ambient: null,
       morphing: null,
       animation: null,
+      labyrinth: null,
+      tunnels: null,
     };
 
     // Event emitter state
@@ -111,7 +116,9 @@ class LivingPantheonCore {
 
     // Check for prefers-reduced-motion
     if (this._prefersReducedMotion()) {
-      console.info('LivingPantheonCore: Disabled due to prefers-reduced-motion');
+      console.info(
+        'LivingPantheonCore: Disabled due to prefers-reduced-motion'
+      );
       return this;
     }
 
@@ -165,6 +172,15 @@ class LivingPantheonCore {
     if (this.config.animation?.enabled) {
       this._ensureAnimatedContentSystem().start();
     }
+    if (this.config.labyrinth?.enabled) {
+      const labyrinth = this._ensureLabyrinthGenerator();
+      if (labyrinth && !labyrinth.isInitialized) {
+        labyrinth.initialize();
+      }
+    }
+    if (this.config.glitchTunnels?.enabled) {
+      this._ensureGlitchTunnelSystem()?.start();
+    }
 
     this._emitStatusChange();
 
@@ -194,6 +210,9 @@ class LivingPantheonCore {
     }
     if (this.subsystems.animation) {
       this.subsystems.animation.stop();
+    }
+    if (this.subsystems.tunnels) {
+      this.subsystems.tunnels.stop();
     }
 
     this._emitStatusChange();
@@ -249,6 +268,14 @@ class LivingPantheonCore {
       this.subsystems.animation.dispose();
       this.subsystems.animation = null;
     }
+    if (this.subsystems.labyrinth) {
+      this.subsystems.labyrinth.dispose();
+      this.subsystems.labyrinth = null;
+    }
+    if (this.subsystems.tunnels) {
+      this.subsystems.tunnels.dispose();
+      this.subsystems.tunnels = null;
+    }
 
     this.isInitialized = false;
     this.listeners.clear();
@@ -297,10 +324,24 @@ class LivingPantheonCore {
       userEnabledInStorage: this.userEnabledInStorage,
       prefersReducedMotion: this._prefersReducedMotion(),
       subsystems: {
-        glitch: this.subsystems.glitch ? this.subsystems.glitch.getStatus() : null,
-        ambient: this.subsystems.ambient ? this.subsystems.ambient.getStatus?.() : null,
-        morphing: this.subsystems.morphing ? this.subsystems.morphing.getStatus?.() : null,
-        animation: this.subsystems.animation ? this.subsystems.animation.getStatus?.() : null,
+        glitch: this.subsystems.glitch
+          ? this.subsystems.glitch.getStatus()
+          : null,
+        ambient: this.subsystems.ambient
+          ? this.subsystems.ambient.getStatus?.()
+          : null,
+        morphing: this.subsystems.morphing
+          ? this.subsystems.morphing.getStatus?.()
+          : null,
+        animation: this.subsystems.animation
+          ? this.subsystems.animation.getStatus?.()
+          : null,
+        labyrinth: this.subsystems.labyrinth
+          ? this.subsystems.labyrinth.getStatus?.()
+          : null,
+        tunnels: this.subsystems.tunnels
+          ? this.subsystems.tunnels.getStatus?.()
+          : null,
       },
       config: {
         enabled: this.config.enabled,
@@ -308,6 +349,8 @@ class LivingPantheonCore {
         ambient: !!this.config.ambient?.enabled,
         morphing: !!this.config.morphing?.enabled,
         animation: !!this.config.animation?.enabled,
+        labyrinth: !!this.config.labyrinth?.enabled,
+        glitchTunnels: !!this.config.glitchTunnels?.enabled,
       },
     };
   }
@@ -336,7 +379,9 @@ class LivingPantheonCore {
    * @returns {boolean}
    */
   _prefersReducedMotion() {
-    return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    return (
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+    );
   }
 
   /**
@@ -361,9 +406,11 @@ class LivingPantheonCore {
     }
 
     // Emit custom event on window for external listeners
-    window.dispatchEvent(new CustomEvent('living-pantheon-status-change', {
-      detail: eventDetail,
-    }));
+    window.dispatchEvent(
+      new CustomEvent('living-pantheon-status-change', {
+        detail: eventDetail,
+      })
+    );
   }
 
   /**
@@ -383,7 +430,8 @@ class LivingPantheonCore {
       return;
     }
 
-    const isCtrl = event.ctrlKey || (event.metaKey && navigator.platform.includes('Mac'));
+    const isCtrl =
+      event.ctrlKey || (event.metaKey && navigator.platform.includes('Mac'));
     const isShift = event.shiftKey;
     const isL = event.key.toLowerCase() === toggleShortcut.key.toLowerCase();
 
@@ -413,6 +461,9 @@ class LivingPantheonCore {
       if (this.subsystems.animation?.isRunning) {
         this.subsystems.animation.stop();
       }
+      if (this.subsystems.tunnels?.isRunning) {
+        this.subsystems.tunnels.stop();
+      }
     } else if (this.isRunning) {
       // Resume all subsystems
       if (this.config.glitch?.enabled) {
@@ -426,6 +477,9 @@ class LivingPantheonCore {
       }
       if (this.config.animation?.enabled) {
         this.subsystems.animation?.start?.();
+      }
+      if (this.config.glitchTunnels?.enabled) {
+        this.subsystems.tunnels?.start?.();
       }
     }
   }
@@ -493,9 +547,45 @@ class LivingPantheonCore {
         console.error('LivingPantheonCore: AnimatedContentSystem not loaded');
         return null;
       }
-      this.subsystems.animation = new AnimatedContentSystem(this.config.animation);
+      this.subsystems.animation = new AnimatedContentSystem(
+        this.config.animation
+      );
     }
     return this.subsystems.animation;
+  }
+
+  /**
+   * Ensure LabyrinthGenerator is instantiated
+   * @private
+   * @returns {LabyrinthGenerator|null}
+   */
+  _ensureLabyrinthGenerator() {
+    if (!this.subsystems.labyrinth) {
+      if (typeof LabyrinthGenerator === 'undefined') {
+        console.error('LivingPantheonCore: LabyrinthGenerator not loaded');
+        return null;
+      }
+      this.subsystems.labyrinth = new LabyrinthGenerator(this.config.labyrinth);
+    }
+    return this.subsystems.labyrinth;
+  }
+
+  /**
+   * Ensure GlitchTunnelSystem is instantiated
+   * @private
+   * @returns {GlitchTunnelSystem|null}
+   */
+  _ensureGlitchTunnelSystem() {
+    if (!this.subsystems.tunnels) {
+      if (typeof GlitchTunnelSystem === 'undefined') {
+        console.error('LivingPantheonCore: GlitchTunnelSystem not loaded');
+        return null;
+      }
+      this.subsystems.tunnels = new GlitchTunnelSystem(
+        this.config.glitchTunnels
+      );
+    }
+    return this.subsystems.tunnels;
   }
 }
 

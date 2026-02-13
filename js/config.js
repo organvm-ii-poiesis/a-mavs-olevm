@@ -618,6 +618,7 @@ const ETCETER4_CONFIG = {
       ogod: {
         id: 'ogod',
         title: 'OGOD',
+        shortTitle: 'OGOD',
         artist: 'ET CETER4',
         year: 2015,
         trackCount: 29,
@@ -628,42 +629,117 @@ const ETCETER4_CONFIG = {
         },
         hasLyrics: true,
         hasStems: true,
+        tracks: [
+          { id: 'ogod-01', title: 'I. Overture', duration: '2:45' },
+          { id: 'ogod-02', title: 'II. Descent', duration: '3:12' },
+          { id: 'ogod-03', title: 'III. Labyrinth', duration: '2:58' },
+          { id: 'ogod-04', title: 'IV. Horizon', duration: '3:30' },
+          { id: 'ogod-05', title: 'V. Cascade', duration: '2:15' },
+          { id: 'ogod-06', title: 'VI. Mirage', duration: '3:05' },
+          { id: 'ogod-07', title: 'VII. Tempest', duration: '2:48' },
+          { id: 'ogod-08', title: 'VIII. Reverie', duration: '3:22' },
+          { id: 'ogod-09', title: 'IX. Eclipse', duration: '2:35' },
+          { id: 'ogod-10', title: 'X. Zenith', duration: '3:10' },
+          { id: 'ogod-11', title: 'XI. Resonance', duration: '2:52' },
+          { id: 'ogod-12', title: 'XII. Fragment', duration: '1:55' },
+          { id: 'ogod-13', title: 'XIII. Drift', duration: '3:40' },
+          { id: 'ogod-14', title: 'XIV. Pulse', duration: '2:28' },
+          { id: 'ogod-15', title: 'XV. Fracture', duration: '3:15' },
+          { id: 'ogod-16', title: 'XVI. Convergence', duration: '2:42' },
+          { id: 'ogod-17', title: 'XVII. Static', duration: '1:48' },
+          { id: 'ogod-18', title: 'XVIII. Bloom', duration: '3:33' },
+          { id: 'ogod-19', title: 'XIX. Threshold', duration: '2:20' },
+          { id: 'ogod-20', title: 'XX. Cipher', duration: '3:08' },
+          { id: 'ogod-21', title: 'XXI. Hollow', duration: '2:55' },
+          { id: 'ogod-22', title: 'XXII. Surge', duration: '3:18' },
+          { id: 'ogod-23', title: 'XXIII. Passage', duration: '2:10' },
+          { id: 'ogod-24', title: 'XXIV. Void', duration: '3:45' },
+          { id: 'ogod-25', title: 'XXV. Refraction', duration: '2:38' },
+          { id: 'ogod-26', title: 'XXVI. Signal', duration: '3:02' },
+          { id: 'ogod-27', title: 'XXVII. Ascent', duration: '2:22' },
+          { id: 'ogod-28', title: 'XXVIII. Dissolution', duration: '3:50' },
+          { id: 'ogod-29', title: 'XXIX. Coda', duration: '4:15' },
+        ],
       },
       rmxs: {
         id: 'rmxs',
         title: 'ET CETER4 RMXS',
+        shortTitle: 'RMXS',
         artist: 'ET CETER4',
         year: 2020,
-        trackCount: 0, // TBD
+        trackCount: 6,
         coverArt: {
           large: 'audio/albums/rmxs/cover-1200.jpg',
           medium: 'audio/albums/rmxs/cover-600.jpg',
           small: 'audio/albums/rmxs/cover-300.jpg',
         },
+        tracks: [
+          {
+            id: 'rmx-01',
+            title: 'Opening (Recontextualized)',
+            duration: '4:30',
+          },
+          {
+            id: 'rmx-02',
+            title: 'Tangent I (Deconstructed)',
+            duration: '5:15',
+          },
+          {
+            id: 'rmx-03',
+            title: 'Parallel Lines (Inverted)',
+            duration: '4:45',
+          },
+          { id: 'rmx-04', title: 'Recursive (Unfolded)', duration: '5:50' },
+          { id: 'rmx-05', title: 'Convergence (Scattered)', duration: '4:20' },
+          { id: 'rmx-06', title: 'Return (Reimagined)', duration: '6:10' },
+        ],
       },
       progressionDigression: {
         id: 'progression-digression',
         title: 'The Progression of Digression',
+        shortTitle: 'P/D',
         artist: 'ET CETER4',
         year: 2012,
-        trackCount: 0, // TBD
+        trackCount: 12,
         coverArt: {
           large: 'audio/albums/progression-digression/cover-1200.jpg',
           medium: 'audio/albums/progression-digression/cover-600.jpg',
           small: 'audio/albums/progression-digression/cover-300.jpg',
         },
+        tracks: [
+          { id: 'pd-01', title: 'Opening Statement', duration: '4:12' },
+          { id: 'pd-02', title: 'Tangent I', duration: '3:45' },
+          { id: 'pd-03', title: 'Parallel Lines', duration: '5:20' },
+          { id: 'pd-04', title: 'Deviation', duration: '3:58' },
+          { id: 'pd-05', title: 'Recursive', duration: '4:30' },
+          { id: 'pd-06', title: 'Tangent II', duration: '3:15' },
+          { id: 'pd-07', title: 'Convergence Point', duration: '4:48' },
+          { id: 'pd-08', title: 'Lateral Drift', duration: '3:22' },
+          { id: 'pd-09', title: 'Tangent III', duration: '3:55' },
+          { id: 'pd-10', title: 'Return Path', duration: '4:10' },
+          { id: 'pd-11', title: 'Final Digression', duration: '5:05' },
+          { id: 'pd-12', title: 'Closing Statement', duration: '6:15' },
+        ],
       },
       etc: {
         id: 'etc',
         title: 'Etc',
+        shortTitle: 'Etc',
         artist: 'ET CETER4',
         year: 2011,
-        trackCount: 0, // TBD
+        trackCount: 5,
         coverArt: {
           large: 'audio/albums/etc/cover-1200.jpg',
           medium: 'audio/albums/etc/cover-600.jpg',
           small: 'audio/albums/etc/cover-300.jpg',
         },
+        tracks: [
+          { id: 'etc-01', title: 'Et', duration: '3:30' },
+          { id: 'etc-02', title: 'Cetera', duration: '4:15' },
+          { id: 'etc-03', title: 'And So On', duration: '3:55' },
+          { id: 'etc-04', title: 'Continued', duration: '4:40' },
+          { id: 'etc-05', title: 'Ellipsis', duration: '5:20' },
+        ],
       },
     },
 
@@ -781,6 +857,23 @@ const ETCETER4_CONFIG = {
       fragmentSources: ['js/living-pantheon/data/fragments.json'],
       // Loophole trigger probability
       loopholeProbability: 0.05,
+    },
+
+    // Glitch tunnel transitions between chambers
+    glitchTunnels: {
+      enabled: true,
+      // Probability of triggering per navigation (0.1 = 10%)
+      probability: 0.1,
+      // Total effect duration in milliseconds
+      duration: 2000,
+      // Capture resolution (lower = faster)
+      captureWidth: 640,
+      captureHeight: 480,
+      // Pixel sort parameters
+      pixelSort: {
+        thresholdLow: 0.1,
+        thresholdHigh: 0.85,
+      },
     },
 
     // Accessibility settings

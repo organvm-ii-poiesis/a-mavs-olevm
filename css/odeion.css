@@ -1,0 +1,66 @@
+/**
+ * odeion.css - Odeion music hall chamber styles
+ * Gold (#FFD700) accent per chamber config
+ */
+
+/* ── Album Grid ────────────────────────────────────────────────────── */
+
+.odeion-album-grid {
+  gap: 1rem;
+}
+
+.odeion-album-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.odeion-album-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.1);
+}
+
+/* ── Track List ────────────────────────────────────────────────────── */
+
+.odeion-track-row {
+  transition: background-color 0.15s ease;
+  border-left: 2px solid transparent;
+}
+
+.odeion-track-row:hover {
+  border-left-color: #ffd700;
+}
+
+.odeion-track-row:focus-visible {
+  outline: 2px solid #ffd700;
+  outline-offset: -2px;
+}
+
+/* ── Waveform ──────────────────────────────────────────────────────── */
+
+#odeion-waveform {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.25rem;
+}
+
+/* ── Playlist Controls ─────────────────────────────────────────────── */
+
+.odeion-playlist-controls button {
+  transition: color 0.15s ease;
+  min-width: 32px;
+}
+
+.odeion-playlist-controls button:hover {
+  color: #ffd700;
+}
+
+/* ── Reduced Motion ────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .odeion-album-card {
+    transition: none;
+  }
+  .odeion-album-card:hover {
+    transform: none;
+  }
+}

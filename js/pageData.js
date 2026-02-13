@@ -113,7 +113,7 @@ pages.sound = new Page({
   tier: 3,
   upLinks: [_pID.menu],
   initialize() {
-    // add the iFrames
+    // Load Bandcamp embeds as fallback
     const _iFrames = [
       '<iframe style="border: 0; width: 300px; height: 300px;" src="https://bandcamp.com/EmbeddedPlayer/album=3780915385/size=large/bgcol=ffffff/linkcol=0687f5/minimal=true/transparent=true/"><a href="https://music.etceter4.com/album/ogod">OGOD by ET CETER4</a></iframe>',
       '<iframe style="border: 0; width: 300px; height: 300px;" src="https://bandcamp.com/EmbeddedPlayer/album=604244064/size=large/bgcol=ffffff/linkcol=333333/minimal=true/transparent=true/"><a href="https://music.etceter4.com/album/et-ceter4-rmxs">ET CETER4 RMXS by ET CETER4</a></iframe>',
@@ -124,6 +124,22 @@ pages.sound = new Page({
     $('#sound #BCContainer').each(function (index) {
       $(this).html(_iFrames[index]);
     });
+
+    // Add a link to the full Odeion player
+    const soundSection = document.querySelector(
+      '#sound .mw7, #sound .mw8, #sound .center'
+    );
+    if (soundSection && !document.getElementById('odeion-link')) {
+      const link = document.createElement('div');
+      link.id = 'odeion-link';
+      link.className = 'tc mt4 mb3';
+      link.innerHTML =
+        '<a href="#odeion" class="f5 link dib pa3 ph4 ba br3" ' +
+        'style="color: #ffd700; border-color: #ffd700" ' +
+        'onclick="showNewSection(\'#odeion\'); return false;">' +
+        'Open Full Player in ODEION &rarr;</a>';
+      soundSection.appendChild(link);
+    }
   },
 });
 
@@ -802,29 +818,45 @@ pages.odeion = new Page({
   initialize() {
     replacePlaceholders(this.id);
     initChamberSectionNav(this.id);
-    // Initialize enhanced audio player if available
-    if (typeof EnhancedAudioPlayer !== 'undefined') {
-      try {
-        const playerContainer = document.getElementById(
-          'odeion-player-container'
-        );
-        const waveformCanvas = document.getElementById('odeion-waveform');
-        if (playerContainer && waveformCanvas) {
-          window.odeionPlayer = new EnhancedAudioPlayer({
-            container: playerContainer,
-            waveformCanvas,
+    // Initialize enhanced audio player and playlist manager
+    try {
+      const playerContainer = document.getElementById(
+        'odeion-player-container'
+      );
+      const waveformCanvas = document.getElementById('odeion-waveform');
+
+      if (
+        typeof EnhancedAudioPlayer !== 'undefined' &&
+        playerContainer &&
+        waveformCanvas
+      ) {
+        window.odeionPlayer = new EnhancedAudioPlayer({
+          container: playerContainer,
+          waveformCanvas,
+        });
+        if (typeof WaveformVisualizer !== 'undefined') {
+          window.odeionWaveform = new WaveformVisualizer({
+            canvas: waveformCanvas,
+            primaryColor: '#FFD700',
+            secondaryColor: '#000000',
           });
-          if (typeof WaveformVisualizer !== 'undefined') {
-            window.odeionWaveform = new WaveformVisualizer({
-              canvas: waveformCanvas,
-              primaryColor: '#FFD700',
-              secondaryColor: '#000000',
-            });
-          }
         }
-      } catch (audioError) {
-        console.warn('Odeion audio player init:', audioError.message);
       }
+
+      // Initialize PlaylistManager for album browsing
+      if (typeof PlaylistManager !== 'undefined') {
+        const odeionContent = document.querySelector('#odeion .mw9');
+        if (odeionContent) {
+          window.odeionPlaylist = new PlaylistManager({
+            container: odeionContent,
+            player: window.odeionPlayer,
+            waveform: window.odeionWaveform,
+          });
+          window.odeionPlaylist.initialize();
+        }
+      }
+    } catch (audioError) {
+      console.warn('Odeion audio init:', audioError.message);
     }
   },
 });
@@ -860,7 +892,16 @@ pages.ergasterion = new Page({
   upLinks: [_pID.northWing],
   initialize() {
     replacePlaceholders(this.id);
-    initChamberSectionNav(this.id);
+    // Initialize Exhibit Portal for absorb-alchemize apps
+    if (typeof ExhibitPortal !== 'undefined') {
+      const portalContainer = document.getElementById(
+        'ergasterion-exhibit-portal'
+      );
+      if (portalContainer && !window.exhibitPortal) {
+        window.exhibitPortal = new ExhibitPortal();
+        window.exhibitPortal.initialize(portalContainer);
+      }
+    }
   },
 });
 

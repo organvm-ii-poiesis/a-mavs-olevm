@@ -33,8 +33,8 @@
   },
   "scripts": {
     "dev": "browser-sync start --server --files '*.html, css/*.css, js/*.js' --port 3000",
-    "lint": "eslint --config .config/eslint.config.js js/main.js js/page.js js/pageData.js js/images.js js/diary.js js/ogod.js js/analytics.js js/config.js js/audioPlayer.js js/videoPlayer.js js/nameSearch.js js/namingAPI.js js/namingStrategies.js js/loophole.js js/sketch.js js/3d/ui/*.js js/living-pantheon/*.js js/media/**/*.js",
-    "lint:fix": "eslint --config .config/eslint.config.js js/main.js js/page.js js/pageData.js js/images.js js/diary.js js/ogod.js js/analytics.js js/config.js js/audioPlayer.js js/videoPlayer.js js/nameSearch.js js/namingAPI.js js/namingStrategies.js js/loophole.js js/sketch.js js/3d/ui/*.js js/living-pantheon/*.js js/media/**/*.js --fix",
+    "lint": "eslint --config .config/eslint.config.js js/main.js js/page.js js/pageData.js js/images.js js/diary.js js/ogod.js js/analytics.js js/config.js js/audioPlayer.js js/videoPlayer.js js/nameSearch.js js/namingAPI.js js/namingStrategies.js js/loophole.js js/sketch.js js/3d/ui/*.js js/living-pantheon/*.js js/media/**/*.js js/ergasterion/*.js js/ogod/utils/*.js",
+    "lint:fix": "eslint --config .config/eslint.config.js js/main.js js/page.js js/pageData.js js/images.js js/diary.js js/ogod.js js/analytics.js js/config.js js/audioPlayer.js js/videoPlayer.js js/nameSearch.js js/namingAPI.js js/namingStrategies.js js/loophole.js js/sketch.js js/3d/ui/*.js js/living-pantheon/*.js js/media/**/*.js js/ergasterion/*.js js/ogod/utils/*.js --fix",
     "format": "prettier --config .config/prettierrc.json --ignore-path .config/prettierignore --write '**/*.{js,css,html,md}'",
     "format:check": "prettier --config .config/prettierrc.json --ignore-path .config/prettierignore --check '**/*.{js,css,html,md}'",
     "validate": "npm run lint && npm run format:check",
@@ -48,6 +48,12 @@
     "test:all": "npm run test:unit && npm run test",
     "test:a11y": "playwright test --config .config/playwright.config.js tests/e2e/accessibility.spec.js",
     "validate:html": "html-validate --config .config/htmlvalidate.json index.html",
+    "build:exhibits": "npm run build:audio-orb && npm run build:ink-studio && npm run build:p5js-playground && npm run build:synthwave-space",
+    "build:audio-orb": "cd absorb-alchemize/audio-orb && npm install && npm run build",
+    "build:ink-studio": "cd absorb-alchemize/gemini-ink-studio && npm install && npm run build",
+    "build:p5js-playground": "cd absorb-alchemize/p5js-playground && npm install && npm run build",
+    "build:synthwave-space": "cd absorb-alchemize/synthwave-space && npm install && npm run build",
+    "generate:ambient": "node scripts/generate-ambient-audio.mjs",
     "prepare": "husky"
   },
   "repository": {
