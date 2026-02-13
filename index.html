@@ -46,6 +46,7 @@
     <link rel="stylesheet" href="css/breathing.css" />
     <link rel="stylesheet" href="css/ergasterion.css" />
     <link rel="stylesheet" href="css/odeion.css" />
+    <link rel="stylesheet" href="css/generative.css" />
 
     <!-- Video.js CSS -->
     <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
@@ -373,7 +374,7 @@
               >
                 <h3 class="f4 mt0 mb2" style="color: #8b4513">Untitled Verses</h3>
                 <p class="f6 o-70 mt0 mb2">Contemporary Poetry Collection</p>
-                <span class="f7 ba b--white-30 br2 ph2 pv1 o-50">Coming Soon</span>
+                <div class="bibliotheke-poem" data-mode="poetry"></div>
               </div>
               <div
                 class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
@@ -382,7 +383,7 @@
               >
                 <h3 class="f4 mt0 mb2" style="color: #8b4513">Narrative Fragments</h3>
                 <p class="f6 o-70 mt0 mb2">Short-Form Prose Collection</p>
-                <span class="f7 ba b--white-30 br2 ph2 pv1 o-50">Coming Soon</span>
+                <div class="bibliotheke-poem" data-mode="prose"></div>
               </div>
               <div
                 class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
@@ -391,7 +392,7 @@
               >
                 <h3 class="f4 mt0 mb2" style="color: #8b4513">Song Texts</h3>
                 <p class="f6 o-70 mt0 mb2">Lyrics from Musical Works</p>
-                <span class="f7 ba b--white-30 br2 ph2 pv1 o-50">Coming Soon</span>
+                <div class="bibliotheke-poem" data-mode="lyrics"></div>
               </div>
             </div>
           </div>
@@ -451,65 +452,55 @@
                 data-section="photography"
                 style="width: 200px; height: 200px"
               >
-                <img
-                  src="img/placeholder.jpg"
-                  data-src="../img/gallery/photography/study-1-thumb.jpg"
-                  alt="Untitled Study I"
-                  class="w-100 h-100 cover"
-                  loading="lazy"
-                />
-              </div>
-              <div
-                class="chamber-card morph-image ba b--white-20 br3 ma2 overflow-hidden"
-                data-section="photography"
-                style="width: 200px; height: 200px"
-              >
-                <img
-                  src="img/placeholder.jpg"
-                  data-src="../img/gallery/photography/landscape-2-thumb.jpg"
-                  alt="Landscape Series #2"
-                  class="w-100 h-100 cover"
-                  loading="lazy"
-                />
+                <canvas
+                  class="pinakotheke-canvas w-100 h-100"
+                  data-sketch="noiseField"
+                  aria-label="Generative noise field artwork"
+                ></canvas>
               </div>
               <div
                 class="chamber-card morph-image ba b--white-20 br3 ma2 overflow-hidden"
                 data-section="digital"
                 style="width: 200px; height: 200px"
               >
-                <img
-                  src="img/placeholder.jpg"
-                  data-src="../img/gallery/digital/vector-realm-thumb.jpg"
-                  alt="Vector Realm"
-                  class="w-100 h-100 cover"
-                  loading="lazy"
-                />
+                <canvas
+                  class="pinakotheke-canvas w-100 h-100"
+                  data-sketch="vectorForms"
+                  aria-label="Generative vector geometry artwork"
+                ></canvas>
               </div>
               <div
                 class="chamber-card morph-image ba b--white-20 br3 ma2 overflow-hidden"
                 data-section="glitch"
                 style="width: 200px; height: 200px"
               >
-                <img
-                  src="img/placeholder.jpg"
-                  data-src="../img/gallery/glitch/corrupted-signal-1-thumb.jpg"
-                  alt="Corrupted Signal #1"
-                  class="w-100 h-100 cover"
-                  loading="lazy"
-                />
+                <canvas
+                  class="pinakotheke-canvas w-100 h-100"
+                  data-sketch="pixelGlitch"
+                  aria-label="Live pixel sort glitch artwork"
+                ></canvas>
               </div>
               <div
                 class="chamber-card morph-image ba b--white-20 br3 ma2 overflow-hidden"
                 data-section="generative"
                 style="width: 200px; height: 200px"
               >
-                <img
-                  src="img/placeholder.jpg"
-                  data-src="../img/gallery/generative/algorithmic-bloom-thumb.jpg"
-                  alt="Algorithmic Bloom"
-                  class="w-100 h-100 cover"
-                  loading="lazy"
-                />
+                <canvas
+                  class="pinakotheke-canvas w-100 h-100"
+                  data-sketch="flowParticles"
+                  aria-label="Generative flow particle artwork"
+                ></canvas>
+              </div>
+              <div
+                class="chamber-card morph-image ba b--white-20 br3 ma2 overflow-hidden"
+                data-section="generative"
+                style="width: 200px; height: 200px"
+              >
+                <canvas
+                  class="pinakotheke-canvas w-100 h-100"
+                  data-sketch="fractalGrowth"
+                  aria-label="Generative fractal growth artwork"
+                ></canvas>
               </div>
             </div>
           </div>
@@ -561,25 +552,53 @@
             </div>
             <div class="flex flex-wrap justify-center">
               <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
+                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
                 data-section="feed"
                 style="border-left: 3px solid #dc143c"
               >
                 <span class="f7 o-50 db mb2">POLITICS &middot; 2026-02-02</span>
                 <h3 class="f4 mt0 mb2" style="color: #dc143c">The Paradox of Democratic Representation</h3>
                 <p class="f6 o-70 mt0">How systems designed to amplify the many end up silencing the singular voice.</p>
+                <div class="agora-full-text f6 o-60 lh-copy mt2">
+                  <p>
+                    Representative democracy operates on a fundamental contradiction: it asks individuals to surrender
+                    their voice to a proxy, trusting that the aggregate will approximate their intent. But aggregation
+                    is lossy compression. The nuance of a single perspective — its contradictions, its conditional
+                    truths, its lived specificity — cannot survive the reduction into a vote, a poll number, a
+                    demographic.
+                  </p>
+                  <p class="mt2">
+                    What remains is not the voice of the many, but the voice of the mean: an averaged signal that
+                    belongs to no one and speaks for everyone. The system doesn't amplify — it averages. And in
+                    averaging, it creates an illusion of consensus where only compromise exists.
+                  </p>
+                </div>
+                <span class="agora-read-more f7 db mt2" style="color: #dc143c">Read more &darr;</span>
               </div>
               <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
+                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
                 data-section="feed"
                 style="border-left: 3px solid #dc143c"
               >
                 <span class="f7 o-50 db mb2">IDEOLOGY &middot; 2026-02-01</span>
                 <h3 class="f4 mt0 mb2" style="color: #dc143c">Power as Narrative Architecture</h3>
                 <p class="f6 o-70 mt0">The stories we tell ourselves become the structures we live within.</p>
+                <div class="agora-full-text f6 o-60 lh-copy mt2">
+                  <p>
+                    Every power structure begins as a story. The nation-state is a story of borders. The corporation is
+                    a story of ownership. The family is a story of blood. These narratives are not descriptions of
+                    reality — they are blueprints that reality is built to match.
+                  </p>
+                  <p class="mt2">
+                    The most dangerous stories are the ones we've forgotten are stories at all. When a narrative becomes
+                    so embedded that it feels like physics — like gravity, inevitable and natural — then it has achieved
+                    its ultimate form: ideology disguised as common sense.
+                  </p>
+                </div>
+                <span class="agora-read-more f7 db mt2" style="color: #dc143c">Read more &darr;</span>
               </div>
               <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
+                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
                 data-section="manifestos"
                 style="border-left: 3px solid #dc143c"
               >
@@ -588,6 +607,20 @@
                 <p class="f6 o-70 mt0">
                   We refuse the ease of the familiar. We declare: discomfort is prerequisite to thought.
                 </p>
+                <div class="agora-full-text f6 o-60 lh-copy mt2">
+                  <p>
+                    I. Comfort is the anaesthetic of the mind. It does not heal — it numbs. Every convenience is a small
+                    surrender, every ease a minor abdication of the friction that makes thought possible.
+                  </p>
+                  <p class="mt2">
+                    II. We do not seek suffering for its own sake. We seek the productive tension that arises when
+                    assumptions are challenged, when habits are disrupted, when the familiar becomes strange again.
+                  </p>
+                  <p class="mt2">
+                    III. The comfortable mind reproduces. The uncomfortable mind creates. Choose accordingly.
+                  </p>
+                </div>
+                <span class="agora-read-more f7 db mt2" style="color: #dc143c">Read more &darr;</span>
               </div>
             </div>
           </div>
@@ -710,7 +743,7 @@
                 style="border-left: 3px solid #ff8c00"
               >
                 <p class="f5 o-70 bodoni i mt0">What clarity emerged today?</p>
-                <p class="f6 o-50 mt3">Entries appear as you write them...</p>
+                <div class="oikos-journal-mount" data-type="reflections"></div>
               </div>
               <div
                 class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white tc"
@@ -718,7 +751,7 @@
                 style="border-left: 3px solid #ffb6c1"
               >
                 <p class="f5 o-70 bodoni i mt0">What did your unconscious reveal?</p>
-                <p class="f6 o-50 mt3">Record your nocturnal visions...</p>
+                <div class="oikos-journal-mount" data-type="dreams"></div>
               </div>
               <div
                 class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white tc"
@@ -726,7 +759,7 @@
                 style="border-left: 3px solid #ffd9b3"
               >
                 <p class="f5 o-70 bodoni i mt0">What truth do you need to speak?</p>
-                <p class="f6 o-50 mt3">Write your confession...</p>
+                <div class="oikos-journal-mount" data-type="confessions"></div>
               </div>
             </div>
           </div>
@@ -914,6 +947,7 @@
               <div
                 class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
                 data-section="performances"
+                data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
                 style="border-left: 3px solid #800080"
               >
                 <span class="f7 o-50 db mb2">&#127917; LIVE &middot; 2015 &middot; 45:00</span>
@@ -923,6 +957,7 @@
               <div
                 class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
                 data-section="performances"
+                data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
                 style="border-left: 3px solid #800080"
               >
                 <span class="f7 o-50 db mb2">&#127917; LIVE &middot; 2015 &middot; 62:00</span>
@@ -932,6 +967,7 @@
               <div
                 class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
                 data-section="performances"
+                data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
                 style="border-left: 3px solid #800080"
               >
                 <span class="f7 o-50 db mb2">&#127916; STUDIO &middot; 2018 &middot; 28:00</span>
@@ -941,6 +977,7 @@
               <div
                 class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
                 data-section="rehearsals"
+                data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
                 style="border-left: 3px solid #c71585"
               >
                 <span class="f7 o-50 db mb2">&#127916; REHEARSAL &middot; 2015 &middot; 35:00</span>
@@ -2223,6 +2260,11 @@
     <script type="text/javascript" src="js/ogod/utils/PixelSortUtils.js" defer></script>
     <script type="text/javascript" src="js/ergasterion/ExhibitBridge.js" defer></script>
     <script type="text/javascript" src="js/ergasterion/ExhibitPortal.js" defer></script>
+    <!-- Generative Chamber Systems -->
+    <script type="text/javascript" src="js/generative/PinakothekeGenerator.js" defer></script>
+    <script type="text/javascript" src="js/generative/KhronosTimeline.js" defer></script>
+    <script type="text/javascript" src="js/generative/BibliothekePoetry.js" defer></script>
+    <script type="text/javascript" src="js/generative/OikosJournal.js" defer></script>
     <!-- Enhanced Media Systems -->
     <script type="text/javascript" src="js/media/MediaURLResolver.js" defer></script>
     <script type="text/javascript" src="js/media/audio/EnhancedAudioPlayer.js" defer></script>

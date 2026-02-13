@@ -768,6 +768,12 @@ pages.bibliotheke = new Page({
   initialize() {
     replacePlaceholders(this.id);
     initChamberSectionNav(this.id);
+    // Initialize procedural poetry engine
+    if (typeof BibliothekePoetry !== 'undefined') {
+      window.bibliothekePoetry =
+        window.bibliothekePoetry || new BibliothekePoetry();
+      window.bibliothekePoetry.initialize('#bibliotheke .mw9');
+    }
   },
 });
 
@@ -778,6 +784,11 @@ pages.oikos = new Page({
   initialize() {
     replacePlaceholders(this.id);
     initChamberSectionNav(this.id);
+    // Initialize localStorage-backed journal
+    if (typeof OikosJournal !== 'undefined') {
+      window.oikosJournal = window.oikosJournal || new OikosJournal();
+      window.oikosJournal.initialize('#oikos .mw9');
+    }
   },
 });
 
@@ -788,6 +799,12 @@ pages.pinakotheke = new Page({
   initialize() {
     replacePlaceholders(this.id);
     initChamberSectionNav(this.id);
+    // Initialize generative gallery canvases
+    if (typeof PinakothekeGenerator !== 'undefined') {
+      window.pinakothekeGen =
+        window.pinakothekeGen || new PinakothekeGenerator();
+      window.pinakothekeGen.initialize('#pinakotheke-gallery');
+    }
   },
 });
 
@@ -798,6 +815,18 @@ pages.agora = new Page({
   initialize() {
     replacePlaceholders(this.id);
     initChamberSectionNav(this.id);
+    // Wire click-to-expand on commentary cards
+    $(this.id)
+      .find('.chamber-card')
+      .on('click', function () {
+        const fullText = $(this).find('.agora-full-text');
+        const readMore = $(this).find('.agora-read-more');
+        if (fullText.length) {
+          fullText.toggleClass('expanded');
+          const isExpanded = fullText.hasClass('expanded');
+          readMore.html(isExpanded ? 'Collapse &uarr;' : 'Read more &darr;');
+        }
+      });
   },
 });
 
@@ -883,6 +912,24 @@ pages.theatron = new Page({
         console.warn('Theatron video player init:', videoError.message);
       }
     }
+    // Wire performance card clicks to load video
+    const theatronEl = $(this.id);
+    theatronEl.find('.chamber-card[data-video-url]').on('click', function () {
+      const videoUrl = $(this).data('video-url');
+      if (!videoUrl) {
+        return;
+      }
+      // Remove active state from all cards
+      theatronEl.find('.chamber-card').removeClass('theatron-active');
+      $(this).addClass('theatron-active');
+      // Load video into player container
+      const playerArea = theatronEl.find('.aspect-ratio--object');
+      if (playerArea.length) {
+        playerArea.html(
+          `<iframe src="${videoUrl}?autoplay=1" class="w-100 h-100" style="border:none" allow="autoplay; encrypted-media" allowfullscreen></iframe>`
+        );
+      }
+    });
   },
 });
 
@@ -912,6 +959,11 @@ pages.khronos = new Page({
   initialize() {
     replacePlaceholders(this.id);
     initChamberSectionNav(this.id);
+    // Initialize interactive SVG timeline
+    if (typeof KhronosTimeline !== 'undefined') {
+      window.khronosTimeline = window.khronosTimeline || new KhronosTimeline();
+      window.khronosTimeline.initialize('#khronos-timeline');
+    }
   },
 });
 

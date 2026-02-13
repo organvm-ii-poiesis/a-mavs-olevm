@@ -1,0 +1,135 @@
+/* ==========================================================================
+   Generative Chamber Styles
+   Pinakotheke, Khronos, Bibliotheke, Oikos, Agora activation
+   ========================================================================== */
+
+/* Pinakotheke canvases */
+.pinakotheke-canvas {
+  display: block;
+}
+
+/* Khronos timeline */
+#khronos-timeline svg {
+  width: 100%;
+  cursor: grab;
+}
+
+.khronos-milestone {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.khronos-milestone:hover {
+  transform: scale(1.3);
+}
+
+.khronos-detail {
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.khronos-detail.active {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+/* Bibliotheke poems */
+.bibliotheke-poem {
+  min-height: 80px;
+}
+
+.bibliotheke-regenerate {
+  opacity: 0.3;
+  transition: opacity 0.2s;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.bibliotheke-regenerate:hover {
+  opacity: 1;
+}
+
+/* Oikos journal */
+.oikos-textarea {
+  background: transparent;
+  border: 1px solid rgba(255, 140, 0, 0.3);
+  color: white;
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+}
+
+.oikos-textarea:focus {
+  border-color: #ff8c00;
+  outline: none;
+}
+
+.oikos-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.oikos-entry {
+  border-bottom: 1px solid rgba(255, 140, 0, 0.1);
+}
+
+.oikos-entry-delete {
+  opacity: 0.3;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.oikos-entry-delete:hover {
+  opacity: 1;
+  color: #dc143c;
+}
+
+/* Agora expand */
+.agora-full-text {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.agora-full-text.expanded {
+  max-height: 500px;
+}
+
+.agora-read-more {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.agora-read-more:hover {
+  opacity: 1;
+}
+
+/* Theatron active card highlight */
+.theatron-active {
+  border-color: #800080 !important;
+  box-shadow: 0 0 10px rgba(128, 0, 128, 0.3);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .khronos-milestone,
+  .bibliotheke-regenerate,
+  .oikos-entry-delete,
+  .agora-read-more {
+    transition: none;
+  }
+
+  .agora-full-text {
+    transition: none;
+  }
+
+  .khronos-detail {
+    transition: none;
+  }
+}
