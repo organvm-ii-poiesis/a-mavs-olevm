@@ -1,0 +1,84 @@
+<!-- Canvas Container -->
+<div id="ogod-viewer-container" class="absolute top-0 left-0 w-100 vh-100"></div>
+
+<!-- Back Button -->
+<a
+  href="#vision"
+  id="ogod-viewer-back-btn"
+  class="fixed top-1 left-1 pa2 ph3 bg-black-70 ba b--white-30 white f6 link br2 z-5"
+  style="transition: all 0.2s ease"
+  >&larr; Back</a
+>
+
+<!-- Controls Panel -->
+<div
+  id="ogod-viewer-controls"
+  class="fixed top-1 right-1 pa3 bg-black-70 ba b--white-20 white br3 z-5"
+  style="max-width: 280px"
+>
+  <h3 class="ma0 mb2 f6" style="color: #00ffff">OGOD Viewer</h3>
+  <p id="ogod-viewer-track-info" class="ma0 mt1 f7 o-80">Track I - Animal Crossing</p>
+
+  <!-- Mode Selector -->
+  <div class="mt3 mb2">
+    <label class="f7 o-70 db mb1">Mode</label>
+    <div id="ogod-viewer-mode-selector" class="flex" style="gap: 0.25rem">
+      <button class="ogod-viewer-mode-btn" data-mode="faithful">Faithful</button>
+      <button class="ogod-viewer-mode-btn active" data-mode="enhanced">Enhanced</button>
+      <button class="ogod-viewer-mode-btn" data-mode="generative">Generative</button>
+      <button class="ogod-viewer-mode-btn" data-mode="3d">3D</button>
+    </div>
+  </div>
+
+  <!-- Custom Image -->
+  <div class="mt2">
+    <label class="f7 o-70 db mb1">Custom Image</label>
+    <input type="file" id="ogod-viewer-file-input" accept="image/*" class="f7 w-100" style="color: #aaa" />
+  </div>
+
+  <!-- Pause/Play -->
+  <button
+    id="ogod-viewer-pause-btn"
+    class="mt3 pa2 ph3 bg-black-70 ba b--white-30 white f7 pointer br2 w-100"
+    style="transition: all 0.2s ease"
+    aria-label="Pause animation"
+  >
+    Pause
+  </button>
+</div>
+
+<!-- Track Selector -->
+<div
+  id="ogod-viewer-track-selector"
+  class="fixed bottom-1 left-50 z-5 flex flex-wrap justify-center"
+  style="transform: translateX(-50%); max-width: 90%; gap: 0.5rem"
+></div>
+
+<!-- OGOD Viewer styles -->
+<style>
+  .ogod-viewer-mode-btn {
+    padding: 0.25rem 0.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ccc;
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 3px;
+  }
+  .ogod-viewer-mode-btn:hover {
+    background: rgba(0, 255, 255, 0.2);
+    border-color: #00ffff;
+    color: #fff;
+  }
+  .ogod-viewer-mode-btn.active {
+    background: rgba(0, 255, 255, 0.3);
+    border-color: #00ffff;
+    color: #00ffff;
+  }
+  #ogod-viewer-back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+  }
+</style>

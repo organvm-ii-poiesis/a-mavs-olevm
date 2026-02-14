@@ -121,7 +121,7 @@ pages.sound = new Page({
       '<iframe style="border: 10px; width: 300px; height: 300px;" src="https://bandcamp.com/EmbeddedPlayer/album=448587485/size=large/bgcol=ffffff/linkcol=de270f/minimal=true/transparent=true/"><a href="https://music.etceter4.com/album/etc">Etc by ET CETER4</a></iframe>',
     ];
 
-    $('#sound #BCContainer').each(function (index) {
+    $('#sound .BCContainer').each(function (index) {
       $(this).html(_iFrames[index]);
     });
 
@@ -224,476 +224,28 @@ window.createOGODExperience = createOGODExperience;
 /**
  * OGOD 3D page configuration
  * Tier 4 - Immersive 3D audio-visual experience
+ * Logic extracted to js/ogod/OGOD3DController.js
  */
 pages.ogod3d = new Page({
   id: _pID.ogod3d,
   tier: 4,
   upLinks: [_pID.vision],
   initialize() {
-    // Initialize OGOD 3D experience on first visit
-    const container = document.getElementById('ogod3d-container');
-    const loadingScreen = document.getElementById('ogod3d-loading');
-    const loadingBar = document.getElementById('ogod3d-loading-bar');
-    const loadingText = document.getElementById('ogod3d-loading-text');
-
-    if (!container) {
-      console.warn('OGOD 3D: Container not found');
-      return;
-    }
-
-    // Track state
-    window.ogod3dState = window.ogod3dState || {
-      currentTrack: 1,
-      experience: null,
-      audioStarted: false,
-      isTransitioning: false,
-    };
-
-    const state = window.ogod3dState;
-
-    // Update loading UI
-    const updateLoading = (progress, text) => {
-      if (loadingBar) {
-        loadingBar.style.width = `${progress}%`;
-      }
-      if (loadingText) {
-        loadingText.textContent = text;
-      }
-    };
-
-    // Load a track
-    const loadTrack = async trackNum => {
-      if (state.isTransitioning) {
-        return;
-      }
-
-      const isInitialLoad = !state.experience;
-
-      // Show transition if switching tracks
-      if (!isInitialLoad) {
-        state.isTransitioning = true;
-        state.experience.dispose();
-        state.experience = null;
-      }
-
-      // Show loading
-      if (loadingScreen) {
-        loadingScreen.classList.remove('hidden');
-      }
-      updateLoading(10, 'Loading environment...');
-
-      state.currentTrack = trackNum;
-
-      // Update track buttons
-      document.querySelectorAll('.ogod3d-track-btn').forEach(btn => {
-        btn.classList.toggle(
-          'active',
-          parseInt(btn.dataset.track) === trackNum
-        );
-      });
-
-      try {
-        updateLoading(30, 'Creating 3D scene...');
-        container.innerHTML = '';
-
-        state.experience = await createOGODExperience({
-          container,
-          trackNumber: trackNum,
-        });
-
-        updateLoading(70, 'Starting visuals...');
-        state.experience.sceneManager.start();
-
-        updateLoading(100, 'Ready!');
-
-        // Hide loading
-        setTimeout(() => {
-          if (loadingScreen) {
-            loadingScreen.classList.add('hidden');
-          }
-          state.isTransitioning = false;
-        }, 300);
-
-        // Start audio if already enabled
-        if (state.audioStarted && state.experience.audioEngine) {
-          state.experience.audioEngine.start();
-        }
-      } catch (error) {
-        console.error('OGOD 3D: Failed to load track:', error);
-        updateLoading(100, 'Error loading track');
-        state.isTransitioning = false;
-      }
-    };
-
-    // Create track selector buttons
-    const trackSelector = document.getElementById('ogod3d-track-selector');
-    if (trackSelector && !trackSelector.dataset.initialized) {
-      trackSelector.dataset.initialized = 'true';
-      const tracks = ETCETER4_CONFIG.ogodTracks;
-
-      Object.keys(tracks).forEach(num => {
-        const btn = document.createElement('button');
-        btn.className = `ogod3d-track-btn${
-          parseInt(num) === state.currentTrack ? ' active' : ''
-        }`;
-        btn.dataset.track = num;
-        btn.textContent = [
-          '',
-          'I',
-          'II',
-          'III',
-          'IV',
-          'V',
-          'VI',
-          'VII',
-          'VIII',
-          'IX',
-          'X',
-          'XI',
-          'XII',
-          'XIII',
-          'XIV',
-          'XV',
-          'XVI',
-          'XVII',
-          'XVIII',
-          'XIX',
-          'XX',
-          'XXI',
-          'XXII',
-          'XXIII',
-          'XXIV',
-          'XXV',
-          'XXVI',
-          'XXVII',
-          'XXVIII',
-          'XXIX',
-        ][num];
-        btn.title = tracks[num].game;
-        btn.onclick = () => loadTrack(parseInt(num));
-        trackSelector.appendChild(btn);
-      });
-    }
-
-    // Audio button handler
-    const audioBtn = document.getElementById('ogod3d-audio-btn');
-    if (audioBtn && !audioBtn.dataset.initialized) {
-      audioBtn.dataset.initialized = 'true';
-      audioBtn.onclick = async () => {
-        if (!state.audioStarted && typeof Tone !== 'undefined') {
-          await Tone.start();
-          state.audioStarted = true;
-          audioBtn.textContent = 'Audio Playing';
-          audioBtn.classList.add('playing');
-
-          if (state.experience?.audioEngine) {
-            state.experience.audioEngine.start();
-          }
-        }
-      };
-    }
-
-    // Back button handler
-    const backBtn = document.getElementById('ogod3d-back-btn');
-    if (backBtn && !backBtn.dataset.initialized) {
-      backBtn.dataset.initialized = 'true';
-      backBtn.onclick = e => {
-        e.preventDefault();
-        // Stop and dispose experience when leaving
-        if (state.experience) {
-          state.experience.dispose();
-          state.experience = null;
-        }
-        showNewSection(_pID.vision);
-      };
-    }
-
-    // Load initial track
-    loadTrack(state.currentTrack);
+    new OGOD3DController().init();
   },
 });
 
 /**
  * OGOD Animation Viewer page configuration
  * Tier 4 - 2D animation viewer with mode switching
+ * Logic extracted to js/ogod/OGODViewerController.js
  */
 pages.ogodViewer = new Page({
   id: _pID.ogodViewer,
   tier: 4,
   upLinks: [_pID.vision],
   initialize() {
-    const container = document.getElementById('ogod-viewer-container');
-    if (!container) {
-      console.warn('OGOD Viewer: Container not found');
-      return;
-    }
-
-    // Track state
-    window.ogodViewerState = window.ogodViewerState || {
-      currentTrack: 1,
-      currentMode: 'enhanced',
-      engine: null,
-      audioAdapter: null,
-    };
-
-    const state = window.ogodViewerState;
-
-    // Check for deep link query param (?ogod=N)
-    const params = new URLSearchParams(window.location.search);
-    const ogodParam = params.get('ogod');
-    if (ogodParam) {
-      const trackNum = parseInt(ogodParam);
-      if (trackNum >= 1 && trackNum <= 29) {
-        state.currentTrack = trackNum;
-      }
-    }
-
-    const romanNumerals = [
-      '',
-      'I',
-      'II',
-      'III',
-      'IV',
-      'V',
-      'VI',
-      'VII',
-      'VIII',
-      'IX',
-      'X',
-      'XI',
-      'XII',
-      'XIII',
-      'XIV',
-      'XV',
-      'XVI',
-      'XVII',
-      'XVIII',
-      'XIX',
-      'XX',
-      'XXI',
-      'XXII',
-      'XXIII',
-      'XXIV',
-      'XXV',
-      'XXVI',
-      'XXVII',
-      'XXVIII',
-      'XXIX',
-    ];
-
-    /** Update track info display */
-    const updateTrackInfo = trackNum => {
-      const tracks = ETCETER4_CONFIG.ogodTracks;
-      const track = tracks[trackNum];
-      const infoEl = document.getElementById('ogod-viewer-track-info');
-      if (infoEl && track) {
-        infoEl.textContent = `Track ${romanNumerals[trackNum]} \u2014 ${track.game}`;
-      }
-    };
-
-    /** Load a track with the current mode */
-    const loadTrack = async trackNum => {
-      // Dispose previous engine
-      if (state.engine) {
-        state.engine.dispose();
-        state.engine = null;
-      }
-
-      state.currentTrack = trackNum;
-      container.innerHTML = '';
-
-      // Update track buttons
-      document.querySelectorAll('.ogod-viewer-track-btn').forEach(btn => {
-        btn.classList.toggle(
-          'active',
-          parseInt(btn.dataset.track) === trackNum
-        );
-      });
-
-      updateTrackInfo(trackNum);
-
-      // If 3D mode, switch to ogod3d page
-      if (state.currentMode === '3d') {
-        if (window.ogod3dState) {
-          window.ogod3dState.currentTrack = trackNum;
-        }
-        showNewSection(_pID.ogod3d);
-        return;
-      }
-
-      try {
-        // Create audio adapter (standalone, no Tone.js needed)
-        if (!state.audioAdapter) {
-          state.audioAdapter = new OGODAudioAdapter({});
-        }
-
-        state.engine = new OGODAnimationEngine({
-          container,
-          mode: state.currentMode,
-          trackNumber: trackNum,
-          audioAdapter: state.audioAdapter,
-        });
-
-        const tracks = ETCETER4_CONFIG.ogodTracks;
-        const trackConfig = tracks[trackNum];
-        if (
-          trackConfig &&
-          trackConfig.palette &&
-          state.engine.renderer &&
-          state.engine.renderer.setPalette
-        ) {
-          state.engine.renderer.setPalette(trackConfig.palette);
-        }
-
-        await state.engine.initialize();
-        state.engine.start();
-      } catch (error) {
-        console.error('OGOD Viewer: Failed to load track:', error);
-      }
-    };
-
-    /** Switch rendering mode */
-    const setMode = mode => {
-      if (mode === state.currentMode) {
-        return;
-      }
-
-      state.currentMode = mode;
-
-      // Update mode buttons
-      document.querySelectorAll('.ogod-viewer-mode-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === mode);
-      });
-
-      if (mode === '3d') {
-        if (window.ogod3dState) {
-          window.ogod3dState.currentTrack = state.currentTrack;
-        }
-        showNewSection(_pID.ogod3d);
-        return;
-      }
-
-      if (state.engine) {
-        state.engine.setMode(mode);
-      } else {
-        loadTrack(state.currentTrack);
-      }
-    };
-
-    // Build track selector
-    const trackSelector = document.getElementById('ogod-viewer-track-selector');
-    if (trackSelector && !trackSelector.dataset.initialized) {
-      trackSelector.dataset.initialized = 'true';
-      const tracks = ETCETER4_CONFIG.ogodTracks;
-
-      Object.keys(tracks).forEach(num => {
-        const btn = document.createElement('button');
-        btn.className = `ogod3d-track-btn ogod-viewer-track-btn${parseInt(num) === state.currentTrack ? ' active' : ''}`;
-        btn.dataset.track = num;
-        btn.textContent = romanNumerals[num];
-        btn.title = tracks[num].game;
-        btn.onclick = () => loadTrack(parseInt(num));
-        trackSelector.appendChild(btn);
-      });
-    }
-
-    // Mode selector
-    const modeSelector = document.getElementById('ogod-viewer-mode-selector');
-    if (modeSelector && !modeSelector.dataset.initialized) {
-      modeSelector.dataset.initialized = 'true';
-      modeSelector.querySelectorAll('.ogod-viewer-mode-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === state.currentMode);
-        btn.onclick = () => setMode(btn.dataset.mode);
-      });
-    }
-
-    // Back button
-    const backBtn = document.getElementById('ogod-viewer-back-btn');
-    if (backBtn && !backBtn.dataset.initialized) {
-      backBtn.dataset.initialized = 'true';
-      backBtn.onclick = e => {
-        e.preventDefault();
-        if (state.engine) {
-          state.engine.dispose();
-          state.engine = null;
-        }
-        showNewSection(_pID.vision);
-      };
-    }
-
-    // Pause button
-    const pauseBtn = document.getElementById('ogod-viewer-pause-btn');
-    if (pauseBtn && !pauseBtn.dataset.initialized) {
-      pauseBtn.dataset.initialized = 'true';
-      pauseBtn.onclick = () => {
-        if (state.engine) {
-          state.engine.togglePause();
-          pauseBtn.textContent = state.engine.isPaused ? 'Play' : 'Pause';
-        }
-      };
-    }
-
-    // Custom image file input
-    const fileInput = document.getElementById('ogod-viewer-file-input');
-    if (fileInput && !fileInput.dataset.initialized) {
-      fileInput.dataset.initialized = 'true';
-      fileInput.onchange = async e => {
-        const file = e.target.files[0];
-        if (!file) {
-          return;
-        }
-        const url = URL.createObjectURL(file);
-        if (state.engine) {
-          await state.engine.setCustomImage(url);
-        }
-      };
-    }
-
-    // Keyboard controls
-    const keyHandler = e => {
-      if (
-        document.activeElement &&
-        document.activeElement.tagName === 'INPUT'
-      ) {
-        return;
-      }
-      switch (e.key) {
-        case ' ':
-          e.preventDefault();
-          if (state.engine) {
-            state.engine.togglePause();
-            if (pauseBtn) {
-              pauseBtn.textContent = state.engine.isPaused ? 'Play' : 'Pause';
-            }
-          }
-          break;
-        case '1':
-          setMode('faithful');
-          break;
-        case '2':
-          setMode('enhanced');
-          break;
-        case '3':
-          setMode('generative');
-          break;
-        case 'ArrowLeft':
-          if (state.currentTrack > 1) {
-            loadTrack(state.currentTrack - 1);
-          }
-          break;
-        case 'ArrowRight':
-          if (state.currentTrack < 29) {
-            loadTrack(state.currentTrack + 1);
-          }
-          break;
-      }
-    };
-    document.addEventListener('keydown', keyHandler);
-    // Store for cleanup
-    window._ogodViewerKeyHandler = keyHandler;
-
-    // Load initial track
-    loadTrack(state.currentTrack);
+    new OGODViewerController().init();
   },
 });
 
@@ -757,6 +309,10 @@ pages.akademia = new Page({
   upLinks: [_pID.eastWing],
   initialize() {
     replacePlaceholders(this.id);
+    // Render cards from akademiaConfig data
+    if (typeof akademiaConfig !== 'undefined') {
+      new AkademiaRenderer(akademiaConfig).render('#akademia-cards');
+    }
     initChamberSectionNav(this.id);
   },
 });
@@ -837,6 +393,12 @@ pages.symposion = new Page({
   initialize() {
     replacePlaceholders(this.id);
     initChamberSectionNav(this.id);
+    // Initialize generative dialogue system
+    if (typeof SymposionDialogues !== 'undefined') {
+      window.symposionDialogues =
+        window.symposionDialogues || new SymposionDialogues();
+      window.symposionDialogues.initialize('#symposion');
+    }
   },
 });
 
@@ -897,38 +459,23 @@ pages.theatron = new Page({
   initialize() {
     replacePlaceholders(this.id);
     initChamberSectionNav(this.id);
-    // Initialize enhanced video player if available
-    if (typeof EnhancedVideoPlayer !== 'undefined') {
-      try {
-        const videoContainer = document.getElementById(
-          'theatron-video-container'
-        );
-        if (videoContainer) {
-          window.theatronPlayer = new EnhancedVideoPlayer({
-            container: videoContainer,
-          });
-        }
-      } catch (videoError) {
-        console.warn('Theatron video player init:', videoError.message);
-      }
+    // Initialize generative visual system
+    if (typeof TheatronVisuals !== 'undefined') {
+      window.theatronVisuals = window.theatronVisuals || new TheatronVisuals();
+      window.theatronVisuals.initialize('#theatron');
     }
-    // Wire performance card clicks to load video
+    // Wire performance card clicks to load p5.js sketch
     const theatronEl = $(this.id);
-    theatronEl.find('.chamber-card[data-video-url]').on('click', function () {
-      const videoUrl = $(this).data('video-url');
-      if (!videoUrl) {
+    theatronEl.find('.chamber-card[data-sketch]').on('click', function () {
+      const sketchName = $(this).data('sketch');
+      if (!sketchName || !window.theatronVisuals) {
         return;
       }
       // Remove active state from all cards
       theatronEl.find('.chamber-card').removeClass('theatron-active');
       $(this).addClass('theatron-active');
-      // Load video into player container
-      const playerArea = theatronEl.find('.aspect-ratio--object');
-      if (playerArea.length) {
-        playerArea.html(
-          `<iframe src="${videoUrl}?autoplay=1" class="w-100 h-100" style="border:none" allow="autoplay; encrypted-media" allowfullscreen></iframe>`
-        );
-      }
+      // Load sketch into player container
+      window.theatronVisuals.loadSketch(sketchName);
     });
   },
 });
@@ -939,6 +486,7 @@ pages.ergasterion = new Page({
   upLinks: [_pID.northWing],
   initialize() {
     replacePlaceholders(this.id);
+    initChamberSectionNav(this.id);
     // Initialize Exhibit Portal for absorb-alchemize apps
     if (typeof ExhibitPortal !== 'undefined') {
       const portalContainer = document.getElementById(
@@ -1016,7 +564,7 @@ pages = [
     id: _pID.vision,
     tier: 3,
     upLinks: [_pID.menu],
-    downLinks: [_pID.ogod3d, _pID.ogodViewer],
+    downLinks: [_pID.stills, _pID.video, _pID.ogod3d, _pID.ogodViewer],
   }),
   new Page({
     id: _pID.words,
@@ -1033,6 +581,12 @@ pages = [
     id: _pID.video,
     tier: 4,
     upLinks: [_pID.vision],
+    initialize() {
+      // Lazy-load YouTube iframes on first visit
+      $('#video iframe[data-src]').each(function () {
+        $(this).attr('src', $(this).data('src')).removeAttr('data-src');
+      });
+    },
   }),
 ];
 

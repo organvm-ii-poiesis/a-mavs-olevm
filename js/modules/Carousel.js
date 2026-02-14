@@ -31,7 +31,7 @@ function appendImagesTo(element, location, prefix, fileExtension, start, end) {
   let content = '';
   while (start <= end) {
     content +=
-      '<div id="stillsImage" class="dn v-mid heightControl-stills min-h-21_875rem min-h-28_125rem-ns tc h-100">' +
+      '<div class="stillsImage dn v-mid heightControl-stills min-h-21_875rem min-h-28_125rem-ns tc h-100">' +
       '<img class="mw-100 mh-100 w-auto h-auto anim anim-easeout" src="' +
       srcContents +
       start +
@@ -97,7 +97,7 @@ class Carousel {
     this.indexLoadRight = config.indexLoadRight || this.total - 1;
     this.totalLoaded = config.totalLoaded || 0;
     this.captionData = config.captionData || {};
-    this.imageSelector = config.imageSelector || '[id*=stillsImage]';
+    this.imageSelector = config.imageSelector || '.stillsImage';
 
     // Touch handler state
     this._touchActiveClass = null;
@@ -300,6 +300,51 @@ class Carousel {
   }
 
   /**
+   * Bind click handlers to navigation buttons
+   * Uses navigatePrev/navigateNext internally
+   * @param {string} leftSel - jQuery selector for the "previous" button
+   * @param {string} rightSel - jQuery selector for the "next" button
+   * @param {string} activeClass - CSS class for the visible image
+   * @param {string} hiddenClass - CSS class for hidden images
+   */
+  bindNavButtons(leftSel, rightSel, activeClass, hiddenClass) {
+    const self = this;
+    $(leftSel).on('click', () => self.navigatePrev(activeClass, hiddenClass));
+    $(rightSel).on('click', () => self.navigateNext(activeClass, hiddenClass));
+  }
+
+  /**
+   * Bind the carousel:slide event for lazy image loading
+   * Automatically loads more images when the user reaches the load boundary.
+   * Unbinds itself once all data is loaded.
+   */
+  bindLazyLoad() {
+    if (this._lazyLoadBound) {
+      return;
+    }
+    this._lazyLoadBound = true;
+    const self = this;
+
+    $(this.id).on(
+      'carousel:slide',
+      (event, _index, _indexLoadLeft, _indexLoadRight, _images, _dir, _this) => {
+        try {
+          const page = Page.findPage(self.id);
+          if (page.hasAllData === true) {
+            $(self.id).off('carousel:slide');
+            self._lazyLoadBound = false;
+            return;
+          } else if (_index === _indexLoadLeft || _index === _indexLoadRight) {
+            _this.loadImages();
+          }
+        } catch (error) {
+          console.error(`Error in ${self.id} carousel slide handler:`, error.message);
+        }
+      }
+    );
+  }
+
+  /**
    * Initialize touch handlers for swipe navigation
    * Stores active/hidden classes for use in destroy method
    * @param {string} activeClass - CSS class for active image (e.g., 'dtc')
@@ -369,5 +414,6 @@ class Carousel {
   destroy() {
     this.destroyTouchHandlers();
     $(this.id).off('carousel:slide');
+    this._lazyLoadBound = false;
   }
 }

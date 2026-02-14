@@ -1,10 +1,13 @@
 /**
  * Service Worker for ET CETER4
- * Provides basic caching for critical assets
+ * Provides basic caching for critical assets with offline fallback
  * Cache limit ~5MB due to large images
+ *
+ * Bump CACHE_VERSION when deploying updated assets to bust stale caches
  */
 
-const CACHE_NAME = 'etceter4-v1';
+const CACHE_VERSION = 4;
+const CACHE_NAME = `etceter4-v${CACHE_VERSION}`;
 
 /**
  * Critical assets to cache
@@ -13,16 +16,18 @@ const CACHE_NAME = 'etceter4-v1';
 const CRITICAL_ASSETS = [
   '/',
   '/index.html',
+  '/offline.html',
   '/css/styles.css',
   '/css/vendor/tachyons/css/tachyons.min.css',
   '/js/config.js',
+  '/js/modules/ScriptLoader.js',
+  '/js/modules/ChamberLoader.js',
+  '/js/modules/JourneyTracker.js',
+  '/js/modules/JourneyNarrative.js',
+  '/js/chamberManifest.js',
   '/js/main.js',
   '/js/page.js',
   '/js/pageData.js',
-  '/js/modules/Carousel.js',
-  '/js/images.js',
-  '/js/diary.js',
-  '/js/ogod.js',
   '/img/favicon.ico',
   '/img/placeholder.jpg',
 ];
@@ -37,7 +42,6 @@ self.addEventListener('install', event => {
       .then(cache => {
         return cache.addAll(CRITICAL_ASSETS).catch(err => {
           console.warn('Failed to cache some assets:', err);
-          // Continue with partial cache
           return Promise.resolve();
         });
       })
@@ -64,7 +68,6 @@ self.addEventListener('activate', event => {
             .map(cacheName => caches.delete(cacheName))
         ).catch(err => {
           console.warn('Cache cleanup failed:', err);
-          // Continue even if cleanup fails
           return Promise.resolve();
         });
       })
@@ -78,7 +81,7 @@ self.addEventListener('activate', event => {
 });
 
 /**
- * Fetch event - network first, fallback to cache
+ * Fetch event - network first, fallback to cache, then offline page
  * Does not cache large images to respect cache limits
  */
 self.addEventListener('fetch', event => {
@@ -96,6 +99,20 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Chamber fragments: network-first with cache fallback for offline
+  if (event.request.url.includes('/chambers/') && event.request.url.endsWith('/fragment.html')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
   event.respondWith(
     fetch(event.request)
       .then(response => {
@@ -110,7 +127,16 @@ self.addEventListener('fetch', event => {
       })
       .catch(() => {
         // Fallback to cache if network fails
-        return caches.match(event.request);
+        return caches.match(event.request).then(cachedResponse => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          // For navigation requests, serve the offline page
+          if (event.request.mode === 'navigate') {
+            return caches.match('/offline.html');
+          }
+          return cachedResponse;
+        });
       })
   );
 });

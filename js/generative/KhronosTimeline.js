@@ -83,7 +83,7 @@ class KhronosTimeline {
       { id: 'origin', label: 'Origin', startDate: '2016-11', endDate: '2021-12', color: '#1a1a3e' },
       { id: 'genesis', label: 'Genesis', startDate: '2022-01', endDate: '2022-12', color: '#87ceeb' },
       { id: 'expansion', label: 'Expansion', startDate: '2023-01', endDate: '2023-12', color: '#6495ed' },
-      { id: 'refinement', label: 'Refinement', startDate: '2024-01', endDate: '2024-12', color: '#4169e1' },
+      { id: 'refinement', label: 'Refinement', startDate: '2024-01', endDate: '2024-12', color: '#6495ed' },
       { id: 'integration', label: 'Integration', startDate: '2025-01', endDate: '2026-12', color: '#00008b' },
     ];
 
@@ -112,6 +112,11 @@ class KhronosTimeline {
     this._render();
     this._bindEvents();
     this.initialized = true;
+
+    // Record interaction
+    if (typeof JourneyTracker !== 'undefined') {
+      JourneyTracker.getInstance().recordInteraction('khronos', 'timeline_explored');
+    }
   }
 
   /**
@@ -210,7 +215,7 @@ class KhronosTimeline {
     axisLine.setAttribute('y1', this.timelineHeight / 2);
     axisLine.setAttribute('x2', this.timelineWidth - this.padding);
     axisLine.setAttribute('y2', this.timelineHeight / 2);
-    axisLine.setAttribute('stroke', '#4169e1');
+    axisLine.setAttribute('stroke', '#6495ed');
     axisLine.setAttribute('stroke-width', '2');
     axisLine.setAttribute('opacity', '0.4');
     svg.appendChild(axisLine);
@@ -231,7 +236,7 @@ class KhronosTimeline {
       connector.setAttribute('y1', midY);
       connector.setAttribute('x2', x);
       connector.setAttribute('y2', above ? midY - 25 : midY + 25);
-      connector.setAttribute('stroke', '#4169e1');
+      connector.setAttribute('stroke', '#6495ed');
       connector.setAttribute('stroke-width', '1');
       connector.setAttribute('opacity', '0.5');
       group.appendChild(connector);
@@ -241,7 +246,7 @@ class KhronosTimeline {
       circle.setAttribute('cx', x);
       circle.setAttribute('cy', midY);
       circle.setAttribute('r', '5');
-      circle.setAttribute('fill', '#4169e1');
+      circle.setAttribute('fill', '#6495ed');
       circle.classList.add('milestone-pulse', 'khronos-milestone');
       circle.style.animationDelay = `${index * 0.3}s`;
       group.appendChild(circle);
@@ -263,7 +268,7 @@ class KhronosTimeline {
       dateLabel.setAttribute('x', x);
       dateLabel.setAttribute('y', above ? labelY - 13 : labelY + 13);
       dateLabel.setAttribute('text-anchor', 'middle');
-      dateLabel.setAttribute('fill', '#4169e1');
+      dateLabel.setAttribute('fill', '#6495ed');
       dateLabel.setAttribute('font-size', '9');
       dateLabel.setAttribute('opacity', '0.7');
       dateLabel.setAttribute('font-family', 'inherit');
@@ -283,7 +288,7 @@ class KhronosTimeline {
       detailBg.setAttribute('width', 200);
       detailBg.setAttribute('height', 40);
       detailBg.setAttribute('fill', 'rgba(0, 0, 0, 0.9)');
-      detailBg.setAttribute('stroke', '#4169e1');
+      detailBg.setAttribute('stroke', '#6495ed');
       detailBg.setAttribute('stroke-width', '1');
       detailBg.setAttribute('rx', 4);
       detailGroup.appendChild(detailBg);

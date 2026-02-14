@@ -42,6 +42,10 @@ class PinakothekeGenerator {
       return;
     }
 
+    if (typeof p5 === 'undefined') {
+      return;
+    }
+
     const container = document.querySelector(containerSelector);
     if (!container) {
       return;
@@ -93,6 +97,11 @@ class PinakothekeGenerator {
         const instance = new p5(sketchFn(canvas), parent);
         this.instances.push(instance);
         this.observer.observe(canvas);
+
+        // Record interaction
+        if (typeof JourneyTracker !== 'undefined') {
+          JourneyTracker.getInstance().recordInteraction('pinakotheke', 'sketch_viewed', { sketch: sketchName });
+        }
       } catch (err) {
         console.warn(`PinakothekeGenerator: sketch ${sketchName} failed:`, err.message);
         this.instances.push(null);

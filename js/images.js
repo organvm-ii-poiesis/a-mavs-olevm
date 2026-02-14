@@ -79,112 +79,26 @@ const stillsCarousel = new Carousel({
     ETCETER4_CONFIG.images.faster +
     ETCETER4_CONFIG.images.slip +
     ETCETER4_CONFIG.images.live,
-  indexLoadLeft: $('[id*=stillsImage]').length,
+  indexLoadLeft: $('.stillsImage').length,
   loadOffset: ETCETER4_CONFIG.carousel.loadOffset,
   caption: $('#stillsCaption'),
   captionData: stillsData,
-  imageSelector: '#stills [id*=stillsImage]',
+  imageSelector: '#stills .stillsImage',
 });
 
 // Initialize touch handlers for mobile swipe support
 stillsCarousel.initTouchHandlers('dtc', 'dn');
 
-/**
- * Stills gallery navigation handlers
- */
-$('#stills-left').on('click', () => {
-  const img = $('#stills #stillsImage.dtc');
-  const sC = stillsCarousel;
-  const tmpIndex = sC.index;
-  let loadingImage;
+// Bind navigation buttons using shared Carousel methods
+stillsCarousel.bindNavButtons('#stills-left', '#stills-right', 'dtc', 'dn');
 
-  sC.decIndex();
-  sC.emitSlide('left');
-  sC.setIndicator();
-  img.removeClass('dtc').addClass('dn');
-
-  if (tmpIndex !== 0) {
-    loadingImage = img.prev();
-    loadingImage.addClass('dtc').removeClass('dn');
-    loadingImage.children().addClass('anim-fadeIn');
-  } else {
-    loadingImage = $('#stills [id*=stillsImage]').last();
-    loadingImage.addClass('dtc').removeClass('dn');
-    loadingImage.children().addClass('anim-fadeIn');
-  }
-  sC.loadCaption(loadingImage);
-});
-
-$('#stills-right').on('click', () => {
-  const img = $('#stills #stillsImage.dtc');
-  const sC = stillsCarousel;
-  const tmpIndex = sC.index + 1;
-  let loadingImage;
-
-  sC.incIndex();
-  sC.emitSlide('right');
-  sC.setIndicator();
-  img.removeClass('dtc').addClass('dn');
-
-  if (tmpIndex < sC.total) {
-    loadingImage = img.next();
-    loadingImage.addClass('dtc').removeClass('dn');
-    loadingImage.children().addClass('anim-fadeIn');
-  } else {
-    loadingImage = $('#stills [id*=stillsImage]').first();
-    loadingImage.addClass('dtc').removeClass('dn');
-    loadingImage.children().addClass('anim-fadeIn');
-  }
-  sC.loadCaption(loadingImage);
-});
-
-/**
- * Track if stills event handlers are bound to prevent accumulation
- * @type {boolean}
- */
-let stillsHandlersBound = false;
-
-/**
- * Initialize stills gallery event handlers
- * Safe to call multiple times - prevents event listener accumulation
- */
-function initStillsHandlers() {
-  if (stillsHandlersBound) {
-    return;
-  }
-
-  $('#stills').on(
-    'carousel:slide',
-    (event, _index, _indexLoadLeft, _indexLoadRight, _images, _dir, _this) => {
-      try {
-        const stillsPage = Page.findPage('#stills');
-        if (stillsPage.hasAllData === true) {
-          $('#stills').off('carousel:slide');
-          stillsHandlersBound = false;
-          return;
-        } else if (_index === _indexLoadLeft || _index === _indexLoadRight) {
-          _this.loadImages();
-        }
-      } catch (error) {
-        console.error('Error in stills carousel slide handler:', error.message);
-      }
-    }
-  );
-
-  stillsHandlersBound = true;
-}
+// Bind lazy-load handler for progressive image loading
+stillsCarousel.bindLazyLoad();
 
 /**
  * Cleanup stills gallery resources
  * Call when navigating away from stills page
  */
 function cleanupStills() {
-  if (stillsHandlersBound) {
-    $('#stills').off('carousel:slide');
-    stillsHandlersBound = false;
-  }
   stillsCarousel.destroy();
 }
-
-// Initialize handlers on load
-initStillsHandlers();

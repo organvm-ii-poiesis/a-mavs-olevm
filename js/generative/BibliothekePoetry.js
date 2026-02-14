@@ -155,12 +155,22 @@ class BibliothekePoetry {
     const title = this._generateTitle();
 
     el.innerHTML = `
-      <h4 class="f5 mt0 mb2 i" style="color: #8b4513">${title}</h4>
+      <h4 class="f5 mt0 mb2 i" style="color: #d2b48c">${title}</h4>
       <div class="f6 o-80 lh-copy white-90">${content}</div>
       <div class="mt2 tr">
         <span class="bibliotheke-regenerate f7 o-30" title="Generate new text">&#8635;</span>
       </div>
     `;
+
+    // Record interaction
+    if (typeof JourneyTracker !== 'undefined') {
+      JourneyTracker.getInstance().recordInteraction('bibliotheke', 'poem_generated', { mode });
+    }
+
+    // Record interaction
+    if (typeof JourneyTracker !== 'undefined') {
+      JourneyTracker.getInstance().recordInteraction('bibliotheke', 'poem_generated', { mode });
+    }
 
     // Bind regenerate button
     const regenBtn = el.querySelector('.bibliotheke-regenerate');

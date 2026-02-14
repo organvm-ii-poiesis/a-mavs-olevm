@@ -14,10 +14,10 @@
   --akademia-dark: #00ced1;
   --akademia-light: #e0ffff;
 
-  /* Bibliotheke - Brown/Cream */
-  --bibliotheke-primary: #8b4513;
+  /* Bibliotheke - Brown/Cream (WCAG: #d2b48c ≥ 4.5:1 on black) */
+  --bibliotheke-primary: #d2b48c;
   --bibliotheke-secondary: #f5f5dc;
-  --bibliotheke-dark: #654321;
+  --bibliotheke-dark: #8b4513;
   --bibliotheke-light: #deb887;
 
   /* Pinakotheke - Magenta */
@@ -26,16 +26,16 @@
   --pinakotheke-dark: #c71585;
   --pinakotheke-light: #ffb6ff;
 
-  /* Agora - Crimson */
-  --agora-primary: #dc143c;
-  --agora-secondary: #dc143c;
-  --agora-dark: #8b0000;
+  /* Agora - Crimson (WCAG: #ff6b6b ≥ 4.5:1 on black) */
+  --agora-primary: #ff6b6b;
+  --agora-secondary: #ff6b6b;
+  --agora-dark: #dc143c;
   --agora-light: #ff69b4;
 
-  /* Symposion - Maroon/Cream */
-  --symposion-primary: #722f37;
+  /* Symposion - Maroon/Cream (WCAG: #cd919e ≥ 4.5:1 on black) */
+  --symposion-primary: #cd919e;
   --symposion-secondary: #f5f5dc;
-  --symposion-dark: #3e1b23;
+  --symposion-dark: #722f37;
   --symposion-light: #a0522d;
 
   /* Oikos - Orange/Pink */
@@ -50,10 +50,10 @@
   --odeion-dark: #daa520;
   --odeion-light: #ffff99;
 
-  /* Theatron - Purple */
-  --theatron-primary: #800080;
-  --theatron-secondary: #800080;
-  --theatron-dark: #4b0082;
+  /* Theatron - Purple (WCAG: #da70d6 ≥ 4.5:1 on black) */
+  --theatron-primary: #da70d6;
+  --theatron-secondary: #da70d6;
+  --theatron-dark: #800080;
   --theatron-light: #dda0dd;
 
   /* Ergasterion - Lime */
@@ -62,10 +62,10 @@
   --ergasterion-dark: #228b22;
   --ergasterion-light: #bfff00;
 
-  /* Khronos - Royal Blue */
-  --khronos-primary: #4169e1;
-  --khronos-secondary: #4169e1;
-  --khronos-dark: #00008b;
+  /* Khronos - Royal Blue (WCAG: #6495ed ≥ 4.5:1 on black) */
+  --khronos-primary: #6495ed;
+  --khronos-secondary: #6495ed;
+  --khronos-dark: #4169e1;
   --khronos-light: #87ceeb;
 }
 

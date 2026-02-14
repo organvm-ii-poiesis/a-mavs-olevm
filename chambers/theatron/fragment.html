@@ -1,0 +1,81 @@
+<div class="fixed vh-100 w-100 overflow-y-auto">
+  <div class="absolute top-1 left-1 z-5">
+    <a href="#south-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
+  </div>
+  <div class="tc pt5 pb4">
+    <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #da70d6">THEATRON</h2>
+    <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">Performance recordings, rehearsals, stage</p>
+  </div>
+  <div class="mw9 center ph4 pb5 breathing">
+    <!-- Video Player Container -->
+    <div
+      id="theatron-video-container"
+      class="mb4 ba b--white-20 br3 bg-black-70 overflow-hidden"
+      style="max-width: 960px; margin: 0 auto"
+    >
+      <div class="aspect-ratio aspect-ratio--16x9 bg-dark-gray">
+        <div class="aspect-ratio--object flex items-center justify-center">
+          <p class="f4 o-50" style="color: #da70d6">Select a performance to experience</p>
+        </div>
+      </div>
+    </div>
+    <!-- Section Navigation -->
+    <div class="flex flex-wrap justify-center mb4" role="group" aria-label="Section navigation">
+      <button class="section-btn active pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2" data-section="all">
+        All
+      </button>
+      <button
+        class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
+        data-section="performances"
+      >
+        Performances
+      </button>
+      <button class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2" data-section="rehearsals">
+        Rehearsals
+      </button>
+    </div>
+    <!-- Performance Cards -->
+    <div class="flex flex-wrap justify-center">
+      <div
+        class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
+        data-section="performances"
+        data-sketch="liveWaveform"
+        style="border-left: 3px solid #da70d6"
+      >
+        <span class="f7 o-50 db mb2">&#127917; LIVE &middot; 2015 &middot; 45:00</span>
+        <h3 class="f4 mt0 mb2" style="color: #da70d6">Live at Electronica 1.3</h3>
+        <p class="f6 o-70 mt0">Full audiovisual performance with live synthesis and video manipulation.</p>
+      </div>
+      <div
+        class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
+        data-section="performances"
+        data-sketch="particleStorm"
+        style="border-left: 3px solid #da70d6"
+      >
+        <span class="f7 o-50 db mb2">&#127917; LIVE &middot; 2015 &middot; 62:00</span>
+        <h3 class="f4 mt0 mb2" style="color: #da70d6">OGOD Album Release Show</h3>
+        <p class="f6 o-70 mt0">Album release performance celebrating OGOD with expanded visual arrangements.</p>
+      </div>
+      <div
+        class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
+        data-section="performances"
+        data-sketch="modularPatch"
+        style="border-left: 3px solid #da70d6"
+      >
+        <span class="f7 o-50 db mb2">&#127916; STUDIO &middot; 2018 &middot; 28:00</span>
+        <h3 class="f4 mt0 mb2" style="color: #da70d6">Modular Synthesis Session #1</h3>
+        <p class="f6 o-70 mt0">Experimental session with Eurorack modular synthesizer.</p>
+      </div>
+      <div
+        class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
+        data-section="rehearsals"
+        data-sketch="rehearsalGhost"
+        style="border-left: 3px solid #c71585"
+      >
+        <span class="f7 o-50 db mb2">&#127916; REHEARSAL &middot; 2015 &middot; 35:00</span>
+        <h3 class="f4 mt0 mb2" style="color: #c71585">Electronica 1.3 Rehearsal</h3>
+        <p class="f6 o-70 mt0">Preparation session for the Electronica 1.3 performance.</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,128 @@
+<div class="discovery-container pa4 mw9 center">
+  <!-- Header -->
+  <header class="discovery-header flex justify-between items-center mb4 pb3 bb b--light-gray">
+    <h1 class="f2 f1-ns tracked-mega ma0">DISCOVERY</h1>
+    <a href="#menu" class="black-link f4 link" aria-label="Back to Naos">&#8629; Back</a>
+  </header>
+
+  <!-- Search Input -->
+  <div class="discovery-search mb4">
+    <input
+      type="text"
+      id="discoverySearchInput"
+      class="w-100 pa3 f4 ba b--light-gray br2"
+      placeholder="Search all chambers..."
+      aria-label="Search all chambers"
+    />
+  </div>
+
+  <!-- Quick Filters -->
+  <div
+    id="quickFilters"
+    class="discovery-quick-filters flex flex-wrap gap2 mb4"
+    role="group"
+    aria-label="Quick filters"
+  ></div>
+
+  <!-- Advanced Filters -->
+  <details class="discovery-filters mb4 ba b--light-gray br2">
+    <summary class="pa3 pointer fw6 tracked">Advanced Filters</summary>
+    <div class="filter-panel-content pa3" id="filterPanel">
+      <!-- Tag Cloud -->
+      <div class="filter-group mb3">
+        <span class="filter-group-label db mb2 f7 tracked ttu gray">Tags</span>
+        <div
+          id="tagCloud"
+          class="flex flex-wrap gap2 pa3 bg-near-white br2"
+          role="group"
+          aria-label="Filter by tag"
+        ></div>
+      </div>
+
+      <!-- Chamber Filters -->
+      <div class="filter-group mb3">
+        <span class="filter-group-label db mb2 f7 tracked ttu gray">Chambers</span>
+        <div id="chamberFilters" class="filter-group-options flex flex-wrap gap2"></div>
+      </div>
+
+      <!-- Type Filters -->
+      <div class="filter-group mb3">
+        <span class="filter-group-label db mb2 f7 tracked ttu gray">Content Type</span>
+        <div id="typeFilters" class="filter-group-options flex flex-wrap gap2"></div>
+      </div>
+
+      <!-- Wing Filters -->
+      <div class="filter-group mb3">
+        <span class="filter-group-label db mb2 f7 tracked ttu gray">Wing</span>
+        <div id="wingFilters" class="filter-group-options flex flex-wrap gap2"></div>
+      </div>
+
+      <!-- Year Range -->
+      <div class="filter-group mb3">
+        <span class="filter-group-label db mb2 f7 tracked ttu gray">Year Range</span>
+        <div class="filter-year-range flex items-center gap2">
+          <input
+            type="number"
+            id="yearFromInput"
+            class="filter-year-input pa2 ba b--light-gray br2 w4"
+            placeholder="From"
+            min="2000"
+            max="2030"
+            aria-label="Year range start"
+          />
+          <span>to</span>
+          <input
+            type="number"
+            id="yearToInput"
+            class="filter-year-input pa2 ba b--light-gray br2 w4"
+            placeholder="To"
+            min="2000"
+            max="2030"
+            aria-label="Year range end"
+          />
+        </div>
+      </div>
+
+      <!-- Clear Filters -->
+      <button id="clearFiltersBtn" class="pa2 ph3 ba b--black br2 bg-white pointer f6">Clear All Filters</button>
+    </div>
+  </details>
+
+  <!-- Results Header -->
+  <div class="discovery-results-header flex justify-between items-center mb3">
+    <span id="resultCount" class="f6 gray">0 items</span>
+    <div class="flex items-center gap2">
+      <span id="filterSummary" class="f7 gray dn db-ns">No filters active</span>
+      <select id="sortSelect" class="pa2 ba b--light-gray br2 f6 bg-white">
+        <option value="relevance-desc">Relevance</option>
+        <option value="date-desc">Newest First</option>
+        <option value="date-asc">Oldest First</option>
+        <option value="title-asc">A-Z</option>
+        <option value="title-desc">Z-A</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Results Grid -->
+  <div
+    id="resultsGrid"
+    class="discovery-results mb4"
+    role="region"
+    aria-label="Search results"
+    aria-live="polite"
+  ></div>
+
+  <!-- Pagination -->
+  <nav
+    id="pagination"
+    class="discovery-pagination flex justify-center gap2 mb4"
+    role="navigation"
+    aria-label="Results pagination"
+  ></nav>
+
+  <!-- Recommendations -->
+  <aside class="discovery-recommendations mt5 pt4 bt b--light-gray">
+    <h2 class="f5 tracked ttu mb4">Recommended For You</h2>
+    <div id="recommendationsGrid" role="region" aria-label="Recommended content"></div>
+  </aside>
+</div>

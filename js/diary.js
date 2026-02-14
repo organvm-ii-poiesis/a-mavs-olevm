@@ -104,53 +104,13 @@ $('#stills-right-diary').on('click', () => {
   loadingImage.find('img').addClass('anim-fadeIn');
 });
 
-/**
- * Track if diary event handlers are bound to prevent accumulation
- * @type {boolean}
- */
-let diaryHandlersBound = false;
-
-/**
- * Initialize diary gallery event handlers
- * Safe to call multiple times - prevents event listener accumulation
- */
-function initDiaryHandlers() {
-  if (diaryHandlersBound) {
-    return;
-  }
-
-  $('#diary').on(
-    'carousel:slide',
-    (event, _index, _indexLoadLeft, _indexLoadRight, _images, _dir, _this) => {
-      try {
-        const diaryPage = Page.findPage('#diary');
-        if (diaryPage.hasAllData === true) {
-          $('#diary').off('carousel:slide');
-          diaryHandlersBound = false;
-          return;
-        } else if (_index === _indexLoadLeft || _index === _indexLoadRight) {
-          _this.loadImages();
-        }
-      } catch (error) {
-        console.error('Error in diary carousel slide handler:', error.message);
-      }
-    }
-  );
-
-  diaryHandlersBound = true;
-}
+// Bind lazy-load handler for progressive image loading
+diaryCarousel.bindLazyLoad();
 
 /**
  * Cleanup diary gallery resources
  * Call when navigating away from diary page
  */
 function cleanupDiary() {
-  if (diaryHandlersBound) {
-    $('#diary').off('carousel:slide');
-    diaryHandlersBound = false;
-  }
   diaryCarousel.destroy();
 }
-
-// Initialize handlers on load
-initDiaryHandlers();

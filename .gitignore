@@ -81,3 +81,6 @@ playwright/.cache/
 # Build artifacts
 dist/
 build/
+
+# Project config (override global .config ignore)
+!.config/

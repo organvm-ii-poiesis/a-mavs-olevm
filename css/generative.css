@@ -86,7 +86,7 @@
 
 .oikos-entry-delete:hover {
   opacity: 1;
-  color: #dc143c;
+  color: #ff6b6b;
 }
 
 /* Agora expand */
@@ -98,6 +98,7 @@
 
 .agora-full-text.expanded {
   max-height: 500px;
+  overflow-y: auto;
 }
 
 .agora-read-more {
@@ -110,16 +111,104 @@
   opacity: 1;
 }
 
+/* Symposion dialogues */
+.symposion-dialogue {
+  min-width: 280px;
+}
+
+.symposion-line {
+  margin-bottom: 0.75rem;
+}
+
+.symposion-regenerate {
+  opacity: 0.3;
+  transition: opacity 0.2s;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.symposion-regenerate:hover {
+  opacity: 1;
+}
+
 /* Theatron active card highlight */
 .theatron-active {
-  border-color: #800080 !important;
+  border-color: #da70d6 !important;
   box-shadow: 0 0 10px rgba(128, 0, 128, 0.3);
+}
+
+/* Theatron p5 sketch container */
+.theatron-sketch-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theatron-sketch-active canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* ==========================================================================
+   Responsive: Mobile (< 30em / 480px)
+   Stack cards, reduce canvas sizes, full-width dialogues
+   ========================================================================== */
+@media screen and (max-width: 30em) {
+  /* Stack chamber cards vertically at full width */
+  .chamber-card {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* Constrain Pinakotheke canvases */
+  .pinakotheke-canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Khronos timeline: allow horizontal scroll */
+  #khronos-timeline {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #khronos-timeline svg {
+    min-width: 600px;
+  }
+
+  /* Symposion dialogues: full width on mobile */
+  .symposion-dialogue {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Theatron canvas: constrain to viewport */
+  .theatron-sketch-active canvas {
+    max-height: 50vh;
+  }
+}
+
+/* ==========================================================================
+   Responsive: Tablet (30em–60em / 480px–960px)
+   Two-column cards, medium canvas sizes
+   ========================================================================== */
+@media screen and (min-width: 30em) and (max-width: 60em) {
+  .chamber-card {
+    width: calc(50% - 2rem);
+  }
+
+  .symposion-dialogue {
+    min-width: 220px;
+  }
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .khronos-milestone,
   .bibliotheke-regenerate,
+  .symposion-regenerate,
   .oikos-entry-delete,
   .agora-read-more {
     transition: none;

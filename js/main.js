@@ -27,6 +27,19 @@
  */
 
 /**
+ * Global error boundary
+ * Catches unhandled errors and promise rejections to prevent silent failures
+ */
+window.onerror = (msg, src, line, col, err) => {
+  console.error(`Global error: ${msg} at ${src}:${line}:${col}`, err);
+  return false;
+};
+
+window.addEventListener('unhandledrejection', e => {
+  console.error('Unhandled promise rejection:', e.reason);
+});
+
+/**
  * Flag to prevent hashchange handler during programmatic navigation
  * Reassigned in page.js during navigation
  * @type {boolean}
@@ -125,68 +138,83 @@ function manageLandingCompositor() {
   }
 }
 
-// Extend showNewSection to manage 3D compositor lifecycle
-const _originalShowNewSection =
-  typeof showNewSection !== 'undefined' ? showNewSection : null;
+/**
+ * Cmd/Ctrl+K search bootstrap
+ * Loads discovery scripts on first use, then delegates to DiscoveryController
+ */
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
 
-if (_originalShowNewSection) {
-  // Override showNewSection to handle compositor lifecycle
-  window.showNewSection = function (pageId) {
-    // Call original navigation
-    _originalShowNewSection(pageId);
+    // If DiscoveryController is already loaded, let it handle subsequent events
+    if (typeof DiscoveryController !== 'undefined') {
+      return;
+    }
 
-    // Manage compositor after navigation (with slight delay for page transition)
-    setTimeout(manageLandingCompositor, 100);
-  };
-}
+    // Load discovery chamber scripts on first Cmd+K press
+    if (typeof ChamberLoader !== 'undefined') {
+      const loader = ChamberLoader.getInstance();
+      if (loader.isRegistered('discovery')) {
+        loader.ensureLoaded('discovery').then(() => {
+          // Initialize ContentRegistry for search
+          if (typeof ContentRegistry !== 'undefined') {
+            try {
+              ContentRegistry.getInstance()
+                .initialize()
+                .then(() => {
+                  // Open search modal after scripts are ready
+                  const modal = document.getElementById('searchModal');
+                  if (modal) {
+                    modal.classList.remove('dn');
+                  }
+                  const input = document.getElementById('globalSearchInput');
+                  if (input) {
+                    input.focus();
+                  }
+                })
+                .catch(err => {
+                  console.warn('ContentRegistry init error:', err.message);
+                });
+            } catch (regErr) {
+              console.warn('ContentRegistry setup error:', regErr.message);
+            }
+          }
+        });
+      }
+    }
+  }
+});
 
 $(document).ready(() => {
   const hash = window.location.hash;
-
-  // Initialize ContentRegistry for discovery system
-  // This runs early to make search available across all pages
-  if (typeof ContentRegistry !== 'undefined') {
-    try {
-      const registry = ContentRegistry.getInstance();
-      registry
-        .initialize()
-        .then(() => {
-          console.info('ContentRegistry initialized');
-        })
-        .catch(err => {
-          console.warn('ContentRegistry initialization error:', err.message);
-        });
-    } catch (registryError) {
-      console.warn('ContentRegistry setup error:', registryError.message);
-    }
-  }
 
   // Goes to the section in the URL
   if (hash) {
     try {
       const _hash = $(hash);
 
-      _hash.removeClass('dn');
-      if (hash === '#stills' || hash === '#diary') {
-        _hash.addClass('dt');
-      }
       currentPage = Page.findPage(hash);
-      currentPage.initPage();
-
-      // Manage compositor on initial load
-      manageLandingCompositor();
-
-      // Initialize Living Pantheon system on first page load
-      if (typeof initializeLivingPantheon === 'function') {
-        try {
-          initializeLivingPantheon(hash);
-        } catch (pantheError) {
-          console.warn(
-            'Living Pantheon initialization error:',
-            pantheError.message
-          );
+      currentPage.initPage().then(() => {
+        _hash.removeClass('dn');
+        if (hash === '#stills' || hash === '#diary') {
+          _hash.addClass('dt');
         }
-      }
+
+        // Manage compositor on initial load
+        manageLandingCompositor();
+
+        // Initialize Living Pantheon system on first page load
+        if (typeof initializeLivingPantheon === 'function') {
+          try {
+            initializeLivingPantheon(hash);
+          } catch (pantheError) {
+            console.warn(
+              'Living Pantheon initialization error:',
+              pantheError.message
+            );
+          }
+        }
+      });
     } catch (error) {
       // Fallback to landing page if hash is invalid
       console.warn(`Invalid hash on load: ${hash}, defaulting to landing`);

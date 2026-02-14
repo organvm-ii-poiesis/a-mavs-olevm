@@ -18,6 +18,8 @@ class OikosJournal {
     this.storageKey = 'etceter4-oikos-entries';
     /** @type {number} Character limit per entry */
     this.charLimit = 2000;
+    /** @type {number} Max entries per type before oldest-first eviction */
+    this.maxEntriesPerType = 100;
   }
 
   /**
@@ -100,7 +102,7 @@ class OikosJournal {
       charCount.textContent = `${len} / ${this.charLimit}`;
       saveBtn.disabled = len === 0;
       if (len > this.charLimit * 0.9) {
-        charCount.style.color = '#dc143c';
+        charCount.style.color = '#ff6b6b';
       } else {
         charCount.style.color = '';
       }
@@ -146,10 +148,28 @@ class OikosJournal {
     };
     entries.unshift(entry);
 
+    // Record interaction
+    if (typeof JourneyTracker !== 'undefined') {
+      JourneyTracker.getInstance().recordInteraction('oikos', 'journal_written', { type });
+    }
+
+    // Evict oldest entries per type when cap is exceeded
+    const typeCounts = {};
+    const capped = entries.filter(e => {
+      typeCounts[e.type] = (typeCounts[e.type] || 0) + 1;
+      return typeCounts[e.type] <= this.maxEntriesPerType;
+    });
+
     try {
-      localStorage.setItem(this.storageKey, JSON.stringify(entries));
+      const serialized = JSON.stringify(capped);
+      localStorage.setItem(this.storageKey, serialized);
     } catch (err) {
       console.warn('OikosJournal: storage error:', err.message);
+    }
+
+    // Record interaction
+    if (typeof JourneyTracker !== 'undefined') {
+      JourneyTracker.getInstance().recordInteraction('oikos', 'journal_written', { type });
     }
   }
 

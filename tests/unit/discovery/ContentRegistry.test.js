@@ -14,10 +14,10 @@ const mockConfig = {
   },
   chambers: {
     akademia: { name: 'AKADEMIA', color: '#00FFFF', wing: 'east' },
-    bibliotheke: { name: 'BIBLIOTHEKE', color: '#8B4513', wing: 'east' },
+    bibliotheke: { name: 'BIBLIOTHEKE', color: '#D2B48C', wing: 'east' },
     pinakotheke: { name: 'PINAKOTHEKE', color: '#FF00FF', wing: 'east' },
     odeion: { name: 'ODEION', color: '#FFD700', wing: 'south' },
-    agora: { name: 'AGORA', color: '#DC143C', wing: 'west' },
+    agora: { name: 'AGORA', color: '#FF6B6B', wing: 'west' },
   },
 };
 
@@ -95,7 +95,7 @@ const mockOdeionConfig = {
 // Mock AGORA_CONFIG
 const mockAgoraConfig = {
   chamber: { id: 'agora', name: 'AGORA', wing: 'west' },
-  theme: { primary: '#DC143C' },
+  theme: { primary: '#FF6B6B' },
   content: {
     items: [
       {

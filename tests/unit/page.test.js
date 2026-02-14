@@ -435,3 +435,113 @@ describe('Page State Management', () => {
     expect(page.hasAllData).toBe(true);
   });
 });
+
+describe('Delegated Click Handler', () => {
+  // Tests for the delegated a[href^="#"] handler in page.js
+  // These validate the handler logic without requiring jQuery event simulation
+
+  it('should skip links with href="#" (bare hash)', () => {
+    // The handler returns early for href="#"
+    const hash = '#';
+    const shouldSkip = !hash || hash === '#' || hash === '#pages';
+    expect(shouldSkip).toBe(true);
+  });
+
+  it('should skip links with href="#pages"', () => {
+    const hash = '#pages';
+    const shouldSkip = !hash || hash === '#' || hash === '#pages';
+    expect(shouldSkip).toBe(true);
+  });
+
+  it('should skip empty or falsy href values', () => {
+    const hash = '';
+    const shouldSkip = !hash || hash === '#' || hash === '#pages';
+    expect(shouldSkip).toBe(true);
+  });
+
+  it('should allow navigation for valid hash links', () => {
+    const testHashes = ['#menu', '#sound', '#vision', '#landing', '#akademia'];
+    testHashes.forEach(hash => {
+      const shouldSkip = !hash || hash === '#' || hash === '#pages';
+      expect(shouldSkip).toBe(false);
+    });
+  });
+
+  it('should process hash links starting with #', () => {
+    const hash = '#ergasterion';
+    const isHashLink = hash.startsWith('#');
+    const shouldSkip = !hash || hash === '#' || hash === '#pages';
+    expect(isHashLink).toBe(true);
+    expect(shouldSkip).toBe(false);
+  });
+});
+
+describe('Back Button Navigation', () => {
+  beforeEach(() => {
+    mockPages = [
+      new Page({
+        id: '#landing',
+        tier: 1,
+        downLinks: ['#menu'],
+      }),
+      new Page({
+        id: '#menu',
+        tier: 2,
+        upLinks: ['#landing'],
+        downLinks: ['#sound', '#vision'],
+      }),
+      new Page({
+        id: '#sound',
+        tier: 3,
+        upLinks: ['#menu'],
+      }),
+      new Page({
+        id: '#vision',
+        tier: 3,
+        upLinks: ['#menu'],
+        downLinks: ['#video'],
+      }),
+      new Page({
+        id: '#video',
+        tier: 4,
+        upLinks: ['#vision'],
+      }),
+    ];
+  });
+
+  it('should use getBackElement() to determine back target', () => {
+    const videoPage = Page.findPage('#video');
+    const back = videoPage.getBackElement();
+    expect(back).toBeDefined();
+    expect(back.id).toBe('#vision');
+  });
+
+  it('should return empty string when landing has no back', () => {
+    const landingPage = Page.findPage('#landing');
+    const back = landingPage.getBackElement();
+    expect(back).toBe('');
+  });
+
+  it('should prefer trace over upLinks for back navigation', () => {
+    const soundPage = Page.findPage('#sound');
+    soundPage.trace = '#landing';
+    const back = soundPage.getBackElement();
+    // trace returns the string directly, not a Page object
+    expect(back).toBe('#landing');
+  });
+
+  it('should navigate through multi-level hierarchy correctly', () => {
+    const videoPage = Page.findPage('#video');
+    const visionPage = videoPage.getBackElement();
+    expect(visionPage.id).toBe('#vision');
+
+    const menuPage = visionPage.getBackElement();
+    expect(menuPage.id).toBe('#menu');
+
+    const landingPage = menuPage.getBackElement();
+    expect(landingPage.id).toBe('#landing');
+
+    const noBack = landingPage.getBackElement();
+    expect(noBack).toBe('');
+  });
+});

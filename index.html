@@ -47,9 +47,25 @@
     <link rel="stylesheet" href="css/ergasterion.css" />
     <link rel="stylesheet" href="css/odeion.css" />
     <link rel="stylesheet" href="css/generative.css" />
+    <link rel="stylesheet" href="css/living-animations.css" />
+    <link rel="stylesheet" href="css/chamber-colors.css" />
+    <link rel="stylesheet" href="css/gallery.css" />
+    <link rel="stylesheet" href="css/timeline.css" />
 
     <!-- Video.js CSS -->
-    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+    <link
+      href="https://vjs.zencdn.net/8.6.1/video-js.css"
+      rel="stylesheet"
+      integrity="sha384-tFXa23e+aajUXEEQBum5/6q0Cq9+dJaDFPH5nk4lyG8NK9SbKo5AlZ4LtVHzyFH0"
+      crossorigin="anonymous"
+    />
+
+    <!-- Resource hints for CDN origins -->
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="preconnect" href="https://code.createjs.com" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://vjs.zencdn.net" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/favicon.ico" />
@@ -102,12 +118,10 @@
           >
             <div class="tji tji-fix">
               <a
-                href="http://music.etceter4.com/music"
+                href="#sound"
                 id="toSoundPage"
-                target="_blank"
-                rel="noopener noreferrer"
                 class="db f2 link tji tji-fix black-link"
-                aria-label="Sound - Music and audio content (opens in new tab)"
+                aria-label="Sound - Music and audio content"
                 >S O U N D</a
               >
             </div>
@@ -147,6 +161,13 @@
                 title="Search all chambers (Cmd+K)"
                 >&#x1F50D; D I S C O V E R Y</a
               >
+            </div>
+            <!-- Wings -->
+            <div class="tji tji-fix mt3 pt3 bt b--black-20">
+              <a href="#east-wing" class="db f4 link tji tji-fix light-blue hover-black mb2">EAST WING</a>
+              <a href="#west-wing" class="db f4 link tji tji-fix light-green hover-black mb2">WEST WING</a>
+              <a href="#south-wing" class="db f4 link tji tji-fix light-yellow hover-black mb2">SOUTH WING</a>
+              <a href="#north-wing" class="db f4 link tji tji-fix gray hover-black">NORTH WING</a>
             </div>
           </nav>
         </section>
@@ -261,251 +282,21 @@
         id="akademia"
         class="dn min-vh-100 w-100 pb-6rem bg-black white"
         aria-label="Akademia - Essays, research, and scholarly work"
-      >
-        <div class="fixed vh-100 w-100 overflow-y-auto">
-          <div class="absolute top-1 left-1 z-5">
-            <a href="#east-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
-          </div>
-          <div class="tc pt5 pb4">
-            <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #00ffff">AKADEMIA</h2>
-            <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">Essays, research, papers, and scholarly work</p>
-          </div>
-          <div class="mw9 center ph4 pb5 breathing">
-            <div class="flex flex-wrap justify-center mb4" role="group" aria-label="Section navigation">
-              <button
-                class="section-btn active pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="all"
-              >
-                All
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="essays"
-              >
-                Essays
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="papers"
-              >
-                Papers
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="tutorials"
-              >
-                Tutorials
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="research"
-              >
-                Research
-              </button>
-            </div>
-            <div class="flex flex-wrap justify-center">
-              <a
-                href="akademia/index.html"
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 link white hover-bg-white-10"
-                data-section="essays"
-                style="border-left: 3px solid #00ffff"
-              >
-                <h3 class="f4 mt0 mb2" style="color: #00ffff">The Digital Temple</h3>
-                <p class="f6 o-70 mt0 mb2">Reflections on Web Architecture as Sacred Space</p>
-                <span class="f7 o-50">Draft &middot; 15 min read</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      ></section>
 
       <!-- Bibliotheke - Library -->
       <section
         id="bibliotheke"
         class="dn min-vh-100 w-100 pb-6rem bg-black white"
         aria-label="Bibliotheke - Poetry, prose, and literary works"
-      >
-        <div class="fixed vh-100 w-100 overflow-y-auto">
-          <div class="absolute top-1 left-1 z-5">
-            <a href="#east-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
-          </div>
-          <div class="tc pt5 pb4">
-            <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #8b4513">BIBLIOTHEKE</h2>
-            <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">Poetry, prose, lyrics, literary criticism</p>
-          </div>
-          <div class="mw9 center ph4 pb5 breathing">
-            <div class="flex flex-wrap justify-center mb4" role="group" aria-label="Section navigation">
-              <button
-                class="section-btn active pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="all"
-              >
-                All
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="poetry"
-              >
-                Poetry
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="prose"
-              >
-                Prose
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="lyrics"
-              >
-                Lyrics
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="criticism"
-              >
-                Criticism
-              </button>
-            </div>
-            <div class="flex flex-wrap justify-center">
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="poetry"
-                style="border-left: 3px solid #8b4513"
-              >
-                <h3 class="f4 mt0 mb2" style="color: #8b4513">Untitled Verses</h3>
-                <p class="f6 o-70 mt0 mb2">Contemporary Poetry Collection</p>
-                <div class="bibliotheke-poem" data-mode="poetry"></div>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="prose"
-                style="border-left: 3px solid #8b4513"
-              >
-                <h3 class="f4 mt0 mb2" style="color: #8b4513">Narrative Fragments</h3>
-                <p class="f6 o-70 mt0 mb2">Short-Form Prose Collection</p>
-                <div class="bibliotheke-poem" data-mode="prose"></div>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="lyrics"
-                style="border-left: 3px solid #8b4513"
-              >
-                <h3 class="f4 mt0 mb2" style="color: #8b4513">Song Texts</h3>
-                <p class="f6 o-70 mt0 mb2">Lyrics from Musical Works</p>
-                <div class="bibliotheke-poem" data-mode="lyrics"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      ></section>
 
       <!-- Pinakotheke - Art Gallery -->
       <section
         id="pinakotheke"
         class="dn min-vh-100 w-100 pb-6rem bg-black white"
         aria-label="Pinakotheke - Art gallery and visual works"
-      >
-        <div class="fixed vh-100 w-100 overflow-y-auto">
-          <div class="absolute top-1 left-1 z-5">
-            <a href="#east-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
-          </div>
-          <div class="tc pt5 pb4">
-            <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #ff00ff">PINAKOTHEKE</h2>
-            <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">Photography, digital art, glitch, generative</p>
-          </div>
-          <div class="mw9 center ph4 pb5 breathing">
-            <div class="flex flex-wrap justify-center mb4" role="group" aria-label="Section navigation">
-              <button
-                class="section-btn active pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="all"
-              >
-                All
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="photography"
-              >
-                Photography
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="digital"
-              >
-                Digital
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="glitch"
-              >
-                Glitch
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="generative"
-              >
-                Generative
-              </button>
-            </div>
-            <div class="flex flex-wrap justify-center" id="pinakotheke-gallery">
-              <div
-                class="chamber-card morph-image ba b--white-20 br3 ma2 overflow-hidden"
-                data-section="photography"
-                style="width: 200px; height: 200px"
-              >
-                <canvas
-                  class="pinakotheke-canvas w-100 h-100"
-                  data-sketch="noiseField"
-                  aria-label="Generative noise field artwork"
-                ></canvas>
-              </div>
-              <div
-                class="chamber-card morph-image ba b--white-20 br3 ma2 overflow-hidden"
-                data-section="digital"
-                style="width: 200px; height: 200px"
-              >
-                <canvas
-                  class="pinakotheke-canvas w-100 h-100"
-                  data-sketch="vectorForms"
-                  aria-label="Generative vector geometry artwork"
-                ></canvas>
-              </div>
-              <div
-                class="chamber-card morph-image ba b--white-20 br3 ma2 overflow-hidden"
-                data-section="glitch"
-                style="width: 200px; height: 200px"
-              >
-                <canvas
-                  class="pinakotheke-canvas w-100 h-100"
-                  data-sketch="pixelGlitch"
-                  aria-label="Live pixel sort glitch artwork"
-                ></canvas>
-              </div>
-              <div
-                class="chamber-card morph-image ba b--white-20 br3 ma2 overflow-hidden"
-                data-section="generative"
-                style="width: 200px; height: 200px"
-              >
-                <canvas
-                  class="pinakotheke-canvas w-100 h-100"
-                  data-sketch="flowParticles"
-                  aria-label="Generative flow particle artwork"
-                ></canvas>
-              </div>
-              <div
-                class="chamber-card morph-image ba b--white-20 br3 ma2 overflow-hidden"
-                data-section="generative"
-                style="width: 200px; height: 200px"
-              >
-                <canvas
-                  class="pinakotheke-canvas w-100 h-100"
-                  data-sketch="fractalGrowth"
-                  aria-label="Generative fractal growth artwork"
-                ></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      ></section>
 
       <!-- West Wing Chambers -->
 
@@ -514,257 +305,21 @@
         id="agora"
         class="dn min-vh-100 w-100 pb-6rem bg-black white"
         aria-label="Agora - Political commentary and social critique"
-      >
-        <div class="fixed vh-100 w-100 overflow-y-auto">
-          <div class="absolute top-1 left-1 z-5">
-            <a href="#west-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
-          </div>
-          <div class="tc pt5 pb4">
-            <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #dc143c">AGORA</h2>
-            <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">Political commentary, manifestos, social critique</p>
-          </div>
-          <div class="mw9 center ph4 pb5 breathing">
-            <div class="flex flex-wrap justify-center mb4" role="group" aria-label="Section navigation">
-              <button
-                class="section-btn active pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="all"
-              >
-                All
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="feed"
-              >
-                Feed
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="commentary"
-              >
-                Commentary
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="manifestos"
-              >
-                Manifestos
-              </button>
-            </div>
-            <div class="flex flex-wrap justify-center">
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
-                data-section="feed"
-                style="border-left: 3px solid #dc143c"
-              >
-                <span class="f7 o-50 db mb2">POLITICS &middot; 2026-02-02</span>
-                <h3 class="f4 mt0 mb2" style="color: #dc143c">The Paradox of Democratic Representation</h3>
-                <p class="f6 o-70 mt0">How systems designed to amplify the many end up silencing the singular voice.</p>
-                <div class="agora-full-text f6 o-60 lh-copy mt2">
-                  <p>
-                    Representative democracy operates on a fundamental contradiction: it asks individuals to surrender
-                    their voice to a proxy, trusting that the aggregate will approximate their intent. But aggregation
-                    is lossy compression. The nuance of a single perspective — its contradictions, its conditional
-                    truths, its lived specificity — cannot survive the reduction into a vote, a poll number, a
-                    demographic.
-                  </p>
-                  <p class="mt2">
-                    What remains is not the voice of the many, but the voice of the mean: an averaged signal that
-                    belongs to no one and speaks for everyone. The system doesn't amplify — it averages. And in
-                    averaging, it creates an illusion of consensus where only compromise exists.
-                  </p>
-                </div>
-                <span class="agora-read-more f7 db mt2" style="color: #dc143c">Read more &darr;</span>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
-                data-section="feed"
-                style="border-left: 3px solid #dc143c"
-              >
-                <span class="f7 o-50 db mb2">IDEOLOGY &middot; 2026-02-01</span>
-                <h3 class="f4 mt0 mb2" style="color: #dc143c">Power as Narrative Architecture</h3>
-                <p class="f6 o-70 mt0">The stories we tell ourselves become the structures we live within.</p>
-                <div class="agora-full-text f6 o-60 lh-copy mt2">
-                  <p>
-                    Every power structure begins as a story. The nation-state is a story of borders. The corporation is
-                    a story of ownership. The family is a story of blood. These narratives are not descriptions of
-                    reality — they are blueprints that reality is built to match.
-                  </p>
-                  <p class="mt2">
-                    The most dangerous stories are the ones we've forgotten are stories at all. When a narrative becomes
-                    so embedded that it feels like physics — like gravity, inevitable and natural — then it has achieved
-                    its ultimate form: ideology disguised as common sense.
-                  </p>
-                </div>
-                <span class="agora-read-more f7 db mt2" style="color: #dc143c">Read more &darr;</span>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
-                data-section="manifestos"
-                style="border-left: 3px solid #dc143c"
-              >
-                <span class="f7 o-50 db mb2">MANIFESTO &middot; 2026-02-02</span>
-                <h3 class="f4 mt0 mb2" style="color: #dc143c">A Manifesto Against Comfort</h3>
-                <p class="f6 o-70 mt0">
-                  We refuse the ease of the familiar. We declare: discomfort is prerequisite to thought.
-                </p>
-                <div class="agora-full-text f6 o-60 lh-copy mt2">
-                  <p>
-                    I. Comfort is the anaesthetic of the mind. It does not heal — it numbs. Every convenience is a small
-                    surrender, every ease a minor abdication of the friction that makes thought possible.
-                  </p>
-                  <p class="mt2">
-                    II. We do not seek suffering for its own sake. We seek the productive tension that arises when
-                    assumptions are challenged, when habits are disrupted, when the familiar becomes strange again.
-                  </p>
-                  <p class="mt2">
-                    III. The comfortable mind reproduces. The uncomfortable mind creates. Choose accordingly.
-                  </p>
-                </div>
-                <span class="agora-read-more f7 db mt2" style="color: #dc143c">Read more &darr;</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      ></section>
 
       <!-- Symposion - Dialogues -->
       <section
         id="symposion"
         class="dn min-vh-100 w-100 pb-6rem bg-black white"
         aria-label="Symposion - Dialogues, interviews, and conversations"
-      >
-        <div class="fixed vh-100 w-100 overflow-y-auto">
-          <div class="absolute top-1 left-1 z-5">
-            <a href="#west-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
-          </div>
-          <div class="tc pt5 pb4">
-            <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #722f37">SYMPOSION</h2>
-            <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">Dialogues, interviews, conversations</p>
-          </div>
-          <div class="mw9 center ph4 pb5 breathing">
-            <div class="flex flex-wrap justify-center mb4" role="group" aria-label="Section navigation">
-              <button
-                class="section-btn active pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="all"
-              >
-                All
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="interviews"
-              >
-                Interviews
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="conversations"
-              >
-                Conversations
-              </button>
-            </div>
-            <div class="flex flex-wrap justify-center">
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="interviews"
-                style="border-left: 3px solid #722f37"
-              >
-                <div class="mb2">
-                  <span class="f7 ba br2 ph2 pv1 mr1" style="border-color: #722f37; color: #722f37">&#9670; ET</span>
-                  <span class="f7 ba br2 ph2 pv1" style="border-color: #a0522d; color: #a0522d">&#9671; Guest</span>
-                </div>
-                <h3 class="f4 mt0 mb2" style="color: #722f37">Interview with [Guest Name]</h3>
-                <p class="f6 o-70 mt0">A structured exploration of artistic practice and creative philosophy.</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="conversations"
-                style="border-left: 3px solid #722f37"
-              >
-                <div class="mb2">
-                  <span class="f7 ba br2 ph2 pv1 mr1" style="border-color: #722f37; color: #722f37">&#9670; ET</span>
-                  <span class="f7 ba br2 ph2 pv1 mr1" style="border-color: #a0522d; color: #a0522d">&#9671; A</span>
-                  <span class="f7 ba br2 ph2 pv1" style="border-color: #8b4513; color: #8b4513">&#9672; B</span>
-                </div>
-                <h3 class="f4 mt0 mb2" style="color: #722f37">Conversation on Creative Process</h3>
-                <p class="f6 o-70 mt0">
-                  An informal dialogue exploring the intersection of music, code, and visual art.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      ></section>
 
       <!-- Oikos - Personal Reflections -->
       <section
         id="oikos"
         class="dn min-vh-100 w-100 pb-6rem bg-black white"
         aria-label="Oikos - Personal reflections, dreams, and confessions"
-      >
-        <div class="fixed vh-100 w-100 overflow-y-auto">
-          <div class="absolute top-1 left-1 z-5">
-            <a href="#west-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
-          </div>
-          <div class="tc pt5 pb4">
-            <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #ff8c00">OIKOS</h2>
-            <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">Reflections, dreams, confessions</p>
-          </div>
-          <div class="mw9 center ph4 pb5 breathing">
-            <div class="flex flex-wrap justify-center mb4" role="group" aria-label="Section navigation">
-              <button
-                class="section-btn active pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="all"
-              >
-                All
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="reflections"
-              >
-                &#9671; Reflections
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="dreams"
-              >
-                &#9680; Dreams
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="confessions"
-              >
-                &#9670; Confessions
-              </button>
-            </div>
-            <div class="flex flex-wrap justify-center">
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white tc"
-                data-section="reflections"
-                style="border-left: 3px solid #ff8c00"
-              >
-                <p class="f5 o-70 bodoni i mt0">What clarity emerged today?</p>
-                <div class="oikos-journal-mount" data-type="reflections"></div>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white tc"
-                data-section="dreams"
-                style="border-left: 3px solid #ffb6c1"
-              >
-                <p class="f5 o-70 bodoni i mt0">What did your unconscious reveal?</p>
-                <div class="oikos-journal-mount" data-type="dreams"></div>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white tc"
-                data-section="confessions"
-                style="border-left: 3px solid #ffd9b3"
-              >
-                <p class="f5 o-70 bodoni i mt0">What truth do you need to speak?</p>
-                <div class="oikos-journal-mount" data-type="confessions"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      ></section>
 
       <!-- South Wing Chambers -->
 
@@ -773,221 +328,14 @@
         id="odeion"
         class="dn min-vh-100 w-100 pb-6rem bg-black white"
         aria-label="Odeion - Music hall with albums and audio works"
-      >
-        <div class="fixed vh-100 w-100 overflow-y-auto">
-          <div class="absolute top-1 left-1 z-5">
-            <a href="#south-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
-          </div>
-          <div class="tc pt5 pb4">
-            <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #ffd700">ODEION</h2>
-            <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">Albums, singles, demos, experimental</p>
-          </div>
-          <div class="mw9 center ph4 pb5 breathing">
-            <!-- Audio Player Container -->
-            <div id="odeion-player-container" class="mb4 pa3 ba b--white-20 br3 bg-black-70">
-              <div id="odeion-now-playing" class="tc mb3">
-                <p class="f6 o-50 mt0 mb1">Now Playing</p>
-                <p id="odeion-track-title" class="f4 mt0 mb2" style="color: #ffd700">Select a track</p>
-              </div>
-              <canvas
-                id="odeion-waveform"
-                class="w-100 db"
-                height="80"
-                aria-label="Audio waveform visualization"
-              ></canvas>
-              <div id="odeion-controls" class="flex justify-center items-center mt3">
-                <button
-                  id="odeion-play-btn"
-                  class="pa2 ph3 ba b--white-30 bg-black-70 white f7 pointer br2 mr2"
-                  aria-label="Play/Pause"
-                >
-                  &#9654; Play
-                </button>
-                <input id="odeion-volume" type="range" min="0" max="100" value="80" class="mr2" aria-label="Volume" />
-              </div>
-            </div>
-            <!-- Section Navigation -->
-            <div class="flex flex-wrap justify-center mb4" role="group" aria-label="Section navigation">
-              <button
-                class="section-btn active pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="all"
-              >
-                All
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="album"
-              >
-                Albums
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="single"
-              >
-                Singles
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="demo"
-              >
-                Demos
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="experimental"
-              >
-                Experimental
-              </button>
-            </div>
-            <!-- Album Grid -->
-            <div class="flex flex-wrap justify-center">
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 white"
-                data-section="album"
-                style="width: 280px; border-left: 3px solid #ffd700"
-              >
-                <div class="bg-dark-gray br2 mb3 tc" style="height: 200px; line-height: 200px">
-                  <span class="f1" style="color: #ffd700">OGOD</span>
-                </div>
-                <h3 class="f5 mt0 mb1" style="color: #ffd700">OGOD</h3>
-                <p class="f7 o-50 mt0 mb1">2015 &middot; 29 tracks &middot; 1:15:30</p>
-                <p class="f7 o-70 mt0">Visual album with 29 video game music arrangements</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 white"
-                data-section="album"
-                style="width: 280px; border-left: 3px solid #ffd700"
-              >
-                <div class="bg-dark-gray br2 mb3 tc" style="height: 200px; line-height: 200px">
-                  <span class="f2" style="color: #ffd700">P/D</span>
-                </div>
-                <h3 class="f5 mt0 mb1" style="color: #ffd700">The Progression of Digression</h3>
-                <p class="f7 o-50 mt0 mb1">2012 &middot; 12 tracks &middot; 48:15</p>
-                <p class="f7 o-70 mt0">Full-length debut exploring musical transformation</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 white"
-                data-section="album"
-                style="width: 280px; border-left: 3px solid #ffd700"
-              >
-                <div class="bg-dark-gray br2 mb3 tc" style="height: 200px; line-height: 200px">
-                  <span class="f2" style="color: #ffd700">RMXS</span>
-                </div>
-                <h3 class="f5 mt0 mb1" style="color: #ffd700">ET CETER4 RMXS</h3>
-                <p class="f7 o-50 mt0 mb1">2020 &middot; Remix collection</p>
-                <p class="f7 o-70 mt0">Collaborations and reinterpretations</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 white"
-                data-section="experimental"
-                style="width: 280px; border-left: 3px solid #ffd700"
-              >
-                <div class="bg-dark-gray br2 mb3 tc" style="height: 200px; line-height: 200px">
-                  <span class="f3" style="color: #ffd700">&#x223F;</span>
-                </div>
-                <h3 class="f5 mt0 mb1" style="color: #ffd700">Ambient Study No. 1</h3>
-                <p class="f7 o-50 mt0 mb1">2023 &middot; ~15:00</p>
-                <p class="f7 o-70 mt0">Generative ambient soundscape using algorithmic composition</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      ></section>
 
       <!-- Theatron - Theater -->
       <section
         id="theatron"
         class="dn min-vh-100 w-100 pb-6rem bg-black white"
         aria-label="Theatron - Performance recordings and stage documentation"
-      >
-        <div class="fixed vh-100 w-100 overflow-y-auto">
-          <div class="absolute top-1 left-1 z-5">
-            <a href="#south-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
-          </div>
-          <div class="tc pt5 pb4">
-            <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #800080">THEATRON</h2>
-            <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">Performance recordings, rehearsals, stage</p>
-          </div>
-          <div class="mw9 center ph4 pb5 breathing">
-            <!-- Video Player Container -->
-            <div
-              id="theatron-video-container"
-              class="mb4 ba b--white-20 br3 bg-black-70 overflow-hidden"
-              style="max-width: 960px; margin: 0 auto"
-            >
-              <div class="aspect-ratio aspect-ratio--16x9 bg-dark-gray">
-                <div class="aspect-ratio--object flex items-center justify-center">
-                  <p class="f4 o-50" style="color: #800080">Select a performance to watch</p>
-                </div>
-              </div>
-            </div>
-            <!-- Section Navigation -->
-            <div class="flex flex-wrap justify-center mb4" role="group" aria-label="Section navigation">
-              <button
-                class="section-btn active pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="all"
-              >
-                All
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="performances"
-              >
-                Performances
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="rehearsals"
-              >
-                Rehearsals
-              </button>
-            </div>
-            <!-- Performance Cards -->
-            <div class="flex flex-wrap justify-center">
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
-                data-section="performances"
-                data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                style="border-left: 3px solid #800080"
-              >
-                <span class="f7 o-50 db mb2">&#127917; LIVE &middot; 2015 &middot; 45:00</span>
-                <h3 class="f4 mt0 mb2" style="color: #800080">Live at Electronica 1.3</h3>
-                <p class="f6 o-70 mt0">Full audiovisual performance with live synthesis and video manipulation.</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
-                data-section="performances"
-                data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                style="border-left: 3px solid #800080"
-              >
-                <span class="f7 o-50 db mb2">&#127917; LIVE &middot; 2015 &middot; 62:00</span>
-                <h3 class="f4 mt0 mb2" style="color: #800080">OGOD Album Release Show</h3>
-                <p class="f6 o-70 mt0">Album release performance celebrating OGOD with expanded visual arrangements.</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
-                data-section="performances"
-                data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                style="border-left: 3px solid #800080"
-              >
-                <span class="f7 o-50 db mb2">&#127916; STUDIO &middot; 2018 &middot; 28:00</span>
-                <h3 class="f4 mt0 mb2" style="color: #800080">Modular Synthesis Session #1</h3>
-                <p class="f6 o-70 mt0">Experimental session with Eurorack modular synthesizer.</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white pointer"
-                data-section="rehearsals"
-                data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                style="border-left: 3px solid #c71585"
-              >
-                <span class="f7 o-50 db mb2">&#127916; REHEARSAL &middot; 2015 &middot; 35:00</span>
-                <h3 class="f4 mt0 mb2" style="color: #c71585">Electronica 1.3 Rehearsal</h3>
-                <p class="f6 o-70 mt0">Preparation session for the Electronica 1.3 performance.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      ></section>
 
       <!-- North Wing Chambers -->
 
@@ -996,121 +344,14 @@
         id="ergasterion"
         class="dn min-vh-100 w-100 pb-6rem bg-black white"
         aria-label="Ergasterion - Code experiments and interactive demos"
-      >
-        <div class="fixed vh-100 w-100 overflow-y-auto">
-          <div class="absolute top-1 left-1 z-5">
-            <a href="#north-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
-          </div>
-          <div class="tc pt5 pb4">
-            <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #00ff00">ERGASTERION</h2>
-            <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">Code experiments, prototypes, interactive demos</p>
-          </div>
-          <div class="mw9 center ph4 pb5 breathing">
-            <!-- Exhibit Portal: populated by ExhibitPortal.js -->
-            <div id="ergasterion-exhibit-portal"></div>
-          </div>
-        </div>
-      </section>
+      ></section>
 
       <!-- Khronos - Timeline -->
       <section
         id="khronos"
         class="dn min-vh-100 w-100 pb-6rem bg-black white"
         aria-label="Khronos - Historical archive and timeline"
-      >
-        <div class="fixed vh-100 w-100 overflow-y-auto">
-          <div class="absolute top-1 left-1 z-5">
-            <a href="#north-wing" class="white-link f-2_250rem-ns link">&#8629;</a>
-          </div>
-          <div class="tc pt5 pb4">
-            <h2 class="f2 f-headline-ns tracked-mega mb3 living-text" style="color: #4169e1">KHRONOS</h2>
-            <p class="bodoni f4 o-70 mw6 center ph4 drifting-text">
-              Historical archive, evolution tracking, milestones
-            </p>
-          </div>
-          <div class="mw9 center ph4 pb5 breathing">
-            <div class="flex flex-wrap justify-center mb4" role="group" aria-label="Section navigation">
-              <button
-                class="section-btn active pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="all"
-              >
-                All
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="eras"
-              >
-                Eras
-              </button>
-              <button
-                class="section-btn pa2 ph3 ma1 ba b--white-30 bg-black-70 white f7 pointer br2"
-                data-section="milestones"
-              >
-                Milestones
-              </button>
-            </div>
-            <!-- Timeline -->
-            <div id="khronos-timeline" class="mb4 pa3 ba b--white-20 br3" style="min-height: 100px"></div>
-            <!-- Era Cards -->
-            <div class="flex flex-wrap justify-center">
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="eras"
-                style="border-left: 3px solid #87ceeb"
-              >
-                <span class="f7 o-50 db mb2">2022</span>
-                <h3 class="f4 mt0 mb2" style="color: #87ceeb">Genesis</h3>
-                <p class="f6 o-70 mt0">Initial conception and foundational architecture development.</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="eras"
-                style="border-left: 3px solid #6495ed"
-              >
-                <span class="f7 o-50 db mb2">2022&ndash;2023</span>
-                <h3 class="f4 mt0 mb2" style="color: #6495ed">Expansion</h3>
-                <p class="f6 o-70 mt0">Rapid expansion of chamber content and multimedia support.</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="eras"
-                style="border-left: 3px solid #4169e1"
-              >
-                <span class="f7 o-50 db mb2">2023&ndash;2024</span>
-                <h3 class="f4 mt0 mb2" style="color: #4169e1">Refinement</h3>
-                <p class="f6 o-70 mt0">Code quality, accessibility, and performance optimization.</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="eras"
-                style="border-left: 3px solid #00008b"
-              >
-                <span class="f7 o-50 db mb2">2024&ndash;Present</span>
-                <h3 class="f4 mt0 mb2" style="color: #00008b">Integration</h3>
-                <p class="f6 o-70 mt0">Living Pantheon, AI integration, and advanced shader systems.</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="milestones"
-                style="border-left: 3px solid #4169e1"
-              >
-                <span class="f7 o-50 db mb2">2022-01-15 &middot; HIGH IMPACT</span>
-                <h3 class="f5 mt0 mb2" style="color: #4169e1">Project Launch</h3>
-                <p class="f6 o-70 mt0">Official launch of ETCETER4 project with initial chamber framework</p>
-              </div>
-              <div
-                class="chamber-card db ba b--white-20 br3 pa4 ma3 mw6 white"
-                data-section="milestones"
-                style="border-left: 3px solid #4169e1"
-              >
-                <span class="f7 o-50 db mb2">2024-03-10 &middot; HIGH IMPACT</span>
-                <h3 class="f5 mt0 mb2" style="color: #4169e1">Living Pantheon System</h3>
-                <p class="f6 o-70 mt0">Introduction of the Living Pantheon system for dynamic content management</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      ></section>
 
       <!-- Menu // Words -->
       <section id="words" class="dn vh-100 w-100 pb-6rem bg-blue black">
@@ -1121,14 +362,7 @@
               class="flex flex-column justify-between center tc ba bg-gray bw1 b--black pa0 bn"
             >
               <div class="tji tji-fix">
-                <a
-                  href="analog.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  id="toDiaryPage"
-                  class="f3 f-2_250rem-ns link black-link"
-                  >D I A R Y</a
-                >
+                <a href="#diary" id="toDiaryPage" class="f3 f-2_250rem-ns link black-link">D I A R Y</a>
               </div>
               <div class="tji tji-fix">
                 <a href="#blog" id="toBlogPage" class="f3 f-2_250rem-ns link red-link">B L O G</a>
@@ -1165,14 +399,7 @@
               class="flex flex-column justify-between center tc ba bg-light-green bw1 b--black pa0 bn"
             >
               <div class="tji tji-fix">
-                <a
-                  href="https://www.youtube.com/user/etceter4"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  id="toVideoPage"
-                  class="f3 f-2_250rem-ns link white-link"
-                  >V I D E O</a
-                >
+                <a href="#video" id="toVideoPage" class="f3 f-2_250rem-ns link white-link">V I D E O</a>
               </div>
               <div class="tji tji-fix">
                 <a href="#ogod3d" id="toOGOD3D" class="f3 f-2_250rem-ns link cyan-link">O G O D</a>
@@ -1183,14 +410,7 @@
                 >
               </div>
               <div class="tji tji-fix">
-                <a
-                  href="img/photos/random/stills.html"
-                  id=""
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="f3 f-2_250rem-ns link black-link"
-                  >S T I L L</a
-                >
+                <a href="#stills" id="toStillsPage" class="f3 f-2_250rem-ns link black-link">S T I L L S</a>
               </div>
             </div>
           </div>
@@ -1204,8 +424,8 @@
           class="flex justify-around items-center flex-wrap vh-100 w-100-ns overflow-x-scroll overflow-y-none center"
         >
           <section id="OneGameOneDay" class="w-18_750rem shadedow ma4">
-            <div id="BCContainer" class="h-18_750rem"></div>
-            <div id="textContainer" class="pt4 h-6_250rem bg-white tc relative">
+            <div class="BCContainer h-18_750rem"></div>
+            <div class="textContainer pt4 h-6_250rem bg-white tc relative">
               <p class="mt1 mb1">OGOD // 2015</p>
 
               <a
@@ -1220,22 +440,22 @@
           </section>
 
           <section id="RMXS" class="w-18_750rem shadedow ma4">
-            <div id="BCContainer" class="h-18_750rem"></div>
-            <div id="textContainer" class="pt4 h-6_250rem bg-white tc relative">
+            <div class="BCContainer h-18_750rem"></div>
+            <div class="textContainer pt4 h-6_250rem bg-white tc relative">
               <p class="mt3 mb1">RMXS // 20XX</p>
             </div>
           </section>
 
           <section id="ProgressionOfDigression" class="w-18_750rem shadedow ma4">
-            <div id="BCContainer" class="h-18_750rem"></div>
-            <div id="textContainer" class="pt4 h-6_250rem bg-white tc relative">
+            <div class="BCContainer h-18_750rem"></div>
+            <div class="textContainer pt4 h-6_250rem bg-white tc relative">
               <p class="mt1 mb1">PROGRESSIONDIGRESSION<br />// 2012</p>
             </div>
           </section>
 
           <section id="Etcetera" class="w-18_750rem shadedow ma4">
-            <div id="BCContainer" class="h-18_750rem"></div>
-            <div id="textContainer" class="pt4 h-6_250rem bg-white tc relative">
+            <div class="BCContainer h-18_750rem"></div>
+            <div class="textContainer pt4 h-6_250rem bg-white tc relative">
               <p class="mt3 mb1">ETCETERA // 2011</p>
             </div>
           </section>
@@ -1243,220 +463,17 @@
       </section>
 
       <!-- Video -->
-      <section id="video" class="dn h-100 w-100 pb-6rem bg-light-gray black">
-        <section
-          id="videoContainer"
-          class="flex justify-center items-center flex-wrap flex-row w-90 w-100-ns mw9-ns center"
-        >
-          <section class="w-90 w-80-ns shadedow ma4-ns mt4">
-            <div class="youtubeContainer">
-              <iframe
-                src="https://www.youtube.com/embed/BIaJcXkKW0E?rel=0"
-                frameborder="0"
-                allowfullscreen
-                title="David Bowie - Thursday's Child (ET CETER4 Remix)"
-              ></iframe>
-            </div>
-            <div class="_line-modal pt4 h-6_250rem tc relative">
-              <p class="mt1 mb1">DAVID BOWIE - THURSDAY'S CHILD <br class="dn-ns" />(ET CETER4 RMX) // FEB 2016</p>
-            </div>
-            <!-- Back Button -->
-            <section id="VideoBackButtonContainer" class="VideoBackButtonContainer mw2 tc">
-              <a id="VideoBackButton" href="#" class="black-link items-center f-2_250rem-ns link">&#8629;</a>
-            </section>
-          </section>
-
-          <section class="w-90 w-80-ns shadedow ma4-ns mt4">
-            <div class="youtubeContainer">
-              <iframe
-                src="https://www.youtube.com/embed/8ofL2qbSap0?rel=0"
-                frameborder="0"
-                allowfullscreen
-                title="ET CETER4 - OGOD I : XXIX Visual Album"
-              ></iframe>
-            </div>
-            <div class="_line-modal pt4 h-6_250rem tc relative">
-              <p class="mt1 mb1">ET CETER4 - OGOD I : XXIX</p>
-            </div>
-          </section>
-
-          <section class="w-90 w-80-ns shadedow ma4-ns mt4">
-            <div class="youtubeContainer">
-              <iframe
-                src="https://www.youtube.com/embed/IiaEEnfSuW8?rel=0"
-                frameborder="0"
-                allowfullscreen
-                title="ET CETER4 Live at Electronica 1.3"
-              ></iframe>
-            </div>
-            <div class="_line-modal pt4 h-6_250rem tc relative">
-              <p class="mt1 mb1">ET CETER4 LIVE <br class="dn-ns" />@ ELECTRONICA 1.3</p>
-            </div>
-          </section>
-
-          <section class="w-90 w-80-ns shadedow ma4-ns mt4">
-            <div class="youtubeContainer">
-              <iframe
-                src="https://www.youtube.com/embed/KXaMIIBtrkQ?rel=0"
-                frameborder="0"
-                allowfullscreen
-                title="ET CETER4 - FASTER Music Video"
-              ></iframe>
-            </div>
-            <div class="_line-modal pt4 h-6_250rem tc relative">
-              <p class="mt1 mb1">ET CETER4 - FASTER</p>
-            </div>
-          </section>
-
-          <section class="w-90 w-80-ns shadedow ma4-ns mt4 mb4">
-            <div class="youtubeContainer">
-              <iframe
-                src="https://www.youtube.com/embed/eHW34l3RrAo?rel=0"
-                frameborder="0"
-                allowfullscreen
-                title="ET CETER4 - SLIP Music Video"
-              ></iframe>
-            </div>
-            <div class="_line-modal pt4 h-6_250rem tc relative">
-              <p class="mt1 mb1">ET CETER4 - SLIP</p>
-            </div>
-          </section>
-        </section>
-      </section>
+      <section id="video" class="dn h-100 w-100 pb-6rem bg-light-gray black"></section>
 
       <!--Stills-->
-      <section id="stills" class="dn min-h-100vh vh-100 w-100 pb-6rem bodoni black">
-        <div id="stillsContainer" class="dtc tc v-mid relative mw108rem-ns">
-          <section id="imageCaptionContainer" class="mw9 center relative">
-            <section id="images" class="dt h-100 min-h-21_875rem h-28_125rem-ns center w-100 w-90-ns pt3-ns relative">
-              <div class="dtc v-mid">
-                <div id="imageContainer" class="dt w-100">
-                  <div
-                    id="stillsImage"
-                    class="dtc v-mid heightControl-stills min-h-21_875rem min-h-28_125rem-ns tc h-100"
-                  >
-                    <img
-                      class="mw-100 mh-100 w-auto h-auto anim"
-                      src="img/placeholder.jpg"
-                      data-src="img/photos/media/media1.jpg"
-                      alt=""
-                    />
-                  </div>
-                  <div
-                    id="stillsImage"
-                    class="dn v-mid heightControl-stills min-h-21_875rem min-h-28_125rem-ns tc h-100"
-                  >
-                    <img
-                      class="mw-100 mh-100 w-auto h-auto anim"
-                      src="img/placeholder.jpg"
-                      data-src="img/photos/media/media2.jpg"
-                      alt=""
-                    />
-                  </div>
-                  <div
-                    id="stillsImage"
-                    class="dn v-mid heightControl-stills min-h-21_875rem min-h-28_125rem-ns tc h-100"
-                  >
-                    <img
-                      class="mw-100 mh-100 w-auto h-auto anim"
-                      src="img/placeholder.jpg"
-                      data-src="img/photos/media/media3.jpg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </div>
-            </section>
-            <p id="stillsCaption" class="_captionSeperator relative ml3 h4 center pt4 mt0 mb4 mb0-ns tc w-90 w-30-ns">
-              Fires, fury, absolution.<br />Delusion, fantasy, insincerity.<br />Constants follow us.<br />News breaks
-              us.
-            </p>
-          </section>
-
-          <button
-            id="stills-left"
-            class="dib absolute-ns w-20-ns h-100-ns pb6-ns pr-calc-ns left-0 top-0 f4-ns futura clear-button txtshdw-white bg-transparent b--none pointer 0-50 fadeIn"
-            aria-label="Previous image"
-            tabindex="0"
-          >
-            <span aria-hidden="true">&lt;</span>
-          </button>
-          <p id="stills-indicator" class="dib mt0 mb0">1/83</p>
-          <button
-            id="stills-right"
-            class="dib absolute-ns w-20-ns h-100-ns pb6-ns pl-calc-ns top-0 right-0 f4-ns futura clear-button txtshdw-white bg-transparent b--none pointer o-50 fadeIn"
-            aria-label="Next image"
-            tabindex="0"
-          >
-            <span aria-hidden="true">&gt;</span>
-          </button>
-        </div>
-      </section>
+      <section id="stills" class="dn min-h-100vh vh-100 w-100 pb-6rem bodoni black"></section>
 
       <!-- Diary -->
       <section
         id="diary"
         class="dn min-h-100vh vh-100 w-100 pb-6rem bodoni black relative"
         style="background: url(img/diary_bg.png) center"
-      >
-        <div
-          id="diary-BG"
-          class="absolute h-100 w-100 cover z-n1"
-          style="background: url(img/diary_bg.png) center"
-        ></div>
-
-        <div id="diary-Container" class="dtc tc v-mid h-100 mw108rem-ns">
-          <div id="dimageContainer" class="center">
-            <div id="dstills" class="dt h-100 min-h-21_875rem h-28_125rem-ns center w-100 w-90-ns">
-              <div class="dtc v-mid tc h-100 mh-100rem-ns">
-                <div id="dInnerContainer" class="vh-85 min-h-21_875rem min-h-28_125rem-ns">
-                  <div id="diary-leftImage" class="dib-ns db h-100 w-100 w-50-ns fl-ns" style="">
-                    <img
-                      class="fr-ns mw-100 mh-100 w-auto h-auto"
-                      src="img/placeholder.jpg"
-                      data-src="img/photos/diary/diary1.jpg"
-                      alt=""
-                      style=""
-                    />
-                  </div>
-
-                  <div
-                    id="diary-rightImage"
-                    class="dib-ns dn h-100 min-h-21_875rem min-h-28_125rem-ns w-100 w-50-ns fl-ns"
-                    style=""
-                  >
-                    <img
-                      class="dn fl-ns mw-100 mh-100 w-auto h-auto"
-                      src="img/placeholder.jpg"
-                      data-src="img/photos/diary/diary2.jpg"
-                      alt=""
-                      style=""
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <button
-            id="stills-left-diary"
-            class="dib absolute-ns w-20-ns h-100-ns pb6-ns pr-calc-ns left-0 top-0 f4-ns futura clear-button txtshdw-white bg-transparent b--none pointer 0-50 fadeIn"
-            aria-label="Previous diary entry"
-            tabindex="0"
-          >
-            <span aria-hidden="true">&lt;</span>
-          </button>
-          <p id="diary-indicator" class="dib mt0 mb0">1/83</p>
-          <button
-            id="stills-right-diary"
-            class="dib absolute-ns w-20-ns h-100-ns pb6-ns pl-calc-ns top-0 right-0 f4-ns futura clear-button txtshdw-white bg-transparent b--none pointer o-50 fadeIn"
-            aria-label="Next diary entry"
-            tabindex="0"
-          >
-            <span aria-hidden="true">&gt;</span>
-          </button>
-        </div>
-      </section>
+      ></section>
 
       <!-- Blog -->
       <section id="blog" class="dn h-100 w-100 pb-6rem black">
@@ -1552,9 +569,7 @@
                 <a href="mailto:etceter4@etceter4.com" id="" class="f3 f-2_250rem-ns link red-link">D E S I G N E R</a>
               </div>
               <div class="tji tji-fix">
-                <a href="akademia/cv/" target="_blank" rel="noopener noreferrer" class="f3 f-2_250rem-ns link cyan-link"
-                  >C U R R I C U L U M V I T A E</a
-                >
+                <a href="#akademia" class="f3 f-2_250rem-ns link cyan-link">C U R R I C U L U M V I T A E</a>
               </div>
               <div class="tji tji-fix">
                 <a
@@ -1571,331 +586,17 @@
       </section>
 
       <!-- OGOD 3D Immersive Experience -->
-      <section id="ogod3d" class="dn vh-100 w-100 black" style="overflow: hidden">
-        <!-- Loading Screen -->
-        <div
-          id="ogod3d-loading"
-          class="fixed top-0 left-0 w-100 vh-100 bg-black flex flex-column justify-center items-center z-999"
-        >
-          <h1 class="f1 white tracked-mega mb4" style="text-shadow: 0 0 10px #00ffff">OGOD</h1>
-          <div class="w5 h-point-25rem bg-dark-gray br2 overflow-hidden">
-            <div
-              id="ogod3d-loading-bar"
-              class="h-100 br2"
-              style="width: 0%; background: linear-gradient(90deg, #00ffff, #ff00ff); transition: width 0.3s ease"
-            ></div>
-          </div>
-          <p id="ogod3d-loading-text" class="white mt3 o-70 f6">Initializing...</p>
-        </div>
-
-        <!-- 3D Canvas Container -->
-        <div id="ogod3d-container" class="absolute top-0 left-0 w-100 vh-100"></div>
-
-        <!-- Back Button -->
-        <a
-          href="#vision"
-          id="ogod3d-back-btn"
-          class="fixed top-1 left-1 pa2 ph3 bg-black-70 ba b--white-30 white f6 link br2 z-5"
-          style="transition: all 0.2s ease"
-          >&larr; Back</a
-        >
-
-        <!-- Info Panel -->
-        <div
-          id="ogod3d-info-panel"
-          class="fixed top-1 right-1 pa3 bg-black-70 ba b--white-20 white br3 z-5 dn db-ns"
-          style="max-width: 250px"
-        >
-          <h3 id="ogod3d-track-title" class="ma0 mb2 f6" style="color: #00ffff">Track I</h3>
-          <p id="ogod3d-track-game" class="ma0 mt1 f7 o-80">Animal Crossing</p>
-          <p id="ogod3d-track-archetype" class="ma0 mt1 f7 o-80">Gradient Fog</p>
-        </div>
-
-        <!-- Audio Control -->
-        <button
-          id="ogod3d-audio-btn"
-          class="fixed right-1 pa3 bg-black-70 ba white f7 pointer br2 z-5"
-          style="bottom: 5rem; border-color: rgba(0, 255, 255, 0.5); color: #00ffff; transition: all 0.2s ease"
-        >
-          Click to Start Audio
-        </button>
-
-        <!-- Track Selector -->
-        <div
-          id="ogod3d-track-selector"
-          class="fixed bottom-1 left-50 z-5 flex flex-wrap justify-center"
-          style="transform: translateX(-50%); max-width: 90%; gap: 0.5rem"
-        ></div>
-
-        <!-- Track button styles -->
-        <style>
-          .ogod3d-track-btn {
-            padding: 0.5rem 1rem;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
-            font-family: 'Courier New', monospace;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border-radius: 4px;
-          }
-          .ogod3d-track-btn:hover {
-            background: rgba(0, 255, 255, 0.2);
-            border-color: #00ffff;
-          }
-          .ogod3d-track-btn.active {
-            background: rgba(0, 255, 255, 0.3);
-            border-color: #00ffff;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-          }
-          #ogod3d-loading.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-          }
-          #ogod3d-audio-btn.playing {
-            border-color: #ff00ff;
-            color: #ff00ff;
-          }
-          #ogod3d-back-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #fff;
-          }
-          @media (max-width: 768px) {
-            .ogod3d-track-btn {
-              padding: 0.375rem 0.75rem;
-              font-size: 0.65rem;
-            }
-          }
-        </style>
-      </section>
+      <section id="ogod3d" class="dn vh-100 w-100 black" style="overflow: hidden"></section>
 
       <!-- OGOD Animation Viewer -->
-      <section id="ogod-viewer" class="dn vh-100 w-100 black" style="overflow: hidden">
-        <!-- Canvas Container -->
-        <div id="ogod-viewer-container" class="absolute top-0 left-0 w-100 vh-100"></div>
-
-        <!-- Back Button -->
-        <a
-          href="#vision"
-          id="ogod-viewer-back-btn"
-          class="fixed top-1 left-1 pa2 ph3 bg-black-70 ba b--white-30 white f6 link br2 z-5"
-          style="transition: all 0.2s ease"
-          >&larr; Back</a
-        >
-
-        <!-- Controls Panel -->
-        <div
-          id="ogod-viewer-controls"
-          class="fixed top-1 right-1 pa3 bg-black-70 ba b--white-20 white br3 z-5"
-          style="max-width: 280px"
-        >
-          <h3 class="ma0 mb2 f6" style="color: #00ffff">OGOD Viewer</h3>
-          <p id="ogod-viewer-track-info" class="ma0 mt1 f7 o-80">Track I - Animal Crossing</p>
-
-          <!-- Mode Selector -->
-          <div class="mt3 mb2">
-            <label class="f7 o-70 db mb1">Mode</label>
-            <div id="ogod-viewer-mode-selector" class="flex" style="gap: 0.25rem">
-              <button class="ogod-viewer-mode-btn" data-mode="faithful">Faithful</button>
-              <button class="ogod-viewer-mode-btn active" data-mode="enhanced">Enhanced</button>
-              <button class="ogod-viewer-mode-btn" data-mode="generative">Generative</button>
-              <button class="ogod-viewer-mode-btn" data-mode="3d">3D</button>
-            </div>
-          </div>
-
-          <!-- Custom Image -->
-          <div class="mt2">
-            <label class="f7 o-70 db mb1">Custom Image</label>
-            <input type="file" id="ogod-viewer-file-input" accept="image/*" class="f7 w-100" style="color: #aaa" />
-          </div>
-
-          <!-- Pause/Play -->
-          <button
-            id="ogod-viewer-pause-btn"
-            class="mt3 pa2 ph3 bg-black-70 ba b--white-30 white f7 pointer br2 w-100"
-            style="transition: all 0.2s ease"
-            aria-label="Pause animation"
-          >
-            Pause
-          </button>
-        </div>
-
-        <!-- Track Selector -->
-        <div
-          id="ogod-viewer-track-selector"
-          class="fixed bottom-1 left-50 z-5 flex flex-wrap justify-center"
-          style="transform: translateX(-50%); max-width: 90%; gap: 0.5rem"
-        ></div>
-
-        <!-- OGOD Viewer styles -->
-        <style>
-          .ogod-viewer-mode-btn {
-            padding: 0.25rem 0.5rem;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #ccc;
-            font-family: 'Courier New', monospace;
-            font-size: 0.65rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border-radius: 3px;
-          }
-          .ogod-viewer-mode-btn:hover {
-            background: rgba(0, 255, 255, 0.2);
-            border-color: #00ffff;
-            color: #fff;
-          }
-          .ogod-viewer-mode-btn.active {
-            background: rgba(0, 255, 255, 0.3);
-            border-color: #00ffff;
-            color: #00ffff;
-          }
-          #ogod-viewer-back-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #fff;
-          }
-        </style>
-      </section>
+      <section id="ogod-viewer" class="dn vh-100 w-100 black" style="overflow: hidden"></section>
 
       <!-- Discovery Page - Unified Search and Content Discovery -->
       <section
         id="discovery"
         class="dn vh-100 w-100 pb-6rem bg-white black"
         aria-label="Discovery - Search and filter all chambers"
-      >
-        <div class="discovery-container pa4 mw9 center">
-          <!-- Header -->
-          <header class="discovery-header flex justify-between items-center mb4 pb3 bb b--light-gray">
-            <h1 class="f2 f1-ns tracked-mega ma0">DISCOVERY</h1>
-            <a href="#menu" class="black-link f4 link" aria-label="Back to Naos">&#8629; Back</a>
-          </header>
-
-          <!-- Search Input -->
-          <div class="discovery-search mb4">
-            <input
-              type="text"
-              id="discoverySearchInput"
-              class="w-100 pa3 f4 ba b--light-gray br2"
-              placeholder="Search all chambers..."
-              aria-label="Search all chambers"
-            />
-          </div>
-
-          <!-- Quick Filters -->
-          <div
-            id="quickFilters"
-            class="discovery-quick-filters flex flex-wrap gap2 mb4"
-            role="group"
-            aria-label="Quick filters"
-          ></div>
-
-          <!-- Advanced Filters -->
-          <details class="discovery-filters mb4 ba b--light-gray br2">
-            <summary class="pa3 pointer fw6 tracked">Advanced Filters</summary>
-            <div class="filter-panel-content pa3" id="filterPanel">
-              <!-- Tag Cloud -->
-              <div class="filter-group mb3">
-                <span class="filter-group-label db mb2 f7 tracked ttu gray">Tags</span>
-                <div
-                  id="tagCloud"
-                  class="flex flex-wrap gap2 pa3 bg-near-white br2"
-                  role="group"
-                  aria-label="Filter by tag"
-                ></div>
-              </div>
-
-              <!-- Chamber Filters -->
-              <div class="filter-group mb3">
-                <span class="filter-group-label db mb2 f7 tracked ttu gray">Chambers</span>
-                <div id="chamberFilters" class="filter-group-options flex flex-wrap gap2"></div>
-              </div>
-
-              <!-- Type Filters -->
-              <div class="filter-group mb3">
-                <span class="filter-group-label db mb2 f7 tracked ttu gray">Content Type</span>
-                <div id="typeFilters" class="filter-group-options flex flex-wrap gap2"></div>
-              </div>
-
-              <!-- Wing Filters -->
-              <div class="filter-group mb3">
-                <span class="filter-group-label db mb2 f7 tracked ttu gray">Wing</span>
-                <div id="wingFilters" class="filter-group-options flex flex-wrap gap2"></div>
-              </div>
-
-              <!-- Year Range -->
-              <div class="filter-group mb3">
-                <span class="filter-group-label db mb2 f7 tracked ttu gray">Year Range</span>
-                <div class="filter-year-range flex items-center gap2">
-                  <input
-                    type="number"
-                    id="yearFromInput"
-                    class="filter-year-input pa2 ba b--light-gray br2 w4"
-                    placeholder="From"
-                    min="2000"
-                    max="2030"
-                    aria-label="Year range start"
-                  />
-                  <span>to</span>
-                  <input
-                    type="number"
-                    id="yearToInput"
-                    class="filter-year-input pa2 ba b--light-gray br2 w4"
-                    placeholder="To"
-                    min="2000"
-                    max="2030"
-                    aria-label="Year range end"
-                  />
-                </div>
-              </div>
-
-              <!-- Clear Filters -->
-              <button id="clearFiltersBtn" class="pa2 ph3 ba b--black br2 bg-white pointer f6">
-                Clear All Filters
-              </button>
-            </div>
-          </details>
-
-          <!-- Results Header -->
-          <div class="discovery-results-header flex justify-between items-center mb3">
-            <span id="resultCount" class="f6 gray">0 items</span>
-            <div class="flex items-center gap2">
-              <span id="filterSummary" class="f7 gray dn db-ns">No filters active</span>
-              <select id="sortSelect" class="pa2 ba b--light-gray br2 f6 bg-white">
-                <option value="relevance-desc">Relevance</option>
-                <option value="date-desc">Newest First</option>
-                <option value="date-asc">Oldest First</option>
-                <option value="title-asc">A-Z</option>
-                <option value="title-desc">Z-A</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Results Grid -->
-          <div
-            id="resultsGrid"
-            class="discovery-results mb4"
-            role="region"
-            aria-label="Search results"
-            aria-live="polite"
-          ></div>
-
-          <!-- Pagination -->
-          <nav
-            id="pagination"
-            class="discovery-pagination flex justify-center gap2 mb4"
-            role="navigation"
-            aria-label="Results pagination"
-          ></nav>
-
-          <!-- Recommendations -->
-          <aside class="discovery-recommendations mt5 pt4 bt b--light-gray">
-            <h2 class="f5 tracked ttu mb4">Recommended For You</h2>
-            <div id="recommendationsGrid" role="region" aria-label="Recommended content"></div>
-          </aside>
-        </div>
-      </section>
+      ></section>
     </main>
 
     <!-- Global Search Modal (Cmd+K) -->
@@ -1975,183 +676,15 @@
       </div>
 
       <ul class="list pl0 mt4 mb0 w-100 center f-1_250rem">
-        <li class="mb2 tji tji-fix bg-blue">
-          <a
-            href="http://music.etceter4.com/music"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="f-2_250rem link black-link"
-            >&nbsp; SOUND &nbsp;</a
-          >&nbsp;
-        </li>
-        <li class="mb2 tji tji-fix bg-green">
-          <a
-            href="https://www.youtube.com/user/etceter4"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="f-2_250rem link yellow-link"
-            >VIDEO &nbsp;
-          </a>
-          <a
-            href="img/photos/random/stills.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="f-2_250rem link magenta-link"
-            >&nbsp; STILLS &nbsp;</a
-          >
-          <a href="analog.html" target="_blank" rel="noopener noreferrer" class="f-2_250rem link cyan-link"
-            >&nbsp; DIARY</a
-          >
-        </li>
-
-        <li class="mb2 tji tji-fix bg-pink">
-          <a
-            href="https://etceter4.tumblr.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="f-2_250rem link white-link"
-            >&nbsp; BLOG &nbsp;</a
-          >
-          <a href="loophole.html" target="_blank" rel="noopener noreferrer" class="f-2_250rem link green-link"
-            >&nbsp; LOOPHOLE &nbsp;</a
-          >
-        </li>
-
-        <li class="mb2 tji tji-fix bg-yellow">
-          <a
-            href="https://met4morfoses.tumblr.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="f-2_250rem link blue-link"
-            >&nbsp; MET4MORFOSES &nbsp;</a
-          >&nbsp;
-        </li>
-
-        <li class="mb2 tji tji-fix bg-black">
-          <a
-            href="http://eepurl.com/bPQueX"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="f-2_250rem link white-link"
-            >&nbsp; MAILING_LIST</a
-          >
-        </li>
-        <li class="mb2 tji tji-fix bg-red">
-          <a
-            href="http://music.etceter4.com/music"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="f-2_250rem link cyan-link"
-            >STORE &nbsp;</a
-          >
-          <a href="#info" target="_blank" rel="noopener noreferrer" class="f-2_250rem link black-link"
-            >&nbsp; INFO &nbsp;</a
-          >
-        </li>
-
-        <!-- Social Sharing -->
-        <li class="list-none">
-          <section id="socialRow" class="db-ns w-100 mb2">
-            <a
-              class="social-link"
-              href="http://www.facebook.com/etceter4"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-            >
-              <i class="social-icon">
-                <svg
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="98"
-                  height="98"
-                  viewBox="0 0 97.8 97.8"
-                >
-                  <path
-                    d="M48.9 0C21.9 0 0 21.9 0 48.9S21.9 97.8 48.9 97.8 97.8 75.9 97.8 48.9 75.9 0 48.9 0zM67.5 24.9l-6.8 0c-5.3 0-6.3 2.5-6.3 6.2v8.2h12.6L67.1 52H54.4v32.8H41.3V52H30.2V39.3h11v-9.4c0-10.9 6.7-16.9 16.4-16.9l9.9 0V24.9L67.5 24.9z"
-                  /></svg></i
-            ></a>
-
-            <a
-              class="social-link"
-              href="https://twitter.com/_etceter4"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-            >
-              <i class="social-icon">
-                <svg
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="98"
-                  height="98"
-                  viewBox="0 0 97.8 97.8"
-                >
-                  <path
-                    d="M48.9 0C21.9 0 0 21.9 0 48.9S21.9 97.8 48.9 97.8 97.8 75.9 97.8 48.9 75.9 0 48.9 0zM78.4 35.8c0 0.6 0 1.2 0 1.7 0 20.9-15.9 42.5-42.5 42.5 -8.1 0-16-2.3-22.9-6.7 -0.1-0.1-0.2-0.3-0.1-0.4 0.1-0.2 0.2-0.3 0.4-0.2 1.1 0.1 2.3 0.2 3.5 0.2 6.3 0 12.3-2 17.4-5.7 -6.1-0.5-11.3-4.6-13.2-10.5 0-0.1 0-0.3 0.1-0.4 0.1-0.1 0.2-0.1 0.3-0.1 1.7 0.3 3.4 0.3 5 0.1 -6.3-1.9-10.7-7.8-10.7-14.5l0-0.2c0-0.1 0.1-0.2 0.2-0.3 0.1-0.1 0.2-0.1 0.4 0 1.6 0.9 3.4 1.5 5.3 1.7 -3.6-2.9-5.7-7.2-5.7-11.9 0-2.7 0.7-5.3 2.1-7.6 0.1-0.1 0.2-0.2 0.3-0.2 0.1 0 0.2 0 0.3 0.1 7.4 9 18.2 14.6 29.8 15.3 -0.2-1-0.3-2-0.3-3 0-8.4 6.8-15.2 15.2-15.2 4.1 0 8.1 1.7 10.9 4.6 3.2-0.7 6.3-1.8 9.1-3.5 0.1-0.1 0.3-0.1 0.4 0 0.1 0.1 0.2 0.3 0.1 0.4 -1 3-2.8 5.6-5.3 7.5 2.4-0.4 4.7-1.1 6.8-2.1 0.1-0.1 0.3 0 0.4 0.1 0.1 0.1 0.1 0.3 0 0.4C83.8 31.2 81.3 33.7 78.4 35.8z"
-                  /></svg></i
-            ></a>
-
-            <a
-              class="social-link"
-              href="https://www.instagram.com/etceter4/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <i class="social-icon">
-                <svg
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="97.75"
-                  height="97.75"
-                  viewBox="0 0 97.75 97.75"
-                >
-                  <ellipse cx="48.944" cy="48.719" rx="14.465" ry="14.017" />
-                  <path
-                    d="M71.333 49.501c0 11.981-10.024 21.692-22.389 21.692s-22.389-9.711-22.389-21.692c0-2.147 0.324-4.221 0.924-6.18h-6.616v30.427c0 1.576 1.288 2.863 2.863 2.863h50.159c1.576 0 2.865-1.287 2.865-2.863V43.321h-6.341C71.008 45.28 71.333 47.354 71.333 49.501z"
-                  />
-                  <path
-                    d="M65.332 35.11h8.141c1.784 0 3.242-1.458 3.242-3.242v-7.762c0-1.785-1.458-3.243-3.242-3.243h-8.141c-1.785 0-3.243 1.458-3.243 3.243v7.762C62.088 33.651 63.547 35.11 65.332 35.11z"
-                  />
-                  <path
-                    d="M48.875 0C21.882 0 0 21.882 0 48.875S21.882 97.75 48.875 97.75 97.75 75.868 97.75 48.875 75.868 0 48.875 0zM75.645 84.891H22.106c-5.087 0-9.246-3.765-9.246-9.244V22.105c0-5.481 4.159-9.245 9.246-9.245h53.539c5.086 0 9.246 3.764 9.246 9.245v53.542C84.891 81.126 80.73 84.891 75.645 84.891z"
-                  /></svg></i
-            ></a>
-
-            <a
-              class="social-link"
-              href="https://www.youtube.com/user/etceter4"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="YouTube"
-            >
-              <i class="social-icon">
-                <svg
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="98"
-                  height="98"
-                  viewBox="0 0 97.75 97.75"
-                >
-                  <path
-                    d="M61.52 45.424c-6.555-3.492-13.097-7.008-19.667-10.468 -3.166-1.667-5.914 0.025-5.941 3.612 -0.027 3.492-0.006 6.985-0.006 10.479 0 3.537 0.012 7.074-0.005 10.61 -0.007 1.229 0.362 2.26 1.38 3 1.355 0.985 2.719 1.018 4.219 0.228 6.609-3.482 13.24-6.924 19.874-10.361 1.458-0.756 2.562-1.707 2.616-3.508C64.044 47.194 62.966 46.194 61.52 45.424z"
-                  />
-                  <path
-                    d="M48.875 0C21.883 0 0 21.882 0 48.875S21.883 97.75 48.875 97.75 97.75 75.868 97.75 48.875 75.867 0 48.875 0zM82.833 66.998c0 8.746-7.089 15.835-15.836 15.835H30.753c-8.746 0-15.836-7.09-15.836-15.835V30.752c0-8.746 7.09-15.835 15.836-15.835h36.244c8.747 0 15.836 7.09 15.836 15.835V66.998z"
-                  /></svg></i
-            ></a>
-            <!-- Audio Player -->
-            <section id="audioPlayer" class="audioPlayer r-c center mb2">
-              <iframe
-                style="border: 0; width: 100%; height: 42px"
-                src="https://bandcamp.com/EmbeddedPlayer/album=3780915385/size=small/bgcol=ffffff/linkcol=333333/artwork=none/transparent=true/"
-                title="ET CETER4 music player from Bandcamp"
-                >></iframe
-              >
-            </section>
-          </section>
-        </li>
+        <li class="mb2 tji tji-fix"><a href="#sound" class="f-2_250rem link black-link">S O U N D</a></li>
+        <li class="mb2 tji tji-fix"><a href="#words" class="f-2_250rem link cyan-link">W O R D S</a></li>
+        <li class="mb2 tji tji-fix"><a href="#vision" class="f-2_250rem link magenta-link">V I S I O N</a></li>
+        <li class="mb2 tji tji-fix"><a href="#info" class="f-2_250rem link yellow-link">I N F O</a></li>
+        <li class="mb2 tji tji-fix"><a href="#east-wing" class="f-2_250rem link light-blue">E A S T</a></li>
+        <li class="mb2 tji tji-fix"><a href="#west-wing" class="f-2_250rem link light-green">W E S T</a></li>
+        <li class="mb2 tji tji-fix"><a href="#south-wing" class="f-2_250rem link light-yellow">S O U T H</a></li>
+        <li class="mb2 tji tji-fix"><a href="#north-wing" class="f-2_250rem link gray">N O R T H</a></li>
+        <li class="mb2 tji tji-fix"><a href="#discovery" class="f-2_250rem link black-link">D I S C O V E R Y</a></li>
       </ul>
     </section>
 
@@ -2182,16 +715,20 @@
           id="subscribe"
           class="dn flex-ns flex-row flex-wrap justify-around items-center min-w-15rem mw6 w-34 h-100 f-1_125rem white"
         >
-          <a class="link white-link" href="https://etceter4.bandcamp.com" target="_blank">SUPPORT US</a>
+          <a class="link white-link" href="https://etceter4.bandcamp.com" target="_blank" rel="noopener noreferrer"
+            >SUPPORT US</a
+          >
           <p class="ma0 di">//</p>
-          <a id="mapToMapButton" class="link white-link" href="sitemap.html" target="_self">SITE MAP</a>
+          <a class="link white-link" href="#discovery">DISCOVERY</a>
           <p class="ma0 di">//</p>
-          <a class="link white-link" href="http://eepurl.com/bPQueX" target="_blank">MAILING LIST</a>
+          <a class="link white-link" href="http://eepurl.com/bPQueX" target="_blank" rel="noopener noreferrer"
+            >MAILING LIST</a
+          >
         </section>
       </nav>
     </footer>
 
-    <!-- JS Requests -->
+    <!-- JS Requests — Tier 0: Critical Path -->
     <script
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
@@ -2204,51 +741,36 @@
       crossorigin="anonymous"
     ></script>
     <!-- SoundJS for UI audio sprites -->
-    <script src="https://code.createjs.com/1.0.0/soundjs.min.js" crossorigin="anonymous"></script>
-    <!-- Three.js for 3D immersive experience -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js" crossorigin="anonymous"></script>
-    <!-- Tone.js for stem-based audio -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js" crossorigin="anonymous"></script>
-    <!-- Video.js for enhanced video player -->
-    <script src="https://vjs.zencdn.net/8.6.1/video.min.js" crossorigin="anonymous"></script>
-    <!-- HLS.js for adaptive streaming -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.12/dist/hls.min.js" crossorigin="anonymous"></script>
+    <script
+      src="https://code.createjs.com/1.0.0/soundjs.min.js"
+      integrity="sha384-mcaxXEFlg7++JrDF0LPCZqTCapl34silN67EmAs7ZDK1XzXz5s2gYm2VWeAqxyEp"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Three.js for 3D landing experience -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"
+      integrity="sha384-qOkzR5Ke/XkQxuGVJ9hpFEpDlcoLtWwVYhnJf06cLIZa2vaIptSqaubivErzmD5O"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Core application scripts -->
     <script type="text/javascript" src="js/config.js" defer></script>
+    <script type="text/javascript" src="js/data/ogodTracks.js" defer></script>
     <script type="text/javascript" src="js/audioAnalyzerBridge.js" defer></script>
     <script type="text/javascript" src="js/uiSounds.js" defer></script>
-    <script type="text/javascript" src="js/main.js" defer></script>
+    <!-- Module infrastructure -->
+    <script type="text/javascript" src="js/modules/ScriptLoader.js" defer></script>
+    <script type="text/javascript" src="js/modules/ChamberLoader.js" defer></script>
+    <script type="text/javascript" src="js/modules/JourneyTracker.js" defer></script>
+    <script type="text/javascript" src="js/modules/JourneyNarrative.js" defer></script>
+    <script type="text/javascript" src="js/chamberManifest.js" defer></script>
+    <!-- Navigation and entry point -->
     <script type="text/javascript" src="js/page.js" defer></script>
     <script type="text/javascript" src="js/pageData.js" defer></script>
-    <script type="text/javascript" src="js/sketches/audioReactiveShader.js" defer></script>
-    <script type="text/javascript" src="js/modules/Carousel.js" defer></script>
-    <script type="text/javascript" src="js/images.js" defer></script>
-    <script type="text/javascript" src="js/diary.js" defer></script>
-    <!-- OGOD Animation Engine -->
-    <script type="text/javascript" src="js/ogod/OGODFrameSequencer.js" defer></script>
-    <script type="text/javascript" src="js/ogod/OGODImageLoader.js" defer></script>
-    <script type="text/javascript" src="js/ogod/renderers/OGODCanvasRenderer.js" defer></script>
-    <script type="text/javascript" src="js/ogod/renderers/OGODWebGLRenderer.js" defer></script>
-    <script type="text/javascript" src="js/ogod/renderers/OGODGenerativeRenderer.js" defer></script>
-    <script type="text/javascript" src="js/ogod/renderers/OGODTKOLRenderer.js" defer></script>
-    <script type="text/javascript" src="js/ogod/OGODExportPipeline.js" defer></script>
-    <script type="text/javascript" src="js/ogod/OGODAudioAdapter.js" defer></script>
-    <script type="text/javascript" src="js/ogod/OGODAnimationEngine.js" defer></script>
-    <script type="text/javascript" src="js/ogod.js" defer></script>
-    <!-- 3D Immersive Experience -->
+    <script type="text/javascript" src="js/main.js" defer></script>
+    <!-- 3D Landing Compositor -->
     <script type="text/javascript" src="js/3d/core/SceneManager.js" defer></script>
     <script type="text/javascript" src="js/3d/core/EnvironmentData.js" defer></script>
     <script type="text/javascript" src="js/3d/landing/LandingCompositor.js" defer></script>
-    <!-- OGOD 3D System -->
-    <script type="text/javascript" src="js/3d/ogod/controls/FirstPersonController.js" defer></script>
-    <script type="text/javascript" src="js/3d/ogod/environments/EnvironmentBase.js" defer></script>
-    <script type="text/javascript" src="js/3d/ogod/environments/GradientFogEnv.js" defer></script>
-    <script type="text/javascript" src="js/3d/ogod/environments/StripeBarEnv.js" defer></script>
-    <script type="text/javascript" src="js/3d/ogod/environments/BokehGridEnv.js" defer></script>
-    <script type="text/javascript" src="js/3d/ogod/environments/HighContrastEnv.js" defer></script>
-    <script type="text/javascript" src="js/3d/ogod/environments/LayeredColorsEnv.js" defer></script>
-    <script type="text/javascript" src="js/3d/ogod/environments/GlitchDigitalEnv.js" defer></script>
-    <script type="text/javascript" src="js/3d/ogod/OGODSceneManager.js" defer></script>
-    <script type="text/javascript" src="js/3d/ogod/OGODAudioEngine.js" defer></script>
     <!-- Living Pantheon System -->
     <script type="text/javascript" src="js/living-pantheon/LivingPantheonCore.js" defer></script>
     <script type="text/javascript" src="js/living-pantheon/AmbientSoundLayer.js" defer></script>
@@ -2258,255 +780,5 @@
     <script type="text/javascript" src="js/living-pantheon/LabyrinthGenerator.js" defer></script>
     <script type="text/javascript" src="js/living-pantheon/GlitchTunnelSystem.js" defer></script>
     <script type="text/javascript" src="js/ogod/utils/PixelSortUtils.js" defer></script>
-    <script type="text/javascript" src="js/ergasterion/ExhibitBridge.js" defer></script>
-    <script type="text/javascript" src="js/ergasterion/ExhibitPortal.js" defer></script>
-    <!-- Generative Chamber Systems -->
-    <script type="text/javascript" src="js/generative/PinakothekeGenerator.js" defer></script>
-    <script type="text/javascript" src="js/generative/KhronosTimeline.js" defer></script>
-    <script type="text/javascript" src="js/generative/BibliothekePoetry.js" defer></script>
-    <script type="text/javascript" src="js/generative/OikosJournal.js" defer></script>
-    <!-- Enhanced Media Systems -->
-    <script type="text/javascript" src="js/media/MediaURLResolver.js" defer></script>
-    <script type="text/javascript" src="js/media/audio/EnhancedAudioPlayer.js" defer></script>
-    <script type="text/javascript" src="js/media/audio/WaveformVisualizer.js" defer></script>
-    <script type="text/javascript" src="js/media/audio/PlaylistManager.js" defer></script>
-    <script type="text/javascript" src="js/media/video/HLSLoader.js" defer></script>
-    <script type="text/javascript" src="js/media/video/EnhancedVideoPlayer.js" defer></script>
-    <script type="text/javascript" src="js/media/audio/LyricsSync.js" defer></script>
-    <!-- MiniSearch for Discovery System -->
-    <script src="https://cdn.jsdelivr.net/npm/minisearch@6/dist/umd/index.min.js" defer></script>
-    <!-- Chamber Configurations (needed for ContentRegistry) -->
-    <script type="text/javascript" src="akademia/config.js" defer></script>
-    <script type="text/javascript" src="bibliotheke/config.js" defer></script>
-    <script type="text/javascript" src="pinakotheke/config.js" defer></script>
-    <script type="text/javascript" src="odeion/config.js" defer></script>
-    <script type="text/javascript" src="agora/config.js" defer></script>
-    <!-- Discovery System -->
-    <script type="text/javascript" src="js/discovery/ContentRegistry.js" defer></script>
-    <script type="text/javascript" src="js/discovery/SearchEngine.js" defer></script>
-    <script type="text/javascript" src="js/discovery/FilterSystem.js" defer></script>
-    <script type="text/javascript" src="js/discovery/RelatedWorksEngine.js" defer></script>
-    <script type="text/javascript" src="js/discovery/ShareLinks.js" defer></script>
-    <script type="text/javascript" src="js/discovery/DiscoveryController.js" defer></script>
-    <!-- Three.js Post-processing for OGOD bloom effect -->
-    <script defer>
-      // Minimal EffectComposer implementation for bloom
-      document.addEventListener('DOMContentLoaded', function () {
-        if (typeof THREE === 'undefined') return;
-
-        // Simple render pass that renders a scene
-        THREE.RenderPass = class RenderPass {
-          constructor(scene, camera) {
-            this.scene = scene;
-            this.camera = camera;
-            this.enabled = true;
-            this.clear = true;
-            this.needsSwap = false;
-          }
-          render(renderer, writeBuffer, readBuffer) {
-            renderer.setRenderTarget(this.clear ? null : readBuffer);
-            renderer.render(this.scene, this.camera);
-          }
-        };
-
-        // Simple bloom pass using additive blending
-        THREE.UnrealBloomPass = class UnrealBloomPass {
-          constructor(resolution, strength, radius, threshold) {
-            this.resolution = resolution;
-            this.strength = strength;
-            this.radius = radius;
-            this.threshold = threshold;
-            this.enabled = true;
-            this.needsSwap = true;
-
-            const params = {
-              minFilter: THREE.LinearFilter,
-              magFilter: THREE.LinearFilter,
-              format: THREE.RGBAFormat,
-            };
-
-            this.renderTargetBright = new THREE.WebGLRenderTarget(resolution.x, resolution.y, params);
-            this.renderTargetBlur = new THREE.WebGLRenderTarget(resolution.x / 2, resolution.y / 2, params);
-
-            this.brightMaterial = new THREE.ShaderMaterial({
-              uniforms: {
-                tDiffuse: { value: null },
-                luminosityThreshold: { value: threshold },
-              },
-              vertexShader: `
-                varying vec2 vUv;
-                void main() {
-                  vUv = uv;
-                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                }
-              `,
-              fragmentShader: `
-                uniform sampler2D tDiffuse;
-                uniform float luminosityThreshold;
-                varying vec2 vUv;
-                void main() {
-                  vec4 texel = texture2D(tDiffuse, vUv);
-                  float luma = dot(texel.rgb, vec3(0.299, 0.587, 0.114));
-                  float brightness = max(0.0, luma - luminosityThreshold);
-                  gl_FragColor = texel * brightness * 2.0;
-                }
-              `,
-            });
-
-            this.blurMaterial = new THREE.ShaderMaterial({
-              uniforms: {
-                tDiffuse: { value: null },
-                direction: { value: new THREE.Vector2(1, 0) },
-                resolution: { value: new THREE.Vector2(resolution.x, resolution.y) },
-              },
-              vertexShader: `
-                varying vec2 vUv;
-                void main() {
-                  vUv = uv;
-                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                }
-              `,
-              fragmentShader: `
-                uniform sampler2D tDiffuse;
-                uniform vec2 direction;
-                uniform vec2 resolution;
-                varying vec2 vUv;
-                void main() {
-                  vec2 texelSize = 1.0 / resolution;
-                  vec4 result = vec4(0.0);
-                  float weights[5];
-                  weights[0] = 0.227027;
-                  weights[1] = 0.1945946;
-                  weights[2] = 0.1216216;
-                  weights[3] = 0.054054;
-                  weights[4] = 0.016216;
-                  result += texture2D(tDiffuse, vUv) * weights[0];
-                  for (int i = 1; i < 5; i++) {
-                    vec2 offset = direction * texelSize * float(i) * 2.0;
-                    result += texture2D(tDiffuse, vUv + offset) * weights[i];
-                    result += texture2D(tDiffuse, vUv - offset) * weights[i];
-                  }
-                  gl_FragColor = result;
-                }
-              `,
-            });
-
-            this.compositeMaterial = new THREE.ShaderMaterial({
-              uniforms: {
-                tDiffuse: { value: null },
-                tBloom: { value: null },
-                bloomStrength: { value: strength },
-              },
-              vertexShader: `
-                varying vec2 vUv;
-                void main() {
-                  vUv = uv;
-                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                }
-              `,
-              fragmentShader: `
-                uniform sampler2D tDiffuse;
-                uniform sampler2D tBloom;
-                uniform float bloomStrength;
-                varying vec2 vUv;
-                void main() {
-                  vec4 base = texture2D(tDiffuse, vUv);
-                  vec4 bloom = texture2D(tBloom, vUv);
-                  gl_FragColor = base + bloom * bloomStrength;
-                }
-              `,
-            });
-
-            this.fsQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.brightMaterial);
-            this.fsScene = new THREE.Scene();
-            this.fsScene.add(this.fsQuad);
-            this.fsCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-          }
-
-          render(renderer, writeBuffer, readBuffer) {
-            this.brightMaterial.uniforms.tDiffuse.value = readBuffer.texture;
-            this.fsQuad.material = this.brightMaterial;
-            renderer.setRenderTarget(this.renderTargetBright);
-            renderer.render(this.fsScene, this.fsCamera);
-
-            this.blurMaterial.uniforms.tDiffuse.value = this.renderTargetBright.texture;
-            this.blurMaterial.uniforms.direction.value.set(1, 0);
-            this.fsQuad.material = this.blurMaterial;
-            renderer.setRenderTarget(this.renderTargetBlur);
-            renderer.render(this.fsScene, this.fsCamera);
-
-            this.blurMaterial.uniforms.tDiffuse.value = this.renderTargetBlur.texture;
-            this.blurMaterial.uniforms.direction.value.set(0, 1);
-            renderer.setRenderTarget(this.renderTargetBright);
-            renderer.render(this.fsScene, this.fsCamera);
-
-            this.compositeMaterial.uniforms.tDiffuse.value = readBuffer.texture;
-            this.compositeMaterial.uniforms.tBloom.value = this.renderTargetBright.texture;
-            this.compositeMaterial.uniforms.bloomStrength.value = this.strength;
-            this.fsQuad.material = this.compositeMaterial;
-            renderer.setRenderTarget(writeBuffer);
-            renderer.render(this.fsScene, this.fsCamera);
-          }
-
-          dispose() {
-            this.renderTargetBright.dispose();
-            this.renderTargetBlur.dispose();
-            this.brightMaterial.dispose();
-            this.blurMaterial.dispose();
-            this.compositeMaterial.dispose();
-          }
-        };
-
-        // Effect composer
-        THREE.EffectComposer = class EffectComposer {
-          constructor(renderer) {
-            this.renderer = renderer;
-            this.passes = [];
-
-            const size = renderer.getSize(new THREE.Vector2());
-            const params = {
-              minFilter: THREE.LinearFilter,
-              magFilter: THREE.LinearFilter,
-              format: THREE.RGBAFormat,
-            };
-
-            this.renderTarget1 = new THREE.WebGLRenderTarget(size.x, size.y, params);
-            this.renderTarget2 = new THREE.WebGLRenderTarget(size.x, size.y, params);
-            this.writeBuffer = this.renderTarget1;
-            this.readBuffer = this.renderTarget2;
-          }
-
-          addPass(pass) {
-            this.passes.push(pass);
-          }
-
-          render() {
-            for (let i = 0; i < this.passes.length; i++) {
-              const pass = this.passes[i];
-              if (!pass.enabled) continue;
-
-              pass.render(this.renderer, this.writeBuffer, this.readBuffer);
-
-              if (pass.needsSwap) {
-                const tmp = this.readBuffer;
-                this.readBuffer = this.writeBuffer;
-                this.writeBuffer = tmp;
-              }
-            }
-            this.renderer.setRenderTarget(null);
-          }
-
-          setSize(width, height) {
-            this.renderTarget1.setSize(width, height);
-            this.renderTarget2.setSize(width, height);
-          }
-
-          dispose() {
-            this.renderTarget1.dispose();
-            this.renderTarget2.dispose();
-          }
-        };
-      });
-    </script>
   </body>
 </html>

@@ -59,11 +59,26 @@ class Page {
   }
 
   /**
-   * Initializes the page
+   * Initializes the page. Loads chamber fragment via ChamberLoader if registered.
+   * @returns {Promise<void>}
    */
-  initPage() {
+  async initPage() {
     if (!this.isInitialized && !this.isInitializing) {
       this.isInitializing = true;
+
+      // Load fragment if registered with ChamberLoader
+      if (typeof ChamberLoader !== 'undefined') {
+        try {
+          const loader = ChamberLoader.getInstance();
+          const id = this.id.replace('#', '');
+          if (loader.isRegistered(id) && !loader.isLoaded(id)) {
+            await loader.ensureLoaded(id);
+          }
+        } catch (loaderError) {
+          console.warn('ChamberLoader error:', loaderError.message);
+        }
+      }
+
       this.initialize();
       this.isInitializing = false;
       this.isInitialized = true;
@@ -168,44 +183,49 @@ function showNewSection(_loadingSection) {
       }, ETCETER4_CONFIG.animations.navigationDebounce);
     }
 
-    loadingSection.initPage();
+    loadingSection.initPage().then(() => {
+      fadeOutPage(currentPage, () => {
+        fadeInPage(loadingSection, () => {
+          // Transition Living Pantheon to new chamber after page is visible
+          try {
+            if (typeof LivingPantheonCore !== 'undefined') {
+              const livingPantheon = LivingPantheonCore.getInstance();
+              if (livingPantheon && livingPantheon.isRunning) {
+                // Extract chamber ID from page ID (remove '#' prefix)
+                const chamberId = _loadingSection.replace('#', '');
+                // Get chamber color from config if available
+                const chamberConfig =
+                  typeof ETCETER4_CONFIG !== 'undefined'
+                    ? ETCETER4_CONFIG.livingPantheon?.chambers?.[chamberId]
+                    : null;
+                const chamberColor = chamberConfig?.color || null;
 
-    fadeOutPage(currentPage, () => {
-      fadeInPage(loadingSection, () => {
-        // Transition Living Pantheon to new chamber after page is visible
-        try {
-          if (typeof LivingPantheonCore !== 'undefined') {
-            const livingPantheon = LivingPantheonCore.getInstance();
-            if (livingPantheon && livingPantheon.isRunning) {
-              // Extract chamber ID from page ID (remove '#' prefix)
-              const chamberId = _loadingSection.replace('#', '');
-              // Get chamber color from config if available
-              const chamberConfig =
-                typeof ETCETER4_CONFIG !== 'undefined'
-                  ? ETCETER4_CONFIG.livingPantheon?.chambers?.[chamberId]
-                  : null;
-              const chamberColor = chamberConfig?.color || null;
-
-              livingPantheon.transitionToNewChamber(chamberId, chamberColor);
+                livingPantheon.transitionToNewChamber(chamberId, chamberColor);
+              }
             }
+          } catch (pantheError) {
+            console.warn(
+              'Living Pantheon transition warning:',
+              pantheError.message
+            );
           }
-        } catch (pantheError) {
-          console.warn(
-            'Living Pantheon transition warning:',
-            pantheError.message
-          );
-        }
 
-        // Play page enter sound
-        if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
-          UISounds.pageEnter(0.5);
-        }
+          // Play page enter sound
+          if (typeof UISounds !== 'undefined' && UISounds.isEnabled()) {
+            UISounds.pageEnter(0.5);
+          }
 
-        // Set state to ready when transition completes
-        transitionState = TransitionState.READY;
-        setTimeout(() => {
-          transitionState = TransitionState.IDLE;
-        }, ETCETER4_CONFIG.animations.transitionCooldown);
+          // Manage 3D compositor lifecycle after navigation
+          if (typeof manageLandingCompositor === 'function') {
+            setTimeout(manageLandingCompositor, 100);
+          }
+
+          // Set state to ready when transition completes
+          transitionState = TransitionState.READY;
+          setTimeout(() => {
+            transitionState = TransitionState.IDLE;
+          }, ETCETER4_CONFIG.animations.transitionCooldown);
+        });
       });
     });
 
@@ -249,6 +269,20 @@ function fadeInPage(_Page, _cb) {
             _Page.isLoading = false;
             window.currentPage = _Page;
 
+            // Record visit in journey tracker
+            if (typeof JourneyTracker !== 'undefined') {
+              try {
+                JourneyTracker.getInstance().recordVisit(_Page.id);
+              } catch (_journeyErr) {
+                // Non-critical — silently continue
+              }
+            }
+
+            // Anticipatory preload: when landing on a wing, preload its chambers
+            if (typeof ChamberLoader !== 'undefined') {
+              _preloadWingChambers(_Page.id);
+            }
+
             // Manage focus for accessibility
             if (typeof manageFocus === 'function') {
               manageFocus(_Page.id);
@@ -282,6 +316,51 @@ function fadeInPage(_Page, _cb) {
   } else {
     // prevents fast clicking of the buttons from overloading the function
     return false;
+  }
+}
+
+/**
+ * Wing → chamber mappings for anticipatory preloading
+ * @type {Object<string, string[]>}
+ */
+const WING_CHAMBERS = {
+  '#east-wing': ['akademia', 'bibliotheke', 'pinakotheke'],
+  '#west-wing': ['agora', 'symposion', 'oikos'],
+  '#south-wing': ['odeion', 'theatron'],
+  '#north-wing': ['ergasterion', 'khronos'],
+};
+
+/**
+ * Preload child chamber fragments when visitor lands on a wing page.
+ * Uses requestIdleCallback to avoid blocking the main thread.
+ * Respects connection-aware loading via ChamberLoader._shouldSkipPreload().
+ * @param {string} pageId - e.g. '#east-wing'
+ */
+function _preloadWingChambers(pageId) {
+  const chambers = WING_CHAMBERS[pageId];
+  if (!chambers) {
+    return;
+  }
+
+  const loader = ChamberLoader.getInstance();
+
+  // Skip preloading on slow connections
+  if (loader._shouldSkipPreload && loader._shouldSkipPreload()) {
+    return;
+  }
+
+  const doPreload = () => {
+    for (const chamberId of chambers) {
+      if (loader.isRegistered(chamberId) && !loader.isLoaded(chamberId)) {
+        loader.preload(chamberId);
+      }
+    }
+  };
+
+  if (typeof requestIdleCallback === 'function') {
+    requestIdleCallback(doPreload, { timeout: 3000 });
+  } else {
+    setTimeout(doPreload, 200);
   }
 }
 
@@ -350,79 +429,31 @@ function fadeOutPage(_Page, _cb) {
  * Site navigation listeners
  */
 
-// these listen for when the page is meant to be loaded, trys to init then load, then fade out the current section
-// if any, then fade in the new section
-$('#backButton').on('click', () => {
-  showNewSection(currentPage.getBackElement().id);
-});
-$('#toLandingPage').on('click', () => {
-  showNewSection('#landing');
-});
-$('#toMenuPage').on('click', () => {
-  showNewSection('#menu');
-});
-$('#toWordsPage').on('click', () => {
-  showNewSection('#words');
-});
-$('#toSoundPage').on('click', () => {
-  showNewSection('#sound');
-});
-$('#toVisionPage').on('click', () => {
-  showNewSection('#vision');
-});
-$('#toInfoPage').on('click', () => {
-  showNewSection('#info');
-});
-$('#toVideoPage').on('click', () => {
-  showNewSection('#video');
-});
-$('#toStillsPage').on('click', () => {
-  showNewSection('#stills');
-});
-$('#toMapPage').on('click', () => {
-  showNewSection('#sitemap');
-});
-$('#toDiaryPage').on('click', () => {
-  showNewSection('#diary');
-});
-$('#toBlogPage').on('click', () => {
-  showNewSection('#blog');
-});
-$('#toLoopPage').on('click', () => {
-  showNewSection('#loop');
-});
-$('#toOGOD3D').on('click', e => {
+// Delegated click handler for all internal hash links
+// Routes all a[href^="#"] clicks through showNewSection() uniformly
+$(document).on('click', 'a[href^="#"]', function (e) {
+  const hash = $(this).attr('href');
+  if (!hash || hash === '#' || hash === '#pages') {
+    return;
+  }
   e.preventDefault();
-  showNewSection('#ogod3d');
+  showNewSection(hash);
+
+  // Close mobile menu if open
+  $('.c-hamburger.is-active')
+    .removeClass('is-active')
+    .attr('aria-expanded', 'false');
+  $('.mobileMenu.open').removeClass('open');
+  document.body.style.overflow = '';
 });
 
-$('#SoundBackButton').on('click', () => {
-  showNewSection('#menu');
-});
-$('#WordBackButton').on('click', () => {
-  showNewSection('#menu');
-});
-$('#VisionBackButton').on('click', () => {
-  showNewSection('#menu');
-});
-$('#InfoBackButton').on('click', () => {
-  showNewSection('#menu');
-});
-
-$('#VideoBackButton').on('click', () => {
-  showNewSection('#vision');
-});
-$('#VideoBackButton2').on('click', () => {
-  showNewSection('#vision');
-});
-$('#VideoBackButton3').on('click', () => {
-  showNewSection('#vision');
-});
-$('#VideoBackButton4').on('click', () => {
-  showNewSection('#vision');
-});
-$('#VideoBackButton5').on('click', () => {
-  showNewSection('#vision');
+// Back button uses getBackElement() logic, not a simple hash
+$('#backButton').on('click', e => {
+  e.preventDefault();
+  const back = currentPage.getBackElement();
+  if (back && back.id) {
+    showNewSection(back.id);
+  }
 });
 
 /*
