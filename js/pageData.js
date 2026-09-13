@@ -527,7 +527,7 @@ pages.discovery = new Page({
   initialize() {
     // Initialize discovery controller
     if (typeof DiscoveryController !== 'undefined') {
-      DiscoveryController.initialize();
+      return DiscoveryController.initialize();
     }
   },
 });
