@@ -84,3 +84,6 @@ build/
 
 # Project config (override global .config ignore)
 !.config/
+# Generated, verified publication candidates
+/_site/
+/.publication/
