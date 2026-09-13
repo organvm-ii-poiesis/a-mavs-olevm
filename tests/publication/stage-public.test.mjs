@@ -18,6 +18,7 @@ import {
   inspectExhibit,
   isPublicSource,
   sha256,
+  gitBlobId,
   stagePublic,
 } from '../../scripts/stage-public.mjs';
 
@@ -48,7 +49,12 @@ async function fixture() {
     'js/main.js',
     'img/photos/diary/diary1.jpg',
   ];
-  for (const name of sourceFiles) await put(name, `witness:${name}`);
+  const sourceBlobs = {};
+  for (const name of sourceFiles) {
+    const bytes = Buffer.from(`witness:${name}`);
+    await put(name, bytes);
+    sourceBlobs[name] = gitBlobId(bytes);
+  }
   const receipt = {
     schemaVersion: 1,
     sourceCommit: 'a'.repeat(40),
@@ -71,7 +77,14 @@ async function fixture() {
       files: await inspectExhibit(root, name),
     };
   }
-  return { root, output: path.join(dir, 'site'), receipt, sourceFiles, put };
+  return {
+    root,
+    output: path.join(dir, 'site'),
+    receipt,
+    sourceFiles,
+    sourceBlobs,
+    put,
+  };
 }
 
 test('allowlist keeps public media and attribution, excludes repository and authoring material', () => {
@@ -134,7 +147,7 @@ test('symlinked source and exhibit ancestors are rejected', async () => {
   await symlink('../index.html', path.join(f.root, 'js/main.js'));
   await assert.rejects(stagePublic(f), /Symlink/);
   await rm(path.join(f.root, 'js/main.js'));
-  await f.put('js/main.js', 'restored');
+  await f.put('js/main.js', 'witness:js/main.js');
   await rm(path.join(f.root, 'absorb-alchemize/audio-orb/dist'), {
     recursive: true,
   });
@@ -291,5 +304,21 @@ test('build input provenance rejects untracked public files even when locally ig
   await assert.rejects(
     assertTrackedInputs(f.root, 'audio-orb', tracked),
     /Symlink in exhibit input/
+  );
+});
+
+test('raw committed SVG bytes survive text-filter drift while real changes fail', async () => {
+  const f = await fixture();
+  const name = 'img/legacy.svg';
+  const original = Buffer.from('<svg>\r\n  <path d="M 1 2" />\r\n</svg>\r\n');
+  await f.put(name, original);
+  f.sourceFiles.push(name);
+  f.sourceBlobs[name] = gitBlobId(original);
+  await stagePublic(f);
+  assert.deepEqual(await readFile(path.join(f.output, name)), original);
+  await f.put(name, original.toString().replaceAll('\r\n', '\n'));
+  await assert.rejects(
+    stagePublic({ ...f, output: `${f.output}-changed` }),
+    /Public source differs from the committed blob/
   );
 });

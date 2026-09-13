@@ -20,6 +20,11 @@ import {
 } from './publication-config.mjs';
 
 export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+export const gitBlobId = bytes =>
+  createHash('sha1')
+    .update(`blob ${bytes.length}\0`)
+    .update(bytes)
+    .digest('hex');
 const hidden = name =>
   name.startsWith('.') ||
   ['node_modules', 'test', 'tests', '__tests__'].includes(name);
@@ -116,7 +121,13 @@ export async function inspectExhibit(root, name) {
   return files;
 }
 
-export async function stagePublic({ root, output, receipt, sourceFiles }) {
+export async function stagePublic({
+  root,
+  output,
+  receipt,
+  sourceFiles,
+  sourceBlobs,
+}) {
   root = path.resolve(root);
   output = path.resolve(output);
   if (
@@ -142,6 +153,11 @@ export async function stagePublic({ root, output, receipt, sourceFiles }) {
   for (const name of sourceFiles.filter(isPublicSource).sort()) {
     const full = await checkedFile(root, name);
     const bytes = await readFile(full);
+    // Compare raw committed bytes. Git's text filters can report an untouched
+    // historical CRLF SVG as dirty; normalization must not rewrite artwork.
+    if (!sourceBlobs || gitBlobId(bytes) !== sourceBlobs[name]) {
+      throw new Error(`Public source differs from the committed blob: ${name}`);
+    }
     planned.push({ path: name, bytes: bytes.length, sha256: sha256(bytes) });
   }
   for (const required of ['index.html', '404.html', 'manifest.json', 'sw.js']) {
@@ -196,19 +212,28 @@ if (
   }).trim();
   if (receipt.sourceCommit !== commit)
     throw new Error('Exhibit builds belong to a different commit');
-  execFileSync('git', ['diff', '--quiet', 'HEAD', '--'], { cwd: root });
-  const sourceFiles = execFileSync(
-    'git',
-    ['ls-tree', '-rz', '--name-only', 'HEAD'],
-    { cwd: root, encoding: 'utf8' }
-  )
+  const entries = execFileSync('git', ['ls-tree', '-rz', 'HEAD'], {
+    cwd: root,
+    encoding: 'utf8',
+  })
     .split('\0')
     .filter(Boolean);
+  const sourceBlobs = Object.fromEntries(
+    entries.map(entry => {
+      const tab = entry.indexOf('\t');
+      const [, type, sha] = entry.slice(0, tab).split(' ');
+      if (type !== 'blob')
+        throw new Error('Submodules require a reviewed publication policy');
+      return [entry.slice(tab + 1), sha];
+    })
+  );
+  const sourceFiles = Object.keys(sourceBlobs);
   const manifest = await stagePublic({
     root,
     output: path.join(root, '_site'),
     receipt,
     sourceFiles,
+    sourceBlobs,
   });
   console.log(
     `Staged ${manifest.files.length} files from ${commit}; runtime activation remains separately gated.`
