@@ -64,3 +64,24 @@ test('plays historical audio and stops it when an externally hosted album is sel
   ).toEqual({ sourceCleared: true, previousPaused: true, playing: false });
   expect(pageErrors).toEqual([]);
 });
+
+// Joint release proof also requires the cold-chamber navigation repair (PR #138).
+// Keyboard activation preserves the site's continuously moving artwork; no test
+// disables its motion or forces visibility to satisfy pointer-stability checks.
+test('the real Odeion route plays audio and stops it when changing albums', async ({
+  page,
+}) => {
+  await page.goto('/#odeion');
+  await expect(page.locator('#odeion')).toBeVisible();
+  await expect(page.locator('.odeion-album-card')).toHaveCount(4);
+  await page.locator('.odeion-album-card').first().press('Enter');
+  await expect(page.locator('button.odeion-track-row')).toHaveCount(29);
+  await page.locator('button.odeion-track-row').first().press('Enter');
+  await page.waitForFunction(
+    () =>
+      window.odeionPlayer?.isPlaying && window.odeionPlayer.getPosition() > 0.2
+  );
+  await page.locator('.odeion-album-card').nth(1).press('Enter');
+  await expect(page.locator('#odeion-play-btn')).toBeDisabled();
+  expect(await page.evaluate(() => window.odeionPlayer.isPlaying)).toBe(false);
+});
