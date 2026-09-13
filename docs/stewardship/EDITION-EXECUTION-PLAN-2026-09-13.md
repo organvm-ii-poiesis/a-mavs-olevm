@@ -107,3 +107,19 @@ application/default verification and normal acceptance gates precede expansion.
 The externally documented dependency-DAG producer currently runs only in its
 orchestration repository and does not satisfy this repository's exact-head
 `validate-dependencies` requirement. No context is impersonated or fabricated.
+
+## Delivery state without changing the queue
+
+The candidate table and exact local integration proof are maintained in
+[STATUS.md](../../STATUS.md). Dependencies #135, governance #136, navigation #138,
+coverage #141, source catalogue/diary #143 and guarded publication #145 are
+reviewable implementations; all remain open and unmerged at this cutoff. The
+original restoration is delivered separately as a verified local runnable archive
+and recoverable source bundle because its repository denied writes.
+
+These proofs do not relax the user rule against expansion on a red or dishonest
+default. Adopt and verify the existing foundation through its real CI, DAG and
+publication contracts before activating parked exhibition family #139 and later
+album-visual, text-animation and manuscript editions. Preserve actual audio, scan,
+source and performance gaps as explicit obligations. Rendering, release and artist
+acceptance remain distinct.

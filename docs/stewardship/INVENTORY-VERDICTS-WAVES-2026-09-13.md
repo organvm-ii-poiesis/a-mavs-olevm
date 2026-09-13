@@ -235,8 +235,10 @@ read-only pass and must not be silently included in its counts.
 
 All 37 recovered labels: `accessibility`, `activation-audit`, `automation`, `bug`, `ci`, `cleanup`, `codex`, `community`, `core`, `csp`, `dependencies`, `design`, `devex`, `documentation`, `duplicate`, `enhancement`, `github_actions`, `good first issue`, `help wanted`, `infrastructure`, `invalid`, `javascript`, `kill`, `lifecycle:blocked`, `merged`, `omega`, `park`, `question`, `ready-for-review`, `Review effort 2/5`, `Review effort 4/5`, `security`, `ship-now`, `ship-soon`, `stale`, `testing`, `wontfix`.
 
-The complete returned milestone collection is empty. No label or milestone was
-changed by this publication.
+The complete returned milestone collection is empty. The initial inventory and
+first publication changed no labels or milestones. Later Phase5 bookkeeping
+applied only existing labels to the 13 successor issues/PRs listed in STATUS.md;
+all remain open and no milestone or taxonomy was introduced.
 
 ### Partial branch-protection evidence refreshed before publication
 
@@ -268,3 +270,20 @@ and no-loss conditions are explicit in #139. Wave 1.1 coverage comes first, then
 this one Wave 1.2 successor. No artistic expansion starts behind a red/default
 acceptance gate. Captures receive a separate queue intention only for proven
 unique residue that does not belong to this family.
+
+## Final candidate reconciliation
+
+[STATUS.md](../../STATUS.md) records the later six open candidate PRs #135, #136,
+#138, #141, #143 and #145, the original local restoration delivery, combined local
+proof and retained acceptance boundaries. This subsequent execution evidence does
+not alter the initial 16-branch/89-PR inventory counts or imply adoption on default.
+E-DEPS, E-VERIFY, E-COVERAGE and source-repair obligations have reviewable candidates.
+E-VISUAL/E-REVIVAL remains parked under #139 for its broader exhibition scope.
+Publication has guarded artifact candidate #145 and no-key runtime obligation #144.
+
+The original local restoration is runnable and verified within its stated scope;
+original GitHub writes returned403, so this is an archive/source-recovery delivery,
+not an original-host release. Artist-driven new editions and missing source,
+performance and transcription inputs remain unfulfilled. Earlier statements about
+absent local implementation are superseded by these exact candidate receipts;
+earlier test totals remain historical and are not merged/default evidence.

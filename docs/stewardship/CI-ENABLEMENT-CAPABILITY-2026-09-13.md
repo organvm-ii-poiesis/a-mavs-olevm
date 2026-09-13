@@ -58,3 +58,24 @@ This is distinct from the two manually disabled local workflows. Enabling those
 workflows alone does not demonstrate that the external required context has a
 valid producer for this repository. The complete branch policy remains only
 partially visible through the branch metadata endpoint.
+
+## Final delivery capability boundaries
+
+Later candidate proof is summarized in [STATUS.md](../../STATUS.md). Hosted
+security/metadata checks, local unit/browser proofs and four exhibit builds do
+not enable the existing application/metadata workflows or supply the missing
+exact-head DAG producer. No setting change or check impersonation was performed.
+
+The original unnamedplay-r/etceter4 repository independently returned HTTP403
+for issue/branch writes, and ordinary Git had no configured credential. Its
+complete local restoration candidate de57207a361376b11d92880eed164003a42b4f39 and
+runnable archive/source bundle remain deliverable without claiming host deployment.
+
+PR #145 preserves another concrete boundary: no-key browser entry fails in two
+embedded exhibits, with safe credential/runtime activation retained in #144. The
+guard intentionally refuses publication. Full leaf and combined artifact staging
+subsequently passed with all source/payload hashes verified; the combined receipt
+records 1,362 files and 654,084,260 bytes at local integration
+`3a57c9222bf659cfb4acc8b998ce950d18948de1`. The earlier sparse-input staging boundary
+is resolved. Successful builds and verified artifact bytes do not prove safe,
+usable no-key exhibit entry or an accepted production deployment.
