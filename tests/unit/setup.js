@@ -559,7 +559,7 @@ const localStorageMock = {
   },
   key: vi.fn(i => Object.keys(localStorageMock.store)[i] || null),
 };
-global.localStorage = localStorageMock;
+vi.stubGlobal('localStorage', localStorageMock);
 if (typeof window !== 'undefined') {
   Object.defineProperty(window, 'localStorage', {
     value: localStorageMock,
@@ -569,7 +569,9 @@ if (typeof window !== 'undefined') {
 }
 
 // Mock window.devicePixelRatio
-global.window = global.window || {};
+if (typeof window === 'undefined') {
+  vi.stubGlobal('window', {});
+}
 Object.defineProperty(global.window, 'devicePixelRatio', {
   value: 1,
   writable: true,
@@ -583,7 +585,7 @@ global.requestAnimationFrame = vi.fn(() => ++rafId);
 global.cancelAnimationFrame = vi.fn();
 
 // Mock navigator
-global.navigator = {
+vi.stubGlobal('navigator', {
   ...global.navigator,
   geolocation: {
     getCurrentPosition: vi.fn(success => {
@@ -603,7 +605,7 @@ global.navigator = {
       end: vi.fn().mockResolvedValue(undefined),
     }),
   },
-};
+});
 
 // Mock fetch
 global.fetch = vi.fn().mockResolvedValue({
