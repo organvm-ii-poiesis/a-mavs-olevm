@@ -1,0 +1,12 @@
+{
+  "package": "howler",
+  "version": "2.2.4",
+  "source": "https://registry.npmjs.org/howler/-/howler-2.2.4.tgz",
+  "upstream": "https://github.com/goldfire/howler.js/tree/v2.2.4",
+  "license": "MIT",
+  "tarballSha256": "be9d8d09345954e246e932a057de0c9724475c8b58120dc690644432a0ba485f",
+  "files": {
+    "howler.core.min.js": "e7b836445d8c44bddc99b7678fa336a9d5c5ede27cc709c5fae8b1748ba7431b",
+    "LICENSE.md": "0ad5aef7beeb552832fe01db1c46933f948dfe5da35017bd0efa0006ffd2ced9"
+  }
+}

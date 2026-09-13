@@ -1,3 +1,4 @@
+/* global document, ODEION_CONFIG, EnhancedAudioPlayer */
 /**
  * @file odeion/odeion.js
  * @description ODEION chamber main logic
@@ -126,12 +127,20 @@ const OdeionChamber = (function () {
    */
   function setupAudioPlayer() {
     if (typeof EnhancedAudioPlayer !== 'undefined') {
-      audioPlayer = new EnhancedAudioPlayer({
-        container: 'odeion-player-container',
-        waveformCanvas: 'waveform-canvas',
-        onTrackLoad: handleTrackLoad,
-        onTimeUpdate: handleTimeUpdate,
-        onEnded: handleTrackEnded,
+      audioPlayer = new EnhancedAudioPlayer({ autoAdvance: false });
+      audioPlayer.on('trackChange', ({ track }) => handleTrackLoad(track));
+      audioPlayer.on('progress', ({ position, duration }) =>
+        handleTimeUpdate(position, duration)
+      );
+      audioPlayer.on('loaded', () => {
+        document.getElementById('duration').textContent = formatTime(
+          audioPlayer.getDuration()
+        );
+      });
+      audioPlayer.on('ended', handleTrackEnded);
+      audioPlayer.on('error', () => {
+        document.getElementById('now-playing-track').textContent =
+          'Playback unavailable. Open the album on Bandcamp.';
       });
     }
   }
@@ -170,7 +179,10 @@ const OdeionChamber = (function () {
     // Update duration display
     const durationEl = document.getElementById('duration');
     if (durationEl && trackData.duration) {
-      durationEl.textContent = formatTime(trackData.duration);
+      durationEl.textContent =
+        typeof trackData.duration === 'string'
+          ? trackData.duration
+          : formatTime(trackData.duration);
     }
   }
 
@@ -178,6 +190,7 @@ const OdeionChamber = (function () {
    * Handle time update event
    */
   function handleTimeUpdate(currentTime, duration) {
+    document.getElementById('duration').textContent = formatTime(duration);
     const currentTimeEl = document.getElementById('current-time');
     if (currentTimeEl) {
       currentTimeEl.textContent = formatTime(currentTime);
@@ -188,8 +201,9 @@ const OdeionChamber = (function () {
    * Handle track ended event
    */
   function handleTrackEnded() {
-    // Could implement auto-play next track here
-    console.log('Track ended');
+    const next = audioPlayer.currentTrackIndex + 1;
+    if (next < audioPlayer.tracks.length && audioPlayer.loadTrack(next))
+      audioPlayer.play();
   }
 
   /**
@@ -256,9 +270,9 @@ const OdeionChamber = (function () {
     const categoryLabel =
       item.category.charAt(0).toUpperCase() + item.category.slice(1);
 
-    let coverHtml = '';
+    let coverHtml;
     if (coverUrl) {
-      coverHtml = `<img src="${coverUrl}" alt="${item.title} cover art" loading="lazy" />`;
+      coverHtml = `<img src="${coverUrl}" alt="${escapeHtml(item.title)} cover art" loading="lazy" />`;
     } else {
       coverHtml = '<div class="placeholder"><span>No Cover Art</span></div>';
     }
@@ -290,9 +304,8 @@ const OdeionChamber = (function () {
           <p class="f7 white-60 lh-copy">${escapeHtml(item.description || '')}</p>
           ${featuresHtml}
           <div class="music-item-action">
-            <button class="play-track-btn" data-track-id="${item.id}" aria-label="Play ${item.title}">
-              ▶ Play / More Info
-            </button>
+            ${item.tracks.some(track => track.src || track.url) ? `<button class="play-track-btn" data-track-id="${item.id}" aria-label="Play ${escapeHtml(item.title)}">▶ Play album</button>` : ''}
+            <a href="${escapeHtml(item.links.bandcamp)}" class="white">Listen on Bandcamp</a>
           </div>
         </div>
       </div>
@@ -313,43 +326,15 @@ const OdeionChamber = (function () {
       titleEl.textContent = track.title;
     }
 
-    // If EnhancedAudioPlayer is available, use it
     if (audioPlayer) {
-      // Resolve audio URL using MediaURLResolver if available
-      let audioUrl;
-      let coverArtUrl = ODEION_CONFIG.getCoverArt(track, 'large');
-
-      if (typeof MediaURLResolver !== 'undefined') {
-        // Use R2-resolved URLs
-        if (track.type === 'album' && track.trackCount > 0) {
-          // For album play, start with track 1
-          audioUrl = MediaURLResolver.resolveAlbumTrack(track.id, 1, 'mp3');
-        } else {
-          // For singles/demos/experimental, use direct path
-          audioUrl = MediaURLResolver.resolve(
-            `${track.category}/${track.id}/track.mp3`,
-            'audio'
-          );
-        }
-        // Resolve cover art from R2
-        if (track.id) {
-          coverArtUrl = MediaURLResolver.resolveCoverArt(track.id, 'large');
-        }
-      } else {
-        // Fallback to local paths
-        audioUrl = `audio/${track.category}/${track.id}/track.mp3`;
-      }
-
-      const trackData = {
-        title: track.title,
-        artist: track.artist,
+      audioPlayer.clearQueue();
+      audioPlayer.tracks = track.tracks.map(item => ({
+        ...item,
+        url: ODEION_CONFIG.getAudioUrl(track.id, item.number),
         album: track.title,
-        duration: parseFloat(track.duration) || 0,
-        coverArt: coverArtUrl,
-        url: audioUrl,
-      };
-      audioPlayer.load(trackData);
-      audioPlayer.play();
+        coverArt: ODEION_CONFIG.getCoverArt(track, 'large'),
+      }));
+      if (audioPlayer.loadTrack(0)) audioPlayer.play();
     }
   }
 

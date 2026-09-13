@@ -16,6 +16,23 @@
  * // => 'https://media.etceter4.com/video/performances/electronica-2015/720p.m3u8'
  */
 class MediaURLResolver {
+  /** Classic-script const bindings do not become properties on window. */
+  static getConfig() {
+    return typeof ETCETER4_CONFIG !== 'undefined'
+      ? ETCETER4_CONFIG
+      : globalThis.ETCETER4_CONFIG || {};
+  }
+
+  /** Look up the existing object key or the stable public album ID. */
+  static getAlbum(albumId) {
+    const albums = MediaURLResolver.getConfig()?.media?.albums || {};
+    return (
+      albums[albumId] ||
+      Object.values(albums).find(album => album.id === albumId) ||
+      null
+    );
+  }
+
   /**
    * Get the base URL for media assets
    * Detects environment and returns appropriate base URL
@@ -23,13 +40,13 @@ class MediaURLResolver {
    */
   static getBaseUrl() {
     // Check for config override
-    if (typeof window !== 'undefined' && window.ETCETER4_CONFIG?.media) {
+    if (typeof window !== 'undefined' && MediaURLResolver.getConfig()?.media) {
       // If baseUrl is a function, call it
-      if (typeof window.ETCETER4_CONFIG.media.baseUrl === 'function') {
-        return window.ETCETER4_CONFIG.media.baseUrl();
+      if (typeof MediaURLResolver.getConfig().media.baseUrl === 'function') {
+        return MediaURLResolver.getConfig().media.baseUrl();
       }
       // If r2BaseUrl is set, use it
-      if (window.ETCETER4_CONFIG.media.r2BaseUrl) {
+      if (MediaURLResolver.getConfig().media.r2BaseUrl) {
         // Environment detection
         if (typeof window !== 'undefined') {
           const hostname = window.location?.hostname || '';
@@ -41,11 +58,11 @@ class MediaURLResolver {
 
           // Vercel preview deployments
           if (hostname.includes('vercel.app')) {
-            return window.ETCETER4_CONFIG.media.r2BaseUrl;
+            return MediaURLResolver.getConfig().media.r2BaseUrl;
           }
         }
 
-        return window.ETCETER4_CONFIG.media.r2BaseUrl;
+        return MediaURLResolver.getConfig().media.r2BaseUrl;
       }
     }
 
@@ -73,13 +90,11 @@ class MediaURLResolver {
    * @returns {string} Full track URL
    */
   static resolveAlbumTrack(albumId, trackNumber, format = 'mp3') {
-    // Determine preferred format from config
-    const preferredFormat = MediaURLResolver.getPreferredAudioFormat(format);
-    const paddedTrack = String(trackNumber).padStart(2, '0');
-    return MediaURLResolver.resolve(
-      `albums/${albumId}/${paddedTrack}.${preferredFormat}`,
-      'audio'
+    const track = MediaURLResolver.getAlbum(albumId)?.tracks?.find(
+      item => item.number === Number(trackNumber)
     );
+    // A format preference does not establish that a derivative exists.
+    return track?.formats?.[format] || track?.url || track?.src || null;
   }
 
   /**
@@ -88,7 +103,7 @@ class MediaURLResolver {
    * @returns {string} Supported format to use
    */
   static getPreferredAudioFormat(requested = 'mp3') {
-    const config = window.ETCETER4_CONFIG?.media?.audio;
+    const config = MediaURLResolver.getConfig()?.media?.audio;
     const formatPriority = config?.formatPriority || ['mp3', 'flac', 'ogg'];
 
     // If requested format is in priority list, use it
@@ -136,10 +151,10 @@ class MediaURLResolver {
    * @returns {string} Waveform JSON URL
    */
   static resolveWaveform(albumId, trackNumber) {
-    const paddedTrack = String(trackNumber).padStart(2, '0');
-    return MediaURLResolver.resolve(
-      `albums/${albumId}/${paddedTrack}-waveform.json`,
-      'audio'
+    return (
+      MediaURLResolver.getAlbum(albumId)?.tracks?.find(
+        track => track.number === Number(trackNumber)
+      )?.waveformUrl || null
     );
   }
 
@@ -150,10 +165,13 @@ class MediaURLResolver {
    * @returns {string} LRC file URL
    */
   static resolveLyrics(albumId, trackNumber) {
-    const paddedTrack = String(trackNumber).padStart(2, '0');
-    return MediaURLResolver.resolve(
-      `albums/${albumId}/${paddedTrack}.lrc`,
-      'audio'
+    const album = MediaURLResolver.getAlbum(albumId);
+    if (!album?.hasLyrics) {
+      return null;
+    }
+    return (
+      album.tracks?.find(track => track.number === Number(trackNumber))
+        ?.lyricsUrl || null
     );
   }
 
@@ -165,7 +183,7 @@ class MediaURLResolver {
    */
   static resolveVideo(videoId, quality = 'auto') {
     const preferAdaptive =
-      window.ETCETER4_CONFIG?.media?.video?.preferAdaptive !== false;
+      MediaURLResolver.getConfig()?.media?.video?.preferAdaptive !== false;
 
     if (preferAdaptive && quality === 'auto') {
       // Return master HLS manifest for adaptive streaming
@@ -207,13 +225,8 @@ class MediaURLResolver {
    * @returns {string} Cover art URL
    */
   static resolveCoverArt(albumId, size = 'medium') {
-    const sizeMap = {
-      large: '1200',
-      medium: '600',
-      small: '300',
-    };
-    const sizeValue = sizeMap[size] || '600';
-    return MediaURLResolver.resolve(`${albumId}-${sizeValue}.jpg`, 'covers');
+    const album = MediaURLResolver.getAlbum(albumId);
+    return album?.coverArt?.[size] || album?.coverUrl || null;
   }
 
   /**
@@ -231,7 +244,7 @@ class MediaURLResolver {
    * @returns {boolean} True if URL is from R2
    */
   static isR2Url(url) {
-    const r2BaseUrl = window.ETCETER4_CONFIG?.media?.r2BaseUrl;
+    const r2BaseUrl = MediaURLResolver.getConfig()?.media?.r2BaseUrl;
     if (!r2BaseUrl || !url) {
       return false;
     }
@@ -255,26 +268,37 @@ class MediaURLResolver {
       includeLyrics = false,
     } = options;
 
-    const tracks = [];
-
-    for (let i = 1; i <= trackCount; i++) {
+    const album = MediaURLResolver.getAlbum(albumId);
+    if (!album) {
+      return [];
+    }
+    return album.tracks.slice(0, trackCount).map(sourceTrack => {
       const track = {
-        trackNumber: i,
-        audioUrl: MediaURLResolver.resolveAlbumTrack(albumId, i, format),
+        ...sourceTrack,
+        trackNumber: sourceTrack.number,
+        audioUrl: MediaURLResolver.resolveAlbumTrack(
+          albumId,
+          sourceTrack.number,
+          format
+        ),
       };
 
       if (includeWaveforms) {
-        track.waveformUrl = MediaURLResolver.resolveWaveform(albumId, i);
+        track.waveformUrl = MediaURLResolver.resolveWaveform(
+          albumId,
+          sourceTrack.number
+        );
       }
 
       if (includeLyrics) {
-        track.lyricsUrl = MediaURLResolver.resolveLyrics(albumId, i);
+        track.lyricsUrl = MediaURLResolver.resolveLyrics(
+          albumId,
+          sourceTrack.number
+        );
       }
 
-      tracks.push(track);
-    }
-
-    return tracks;
+      return track;
+    });
   }
 
   /**
@@ -283,7 +307,7 @@ class MediaURLResolver {
    * @returns {Object|null} Album metadata with resolved URLs, or null if not found
    */
   static resolveAlbumMetadata(albumId) {
-    const albumConfig = window.ETCETER4_CONFIG?.media?.albums?.[albumId];
+    const albumConfig = MediaURLResolver.getAlbum(albumId);
 
     if (!albumConfig) {
       return null;

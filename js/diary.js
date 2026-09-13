@@ -11,7 +11,7 @@
 'use strict';
 
 /**
- * Caption data for diary images
+ * Historical authored captions. These are separate texts, not scan transcriptions.
  */
 const diaryData = {
   diary: {
@@ -42,67 +42,38 @@ const diaryData = {
 };
 
 /**
- * Diary carousel instance
+ * The archive has non-contiguous filenames and letter-suffixed pages.
+ * Navigate the verified file list; a numeric total cannot generate its paths.
  */
+const diaryFiles = globalThis.ETCETER4_SOURCE_CATALOGUE?.diary.files || [];
 const diaryCarousel = new Carousel({
   id: '#diary',
-  images: [['diary', 125]],
-  total: 125,
-  indexLoadLeft: $('[id*=diary-leftImage]').length,
-  loadOffset: 4,
+  images: [],
+  total: diaryFiles.length,
   caption: null,
   captionData: diaryData,
-  imageSelector: '#diary [id*=diary-leftImage]',
 });
 
-/**
- * Diary gallery navigation handlers
- */
-$('#stills-left-diary').on('click', () => {
-  const img = $('#diary-leftImage:visible').first();
-  const sC = diaryCarousel;
-  const tmpIndex = sC.index;
-
-  sC.decIndex();
-  sC.emitSlide('left');
-  img.addClass('dn').removeClass('dib-ns db');
-
-  let loadingImage;
-  if (tmpIndex !== 0) {
-    loadingImage = img.prev('[id*=diary-leftImage]');
-    if (loadingImage.length === 0) {
-      loadingImage = $('[id*=diary-leftImage]').last();
-    }
-  } else {
-    loadingImage = $('[id*=diary-leftImage]').last();
+function renderDiaryPage() {
+  const file = diaryFiles[diaryCarousel.index];
+  const image = document.querySelector('#diary-leftImage img');
+  if (!file || !image) {
+    return;
   }
+  image.src = file.path;
+  image.dataset.src = file.path;
+  image.alt = `Handwritten diary scan: ${file.path.split('/').pop()}`;
+  diaryCarousel.setIndicator();
+}
 
-  loadingImage.addClass('dib-ns db').removeClass('dn');
-  loadingImage.find('img').addClass('anim-fadeIn');
+$('#stills-left-diary').on('click', () => {
+  diaryCarousel.decIndex();
+  renderDiaryPage();
 });
 
 $('#stills-right-diary').on('click', () => {
-  const img = $('#diary-leftImage:visible').first();
-  const sC = diaryCarousel;
-  const tmpIndex = sC.index + 1;
-
-  sC.incIndex();
-  sC.emitSlide('right');
-  img.addClass('dn').removeClass('dib-ns db');
-
-  let loadingImage;
-  if (tmpIndex < sC.total) {
-    loadingImage = img.next('[id*=diary-leftImage]');
-    if (loadingImage.length === 0) {
-      loadingImage = $('[id*=diary-leftImage]').first();
-    }
-  } else {
-    loadingImage = $('[id*=diary-leftImage]').first();
-  }
-
-  loadingImage.addClass('dib-ns db').removeClass('dn');
-  loadingImage.find('img').addClass('anim-fadeIn');
+  diaryCarousel.incIndex();
+  renderDiaryPage();
 });
 
-// Bind lazy-load handler for progressive image loading
-diaryCarousel.bindLazyLoad();
+renderDiaryPage();
