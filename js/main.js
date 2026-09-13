@@ -142,47 +142,30 @@ function manageLandingCompositor() {
  * Cmd/Ctrl+K search bootstrap
  * Loads discovery scripts on first use, then delegates to DiscoveryController
  */
+let searchBootstrapPromise = null;
 document.addEventListener('keydown', e => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-    e.preventDefault();
-
-    // If DiscoveryController is already loaded, let it handle subsequent events
-    if (typeof DiscoveryController !== 'undefined') {
-      return;
-    }
-
-    // Load discovery chamber scripts on first Cmd+K press
-    if (typeof ChamberLoader !== 'undefined') {
-      const loader = ChamberLoader.getInstance();
-      if (loader.isRegistered('discovery')) {
-        loader.ensureLoaded('discovery').then(() => {
-          // Initialize ContentRegistry for search
-          if (typeof ContentRegistry !== 'undefined') {
-            try {
-              ContentRegistry.getInstance()
-                .initialize()
-                .then(() => {
-                  // Open search modal after scripts are ready
-                  const modal = document.getElementById('searchModal');
-                  if (modal) {
-                    modal.classList.remove('dn');
-                  }
-                  const input = document.getElementById('globalSearchInput');
-                  if (input) {
-                    input.focus();
-                  }
-                })
-                .catch(err => {
-                  console.warn('ContentRegistry init error:', err.message);
-                });
-            } catch (regErr) {
-              console.warn('ContentRegistry setup error:', regErr.message);
-            }
-          }
-        });
-      }
-    }
+  if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== 'k') {
+    return;
   }
+  e.preventDefault();
+  if (searchBootstrapPromise) {
+    return;
+  }
+  searchBootstrapPromise = Promise.resolve()
+    .then(async () => {
+      if (typeof DiscoveryController === 'undefined') {
+        await ChamberLoader.getInstance().ensureLoaded('discovery');
+      }
+      const controller = DiscoveryController.getInstance();
+      await controller.initialize();
+      controller.openSearchModal();
+    })
+    .catch(error => {
+      recoverNavigation(error, currentPage, '#discovery');
+    })
+    .finally(() => {
+      searchBootstrapPromise = null;
+    });
 });
 
 $(document).ready(() => {
@@ -194,27 +177,32 @@ $(document).ready(() => {
       const _hash = $(hash);
 
       currentPage = Page.findPage(hash);
-      currentPage.initPage().then(() => {
-        _hash.removeClass('dn');
-        if (hash === '#stills' || hash === '#diary') {
-          _hash.addClass('dt');
-        }
-
-        // Manage compositor on initial load
-        manageLandingCompositor();
-
-        // Initialize Living Pantheon system on first page load
-        if (typeof initializeLivingPantheon === 'function') {
-          try {
-            initializeLivingPantheon(hash);
-          } catch (pantheError) {
-            console.warn(
-              'Living Pantheon initialization error:',
-              pantheError.message
-            );
+      currentPage
+        .initPage()
+        .then(() => {
+          _hash.removeClass('dn');
+          if (hash === '#stills' || hash === '#diary') {
+            _hash.addClass('dt');
           }
-        }
-      });
+
+          // Manage compositor on initial load
+          manageLandingCompositor();
+
+          // Initialize Living Pantheon system on first page load
+          if (typeof initializeLivingPantheon === 'function') {
+            try {
+              initializeLivingPantheon(hash);
+            } catch (pantheError) {
+              console.warn(
+                'Living Pantheon initialization error:',
+                pantheError.message
+              );
+            }
+          }
+        })
+        .catch(error => {
+          recoverNavigation(error, Page.findPage('#landing'), hash);
+        });
     } catch (error) {
       // Fallback to landing page if hash is invalid
       console.warn(`Invalid hash on load: ${hash}, defaulting to landing`);

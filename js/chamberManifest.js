@@ -154,11 +154,23 @@
     html: 'chambers/discovery/fragment.html',
     scripts: [
       {
-        src: 'https://cdn.jsdelivr.net/npm/minisearch@6/dist/umd/index.min.js',
+        src: 'https://cdn.jsdelivr.net/npm/minisearch@6.3.0/dist/umd/index.js',
         crossOrigin: 'anonymous',
         integrity:
-          'sha384-rRCYclMbrsKo/chuOGq3NDyd5hQBuqHqdrEqDGfxCc3MQhs9ucV4TQZ1bZvXCweg',
+          'sha384-rOQt62aHbMfSFddgQU78TokzAkqU6b+HoSm/dJMCz6Tn8rMlfE9FUprXQKgyIyBV',
       },
+      // Load metadata without activating every chamber's renderers or media.
+      // Otherwise a first-use search permanently indexes zero unvisited items.
+      'akademia/config.js',
+      'bibliotheke/config.js',
+      'pinakotheke/config.js',
+      'odeion/config.js',
+      'agora/config.js',
+      'symposion/config.js',
+      'oikos/config.js',
+      'theatron/config.js',
+      'ergasterion/config.js',
+      'khronos/config.js',
       'js/discovery/ContentRegistry.js',
       'js/discovery/SearchEngine.js',
       'js/discovery/FilterSystem.js',
