@@ -84,7 +84,7 @@ Opening claim of no public URL/deployment is stale as a blanket description: met
 
 - etceter4-revival:10 unique commits, last2026-07-04,246 changed files from merge base; existing reconstruction/edition work must be recovered before creating another restoration.
 - May preservation pair:22 document moves plus agent-instruction edits. July capture: evolution prototypes (cinematic/editorial/signal), broad SVG formatting and destructive test/metadata differences. Extract intended work; do not merge snapshot wholesale.
-- limen/discover PR#105 merged but branch ahead by ancestry; compare DISCOVERY.md/value-repos.json content before calling residue unique.
+- limen/discover PR#105 merged and its two changed file blobs match surveyed default exactly; nonzero ancestry ahead is not unique content. See E-DISCOVER verdict; the branch remains retained.
 - #102/#103/#104 generated competing suites for one path; repair the family/assertion/mock contract.
 - #100 contains generated catalogue/studies and old URL/Instagram assumptions; old1221-test claim is historical, not current evidence.
 - No open draft PRs. Draft releasev0.0.1 is unpublished and has no assets.
@@ -155,12 +155,18 @@ Risk:lost author/experimental work. Close/delete:NO absent full residue mapping 
 
 ### E-DISCOVER — Discoverability metadata
 
-Members:merged#105/live discover branch.
-Evidence:DISCOVERY.md/value-repos additions.
-Root cause:retained branch after possibly squash-equivalent integration.
-Status:active verification.
-Finish:content-equivalence check or salvaged residue.
-Next:compare both files to main. Risk:low if preserved. Close/delete:NO until equivalence proved and retirement justified.
+Members: merged #105 / retained `limen/discover-organvm-a-mavs-olevm-d673`, head `c1331ef12c5d`.
+Recovered intention: add `DISCOVERY.md` and `value-repos.json`.
+Status: superseded-by the already present source on surveyed default `477d62305943049f638be8fd46d74bd89f4d582f`; no source repair remains for this intention.
+Evidence: the branch's only two changed files are byte-identical to default:
+`DISCOVERY.md` blob `e20a03c84c9a10affd056de8d0b6526f071e4bb1` and
+`value-repos.json` blob `0f7ab816ce8234243c45b58ed92d0ebc71b1a16c`.
+The nonzero ancestry-ahead count is not unique source residue. The evidence and
+successor-on-default verdict were posted to merged PR #105; this governance
+ledger records it. Branch retained; no deletion or state change performed.
+Next action: none for source integration; any later branch retirement still follows
+the constitution. Risk of abandoning unrecovered work: none demonstrated for these
+two files after exact blob comparison.
 
 ### E-AGENT — Historical assistant configuration
 
@@ -172,24 +178,25 @@ Finish:useful live rules incorporated by stewardship baseline without obsolete w
 Next:compare changed files to current configuration. Risk:lost conventions/contradictory instructions.
 Close/delete:NO new deletions; historical PR remains evidence.
 
-## Proposed branch constitution
+## Historical proposal and adopted branch constitution
 
 Existing main stays production trunk; gh-pages retains generated publication history. Calibrated proposed recurring lanes:lane/verify-heal for proof and repair;lane/editions for evolved album, text, manuscript and audiovisual editions. Historical restoration stays in the original repository. BRANCHES.md is the constitution; no lane/evolve is currently justified. Do not claim lanes exist until created. Short-lived fix branches can target main; no redundant lane/heal merely for symmetry, no develop/release lane inferred.
+
+The earlier `lane/verify` and possible `lane/evolve` inventory proposals are superseded by the calibrated [BRANCHES.md](../../BRANCHES.md): `lane/verify-heal` and `lane/editions` are the only proposed recurring lanes. The [edition execution plan](EDITION-EXECUTION-PLAN-2026-09-13.md) is the single normative queue; this inventory records recovered intentions rather than an alternative execution order.
 
 One intention per work/<lane>/<intent> or feat/fix/chore/docs/test/hotfix branch, one worktree each; normal PRs to target lane/main; lanes stay near main without rewriting others' history. Only tested deploy artifacts enter gh-pages. Captures are custody refs, not integration lanes. Dormancy documented, retirement by evidence/successor/constitution PR. No secrets/unrelated WIP/unsupported public claims.
 
 ## Ordered waves
 
-| Queue | Family / reason                                                   | Class proof                                                                                                                                 | Target                                                     | Member disposition                                                      |
-| ----- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------- |
-| 0.1   | E-VERIFY plus foundation-impacting E-DEPS: truthful default first | Safe closure order, application CI/runtime, security-compatible lock; validate/audit/unit/HTML/build/browser/a11y + exact remote SHA        | main via foundation PR                                     | All preserved; no #94 closure before activation finish                  |
-| 1.1   | E-COVERAGE: existing small conflicting family                     | Integrate unique#103/#104 cases with#102; answer15 findings; full unit                                                                      | main via healed#104 or successor                           | Link all; close only after verified default successor                   |
-| 1.2   | E-VISUAL: substantial existing user-facing implementation         | Reconcile#100; catalogue/deep-links/filter/focus/failure/mobile/performance                                                                 | main via healed#100 or successor                           | Link#100 before state changes; preserve until green default             |
-| 1.3   | E-REVIVAL:10 existing commits serving core ask                    | Historical comparison, restoration acceptance, edition boundaries                                                                           | Authorized original/evolved repos with separate intent PRs | Revival kept until every intention accounted                            |
-| 1.4   | E-CAPTURE/E-DISCOVER/E-AGENT: unique branch residue               | Path/case equivalence, relevant prototype/doc/config extraction                                                                             | main via one PR per actual unique intent                   | No age-based deletion; preserve capture refs                            |
-| 2.1   | #94 activation provenance                                         | Canonical URL/exact served SHA/versioned artifacts/deploy/rollback/README smoke                                                             | main/existing Pages                                        | Close#94 only after its whole finish line                               |
-| 3.1   | Authorized album/text/manuscript editions                         | Reusable catalogue/audio-visual/text surfaces; original audio references; scan/transcription/source relations; verified available witnesses | main or lane/editions                                      | Unprovided audio masters/stems/vocals/scans remain explicit obligations |
-| 4.1   | Interactive evolution/public process                              | Artwork tools/export/show routes, stable edition relationships and user-authored public descriptions                                        | main or lane/editions                                      | IDs/provenance persist; no fabricated social accounts/content           |
+| Queue | Family / reason                                                   | Class proof                                                                                                                                                           | Target                                   | Member disposition                                                                        |
+| ----- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------- |
+| 0.1   | E-VERIFY plus foundation-impacting E-DEPS: truthful default first | Safe closure order, application CI/runtime, security-compatible lock; validate/audit/unit/HTML/build/browser/a11y + exact remote SHA                                  | main via foundation PR                   | All preserved; no #94 closure before activation finish                                    |
+| 1.1   | E-COVERAGE: existing small conflicting family                     | Integrate unique#103/#104 cases with#102; answer15 findings; full unit                                                                                                | main via healed#104 or successor         | Link all; close only after verified default successor                                     |
+| 1.2   | E-VISUAL/E-REVIVAL, successor #139: one exhibition family         | Reconcile PR100 and ten revival commits; share227 identical thumbnail blobs, verify gallery/manifest/lineage/browser behavior without reintroducing old tooling drift | main via one healed family successor     | Link PR100 and both source branches; keep all until verified default and no-loss verdicts |
+| 1.3   | E-CAPTURE/E-AGENT: proven distinct branch residue                 | Path/case equivalence, relevant prototype/doc/config extraction                                                                                                       | main via one PR per actual unique intent | No age-based deletion; preserve capture refs                                              |
+| 2.1   | #94 activation provenance                                         | Canonical URL/exact served SHA/versioned artifacts/deploy/rollback/README smoke                                                                                       | main/existing Pages                      | Close#94 only after its whole finish line                                                 |
+| 3.1   | Authorized album/text/manuscript editions                         | Reusable catalogue/audio-visual/text surfaces; original audio references; scan/transcription/source relations; verified available witnesses                           | main or lane/editions                    | Unprovided audio masters/stems/vocals/scans remain explicit obligations                   |
+| 4.1   | Interactive evolution/public process                              | Artwork tools/export/show routes, stable edition relationships and user-authored public descriptions                                                                  | main or lane/editions                    | IDs/provenance persist; no fabricated social accounts/content                             |
 
 ## First concrete actions / illogical items
 
@@ -239,3 +246,25 @@ required-status summary: enforcement level `non_admins`, context
 still returns 403; reviewer counts, strictness and the complete policy remain
 unverified. This partial record does not establish application or stewardship
 checks as protected requirements, and no setting was changed.
+
+## Recovered exhibition family and parked successor
+
+Issue #139 is the single successor for PR #100 / `feat/visual-home` and
+`etceter4-revival`. Source inspection recovered distinct gallery/filter/lightbox,
+ingest, front-door and browser-test work from the four visual commits, and
+sparse/suffixed image manifests, archive filename-stem repair, carousel/caption
+corrections and lineage documentation from the ten revival commits.
+
+Exactly 227 thumbnail paths have identical Git blobs across both tips. Reuse them
+once. Thirteen shared non-thumbnail differences from pinned default include old
+workflows/tooling: their equality is evidence of common drift, not a reason to
+restore them wholesale. `index.html`, `js/main.js` and package files differ between
+the tips and require reconciliation against healed default. Branch assertions of
+pre-git origin dates, artist-approved catalogue identities, social handles and
+past test/performance results remain claims requiring source/applicability checks.
+
+PR #100 remains dirty and open; both branches remain intact. The parked finish line
+and no-loss conditions are explicit in #139. Wave 1.1 coverage comes first, then
+this one Wave 1.2 successor. No artistic expansion starts behind a red/default
+acceptance gate. Captures receive a separate queue intention only for proven
+unique residue that does not belong to this family.

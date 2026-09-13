@@ -33,10 +33,10 @@ not implied by placeholders or code.
 2. **Wave 0, stewardship:** install the constitution/instructions and tested
    pending-verification automation; provision only adopted recurring lanes;
    observe the remote protocol check and inspect required-check enforcement.
-3. **Wave 1, exhibition revival:** recover `etceter4-revival`, visual-home PR #100,
-   and unique preservation residue on one coherent successor.
-4. **Wave 1, coverage:** reconcile meaningful unique cases from PRs #102/#103/#104
+3. **Wave 1.1, coverage:** reconcile meaningful unique cases from PRs #102/#103/#104
    and their review findings into one tested suite.
+4. **Wave 1.2, exhibition revival #139:** amalgamate `etceter4-revival` and visual-home PR #100
+   with related unique preservation residue on one coherent successor after coverage.
 5. **Wave 2 onward:** verified album/source catalogue; per-album audiovisual
    editions; handwritten and original-text experiences; shareable work/edition
    routes; actual source ingestion and later remaster/remix/recording editions.
@@ -80,3 +80,17 @@ required-status summary: enforcement level `non_admins`, context
 still returns 403; reviewer counts, strictness and the complete policy remain
 unverified. This partial record does not establish application or stewardship
 checks as protected requirements, and no setting was changed.
+
+## Required-check and exhibition continuation
+
+The dependency-DAG producer documented by ADR002 runs only in the orchestration
+repository; its inspected source has neither a reusable workflow entry nor
+cross-repository status posting. It cannot supply a-mavs-olevm's protected-head
+`validate-dependencies` context as presently configured. See the updated capability
+receipt for the exact source revision. Hosted security/metadata success remains
+separate from this missing required contract.
+
+Issue #139 parks the amalgamated visual-home/revival intention with a concrete
+asset/path residue ledger, finish line and member-preservation conditions. The
+single queue is coverage first (Wave 1.1), then this exhibition family (Wave 1.2),
+after truthful Wave 0/default acceptance. Existing branches and PR #100 stay open.

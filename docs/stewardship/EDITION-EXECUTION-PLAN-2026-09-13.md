@@ -19,9 +19,9 @@ Authority: user explicitly requested planning and full implementation of this co
 
 ### Wave 1 — recovered existing work
 
-4. Evolved revival family: integrate unique gallery/lineage fixes from etceter4-revival, visual-home PR100, and relevant capture/preservation residues into an explicit successor after current checks pass. Preserve each original branch until every unique commit/intention is integrated or parked with evidence. Keep alternate entrances accessible.
-5. Evolved coverage family: recover unique useful tests from PR103/104 and associated discovery/test branches, test real modules, adapt to current source and run full suite. One successor, no per-sibling closure before default evidence.
-6. Preserve remaining unique capture/design material in the repository with an inventory, its actual implementation status, and successor links. Do not imply archival files implement their features.
+4. Evolved coverage family (Wave 1.1): recover unique useful tests from PRs #103/#104 and merged #102, reconcile review findings and actual module contracts, then run the full suite. One successor, no member closure before verified default evidence.
+5. Evolved exhibition-revival family (Wave 1.2, issue #139): amalgamate PR #100 / feat/visual-home and etceter4-revival after foundation and coverage proof. Reuse their 227 identical thumbnail blobs once; preserve each branch's distinct gallery, ingest, sparse-image manifest, filename-stem, carousel/caption and lineage work. Reconcile on healed main; do not import old workflow/tooling drift or infer artist-approved identity from generated entries. One queue slot and one successor branch/PR. Both source branches and PR #100 remain preserved until every intention is verified on default or individually parked with evidence.
+6. Capture/agent residue (Wave 1.3): compare retained captures and historical configuration to current default and issue #139. Fold related residue into that successor; create a separate intention only when semantic comparison proves a distinct obligation. Discovery #105 is already present: both changed file blobs match default exactly, so no discovery reimplementation is queued. Preserve every source reference and do not claim archival documents implement their features.
 
 ### Wave 2 — unrepresented intentions
 
@@ -92,3 +92,18 @@ recording, publication or artist approval. Source-backed work advances in separa
 intention/family PRs after required foundation proof. Existing application CI and
 metadata automation are manually disabled; authenticated maintenance must enable
 the same workflows and observe their checks before claiming release enforcement.
+
+## Authoritative queue and gate clarification — 2026-09-13
+
+The numbered waves above are the single normative queue. Historical inventory
+proposals are evidence; the adopted BRANCHES.md calibrates proposed recurring
+lanes as `lane/verify-heal` and `lane/editions`, with no `lane/evolve` and no newly
+created `develop`. Names remain proposals until their actual provisioning.
+
+Wave 0 governance/repair owners are #133 / PR #135 (dependencies/runtime), #134 /
+PR #136 (stewardship), and #137 / PR #138 (native navigation/loading). Wave 1.1
+coverage precedes the single Wave 1.2 exhibition-revival family #139. Required
+application/default verification and normal acceptance gates precede expansion.
+The externally documented dependency-DAG producer currently runs only in its
+orchestration repository and does not satisfy this repository's exact-head
+`validate-dependencies` requirement. No context is impersonated or fabricated.
