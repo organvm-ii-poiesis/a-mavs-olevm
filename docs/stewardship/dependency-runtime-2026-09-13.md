@@ -16,13 +16,15 @@ The family intends to maintain a secure, reproducible development and verificati
 
 Node 24.19.0 is pinned in `.nvmrc`, and all jobs in the existing application workflow read it. The audit now includes development dependencies, which constitute this static site's installed root toolchain. BrowserSync's scoped Immutable 4.3.9 override crosses its declared major range; a real server/UI/live-reload test provides explicit compatibility evidence. The test runner upgrade requires supported global mocking and jsdom's real Location, without weakening existing assertions.
 
+The advertised runtime floor is Node 24.15.0: the complete locked graph includes jsdom requiring that minimum on Node 24, which is stricter than html-validate's 24.8.0 floor. A contract test compares the manifest's minimum to every locked package engine and verifies the pinned runtime belongs to the advertised range. The standard `test:all` command now includes the toolchain suite, so its lock and BrowserSync checks cannot be silently omitted by that entry point.
+
 The lock validator now checks exact root declarations, registry URLs, integrity, semantic version ranges, and the dependency ancestry Node actually resolves. Adversarial fixtures cover false positives from prefix matches, unrelated nested dependencies, incompatible versions, missing roots/integrity, and prototype property names, malformed records and required/optional peer dependencies. BrowserSync uses ephemeral loopback ports, so the compatibility test does not rely on a fixed local port. Frozen `npm ci` remains the installability and peer-dependency gate.
 
 Local verification on the candidate source using Node 24.19.0 / npm 11.9.0:
 
 - `npm ci --ignore-scripts`: clean install, 385 packages. Lifecycle scripts were intentionally not run during installation; the repository's only root lifecycle is Husky setup.
 - `npm run test:unit`: 40 suites, 1,222 tests pass.
-- `npm run test:toolchain`: 14 tests pass, including actual BrowserSync HTML, UI and reload.
+- `npm run test:toolchain`: 15 tests pass, including actual BrowserSync HTML, UI and reload, and the complete locked-runtime engine contract.
 - `npm run validate:package-lock`: passes with the stricter validator.
 - `npm run validate`: passes; 66 existing lint warnings, zero errors.
 - `npm run validate:html`: passes; five existing inline-style warnings, zero errors.

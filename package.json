@@ -12,7 +12,7 @@
   ],
   "type": "module",
   "engines": {
-    "node": "^24.0.0",
+    "node": "^24.15.0",
     "npm": ">=11.0.0"
   },
   "main": "index.html",
@@ -46,7 +46,7 @@
     "test:unit": "vitest run --config .config/vitest.config.js",
     "test:unit:watch": "vitest --config .config/vitest.config.js",
     "test:unit:coverage": "vitest run --config .config/vitest.config.js --coverage",
-    "test:all": "npm run test:unit && npm run test",
+    "test:all": "npm run test:unit && npm run test:toolchain && npm run test",
     "test:a11y": "playwright test --config .config/playwright.config.js tests/e2e/accessibility.spec.js",
     "validate:html": "html-validate --config .config/htmlvalidate.json index.html",
     "build:exhibits": "npm run build:audio-orb && npm run build:ink-studio && npm run build:p5js-playground && npm run build:synthwave-space",
