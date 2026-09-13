@@ -7,6 +7,7 @@ const path = require('node:path');
 const {
   closingDirectives,
   labelsForFiles,
+  labelsForPullRequest,
   localIssueNumbers,
   recordMergedIntentions,
   validatePullRequestLinkage,
@@ -186,8 +187,45 @@ test('testing labels recognize spec files outside tests and do not label every f
   );
   assert.deepEqual(labelsForFiles(['js/main.js', 'css/styles.css']), [
     'javascript',
-    'css',
+    'design',
   ]);
+});
+
+test('real source paths and PR lifecycle states use only the repository label inventory', () => {
+  // Independent observed repository metadata, not a second copy of the factory.
+  const inventory = require('./known-labels.json');
+  const known = new Set(inventory.labels);
+  const paths = [
+    'css/styles.css',
+    '.github/workflows/project-automation.yml',
+    'index.html',
+    'akademia/config.js',
+    'js/main.js',
+    'package-lock.json',
+    'tests/governance/stewardship.test.cjs',
+    'docs/REPOSITORY_STEWARDSHIP.md',
+  ];
+  for (const pr of [
+    { state: 'open', draft: true, merged: false },
+    { state: 'open', draft: false, merged: false },
+    { state: 'closed', draft: false, merged: false },
+    { state: 'closed', draft: false, merged: true },
+  ]) {
+    const labels = labelsForPullRequest(pr, paths);
+    for (const name of [...labels.add, ...labels.remove]) {
+      assert.ok(known.has(name), `Unknown repository label: ${name}`);
+    }
+    assert.equal(new Set(labels.add).size, labels.add.length);
+    assert.equal(labels.add.includes('merged'), pr.merged);
+    assert.equal(
+      labels.add.includes('ready-for-review'),
+      pr.state === 'open' && !pr.draft
+    );
+    assert.equal(
+      labels.remove.includes('ready-for-review'),
+      pr.merged || pr.state === 'closed' || pr.draft
+    );
+  }
 });
 
 test('metadata workflow uses trusted default code and has no automatic issue close operation', () => {

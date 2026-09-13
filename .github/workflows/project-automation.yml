@@ -111,25 +111,14 @@ jobs:
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v7
         with:
           script: |
-            const { labelsForFiles } = require('./scripts/stewardship.cjs');
+            const { labelsForPullRequest } = require('./scripts/stewardship.cjs');
             const pr = context.payload.pull_request;
             const files = await github.paginate(github.rest.pulls.listFiles, {
               ...context.repo, pull_number: pr.number, per_page: 100
             });
-            const labels = labelsForFiles(files.map(file => file.filename));
-            const obsolete = [];
-            if (pr.merged) {
-              labels.push('merged');
-              obsolete.push('draft', 'ready-for-review');
-            } else if (pr.state === 'closed') {
-              obsolete.push('ready-for-review');
-            } else if (pr.draft) {
-              labels.push('draft');
-              obsolete.push('ready-for-review');
-            } else {
-              labels.push('ready-for-review');
-              obsolete.push('draft');
-            }
+            const { add: labels, remove: obsolete } = labelsForPullRequest(
+              pr, files.map(file => file.filename)
+            );
             for (const name of obsolete) {
               try {
                 await github.rest.issues.removeLabel({

@@ -32,21 +32,39 @@ function localIssueNumbers(text, owner, repo) {
 function labelsForFiles(paths) {
   const rules = [
     ['javascript', /^js\//],
-    ['css', /^css\/.*\.css$/],
-    ['ci/cd', /^\.github\/workflows\//],
+    ['design', /^css\/.*\.css$/],
+    ['github_actions', /^\.github\/workflows\//],
     ['dependencies', /(?:^|\/)package[^/]*\.json$|^\.config\//],
     [
       'testing',
       /^(?:tests?|e2e)\/|(?:\.spec|\.test)\.[cm]?js$|(?:^|\/)playwright\.config\./,
     ],
-    ['github', /^\.github\//],
-    ['html', /\.html$/],
+    ['infrastructure', /^\.github\//],
+    ['core', /\.html$/],
     ['documentation', /README|CHANGELOG|\.md$/],
-    ['content', /^(?:labyrinth|akademia)\//],
+    ['core', /^(?:labyrinth|akademia)\//],
   ];
-  return rules
-    .filter(([, pattern]) => paths.some(path => pattern.test(path)))
-    .map(([label]) => label);
+  return [
+    ...new Set(
+      rules
+        .filter(([, pattern]) => paths.some(path => pattern.test(path)))
+        .map(([label]) => label)
+    ),
+  ];
+}
+
+function labelsForPullRequest(pr, paths) {
+  const add = labelsForFiles(paths);
+  const remove = [];
+  if (pr.merged) {
+    add.push('merged');
+    remove.push('ready-for-review');
+  } else if (pr.state === 'closed' || pr.draft) {
+    remove.push('ready-for-review');
+  } else {
+    add.push('ready-for-review');
+  }
+  return { add, remove };
 }
 
 function pendingVerificationComment(pr, issue, defaultBranch) {
@@ -129,6 +147,7 @@ async function validatePullRequestLinkage({ github, context }) {
 module.exports = {
   closingDirectives,
   labelsForFiles,
+  labelsForPullRequest,
   localIssueNumbers,
   pendingVerificationComment,
   recordMergedIntentions,
