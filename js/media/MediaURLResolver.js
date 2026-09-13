@@ -16,6 +16,16 @@
  * // => 'https://media.etceter4.com/video/performances/electronica-2015/720p.m3u8'
  */
 class MediaURLResolver {
+  /** Look up the existing object key or the stable public album ID. */
+  static getAlbum(albumId) {
+    const albums = window.ETCETER4_CONFIG?.media?.albums || {};
+    return (
+      albums[albumId] ||
+      Object.values(albums).find(album => album.id === albumId) ||
+      null
+    );
+  }
+
   /**
    * Get the base URL for media assets
    * Detects environment and returns appropriate base URL
@@ -73,13 +83,11 @@ class MediaURLResolver {
    * @returns {string} Full track URL
    */
   static resolveAlbumTrack(albumId, trackNumber, format = 'mp3') {
-    // Determine preferred format from config
-    const preferredFormat = MediaURLResolver.getPreferredAudioFormat(format);
-    const paddedTrack = String(trackNumber).padStart(2, '0');
-    return MediaURLResolver.resolve(
-      `albums/${albumId}/${paddedTrack}.${preferredFormat}`,
-      'audio'
+    const track = MediaURLResolver.getAlbum(albumId)?.tracks?.find(
+      item => item.number === Number(trackNumber)
     );
+    // A format preference does not establish that a derivative exists.
+    return track?.formats?.[format] || track?.url || track?.src || null;
   }
 
   /**
@@ -136,10 +144,10 @@ class MediaURLResolver {
    * @returns {string} Waveform JSON URL
    */
   static resolveWaveform(albumId, trackNumber) {
-    const paddedTrack = String(trackNumber).padStart(2, '0');
-    return MediaURLResolver.resolve(
-      `albums/${albumId}/${paddedTrack}-waveform.json`,
-      'audio'
+    return (
+      MediaURLResolver.getAlbum(albumId)?.tracks?.find(
+        track => track.number === Number(trackNumber)
+      )?.waveformUrl || null
     );
   }
 
@@ -150,10 +158,13 @@ class MediaURLResolver {
    * @returns {string} LRC file URL
    */
   static resolveLyrics(albumId, trackNumber) {
-    const paddedTrack = String(trackNumber).padStart(2, '0');
-    return MediaURLResolver.resolve(
-      `albums/${albumId}/${paddedTrack}.lrc`,
-      'audio'
+    const album = MediaURLResolver.getAlbum(albumId);
+    if (!album?.hasLyrics) {
+      return null;
+    }
+    return (
+      album.tracks?.find(track => track.number === Number(trackNumber))
+        ?.lyricsUrl || null
     );
   }
 
@@ -207,13 +218,8 @@ class MediaURLResolver {
    * @returns {string} Cover art URL
    */
   static resolveCoverArt(albumId, size = 'medium') {
-    const sizeMap = {
-      large: '1200',
-      medium: '600',
-      small: '300',
-    };
-    const sizeValue = sizeMap[size] || '600';
-    return MediaURLResolver.resolve(`${albumId}-${sizeValue}.jpg`, 'covers');
+    const album = MediaURLResolver.getAlbum(albumId);
+    return album?.coverArt?.[size] || album?.coverUrl || null;
   }
 
   /**
@@ -255,26 +261,37 @@ class MediaURLResolver {
       includeLyrics = false,
     } = options;
 
-    const tracks = [];
-
-    for (let i = 1; i <= trackCount; i++) {
+    const album = MediaURLResolver.getAlbum(albumId);
+    if (!album) {
+      return [];
+    }
+    return album.tracks.slice(0, trackCount).map(sourceTrack => {
       const track = {
-        trackNumber: i,
-        audioUrl: MediaURLResolver.resolveAlbumTrack(albumId, i, format),
+        ...sourceTrack,
+        trackNumber: sourceTrack.number,
+        audioUrl: MediaURLResolver.resolveAlbumTrack(
+          albumId,
+          sourceTrack.number,
+          format
+        ),
       };
 
       if (includeWaveforms) {
-        track.waveformUrl = MediaURLResolver.resolveWaveform(albumId, i);
+        track.waveformUrl = MediaURLResolver.resolveWaveform(
+          albumId,
+          sourceTrack.number
+        );
       }
 
       if (includeLyrics) {
-        track.lyricsUrl = MediaURLResolver.resolveLyrics(albumId, i);
+        track.lyricsUrl = MediaURLResolver.resolveLyrics(
+          albumId,
+          sourceTrack.number
+        );
       }
 
-      tracks.push(track);
-    }
-
-    return tracks;
+      return track;
+    });
   }
 
   /**
@@ -283,7 +300,7 @@ class MediaURLResolver {
    * @returns {Object|null} Album metadata with resolved URLs, or null if not found
    */
   static resolveAlbumMetadata(albumId) {
-    const albumConfig = window.ETCETER4_CONFIG?.media?.albums?.[albumId];
+    const albumConfig = MediaURLResolver.getAlbum(albumId);
 
     if (!albumConfig) {
       return null;

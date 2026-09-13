@@ -38,6 +38,13 @@ class PlaylistManager {
     this._albumGrid = null;
     this._trackList = null;
     this._nowPlaying = null;
+    this._controls = null;
+    this._playerListeners = [];
+    this._domListeners = [];
+    // This controller owns queue/repeat decisions; the player emits ended.
+    if (this.player) {
+      this.player.autoAdvance = false;
+    }
   }
 
   /** Initialize the playlist UI */
@@ -84,26 +91,39 @@ class PlaylistManager {
 
   /** Render album selection grid */
   _renderAlbumGrid() {
-    this._albumGrid.innerHTML = this.albums
-      .map(
-        (album, idx) => `
-      <div class="odeion-album-card pointer ma2 ba b--white-20 br3 pa3 tc"
-           data-album-index="${idx}" role="listitem"
-           style="width: 200px; border-left: 3px solid #ffd700; background: rgba(0,0,0,0.5)">
-        <div class="bg-dark-gray br2 mb2 tc" style="height: 140px; line-height: 140px">
-          ${album.coverUrl ? `<img src="${album.coverUrl}" alt="${album.title}" class="w-100 h-100 br2" style="object-fit:cover">` : `<span class="f2" style="color: #ffd700">${album.shortTitle || album.title.charAt(0)}</span>`}
-        </div>
-        <h4 class="f6 mt0 mb1" style="color: #ffd700">${album.title}</h4>
-        <p class="f7 o-50 mt0 mb0">${album.year || ''} &middot; ${album.tracks?.length || 0} tracks</p>
-      </div>
-    `
-      )
-      .join('');
+    this._albumGrid.replaceChildren();
+    this.albums.forEach((album, idx) => {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className =
+        'odeion-album-card chamber-card pointer ma2 ba b--white-20 br3 pa3 tc white bg-black-70';
+      card.dataset.albumIndex = idx;
+      card.dataset.section = 'album';
+      card.style.width = '200px';
+      card.setAttribute('aria-pressed', 'false');
+      if (album.coverUrl) {
+        const cover = document.createElement('img');
+        cover.src = album.coverUrl;
+        cover.alt = `${album.title} cover`;
+        cover.className = 'w-100 br2 mb2';
+        cover.loading = 'lazy';
+        card.appendChild(cover);
+      }
+      const title = document.createElement('span');
+      title.className = 'db f6 mb1';
+      title.textContent = album.title;
+      const detail = document.createElement('span');
+      detail.className = 'db f7 o-70';
+      detail.textContent = `${album.year} · ${album.tracks.length} tracks`;
+      card.append(title, detail);
+      this._albumGrid.appendChild(card);
+    });
   }
 
   /** Render playlist controls (shuffle, repeat, prev, next) */
   _renderControls() {
     const controls = document.createElement('div');
+    this._controls = controls;
     controls.className =
       'odeion-playlist-controls flex justify-center items-center mt2 mb2';
     controls.innerHTML = `
@@ -126,44 +146,97 @@ class PlaylistManager {
     }
   }
 
-  /** Bind click handlers */
-  _bindEvents() {
-    // Album selection
-    this._albumGrid?.addEventListener('click', e => {
-      const card = e.target.closest('.odeion-album-card');
-      if (card) {
-        const idx = parseInt(card.dataset.albumIndex);
-        this.selectAlbum(idx);
-      }
-    });
-
-    // Track selection
-    this._trackList?.addEventListener('click', e => {
-      const row = e.target.closest('.odeion-track-row');
-      if (row) {
-        const idx = parseInt(row.dataset.trackIndex);
-        this.playTrack(idx);
-      }
-    });
-
-    // Playlist controls
-    document
-      .getElementById('odeion-prev-btn')
-      ?.addEventListener('click', () => this.previous());
-    document
-      .getElementById('odeion-next-btn')
-      ?.addEventListener('click', () => this.next());
-    document
-      .getElementById('odeion-shuffle-btn')
-      ?.addEventListener('click', () => this.toggleShuffle());
-    document
-      .getElementById('odeion-repeat-btn')
-      ?.addEventListener('click', () => this.toggleRepeat());
-
-    // Listen for track end to advance queue
-    if (this.player) {
-      this.player.on('end', () => this._onTrackEnd());
+  /** Bind handlers once; keep references for chamber disposal. */
+  _listen(element, event, callback) {
+    if (!element) {
+      return;
     }
+    element.addEventListener(event, callback);
+    this._domListeners.push([element, event, callback]);
+  }
+
+  _bindEvents() {
+    this._listen(this._albumGrid, 'click', event => {
+      const card = event.target.closest('.odeion-album-card');
+      if (card) {
+        this.selectAlbum(Number(card.dataset.albumIndex));
+      }
+    });
+    this._listen(this._trackList, 'click', event => {
+      const row = event.target.closest('button.odeion-track-row');
+      if (row) {
+        this.playTrack(Number(row.dataset.trackIndex));
+      }
+    });
+    const actions = {
+      'odeion-prev-btn': () => this.previous(),
+      'odeion-next-btn': () => this.next(),
+      'odeion-shuffle-btn': () => this.toggleShuffle(),
+      'odeion-repeat-btn': () => this.toggleRepeat(),
+      'odeion-play-btn': () => {
+        if (this.player?.isPlaying) {
+          this.player.pause();
+        } else if (this.queue[this.currentTrackIndex]?.src) {
+          this.player?.play();
+        }
+      },
+    };
+    Object.entries(actions).forEach(([id, action]) =>
+      this._listen(document.getElementById(id), 'click', action)
+    );
+    this._listen(document.getElementById('odeion-volume'), 'input', event =>
+      this.player?.setVolume(Number(event.target.value) / 100)
+    );
+    if (this.player) {
+      const updatePlay = () => {
+        const button = document.getElementById('odeion-play-btn');
+        if (button) {
+          button.textContent = this.player.isPlaying ? '❚❚ Pause' : '▶ Play';
+          button.setAttribute(
+            'aria-label',
+            this.player.isPlaying ? 'Pause' : 'Play'
+          );
+        }
+      };
+      const handlers = {
+        ended: () => {
+          updatePlay();
+          this._onTrackEnd();
+        },
+        play: updatePlay,
+        pause: updatePlay,
+        stop: updatePlay,
+        error: () => {
+          updatePlay();
+          const title = document.getElementById('odeion-track-title');
+          if (title) {
+            title.textContent =
+              'Playback unavailable. Open the album on Bandcamp below.';
+          }
+        },
+      };
+      Object.entries(handlers).forEach(([event, callback]) => {
+        this.player.on(event, callback);
+        this._playerListeners.push([event, callback]);
+      });
+    }
+    this._setControlsEnabled(false);
+  }
+
+  _setControlsEnabled(enabled) {
+    [
+      'odeion-play-btn',
+      'odeion-prev-btn',
+      'odeion-next-btn',
+      'odeion-shuffle-btn',
+      'odeion-repeat-btn',
+      'odeion-volume',
+    ].forEach(id => {
+      const control = document.getElementById(id);
+      if (control) {
+        control.disabled = !enabled;
+      }
+    });
   }
 
   /**
@@ -171,10 +244,15 @@ class PlaylistManager {
    * @param {number} albumIndex
    */
   selectAlbum(albumIndex) {
-    if (albumIndex < 0 || albumIndex >= this.albums.length) {
+    if (
+      !Number.isInteger(albumIndex) ||
+      albumIndex < 0 ||
+      albumIndex >= this.albums.length
+    ) {
       return;
     }
 
+    this.player?.clearQueue();
     this.currentAlbum = this.albums[albumIndex];
     this.queue = [...(this.currentAlbum.tracks || [])];
     this.currentTrackIndex = 0;
@@ -183,6 +261,7 @@ class PlaylistManager {
     this._albumGrid
       ?.querySelectorAll('.odeion-album-card')
       .forEach((card, i) => {
+        card.setAttribute('aria-pressed', String(i === albumIndex));
         card.style.borderColor =
           i === albumIndex ? '#ffd700' : 'rgba(255,255,255,0.13)';
       });
@@ -191,41 +270,73 @@ class PlaylistManager {
     this._renderTrackList();
     this._trackList?.classList.remove('dn');
 
-    // Load tracks into player
-    if (this.player && this.queue.length > 0) {
-      this.player.tracks = this.queue.map(t => ({
-        id: t.id || t.title,
-        title: t.title,
-        url: t.url,
-      }));
+    const playable = Boolean(this.queue[0]?.src || this.queue[0]?.url);
+    this._setControlsEnabled(playable);
+    const title = document.getElementById('odeion-track-title');
+    if (title) {
+      title.textContent = playable ? this.queue[0].title : 'Listen on Bandcamp';
+    }
+    if (this.player) {
+      this.player.tracks = this.queue.map(track => ({ ...track }));
+      if (playable) {
+        this.player.loadTrack(0);
+      }
     }
   }
 
-  /** Render the track list for the current album */
+  /** Render only verified sources. A Bandcamp page is a link, never audio src. */
   _renderTrackList() {
     if (!this._trackList || !this.currentAlbum) {
       return;
     }
-
-    const tracks = this.currentAlbum.tracks || [];
-    this._trackList.innerHTML = `
-      <div class="pa3 ba b--white-10 br3 bg-black-50">
-        <h4 class="f5 mt0 mb3" style="color: #ffd700">${this.currentAlbum.title}</h4>
-        ${tracks
-          .map(
-            (t, i) => `
-          <div class="odeion-track-row pointer flex items-center pa2 mb1 br2 hover-bg-white-10"
-               data-track-index="${i}" role="button" tabindex="0"
-               aria-label="Play ${t.title}">
-            <span class="f7 o-50 mr2" style="width: 24px; text-align: right">${i + 1}</span>
-            <span class="f6 flex-auto white">${t.title}</span>
-            <span class="f7 o-50">${t.duration || ''}</span>
-          </div>
-        `
-          )
-          .join('')}
-      </div>
-    `;
+    const album = this.currentAlbum;
+    const panel = document.createElement('div');
+    panel.className = 'pa3 ba b--white-10 br3 bg-black-50';
+    const title = document.createElement('h4');
+    title.className = 'f5 mt0 mb3';
+    title.textContent = album.title;
+    panel.appendChild(title);
+    const link = document.createElement('a');
+    link.href = album.links.bandcamp;
+    link.textContent = 'Open album on Bandcamp';
+    link.className = 'db white mb3';
+    panel.appendChild(link);
+    if (!album.tracks.some(track => track.src || track.url)) {
+      const frame = document.createElement('iframe');
+      frame.src = album.embedUrl;
+      frame.title = `Listen to ${album.title} on Bandcamp`;
+      frame.width = '100%';
+      frame.height = '472';
+      frame.loading = 'lazy';
+      frame.style.border = '0';
+      panel.appendChild(frame);
+    }
+    album.tracks.forEach((track, index) => {
+      const playable = Boolean(track.src || track.url);
+      const row = document.createElement(playable ? 'button' : 'a');
+      row.className =
+        'odeion-track-row flex items-center pa2 mb1 br2 white bg-transparent w-100 tl';
+      row.dataset.trackIndex = index;
+      if (playable) {
+        row.type = 'button';
+        row.setAttribute('aria-label', `Play ${track.title}`);
+      } else {
+        row.href = track.externalUrl;
+        row.setAttribute('aria-label', `Listen to ${track.title} on Bandcamp`);
+      }
+      const number = document.createElement('span');
+      number.className = 'f7 o-70 mr2';
+      number.textContent = `${track.number}.`;
+      const name = document.createElement('span');
+      name.className = 'f6 flex-auto';
+      name.textContent = track.title;
+      const duration = document.createElement('span');
+      duration.className = 'f7 o-70 ml2';
+      duration.textContent = track.duration;
+      row.append(number, name, duration);
+      panel.appendChild(row);
+    });
+    this._trackList.replaceChildren(panel);
   }
 
   /**
@@ -233,15 +344,15 @@ class PlaylistManager {
    * @param {number} trackIndex
    */
   playTrack(trackIndex) {
-    if (!this.currentAlbum || trackIndex < 0) {
+    if (!this.currentAlbum || !Number.isInteger(trackIndex) || trackIndex < 0) {
       return;
     }
 
-    this.currentTrackIndex = trackIndex;
     const track = this.queue[trackIndex];
-    if (!track) {
-      return;
+    if (!track || !(track.src || track.url)) {
+      return false;
     }
+    this.currentTrackIndex = trackIndex;
 
     // Update now-playing display
     const titleEl = document.getElementById('odeion-track-title');
@@ -256,8 +367,9 @@ class PlaylistManager {
 
     // Play via EnhancedAudioPlayer
     if (this.player) {
-      this.player.loadTrack?.(trackIndex);
-      this.player.play?.();
+      if (this.player.loadTrack(trackIndex) !== false) {
+        this.player.play();
+      }
     }
   }
 
@@ -272,7 +384,10 @@ class PlaylistManager {
     } else {
       nextIndex = this.currentTrackIndex + 1;
       if (nextIndex >= this.queue.length) {
-        nextIndex = this.repeatMode !== 'none' ? 0 : this.queue.length - 1;
+        if (this.repeatMode === 'none') {
+          return;
+        }
+        nextIndex = 0;
       }
     }
     this.playTrack(nextIndex);
@@ -323,6 +438,13 @@ class PlaylistManager {
 
   /** Dispose */
   dispose() {
+    this._domListeners.forEach(([element, event, callback]) =>
+      element.removeEventListener(event, callback)
+    );
+    this._playerListeners.forEach(([event, callback]) =>
+      this.player?.off(event, callback)
+    );
+    this._controls?.remove();
     this._albumGrid?.remove();
     this._trackList?.remove();
   }
