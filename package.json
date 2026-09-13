@@ -12,8 +12,8 @@
   ],
   "type": "module",
   "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
+    "node": "^24.15.0",
+    "npm": ">=11.0.0"
   },
   "main": "index.html",
   "devDependencies": {
@@ -24,12 +24,13 @@
     "@playwright/test": "^1.62.1",
     "browser-sync": "^3.0.3",
     "eslint": "^10.8.1",
-    "html-validate": "^11.8.0",
+    "html-validate": "^11.15.0",
     "husky": "^9.0.0",
     "jsdom": "^30.0.1",
     "lint-staged": "^17.3.0",
     "prettier": "^3.9.6",
-    "vitest": "4.1.10"
+    "vitest": "5.0.0",
+    "semver": "^7.7.3"
   },
   "scripts": {
     "dev": "browser-sync start --server --files '*.html, css/*.css, js/*.js' --port 3000",
@@ -45,7 +46,7 @@
     "test:unit": "vitest run --config .config/vitest.config.js",
     "test:unit:watch": "vitest --config .config/vitest.config.js",
     "test:unit:coverage": "vitest run --config .config/vitest.config.js --coverage",
-    "test:all": "npm run test:unit && npm run test",
+    "test:all": "npm run test:unit && npm run test:toolchain && npm run test",
     "test:a11y": "playwright test --config .config/playwright.config.js tests/e2e/accessibility.spec.js",
     "validate:html": "html-validate --config .config/htmlvalidate.json index.html",
     "build:exhibits": "npm run build:audio-orb && npm run build:ink-studio && npm run build:p5js-playground && npm run build:synthwave-space",
@@ -54,7 +55,8 @@
     "build:p5js-playground": "cd absorb-alchemize/p5js-playground && npm install && npm run build",
     "build:synthwave-space": "cd absorb-alchemize/synthwave-space && npm install && npm run build",
     "generate:ambient": "node scripts/generate-ambient-audio.mjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:toolchain": "node --test tests/toolchain/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -65,5 +67,13 @@
   "bugs": {
     "url": "https://github.com/4-b100m/etceter4/issues"
   },
-  "homepage": "https://github.com/4-b100m/etceter4#readme"
+  "homepage": "https://github.com/4-b100m/etceter4#readme",
+  "overrides": {
+    "browser-sync": {
+      "immutable": "4.3.9"
+    },
+    "browser-sync-ui": {
+      "immutable": "4.3.9"
+    }
+  }
 }

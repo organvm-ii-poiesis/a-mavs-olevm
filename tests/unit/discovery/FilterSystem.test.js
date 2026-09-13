@@ -1,5 +1,6 @@
 /**
  * @vitest-environment jsdom
+ * @vitest-environment-options {"url":"http://localhost/"}
  * Unit tests for FilterSystem
  * Tests filter state management and URL synchronization
  */
@@ -10,21 +11,10 @@ describe('FilterSystem', () => {
   let filterSystem;
 
   beforeEach(() => {
-    // Mock window.history
-    const mockHistory = {
-      replaceState: vi.fn(),
-      pushState: vi.fn(),
-    };
-    global.history = mockHistory;
-
-    // Mock window.location
-    delete global.window.location;
-    global.window.location = {
-      search: '',
-      hash: '#discovery',
-      pathname: '/',
-      origin: 'http://localhost',
-    };
+    // Use jsdom's real Location; it is intentionally read-only in modern jsdom.
+    window.history.replaceState({}, '', '/#discovery');
+    vi.spyOn(window.history, 'replaceState');
+    vi.spyOn(window.history, 'pushState');
 
     // Create filter system instance
     filterSystem = {
