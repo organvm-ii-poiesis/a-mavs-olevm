@@ -23,9 +23,9 @@ test(
         bs.init(
           {
             server: root,
-            host: '127.0.0.1',
-            port: 32751,
-            ui: { port: 32752 },
+            listen: '127.0.0.1',
+            port: 0,
+            ui: { port: 0 },
             open: false,
             notify: false,
             logLevel: 'silent',
@@ -33,16 +33,16 @@ test(
           error => (error ? reject(error) : resolve())
         )
       );
-      const page = await fetch('http://127.0.0.1:32751/', {
+      const siteUrl = `http://127.0.0.1:${bs.instance.server.address().port}/`;
+      const uiUrl = `http://127.0.0.1:${bs.instance.ui.server.address().port}/`;
+      const page = await fetch(siteUrl, {
         headers: { accept: 'text/html' },
       });
       assert.equal(page.status, 200);
       const html = await page.text();
       assert.match(html, /ETCETER4 fixture/);
       assert.match(html, /browser-sync-client/);
-      const ui = await fetch('http://127.0.0.1:32752/').then(response =>
-        response.text()
-      );
+      const ui = await fetch(uiUrl).then(response => response.text());
       assert.match(ui, /Browsersync/);
       const reload = once(bs.emitter, 'browser:reload');
       bs.reload();

@@ -21,11 +21,16 @@ function dependencyKeys(packageKey, dependency) {
 /** Registry lock contract. Returns every failure; never edits either input. */
 export function validatePackageLock(manifest, lock) {
   const errors = [];
+  const isRecord = value =>
+    value !== null && typeof value === 'object' && !Array.isArray(value);
+  if (!isRecord(manifest)) return ['The package manifest must be an object'];
   if (!lock || lock.lockfileVersion !== 3) {
     return ['A version 3 package lock is required'];
   }
   const packages = lock.packages;
-  if (!packages || !packages['']) return ['The lock root package is missing'];
+  if (!isRecord(packages) || !Object.hasOwn(packages, ''))
+    return ['The lock root package is missing'];
+  if (!isRecord(packages[''])) return ['The lock root package is malformed'];
   const root = packages[''];
   for (const field of ['name', 'version']) {
     if (manifest[field] !== lock[field] || manifest[field] !== root[field]) {
@@ -49,10 +54,17 @@ export function validatePackageLock(manifest, lock) {
     }
   }
   for (const [key, entry] of Object.entries(packages)) {
+    if (!isRecord(entry)) {
+      errors.push(`${key || '<root>'}: invalid package entry`);
+      continue;
+    }
     if (key && !entry.link) {
       if (!semver.valid(entry.version))
         errors.push(`${key}: missing or invalid version`);
-      if (!entry.resolved?.startsWith('https://registry.npmjs.org/')) {
+      if (
+        typeof entry.resolved !== 'string' ||
+        !entry.resolved.startsWith('https://registry.npmjs.org/')
+      ) {
         errors.push(`${key}: expected an HTTPS npm registry resolution`);
       }
       if (
@@ -67,8 +79,8 @@ export function validatePackageLock(manifest, lock) {
       ...entry.optionalDependencies,
     };
     for (const [name, range] of Object.entries(declared)) {
-      const resolvedKey = dependencyKeys(key, name).find(
-        candidate => packages[candidate]
+      const resolvedKey = dependencyKeys(key, name).find(candidate =>
+        Object.hasOwn(packages, candidate)
       );
       if (!resolvedKey) {
         if (!Object.hasOwn(entry.optionalDependencies || {}, name)) {
@@ -77,6 +89,10 @@ export function validatePackageLock(manifest, lock) {
         continue;
       }
       const dependency = packages[resolvedKey];
+      if (!isRecord(dependency)) {
+        errors.push(`${resolvedKey}: invalid package entry`);
+        continue;
+      }
       const importer = key
         .split('/node_modules/')
         .at(-1)
@@ -90,6 +106,31 @@ export function validatePackageLock(manifest, lock) {
       ) {
         errors.push(
           `${key || '<root>'}: ${name}@${dependency.version} does not satisfy ${effectiveRange}`
+        );
+      }
+    }
+    // A peer is supplied at the importing package's parent level or above.
+    // Optional peers may be absent; a present peer must still be compatible.
+    const peerKeys = name => dependencyKeys(key, name).slice(key ? 1 : 0);
+    for (const [name, range] of Object.entries(entry.peerDependencies || {})) {
+      const resolvedKey = peerKeys(name).find(candidate =>
+        Object.hasOwn(packages, candidate)
+      );
+      if (!resolvedKey) {
+        if (entry.peerDependenciesMeta?.[name]?.optional !== true) {
+          errors.push(`${key || '<root>'}: unresolved peer dependency ${name}`);
+        }
+        continue;
+      }
+      const peer = packages[resolvedKey];
+      if (!isRecord(peer)) {
+        errors.push(`${resolvedKey}: invalid package entry`);
+      } else if (
+        !peer.link &&
+        (!semver.validRange(range) || !semver.satisfies(peer.version, range))
+      ) {
+        errors.push(
+          `${key || '<root>'}: peer ${name}@${peer.version} does not satisfy ${range}`
         );
       }
     }

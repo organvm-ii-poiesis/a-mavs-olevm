@@ -131,3 +131,54 @@ test('prototype property names are not implicitly optional dependencies', () => 
     /unresolved dependency constructor/
   );
 });
+
+test('malformed package records return errors instead of throwing', () => {
+  for (const value of [null, false, 42, 'package', []]) {
+    const { manifest, lock } = fixture();
+    lock.packages['node_modules/tool'] = value;
+    assert.match(
+      validatePackageLock(manifest, lock).join('\n'),
+      /invalid package entry/
+    );
+    lock.packages[''] = value;
+    assert.match(
+      validatePackageLock(manifest, lock).join('\n'),
+      /root package.*malformed/
+    );
+  }
+});
+
+test('required peers resolve from the host and reject absence or incompatible versions', () => {
+  const { manifest, lock, entry } = fixture();
+  lock.packages['node_modules/tool'].peerDependencies = { host: '^2.0.0' };
+  lock.packages['node_modules/tool/node_modules/host'] = entry('2.1.0');
+  assert.match(
+    validatePackageLock(manifest, lock).join('\n'),
+    /unresolved peer dependency host/
+  );
+  lock.packages['node_modules/host'] = entry('1.0.0');
+  assert.match(
+    validatePackageLock(manifest, lock).join('\n'),
+    /peer host@1.0.0 does not satisfy/
+  );
+  lock.packages['node_modules/host'] = entry('2.1.0');
+  assert.deepEqual(validatePackageLock(manifest, lock), []);
+});
+
+test('optional peers may be absent but must satisfy their range when installed', () => {
+  const { manifest, lock, entry } = fixture();
+  lock.packages['node_modules/tool'].peerDependencies = {
+    optionalHost: '^2.0.0',
+  };
+  lock.packages['node_modules/tool'].peerDependenciesMeta = {
+    optionalHost: { optional: true },
+  };
+  assert.deepEqual(validatePackageLock(manifest, lock), []);
+  lock.packages['node_modules/optionalHost'] = entry('1.0.0');
+  assert.match(
+    validatePackageLock(manifest, lock).join('\n'),
+    /peer optionalHost@1.0.0 does not satisfy/
+  );
+  lock.packages['node_modules/optionalHost'] = entry('2.1.0');
+  assert.deepEqual(validatePackageLock(manifest, lock), []);
+});
