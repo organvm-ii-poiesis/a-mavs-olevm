@@ -219,7 +219,6 @@ function loadApplication() {
   context.window = context;
   evaluateFile(context, 'js/data/source-catalogue.js');
   evaluateFile(context, 'js/config.js');
-  context.ETCETER4_CONFIG = runInContext('ETCETER4_CONFIG', context);
   evaluateFile(context, 'audio/albums/config.js');
   evaluateFile(context, 'js/media/audio/EnhancedAudioPlayer.js');
   evaluateFile(context, 'js/media/audio/PlaylistManager.js');
@@ -228,7 +227,7 @@ function loadApplication() {
   return {
     context,
     catalogue: context.ETCETER4_SOURCE_CATALOGUE,
-    config: context.ETCETER4_CONFIG,
+    config: runInContext('ETCETER4_CONFIG', context),
     legacy: runInContext('albumsConfig', context),
     Player: context.EnhancedAudioPlayer,
     Playlist: context.PlaylistManager,
@@ -419,6 +418,16 @@ describe('verified source catalogue', () => {
 });
 
 describe('real media resolver', () => {
+  it('reads the actual lexical configuration without a window property alias', () => {
+    expect(Object.hasOwn(app.context, 'ETCETER4_CONFIG')).toBe(false);
+    expect(app.resolver.getConfig()).toBe(app.config);
+    expect(app.resolver.getAlbum('ogod')).toBe(app.config.media.albums.ogod);
+    expect(app.resolver.getBaseUrl()).toBe(app.config.media.baseUrl());
+    const player = new app.Player();
+    expect(player.config).toBe(app.config.media.audio);
+    player.dispose();
+  });
+
   it('returns only served historical recordings, including when FLAC is requested', () => {
     for (const track of app.catalogue.albums.ogod.tracks) {
       expect(app.resolver.resolveAlbumTrack('ogod', track.number)).toBe(
@@ -607,6 +616,71 @@ describe('real playlist controls and end events', () => {
     expect(player.currentTrackIndex).toBe(28);
     expect(manager.currentTrackIndex).toBe(28);
     expect(player.isPlaying).toBe(false);
+    manager.dispose();
+    player.dispose();
+  });
+
+  it('plays each track once in shuffle without repeat, then stops', () => {
+    const { player, manager } = createPlaylist();
+    manager.playTrack(0);
+    manager.toggleShuffle();
+    const visited = [manager.currentTrackIndex];
+    for (let count = 1; count < manager.queue.length; count += 1) {
+      app.Howl.mock.calls.at(-1)[0].onend();
+      expect(player.isPlaying).toBe(true);
+      visited.push(manager.currentTrackIndex);
+    }
+    expect(new Set(visited).size).toBe(29);
+    expect([...visited].sort((a, b) => a - b)).toEqual(
+      Array.from({ length: 29 }, (_, index) => index)
+    );
+    const calls = app.Howl.mock.calls.length;
+    app.Howl.mock.calls.at(-1)[0].onend();
+    expect(app.Howl).toHaveBeenCalledTimes(calls);
+    expect(player.isPlaying).toBe(false);
+    manager.next();
+    expect(app.Howl).toHaveBeenCalledTimes(calls);
+    manager.dispose();
+    player.dispose();
+  });
+
+  it('starts another complete shuffle pass only with repeat-all', () => {
+    const { player, manager } = createPlaylist();
+    manager.playTrack(0);
+    manager.toggleShuffle();
+    manager.toggleRepeat();
+    expect(manager.repeatMode).toBe('all');
+    for (let count = 1; count < manager.queue.length; count += 1) {
+      app.Howl.mock.calls.at(-1)[0].onend();
+    }
+    const lastOfFirstPass = manager.currentTrackIndex;
+    const secondPass = [];
+    for (let count = 0; count < manager.queue.length; count += 1) {
+      app.Howl.mock.calls.at(-1)[0].onend();
+      secondPass.push(manager.currentTrackIndex);
+    }
+    expect(secondPass[0]).not.toBe(lastOfFirstPass);
+    expect(new Set(secondPass).size).toBe(29);
+    // Switching repeat off exhausts the existing pass instead of opening a third.
+    manager.toggleRepeat();
+    manager.toggleRepeat();
+    const calls = app.Howl.mock.calls.length;
+    app.Howl.mock.calls.at(-1)[0].onend();
+    expect(app.Howl).toHaveBeenCalledTimes(calls);
+    expect(player.isPlaying).toBe(false);
+    manager.dispose();
+    player.dispose();
+  });
+
+  it('discards an old shuffle pass when the album changes', () => {
+    const { player, manager } = createPlaylist();
+    manager.toggleShuffle();
+    expect(manager._shuffledQueue).toHaveLength(28);
+    manager.selectAlbum(manager.albums.findIndex(album => album.id === 'etc'));
+    expect(manager._shuffledQueue).toHaveLength(0);
+    manager.selectAlbum(manager.albums.findIndex(album => album.id === 'ogod'));
+    expect(manager._shuffledQueue).toHaveLength(28);
+    expect(new Set(manager._shuffledQueue).size).toBe(28);
     manager.dispose();
     player.dispose();
   });

@@ -256,6 +256,7 @@ class PlaylistManager {
     this.currentAlbum = this.albums[albumIndex];
     this.queue = [...(this.currentAlbum.tracks || [])];
     this.currentTrackIndex = 0;
+    this._resetShuffleQueue();
 
     // Highlight selected album
     this._albumGrid
@@ -353,6 +354,10 @@ class PlaylistManager {
       return false;
     }
     this.currentTrackIndex = trackIndex;
+    // Manual selections also consume their remaining entry in this shuffle pass.
+    this._shuffledQueue = this._shuffledQueue.filter(
+      index => index !== trackIndex
+    );
 
     // Update now-playing display
     const titleEl = document.getElementById('odeion-track-title');
@@ -380,7 +385,16 @@ class PlaylistManager {
     }
     let nextIndex;
     if (this.isShuffled) {
-      nextIndex = Math.floor(Math.random() * this.queue.length);
+      if (!this._shuffledQueue.length) {
+        if (this.repeatMode !== 'all') {
+          return;
+        }
+        this._resetShuffleQueue(true);
+      }
+      nextIndex = this._shuffledQueue.shift();
+      if (nextIndex === undefined) {
+        return;
+      }
     } else {
       nextIndex = this.currentTrackIndex + 1;
       if (nextIndex >= this.queue.length) {
@@ -405,9 +419,41 @@ class PlaylistManager {
     this.playTrack(prevIndex);
   }
 
+  /** Build one finite shuffled pass; repeat-all starts a fresh complete pass. */
+  _resetShuffleQueue(includeCurrent = false) {
+    this._shuffledQueue = this.isShuffled
+      ? this.queue
+          .map((track, index) => index)
+          .filter(
+            index =>
+              (includeCurrent || index !== this.currentTrackIndex) &&
+              (this.queue[index].src || this.queue[index].url)
+          )
+      : [];
+    for (let index = this._shuffledQueue.length - 1; index > 0; index -= 1) {
+      const swap = Math.floor(Math.random() * (index + 1));
+      [this._shuffledQueue[index], this._shuffledQueue[swap]] = [
+        this._shuffledQueue[swap],
+        this._shuffledQueue[index],
+      ];
+    }
+    // Avoid an immediate repeat across the boundary without dropping that track.
+    if (
+      includeCurrent &&
+      this._shuffledQueue.length > 1 &&
+      this._shuffledQueue[0] === this.currentTrackIndex
+    ) {
+      [this._shuffledQueue[0], this._shuffledQueue[1]] = [
+        this._shuffledQueue[1],
+        this._shuffledQueue[0],
+      ];
+    }
+  }
+
   /** Toggle shuffle mode */
   toggleShuffle() {
     this.isShuffled = !this.isShuffled;
+    this._resetShuffleQueue();
     const btn = document.getElementById('odeion-shuffle-btn');
     if (btn) {
       btn.style.color = this.isShuffled ? '#ffd700' : '';

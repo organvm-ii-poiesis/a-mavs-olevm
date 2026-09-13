@@ -26,7 +26,11 @@ class EnhancedAudioPlayer {
    * @param {boolean} [options.autoPlay] - Whether to start playing automatically
    */
   constructor(options = {}) {
-    this.config = window.ETCETER4_CONFIG?.media?.audio || {
+    const siteConfig =
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG
+        : globalThis.ETCETER4_CONFIG;
+    this.config = siteConfig?.media?.audio || {
       crossfadeDuration: 1000,
       defaultVolume: 0.8,
       fadeOutDuration: 500,

@@ -6,7 +6,7 @@
  * Bump CACHE_VERSION when deploying updated assets to bust stale caches
  */
 
-const CACHE_VERSION = 4;
+const CACHE_VERSION = 5;
 const CACHE_NAME = `etceter4-v${CACHE_VERSION}`;
 
 /**
@@ -23,6 +23,7 @@ const CRITICAL_ASSETS = [
   _swBase + '/offline.html',
   _swBase + '/css/styles.css',
   _swBase + '/css/vendor/tachyons/css/tachyons.min.css',
+  _swBase + '/js/data/source-catalogue.js',
   _swBase + '/js/config.js',
   _swBase + '/js/modules/ScriptLoader.js',
   _swBase + '/js/modules/ChamberLoader.js',
