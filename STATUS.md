@@ -198,3 +198,51 @@ real changed-file paths and pull-request lifecycle states. All 11 protocol tests
 passed locally and in the hosted Stewardship Protocol workflow at source commit
 `e2c5e20f9143a134f0590ee21b4d4ad08b4b80f7`; this later receipt changes documentation
 only. The manually disabled metadata workflow is still not running its writes.
+
+## Final review follow-up — 2026-09-13
+
+This supersedes the candidate counts above while preserving them as checkpoints.
+Final runtime/catalogue verification at local `d4b92673614c9d701cbd40dc37ccd6e7b30a9e19`
+passes 1,295 unit tests across 45 files, 15 toolchain tests and all 18 native browser
+cases. The additional browser case installs the real service worker and verifies
+an offline catalogue reload; it does not claim complete offline SPA/media playback.
+The configuration resolver now uses the actual browser lexical binding, and
+shuffle with repeat disabled consumes a finite pass. Cache version is 5.
+
+The advertised Node floor is 24.15.0, consistent with the complete locked graph;
+the pinned runtime remains 24.19.0. `test:all` includes the toolchain suite. Final
+publication validation has 16 passing boundary cases and retains the original
+favicon and real stylesheet sources. Required root lint, formatting and strict
+lock validation pass; unchanged governance has 11 passing local/hosted cases.
+
+| PR | Current implementation head | Follow-up |
+| --- | --- | --- |
+| #135 | `ae1cf0e608eaf71debc52ae710c58b2e053d717d` | Runtime-floor contract and standard local test gate |
+| #138 | `3b816051226c68e6c0f71b6bff792253ed974733` | All six navigation/startup review findings repaired |
+| #141 | `9aa6928d57142a0ff52793f5068cb29cc22d57d3` | Preserved coverage-family source tests |
+| #143 | `125ea730106a57260e78d9ca89e5c3bda98a52a5` | Browser configuration, offline catalogue and finite shuffle |
+| #145 | `9bbe33e9ced55f8cfcce548556caf2219af96d87` | Pinned publication runtime and strict built-HTML resources |
+
+The final combined publication candidate is local
+`c20265a6b027b22edf69efab19c0744c0ddd7d21`, tree
+`4e6a137256453749b47e211868d0094ee8eb370e`. Changes after the browser-tested parent
+are confined to exhibit entry assets and publication configuration/validation;
+the catalogue/navigation application sources are unchanged. All four clean exhibit
+builds pass. All 1,363 payload files (1,347 public source files plus 16 built files),
+654,087,275 bytes, pass source and SHA-256 verification. The manifest SHA-256 is
+`d1eecbf92837eb59f2abe922c974c5b4753fb5e6b18fd26b0c949034343d9a8c`.
+The prior artifact is retained as evidence rather than silently replaced.
+
+PR #136 remains the stewardship implementation and documentation successor; its
+protocol source was verified at `e2c5e20f9143a134f0590ee21b4d4ad08b4b80f7`.
+This final update changes STATUS only. Every repaired inline review finding has a
+preceding evidence reply. The catalogue candidate explicitly depends on the cold
+navigation repair; admit #138 first and refresh #143 against healed main rather
+than skipping its dependent regression or duplicating that intention.
+
+The 2017 restoration deliverables remain verified and available. No remote merge,
+deployment, closure, branch deletion or force-push has occurred. Original write
+access still returned HTTP 403. The evolved default remains `477d6230`; its manually
+disabled application workflow, legitimate required-check producer and preserved
+activation intention #144 remain acceptance gates. Full artistic expansion and
+unrecovered audio/transcription/performance inputs remain in the normative queue.
