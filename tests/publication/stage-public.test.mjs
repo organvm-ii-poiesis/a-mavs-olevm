@@ -322,3 +322,43 @@ test('raw committed SVG bytes survive text-filter drift while real changes fail'
     /Public source differs from the committed blob/
   );
 });
+
+test('built HTML requires real nested stylesheets, favicons, and non-module resources', async () => {
+  const f = await fixture();
+  const base = 'absorb-alchemize/audio-orb/dist';
+  const entry = '<script type="module" src="./assets/entry.js"></script>';
+  for (const resource of [
+    '<link rel="stylesheet" href="./assets/missing.css">',
+    '<link rel="icon" href="./missing.ico">',
+    '<img src="./missing.png">',
+  ]) {
+    await f.put(`${base}/index.html`, entry + resource);
+    await assert.rejects(inspectExhibit(f.root, 'audio-orb'), /ENOENT/);
+  }
+  await f.put(
+    `${base}/index.html`,
+    entry + '<link rel="stylesheet" href="/index.css">'
+  );
+  await assert.rejects(
+    inspectExhibit(f.root, 'audio-orb'),
+    /HTML resource must be relative/
+  );
+  await f.put(
+    `${base}/index.html`,
+    entry + '<link rel="icon" href="../../../img/favicon.ico">'
+  );
+  await assert.rejects(
+    inspectExhibit(f.root, 'audio-orb'),
+    /HTML resource escapes/
+  );
+  await f.put(`${base}/assets/style.css`, 'body { color: black; }');
+  await f.put(`${base}/assets/favicon.ico`, 'test icon');
+  await f.put(
+    `${base}/index.html`,
+    entry +
+      '<link rel="stylesheet" href="./assets/style.css"><link rel="icon" href="./assets/favicon.ico">'
+  );
+  const files = await inspectExhibit(f.root, 'audio-orb');
+  assert.ok(files.some(file => file.path.endsWith('/assets/style.css')));
+  assert.ok(files.some(file => file.path.endsWith('/assets/favicon.ico')));
+});

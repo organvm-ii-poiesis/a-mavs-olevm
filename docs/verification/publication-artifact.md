@@ -33,3 +33,11 @@ Local staging tests use small fixtures. A complete production-media checkout is 
 4. Record the runtime evidence on #94 and its successor, review `publication-needs.json`, then require a green full CI and verified candidate before publishing.
 
 Close/delete allowed: **NO**. The implementation is preserved and the activation intention remains unfinished. No source, branch, issue, or PR is deleted by this repair.
+
+## Nested asset and runtime-pin review
+
+The publication leaf already contains `.nvmrc` with Node 20; the review's missing-file premise was incorrect. The two publication jobs explicitly use Node 24.19.0 to match the runtime policy in dependency PR #135 without depending on that unmerged leaf. Once that policy is on the shared default branch, the jobs can consume the same runtime file; no second runtime-policy file is introduced here.
+
+All four source `index.css` files exist. Audio-orb contains 76 bytes of CSS and p5js-playground contains 13,798 bytes. Ink Studio and Synthwave already have zero-byte CSS files in the historical exhibit sources; their actual styling lives in inline styles, React style objects, and (for Ink Studio) external Tailwind classes. No empty stylesheet was fabricated. Real Vite builds already rewrote the stylesheet links into relative compiled assets; the entry HTML now spells those inputs relatively as well.
+
+Ink Studio's `/vite.svg` was a real missing template reference. Its entry now uses the existing original site `img/favicon.ico`, which Vite bundles into the exhibit assets. All built HTML resources, including stylesheets, icons, images, media and non-module scripts, must resolve to real files within the nested exhibit, or explicitly use an external URL. Root-absolute, escaping and missing local resources fail the artifact build. External CDN availability and the parked AI runtime behavior remain separate acceptance requirements in #144.

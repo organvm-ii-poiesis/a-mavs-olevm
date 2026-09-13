@@ -217,7 +217,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v4
         with:
-          node-version: '24'
+          node-version: '24.19.0'
           cache: 'npm'
 
       - name: Test publication boundaries
@@ -264,7 +264,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v4
         with:
-          node-version-file: '.nvmrc'
+          node-version: '24.19.0'
 
       - name: Download the tested publication candidate
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4

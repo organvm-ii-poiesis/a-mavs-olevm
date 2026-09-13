@@ -60,6 +60,44 @@ async function checkedFile(root, name) {
   return current;
 }
 
+// Vite only rewrites resources it can resolve; missing template links can survive
+// a successful bundle. Every local HTML resource must resolve inside this exhibit.
+async function validateHtmlResources(root, filename, base) {
+  const html = await readFile(path.join(root, filename), 'utf8');
+  const tags = [
+    ...html.matchAll(
+      /<(?:script|link|img|source|audio|video|iframe)\b[^>]*>/gi
+    ),
+  ];
+  for (const [tag] of tags) {
+    const attributes = [
+      ...tag.matchAll(
+        /\b(?:src|href|poster)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/gi
+      ),
+    ];
+    for (const attribute of attributes) {
+      const value = attribute[1] ?? attribute[2] ?? attribute[3];
+      if (/^(?:https?:|data:|blob:|\/\/|#)/i.test(value)) continue;
+      if (!value || value.startsWith('/') || value.includes('\\')) {
+        throw new Error(
+          `HTML resource must be relative to the exhibit: ${filename}: ${value}`
+        );
+      }
+      const url = new URL(value, `https://publication.invalid/${filename}`);
+      const target = decodeURIComponent(url.pathname).slice(1);
+      if (
+        url.origin !== 'https://publication.invalid' ||
+        !target.startsWith(`${base}/`)
+      ) {
+        throw new Error(
+          `HTML resource escapes the exhibit: ${filename}: ${value}`
+        );
+      }
+      await checkedFile(root, target);
+    }
+  }
+}
+
 export async function inspectExhibit(root, name) {
   const base = `absorb-alchemize/${name}/dist`;
   const files = [];
@@ -117,6 +155,9 @@ export async function inspectExhibit(root, name) {
         `Exhibit entry must be a relative compiled asset: ${name}: ${url}`
       );
     await checkedFile(root, `${base}/${url.slice(2)}`);
+  }
+  for (const file of files.filter(file => file.path.endsWith('.html'))) {
+    await validateHtmlResources(root, file.path, base);
   }
   return files;
 }
