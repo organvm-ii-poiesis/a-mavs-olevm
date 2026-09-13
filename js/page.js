@@ -146,12 +146,28 @@ function animatePageOpacity(element, opacity, options) {
 /** Restore a truthful visible route after a failed lazy load, retaining retry. */
 function recoverNavigation(error, previousPage, targetId) {
   console.error('Navigation failed:', error);
+  const queuedPageId = pendingPageId;
   pendingPageId = null;
   transitionState = TransitionState.IDLE;
   currentPage = previousPage?.id ? previousPage : Page.findPage('#landing');
   currentPage.isLoading = false;
-  $(currentPage.id).removeClass('dn').css({ display: 'block', opacity: 1 });
-  window.history.replaceState(null, '', currentPage.id);
+  $(currentPage.id)
+    .removeClass('dn')
+    .css({
+      display:
+        currentPage.id === '#stills' || currentPage.id === '#diary'
+          ? 'table'
+          : 'block',
+      opacity: 1,
+    });
+  // Click navigation has not entered history yet. Only repair a failed browser
+  // history entry; preserve a newer history request that is about to be drained.
+  if (
+    window.location.hash !== currentPage.id &&
+    window.location.hash !== queuedPageId
+  ) {
+    window.history.replaceState(null, '', currentPage.id);
+  }
   if (typeof isNavigating !== 'undefined') {
     isNavigating = false;
   }
@@ -169,6 +185,9 @@ function recoverNavigation(error, previousPage, targetId) {
   retry.addEventListener('click', () => showNewSection(targetId));
   message.append(text, retry);
   document.body.appendChild(message);
+  if (queuedPageId && queuedPageId !== currentPage.id) {
+    showNewSection(queuedPageId);
+  }
 }
 
 /**
@@ -191,6 +210,9 @@ function showNewSection(_loadingSection) {
   // requested route until the current transition finishes instead of dropping it.
   if (currentPage?.isLoading || transitionState !== TransitionState.IDLE) {
     pendingPageId = _loadingSection;
+    return false;
+  }
+  if (currentPage?.id === _loadingSection) {
     return false;
   }
 
@@ -223,14 +245,22 @@ function showNewSection(_loadingSection) {
       UISounds.pageExit(0.5);
     }
 
-    // pushState does not emit hashchange; real back/forward events remain usable.
-    if (window.location.hash !== _loadingSection) {
-      window.history.pushState(null, '', _loadingSection);
-    }
-
     loadingSection
       .initPage()
       .then(() => {
+        // Do not add a failed destination or a superseded slow load to history.
+        const queuedPageId = pendingPageId;
+        pendingPageId = null;
+        if (queuedPageId && queuedPageId !== _loadingSection) {
+          transitionState = TransitionState.IDLE;
+          showNewSection(queuedPageId);
+          return;
+        }
+        // pushState does not emit hashchange; genuine back/forward events have
+        // already changed the URL and therefore do not create another entry.
+        if (window.location.hash !== _loadingSection) {
+          window.history.pushState(null, '', _loadingSection);
+        }
         fadeOutPage(currentPage, () => {
           fadeInPage(loadingSection, () => {
             // Transition Living Pantheon to new chamber after page is visible

@@ -13,12 +13,16 @@ The original hash navigation must remain usable across links, keyboard commands,
 - Initialize first-use search through its controller, load the existing metadata independently of chamber rendering, and let the modal own its keyboard input. Search metadata retains its existing provenance and placeholder limitations.
 - Pin MiniSearch 6.3.0's original distribution file and verified SRI. The prior CDN-generated minified URL had changed bytes and failed the recorded integrity hash.
 - Provide readable links to existing standalone works when the core runtime cannot start. No album audio, visual assets, or historical artwork files are modified by this repair.
+- Load Carousel before the shared image helpers in every consuming chamber. A cold Odeion entry must work without a prior visit to Stills.
+- Commit clicked destinations to browser history only after initialization succeeds. Failed and superseded loads do not add phantom visits; recovery preserves a later click and the diary/stills table layout.
+- Track actual startup progress and completion. Missing late core scripts receive independent readable recovery; a delayed initializer can still finish without a false failure. A recovered initial deep link also starts the existing Living Pantheon system.
+- Collect the actual Symposion, Theatron and Khronos metadata arrays. Twenty-one existing records retain source values and explicit unverified provenance; settings and templates do not become artworks.
 
 ## Verification
 
 - New production-source unit tests cover shared initialization, rejected initializer retry, asset failure, and navigation rollback; existing loader tests now prove failed fragment/script recovery rather than accepting error markup as content.
-- Complete unit suite: 1,228 tests passed across 41 files.
-- Eight new browser regressions use native links, keyboard events, history, and mobile-menu clicks. They cover successful routing, fragment failure/retry, direct URL failure, first-use search with OGOD results, missing Velocity, missing core runtime, and failed-script retry. They never force page visibility or routing state.
+- Complete navigation-branch unit suite after review: 1,266 tests passed across 44 files. The six inline review findings are addressed by actual-source regressions, including eleven navigation runtime cases, nine startup cases, and nine source-collection cases.
+- Fifteen navigation, startup and cold-chamber browser regressions passed in the local joint repair tree. They use native links, keyboard events, history, and mobile-menu clicks; they cover successful routing, fragment/script failure and retry, history entries, queued input, cold prerequisites, first-use search, missing early/late core scripts, delayed startup, and actual Living Pantheon recovery. They never force page visibility or routing state. Two separate catalogue playback cases also passed in that same 17-case run with PR #143; the catalogue repair remains a separate intention.
 - Repository lint and formatting gates pass (existing lint warnings remain).
 
 Local browser verification used Chromium 153 from the `@sparticuz/chromium` package with the repository's Playwright runner. Browser TLS validation remained enabled. Environment CDN/proxy-certificate limitations required fulfilling jQuery 3.7.1, Velocity 2.0.6, Three.js 0.160.0, and MiniSearch 6.3.0 requests with the exact distribution bytes matching the page/manifest SRI. These are source/runtime proofs, not evidence of public CDN availability or deployment. Optional SoundJS and Video.js CSS were unavailable in this environment. Sparse omitted assets are not classified as repository defects.

@@ -46,6 +46,49 @@ test('a failed fragment leaves navigation available and its retry loads real con
   expect(requests).toBe(2);
 });
 
+test('a failed destination does not add a duplicate browser history entry', async ({
+  page,
+}) => {
+  await page.route('**/chambers/diary/fragment.html', route =>
+    route.fulfill({ status: 503, body: 'Unavailable' })
+  );
+  await page.goto('/#menu');
+  await page.locator('#toWordsPage').press('Enter');
+  await expect(page.locator('#words')).toBeVisible();
+  const entries = await page.evaluate(() => history.length);
+  await page.locator('#toDiaryPage').press('Enter');
+  await expect(page.getByRole('alert')).toContainText('could not load');
+  expect(await page.evaluate(() => history.length)).toBe(entries);
+  await page.goBack();
+  await expect(page.locator('#menu')).toBeVisible();
+  await expect(page).toHaveURL(/#menu$/);
+});
+
+test('a later keyboard route survives a slow failed chamber request', async ({
+  page,
+}) => {
+  let release;
+  let started;
+  const requested = new Promise(resolve => {
+    started = resolve;
+  });
+  await page.route('**/chambers/diary/fragment.html', async route => {
+    started();
+    await new Promise(resolve => {
+      release = resolve;
+    });
+    await route.fulfill({ status: 503, body: 'Unavailable' });
+  });
+  await page.goto('/#words');
+  await page.locator('#toDiaryPage').press('Enter');
+  await requested;
+  await page.keyboard.press('Escape');
+  release();
+  await expect(page.locator('#menu')).toBeVisible();
+  await expect(page).toHaveURL(/#menu$/);
+  await expect(page.getByRole('alert')).toHaveCount(0);
+});
+
 test('a failed direct URL has a visible recovery route', async ({ page }) => {
   await page.route('**/chambers/diary/fragment.html', route =>
     route.fulfill({ status: 503, body: 'Unavailable' })
