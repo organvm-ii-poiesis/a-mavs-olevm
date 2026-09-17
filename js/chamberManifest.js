@@ -74,6 +74,7 @@
     scripts: [
       IMAGES,
       'odeion/config.js',
+      'dependencies/vendor/howler/howler.core.min.js',
       'js/media/MediaURLResolver.js',
       'js/media/audio/EnhancedAudioPlayer.js',
       'js/media/audio/WaveformVisualizer.js',

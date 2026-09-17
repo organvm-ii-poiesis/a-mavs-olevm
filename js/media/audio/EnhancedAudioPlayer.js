@@ -26,7 +26,11 @@ class EnhancedAudioPlayer {
    * @param {boolean} [options.autoPlay] - Whether to start playing automatically
    */
   constructor(options = {}) {
-    this.config = window.ETCETER4_CONFIG?.media?.audio || {
+    const siteConfig =
+      typeof ETCETER4_CONFIG !== 'undefined'
+        ? ETCETER4_CONFIG
+        : globalThis.ETCETER4_CONFIG;
+    this.config = siteConfig?.media?.audio || {
       crossfadeDuration: 1000,
       defaultVolume: 0.8,
       fadeOutDuration: 500,
@@ -37,6 +41,7 @@ class EnhancedAudioPlayer {
     this.currentTrackIndex = 0;
     this.isPlaying = false;
     this.isPaused = false;
+    this.autoAdvance = options.autoAdvance !== false;
 
     // Volume state
     this.volume = options.volume ?? this.config.defaultVolume;
@@ -70,14 +75,21 @@ class EnhancedAudioPlayer {
    * @param {number} index - Track index to load
    */
   loadTrack(index) {
-    if (index < 0 || index >= this.tracks.length) {
-      return;
+    if (!Number.isInteger(index) || index < 0 || index >= this.tracks.length) {
+      return false;
     }
 
     // Stop and unload current sound
     if (this.sound) {
       this.sound.stop();
       this.sound.unload();
+    }
+    this.sound = null;
+    this.isPlaying = false;
+    this.isPaused = false;
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+      this.progressInterval = null;
     }
 
     // Clear any pending fade timeouts
@@ -86,12 +98,21 @@ class EnhancedAudioPlayer {
       this.fadeTimeout = null;
     }
 
+    this.isCrossfading = false;
     this.currentTrackIndex = index;
     const track = this.tracks[index];
+    const source = track.url || track.src;
+    // An official release webpage is not an audio file. Unavailable sources
+    // must clear the previous sound rather than replay it under another title.
+    if (typeof source !== 'string' || !source.trim()) {
+      this.emit('unavailable', { track, index });
+      return false;
+    }
 
     // Create new Howler sound instance
     this.sound = new Howl({
-      src: [track.url],
+      src: [source],
+      html5: true,
       volume: this.volume,
       onplay: () => {
         this.isPlaying = true;
@@ -113,12 +134,19 @@ class EnhancedAudioPlayer {
         this.isPaused = false;
         this.emit('ended', { track: this.getCurrentTrack() });
         // Auto-advance to next track
-        this.next();
+        if (this.autoAdvance) {
+          this.next();
+        }
       },
       onload: () => {
         this.emit('loaded', { track: this.getCurrentTrack() });
       },
-      onerror: err => {
+      onloaderror: (_id, err) => {
+        this.isPlaying = false;
+        this.emit('error', { error: err, track: this.getCurrentTrack() });
+      },
+      onplayerror: (_id, err) => {
+        this.isPlaying = false;
         this.emit('error', { error: err, track: this.getCurrentTrack() });
       },
     });
@@ -131,6 +159,7 @@ class EnhancedAudioPlayer {
       index: this.currentTrackIndex,
       total: this.tracks.length,
     });
+    return true;
   }
 
   /**
@@ -161,13 +190,16 @@ class EnhancedAudioPlayer {
   play() {
     if (!this.sound) {
       if (this.tracks.length > 0) {
-        this.loadTrack(0);
+        if (!this.loadTrack(this.currentTrackIndex)) {
+          return false;
+        }
       } else {
-        return;
+        return false;
       }
     }
 
     this.sound.play();
+    return true;
   }
 
   /**
@@ -205,6 +237,9 @@ class EnhancedAudioPlayer {
    * Play next track with crossfade
    */
   next() {
+    if (!this.tracks.length) {
+      return;
+    }
     const nextIndex = (this.currentTrackIndex + 1) % this.tracks.length;
     this.playTrackWithCrossfade(nextIndex);
   }
@@ -213,6 +248,9 @@ class EnhancedAudioPlayer {
    * Play previous track with crossfade
    */
   previous() {
+    if (!this.tracks.length) {
+      return;
+    }
     const prevIndex =
       (this.currentTrackIndex - 1 + this.tracks.length) % this.tracks.length;
     this.playTrackWithCrossfade(prevIndex);
@@ -224,7 +262,13 @@ class EnhancedAudioPlayer {
    * @param {number} index - Track index to play
    */
   playTrackWithCrossfade(index) {
-    if (index === this.currentTrackIndex || this.isCrossfading) {
+    if (
+      !Number.isInteger(index) ||
+      index < 0 ||
+      index >= this.tracks.length ||
+      index === this.currentTrackIndex ||
+      this.isCrossfading
+    ) {
       return;
     }
 
@@ -384,6 +428,19 @@ class EnhancedAudioPlayer {
    */
   clearQueue() {
     this.stop();
+    if (this.sound) {
+      this.sound.unload();
+      this.sound = null;
+    }
+    if (this.fadeTimeout) {
+      clearTimeout(this.fadeTimeout);
+      this.fadeTimeout = null;
+    }
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+      this.progressInterval = null;
+    }
+    this.isCrossfading = false;
     this.tracks = [];
     this.currentTrackIndex = 0;
     this.emit('queueUpdate', { tracks: [] });

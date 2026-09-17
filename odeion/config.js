@@ -1,3 +1,4 @@
+/* global MediaURLResolver, URL, document */
 /**
  * @file odeion/config.js
  * @description ODEION chamber configuration and music metadata
@@ -25,173 +26,47 @@ const ODEION_CONFIG = {
   /**
    * Album catalog
    */
-  albums: [
-    {
-      id: 'ogod',
+  albums: Object.values(globalThis.ETCETER4_SOURCE_CATALOGUE?.albums || {}).map(
+    album => ({
+      ...album,
       type: 'album',
-      title: 'OGOD',
-      artist: 'ET CETER4',
-      year: 2015,
-      description: 'Visual album with 29 video game music arrangements',
-      trackCount: 29,
-      duration: '1:15:30',
-      coverArt: {
-        large: '../audio/albums/ogod/cover-1200.jpg',
-        medium: '../audio/albums/ogod/cover-600.jpg',
-        small: '../audio/albums/ogod/cover-300.jpg',
-      },
-      features: ['stems', 'lyrics', 'visual-sync'],
-      status: 'released',
       category: 'album',
-    },
-    {
-      id: 'progression-digression',
-      type: 'album',
-      title: 'The Progression of Digression',
-      artist: 'ET CETER4',
-      year: 2012,
-      description:
-        'Full-length debut exploring musical transformation and evolutionary themes',
-      trackCount: 12,
-      duration: '48:15',
-      coverArt: {
-        large: '../audio/albums/progression-digression/cover-1200.jpg',
-        medium: '../audio/albums/progression-digression/cover-600.jpg',
-        small: '../audio/albums/progression-digression/cover-300.jpg',
-      },
-      features: ['remaster-2024'],
       status: 'released',
-      category: 'album',
-    },
-    {
-      id: 'rmxs',
-      type: 'album',
-      title: 'ET CETER4 RMXS',
-      artist: 'ET CETER4',
-      year: 2020,
-      description:
-        'Comprehensive remix collection featuring collaborations and reinterpretations',
-      trackCount: 0, // TBD
-      duration: 'TBD',
-      coverArt: {
-        large: '../audio/albums/rmxs/cover-1200.jpg',
-        medium: '../audio/albums/rmxs/cover-600.jpg',
-        small: '../audio/albums/rmxs/cover-300.jpg',
-      },
       features: [],
-      status: 'released',
-      category: 'album',
-    },
-    {
-      id: 'etc',
-      type: 'album',
-      title: 'Etc',
-      artist: 'ET CETER4',
-      year: 2011,
-      description:
-        'Early collection of instrumental sketches and melodic studies',
-      trackCount: 0, // TBD
-      duration: 'TBD',
-      coverArt: {
-        large: '../audio/albums/etc/cover-1200.jpg',
-        medium: '../audio/albums/etc/cover-600.jpg',
-        small: '../audio/albums/etc/cover-300.jpg',
-      },
-      features: [],
-      status: 'released',
-      category: 'album',
-    },
-  ],
+    })
+  ),
 
-  /**
-   * Singles catalog
-   */
-  singles: [
+  // These categories remain available for verified future works.
+  singles: [],
+  demos: [],
+  experimental: [],
+
+  // Preserve the previous template identities without claiming they are releases.
+  // Original records and the recovery path are documented in docs/SOURCE_CATALOGUE.md.
+  unverifiedItems: [
     {
       id: 'single-01',
-      type: 'single',
       title: 'Title [Single]',
-      artist: 'ET CETER4',
-      year: 2024,
-      description: 'Single release with expanded remix versions',
-      trackCount: 1,
-      duration: '3:45',
-      coverArt: {
-        large: '../audio/singles/single-01/cover-1200.jpg',
-        medium: '../audio/singles/single-01/cover-600.jpg',
-        small: '../audio/singles/single-01/cover-300.jpg',
-      },
-      features: ['remixes'],
-      status: 'released',
-      category: 'single',
+      type: 'single',
+      status: 'unverified',
     },
-  ],
-
-  /**
-   * Demos catalog
-   */
-  demos: [
     {
       id: 'demo-01',
-      type: 'demo',
       title: 'Untitled Demo [WIP]',
-      artist: 'ET CETER4',
-      year: 2024,
-      description: 'Early concept exploration for upcoming work',
-      trackCount: 1,
-      duration: '4:20',
-      coverArt: {
-        large: null,
-        medium: null,
-        small: null,
-      },
-      features: ['unreleased', 'work-in-progress'],
-      status: 'demo',
-      category: 'demo',
+      type: 'demo',
+      status: 'unverified',
     },
-  ],
-
-  /**
-   * Experimental works catalog
-   */
-  experimental: [
     {
       id: 'exp-01',
-      type: 'experimental',
       title: 'Ambient Study No. 1',
-      artist: 'ET CETER4',
-      year: 2023,
-      description:
-        'Generative ambient soundscape using algorithmic composition',
-      trackCount: 1,
-      duration: '~15:00',
-      coverArt: {
-        large: null,
-        medium: null,
-        small: null,
-      },
-      features: ['generative', 'ambient', 'algorithmic'],
-      status: 'published',
-      category: 'experimental',
+      type: 'experimental',
+      status: 'unverified',
     },
     {
       id: 'exp-02',
-      type: 'experimental',
       title: 'Glitch Variations',
-      artist: 'ET CETER4',
-      year: 2023,
-      description:
-        'Sound design exploration using digital artifacts as musical material',
-      trackCount: 1,
-      duration: '6:30',
-      coverArt: {
-        large: null,
-        medium: null,
-        small: null,
-      },
-      features: ['glitch', 'sound-design', 'electronic'],
-      status: 'published',
-      category: 'experimental',
+      type: 'experimental',
+      status: 'unverified',
     },
   ],
 
@@ -233,7 +108,10 @@ const ODEION_CONFIG = {
     if (category === 'all') {
       return this.getAllItems();
     }
-    return this.getAllItems().filter(item => item.category === category);
+    const normalized =
+      { albums: 'album', singles: 'single', demos: 'demo' }[category] ||
+      category;
+    return this.getAllItems().filter(item => item.category === normalized);
   },
 
   /**
@@ -260,40 +138,33 @@ const ODEION_CONFIG = {
     return item.coverArt[size] || item.coverArt.medium || null;
   },
 
-  /**
-   * Get audio URL for a track
-   * Uses MediaURLResolver if available for R2 URLs
-   */
+  /** Resolve only verified sources, relative to either the SPA or standalone room. */
   getAudioUrl: function (albumId, trackNumber, format = 'mp3') {
-    if (typeof MediaURLResolver !== 'undefined') {
-      return MediaURLResolver.resolveAlbumTrack(albumId, trackNumber, format);
-    }
-    // Fallback to local path
-    const paddedTrack = String(trackNumber).padStart(2, '0');
-    return `../audio/albums/${albumId}/${paddedTrack}.${format}`;
+    const album = this.getItemById(albumId);
+    const track = album?.tracks.find(item => item.number === trackNumber);
+    const source = track?.formats?.[format] || track?.src || track?.url;
+    if (!source) return null;
+    // The root SPA and /odeion/index.html share this configuration.
+    const standalone =
+      typeof document !== 'undefined' &&
+      /\/odeion\/(?:index\.html)?$/.test(new URL(document.baseURI).pathname);
+    return standalone ? `../${source}` : source;
   },
 
-  /**
-   * Get waveform URL for a track
-   */
   getWaveformUrl: function (albumId, trackNumber) {
-    if (typeof MediaURLResolver !== 'undefined') {
-      return MediaURLResolver.resolveWaveform(albumId, trackNumber);
-    }
-    // Fallback to local path
-    const paddedTrack = String(trackNumber).padStart(2, '0');
-    return `../audio/albums/${albumId}/${paddedTrack}-waveform.json`;
+    return (
+      this.getItemById(albumId)?.tracks.find(
+        track => track.number === trackNumber
+      )?.waveformUrl || null
+    );
   },
 
-  /**
-   * Get lyrics URL for a track
-   */
   getLyricsUrl: function (albumId, trackNumber) {
-    if (typeof MediaURLResolver !== 'undefined') {
-      return MediaURLResolver.resolveLyrics(albumId, trackNumber);
-    }
-    // Fallback to local path
-    const paddedTrack = String(trackNumber).padStart(2, '0');
-    return `../audio/albums/${albumId}/${paddedTrack}.lrc`;
+    const album = this.getItemById(albumId);
+    if (!album?.hasLyrics) return null;
+    return (
+      album.tracks.find(track => track.number === trackNumber)?.lyricsUrl ||
+      null
+    );
   },
 };

@@ -79,13 +79,25 @@ class AudioPlayer {
   }
 
   createPlaylistHTML() {
+    const escape = text =>
+      String(text).replace(
+        /[&<>"']/g,
+        character =>
+          ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+          })[character]
+      );
     return this.tracks
       .map(
         (track, index) => `
             <div class="playlist-item ${index === 0 ? 'active' : ''}"
                  data-track-index="${index}">
                 <span class="track-number">${index + 1}.</span>
-                <span class="track-name">${track.title}</span>
+                <span class="track-name">${!(track.src || track.url) && track.externalUrl ? `<a href="${escape(track.externalUrl)}">${escape(track.title)} — Bandcamp</a>` : escape(track.title)}</span>
                 <span class="track-time">${track.duration || '0:00'}</span>
             </div>
         `
@@ -120,16 +132,20 @@ class AudioPlayer {
     });
 
     // Playlist item click
-    $(`.playlist-item`).on('click', function () {
+    $(`#${this.id}-playlist .playlist-item`).on('click', function (event) {
+      if (event.target.closest('a')) {
+        return;
+      }
       const trackIndex = parseInt($(this).data('track-index'));
-      self.loadTrack(trackIndex);
-      self.play();
+      if (self.loadTrack(trackIndex)) {
+        self.play();
+      }
     });
   }
 
   loadTrack(index) {
-    if (index < 0 || index >= this.tracks.length) {
-      return;
+    if (!Number.isInteger(index) || index < 0 || index >= this.tracks.length) {
+      return false;
     }
 
     // Stop current track if playing
@@ -138,15 +154,37 @@ class AudioPlayer {
       this.howl.unload();
     }
 
+    this.howl = null;
+    this.isPlaying = false;
+    this.updatePlayButton(false);
+    clearInterval(this.progressInterval);
+    this.progressInterval = null;
     // Reset load state
     this.loadFailed = false;
     this.currentTrackIndex = index;
     const track = this.tracks[index];
     const self = this;
 
+    $(`#${this.id}-title`).text(track.title);
+    $(`#${this.id}-artist`).text(track.artist || 'ET CETER4');
+    $(`#${this.id}-current-time`).text('0:00');
+    $(`#${this.id}-duration`).text(track.duration || '0:00');
+    $(`#${this.id}-progress-fill`).css('width', '0%');
+    $(`#${this.id}-playlist .playlist-item`).removeClass('active');
+    $(
+      `#${this.id}-playlist .playlist-item[data-track-index="${index}"]`
+    ).addClass('active');
+    const source = track.src || track.url;
+    $(`#${this.id}-play`).prop('disabled', !source);
+    if (!source) {
+      this.loadFailed = true;
+      $(`#${this.id}-title`).text(`${track.title} — listen on Bandcamp`);
+      return false;
+    }
+
     // Create new Howl instance
     this.howl = new Howl({
-      src: [track.src],
+      src: [source],
       html5: true, // Enable streaming for large files
       volume: this.volume,
       onplay: () => this.updatePlayButton(true),
@@ -155,6 +193,8 @@ class AudioPlayer {
       onload: () => this.updateDuration(),
       onloaderror: (id, error) => {
         self.loadFailed = true;
+        self.isPlaying = false;
+        self.updatePlayButton(false);
         console.error('Error loading track:', error);
         $(`#${self.id}-title`).text('Error loading track');
       },
@@ -165,11 +205,10 @@ class AudioPlayer {
     $(`#${this.id}-artist`).text(track.artist || 'ET CETER4');
 
     // Update playlist active state
-    $(`.playlist-item`).removeClass('active');
-    $(`.playlist-item[data-track-index="${index}"]`).addClass('active');
 
     // Start progress update loop
     this.startProgressUpdate();
+    return true;
   }
 
   play() {
@@ -197,20 +236,28 @@ class AudioPlayer {
   }
 
   nextTrack() {
+    if (!this.tracks.length) {
+      return;
+    }
+    const wasPlaying = this.isPlaying;
     const nextIndex = (this.currentTrackIndex + 1) % this.tracks.length;
-    this.loadTrack(nextIndex);
-    if (this.isPlaying) {
+    const loaded = this.loadTrack(nextIndex);
+    if (loaded && wasPlaying) {
       this.play();
     }
   }
 
   previousTrack() {
+    if (!this.tracks.length) {
+      return;
+    }
+    const wasPlaying = this.isPlaying;
     const prevIndex =
       this.currentTrackIndex === 0
         ? this.tracks.length - 1
         : this.currentTrackIndex - 1;
-    this.loadTrack(prevIndex);
-    if (this.isPlaying) {
+    const loaded = this.loadTrack(prevIndex);
+    if (loaded && wasPlaying) {
       this.play();
     }
   }
