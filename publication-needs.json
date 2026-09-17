@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "issue": "https://github.com/organvm-ii-poiesis/a-mavs-olevm/issues/94",
+  "successor": "https://github.com/organvm-ii-poiesis/a-mavs-olevm/issues/144",
+  "status": "blocked",
+  "exhibits": {
+    "audio-orb": "Needs a server-issued short-lived session credential and a no-credential entry state; current client initializes Gemini at construction.",
+    "gemini-ink-studio": "Needs an approved server credential boundary for voice control and verified local painting without AI.",
+    "p5js-playground": "Needs a server generation endpoint with abuse controls; current module reads globalThis.process.env.GEMINI_API_KEY in the browser.",
+    "synthwave-space": "Needs a server generation endpoint with abuse controls and a verified no-credential entry state."
+  },
+  "finishLine": [
+    "Preserve all four exhibit intentions and current public paths.",
+    "No durable provider keys in HTML, JavaScript, source maps, local storage, or build environment substitution.",
+    "Verify each exhibit at its nested public URL, including no credentials, denied permission, provider failure, and successful authorized interaction.",
+    "Record runtime verification evidence in the issue before changing this status to ready."
+  ]
+}

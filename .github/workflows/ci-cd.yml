@@ -10,7 +10,7 @@ jobs:
   lint-and-format:
     name: Lint and Format Check
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4
@@ -36,7 +36,7 @@ jobs:
   security-audit:
     name: Security Audit
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4
@@ -217,26 +217,42 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v4
         with:
-          node-version: '20'
+          node-version: '24.19.0'
           cache: 'npm'
 
-      - name: Build exhibits
-        run: npm run build:exhibits
-        continue-on-error: true
+      - name: Test publication boundaries
+        run: npm run test:publication
 
-      - name: Upload exhibit builds
+      - name: Build all four exhibits without provider credentials
+        run: npm run build:exhibits
+
+      - name: Stage allowlisted publication candidate
+        run: npm run stage:public
+
+      - name: Upload verified publication candidate
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        if: always()
         with:
-          name: exhibit-builds
-          path: |
-            absorb-alchemize/*/dist/
+          name: public-site-${{ github.sha }}
+          path: _site/
+          include-hidden-files: true
+          if-no-files-found: error
           retention-days: 30
 
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    needs: [lint-and-format, security-audit, lighthouse, unit-tests, e2e-tests, accessibility, html-validate, link-checker, build-exhibits]
+    needs:
+      [
+        lint-and-format,
+        security-audit,
+        lighthouse,
+        unit-tests,
+        e2e-tests,
+        accessibility,
+        html-validate,
+        link-checker,
+        build-exhibits,
+      ]
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     permissions:
       contents: write
@@ -245,9 +261,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v4
+        with:
+          node-version: '24.19.0'
+
+      - name: Download the tested publication candidate
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: public-site-${{ github.sha }}
+          path: _site/
+
+      - name: Verify downloaded artifact hashes and source revision
+        run: node scripts/verify-public-artifact.mjs
+
+      - name: Require safe exhibit activation evidence
+        run: npm run verify:publication
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-          exclude_assets: '.github,.config,node_modules,package*.json,.gitignore,README.md,js/test'
+          publish_dir: _site/
